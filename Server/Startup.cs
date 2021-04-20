@@ -1,5 +1,7 @@
 using DataLibrary;
 using Horrografia.Server.Data;
+using Horrografia.Server.Data.Repos.Implementations;
+using Horrografia.Server.Data.Repos.Interfaces;
 using Horrografia.Server.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
@@ -47,6 +49,7 @@ namespace Horrografia.Server
             services.AddRazorPages();
 
             services.AddSingleton<IDataAccess, DataAccess>();
+            services.AddSingleton<IPersonRepository, PersonRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
