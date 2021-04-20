@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Horrografia.Client", "Clien
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Horrografia.Shared", "Shared\Horrografia.Shared.csproj", "{4B089BCB-6DC7-404E-AE55-C2B0FF32B9D6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataLibrary", "..\DataLibrary\DataLibrary.csproj", "{1BB4849C-8128-4CE8-A7E1-95F6CE291864}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{4B089BCB-6DC7-404E-AE55-C2B0FF32B9D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4B089BCB-6DC7-404E-AE55-C2B0FF32B9D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4B089BCB-6DC7-404E-AE55-C2B0FF32B9D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1BB4849C-8128-4CE8-A7E1-95F6CE291864}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BB4849C-8128-4CE8-A7E1-95F6CE291864}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1BB4849C-8128-4CE8-A7E1-95F6CE291864}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1BB4849C-8128-4CE8-A7E1-95F6CE291864}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

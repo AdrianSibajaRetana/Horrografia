@@ -6,12 +6,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Dapper" Version="2.0.78" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="3.2.1" />
-    <PackageReference Include="MySql.Data" Version="8.0.24" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\DataLibrary\DataLibrary.csproj" />
     <ProjectReference Include="..\Client\Horrografia.Client.csproj" />
     <ProjectReference Include="..\Shared\Horrografia.Shared.csproj" />
   </ItemGroup>
