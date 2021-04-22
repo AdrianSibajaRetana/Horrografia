@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Horrografia.Shared.Models
 {
-    class NivelModel
+    public class NivelModel
     {
         public int Id { get; set; }
         public string Descripcion { get; set; }

@@ -16,7 +16,6 @@ namespace Horrografia.Server.Data.Repos.Implementations
         {
             _dbContext = dbContext;
             ConectionString = configuration.GetConnectionString("DefaultConnection");
-
         }
 
         public async Task DeletePersonById(int PersonId)

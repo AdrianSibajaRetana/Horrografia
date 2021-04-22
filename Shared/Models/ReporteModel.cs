@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Horrografia.Shared.Models
 {
-    class ReporteModel
+    public class ReporteModel
     {
         public int Id { get; set; }
         public int IdUsuario { get; set; }

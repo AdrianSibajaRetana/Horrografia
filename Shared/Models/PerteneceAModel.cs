@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Horrografia.Shared.Models
 {
-    class PerteneceAModel
+    public class PerteneceAModel
     {
         public int IdNivel { get; set; }
         public int IdItem { get; set; }

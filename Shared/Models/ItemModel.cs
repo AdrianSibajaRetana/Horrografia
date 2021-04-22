@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Horrografia.Shared.Models
 {
-    class ItemModel
+    public class ItemModel
     {
         public int Id { get; set; }
         public string FormaCorrecta { get; set; }
