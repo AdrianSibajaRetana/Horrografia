@@ -8,7 +8,6 @@ namespace Horrografia.Server.Data.Repos.Interfaces
     {
         Task<List<ContieneErrorModel>> GetAllAsync();
         List<Task<ContieneErrorModel>> GetErroresByReporteId(int idReporte);
-        Task InsertData(ContieneErrorModel c);
         Task InsertMultiple(List<ContieneErrorModel> c);
     }
 }

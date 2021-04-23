@@ -3,8 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using Horrografia.Server.Data.Repos.Interfaces;
+using Horrografia.Shared.Models;
 
 namespace Horrografia.Server.Controllers
 {
@@ -12,36 +12,32 @@ namespace Horrografia.Server.Controllers
     [ApiController]
     public class ContieneErrorController : ControllerBase
     {
+
+        private readonly IContieneErrorRepository _repo;
+        public ContieneErrorController(IContieneErrorRepository repo)
+        {
+            _repo = repo;
+        }
+
         // GET: api/<ContieneErrorController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public List<ContieneErrorModel> Get()
         {
-            return new string[] { "value1", "value2" };
+            return _repo.GetAllAsync();
         }
 
         // GET api/<ContieneErrorController>/5
         [HttpGet("{id}")]
         public string Get(int id)
         {
-            return "value";
+            return _repo.GetErroresByReporteId(id);
         }
 
         // POST api/<ContieneErrorController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void Post(List<ContieneErrorModel> clist)
         {
-        }
-
-        // PUT api/<ContieneErrorController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<ContieneErrorController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+           return _repo.InsertMultiple(clist);
         }
     }
 }

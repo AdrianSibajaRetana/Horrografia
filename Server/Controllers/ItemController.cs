@@ -3,8 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Horrografia.Server.Data.Repos.Interfaces;
+using Horrografia.Shared.Models;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Horrografia.Server.Controllers
 {
@@ -12,6 +13,12 @@ namespace Horrografia.Server.Controllers
     [ApiController]
     public class ItemController : ControllerBase
     {
+        private readonly IItemRepository _repo;
+        public ItemController(IItemRepository repo)
+        {
+            _repo = repo;
+        }
+
         // GET: api/<ItemController>
         [HttpGet]
         public IEnumerable<string> Get()

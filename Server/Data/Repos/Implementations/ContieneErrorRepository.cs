@@ -36,13 +36,6 @@ namespace Horrografia.Server.Data.Repos.Implementations
         }
 
         //POST
-        public async Task InsertData(ContieneErrorModel c)
-        {
-            string sql = "insert into ContieneError (idReporte, idItem, respuesta) values (@idReporte, @idItem, @respuesta);";
-            await _dbContext.SaveData(sql, new { idReporte = c.IdReporte, idItem = c.IdItem, respuesta = c.Respuesta }, ConectionString);
-        }
-
-        //POST
         //CONSIDERAR BULK INSERT
         public async Task InsertMultiple(List<ContieneErrorModel> c)
         {
