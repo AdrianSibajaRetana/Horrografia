@@ -7,7 +7,7 @@ using Horrografia.Server.Data.Repos.Interfaces;
 
 namespace Horrografia.Server.Data.Repos.Implementations
 {
-    public class ReporteRepository
+    public class ReporteRepository : IReporteRepository
     {
         private readonly IDataAccess _dbContext;
         private readonly string ConectionString;
@@ -29,8 +29,8 @@ namespace Horrografia.Server.Data.Repos.Implementations
         //GET/{IdUsuario}
         public async Task<List<ReporteModel>> GetUserReports(int IdUsuario)
         {
-            string sql = $"SELECT * FROM reporte WHERE IdUsuario = @id";
-            var reportes = await _dbContext.LoadData<ReporteModel, dynamic>(sql, new {id = IdUsuario }, ConectionString);
+            string sql = "SELECT * FROM reporte WHERE IdUsuario = @id";
+            var reportes = await _dbContext.LoadData<ReporteModel, dynamic>(sql, new { id = IdUsuario }, ConectionString);
             return reportes;
         }
 
