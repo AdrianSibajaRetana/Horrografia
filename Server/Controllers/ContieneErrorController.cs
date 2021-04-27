@@ -23,21 +23,21 @@ namespace Horrografia.Server.Controllers
         [HttpGet]
         public List<ContieneErrorModel> Get()
         {
-            return _repo.GetAllAsync();
+            return _repo.GetAllAsync().Result;
         }
 
         // GET api/<ContieneErrorController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public List<ContieneErrorModel> Get(int id)
         {
-            return _repo.GetErroresByReporteId(id);
+            return _repo.GetErroresByReporteId(id).Result;
         }
 
         // POST api/<ContieneErrorController>
         [HttpPost]
         public void Post(List<ContieneErrorModel> clist)
         {
-           return _repo.InsertMultiple(clist);
+            _repo.InsertMultiple(clist);
         }
     }
 }

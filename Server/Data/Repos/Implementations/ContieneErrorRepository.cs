@@ -28,7 +28,7 @@ namespace Horrografia.Server.Data.Repos.Implementations
         }
 
         //GET/{IdReporte}
-        public async List<Task<ContieneErrorModel>> GetErroresByReporteId(int idReporte)
+        public async Task<List<ContieneErrorModel>> GetErroresByReporteId(int idReporte)
         {
             string sql = "SELECT * FROM ContieneError WHERE idReporte = @idReporte";
             var errores = await _dbContext.LoadData<ContieneErrorModel, dynamic>(sql, new { idReporte = idReporte }, ConectionString);

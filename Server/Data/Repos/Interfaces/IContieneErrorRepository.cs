@@ -7,7 +7,7 @@ namespace Horrografia.Server.Data.Repos.Interfaces
     public interface IContieneErrorRepository
     {
         Task<List<ContieneErrorModel>> GetAllAsync();
-        List<Task<ContieneErrorModel>> GetErroresByReporteId(int idReporte);
+        Task<List<ContieneErrorModel>> GetErroresByReporteId(int idReporte);
         Task InsertMultiple(List<ContieneErrorModel> c);
     }
 }
