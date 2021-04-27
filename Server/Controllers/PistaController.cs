@@ -21,34 +21,30 @@ namespace Horrografia.Server.Controllers
 
         // GET: api/<PistaController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public List<PistaModel> Get()
         {
-            return new string[] { "value1", "value2" };
+            return _repo.GetAllAsync().Result;
         }
 
         // GET api/<PistaController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public PistaModel Get(int id)
         {
-            return "value";
+            return _repo.GetPistaById(id).Result;
         }
 
         // POST api/<PistaController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void Post(PistaModel p)
         {
-        }
-
-        // PUT api/<PistaController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
+            _repo.InsertData(p);
         }
 
         // DELETE api/<PistaController>/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+            _repo.DeletePistaById(id);
         }
     }
 }

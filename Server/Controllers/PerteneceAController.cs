@@ -13,6 +13,13 @@ namespace Horrografia.Server.Controllers
     [ApiController]
     public class PerteneceAController : ControllerBase
     {
+        /*Controlador de la tabla Nivel
+            Métodos: 
+                    - Get All
+                    - Get by Id
+                    - Insert Item
+                    - Delete Item 
+         */
         private readonly IPerteneceARepository _repo;
         public PerteneceAController(IPerteneceARepository repo)
         {
@@ -21,34 +28,30 @@ namespace Horrografia.Server.Controllers
 
         // GET: api/<PerteneceAController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public List<PerteneceAModel> Get()
         {
-            return new string[] { "value1", "value2" };
+            return _repo.GetAllAsync().Result;
         }
 
         // GET api/<PerteneceAController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public List<PerteneceAModel> Get(int id)
         {
-            return "value";
+            return _repo.GetPerteneceAByLevelId(id).Result;
         }
 
         // POST api/<PerteneceAController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void Post(PerteneceAModel p)
         {
+            _repo.InsertData(p);
         }
 
-        // PUT api/<PerteneceAController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        // DELETE api/<PerteneceAController>/model p
+        [HttpDelete]
+        public void Delete(PerteneceAModel p)
         {
-        }
-
-        // DELETE api/<PerteneceAController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
+            _repo.DeleteRelation(p);
         }
     }
 }

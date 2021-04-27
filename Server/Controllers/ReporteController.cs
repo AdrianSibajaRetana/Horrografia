@@ -21,34 +21,30 @@ namespace Horrografia.Server.Controllers
 
         // GET: api/<ReporteController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public List<ReporteModel> Get()
         {
-            return new string[] { "value1", "value2" };
+            return _repo.GetAllAsync().Result;
         }
 
         // GET api/<ReporteController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public List<ReporteModel> Get(int id)
         {
-            return "value";
+            return _repo.GetUserReports(id).Result;
         }
 
         // POST api/<ReporteController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void Post(ReporteModel r)
         {
-        }
-
-        // PUT api/<ReporteController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
+            _repo.InsertData(r);
         }
 
         // DELETE api/<ReporteController>/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+            _repo.DeleteReporteById(id);
         }
     }
 }
