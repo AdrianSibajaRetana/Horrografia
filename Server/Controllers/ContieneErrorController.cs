@@ -12,7 +12,12 @@ namespace Horrografia.Server.Controllers
     [ApiController]
     public class ContieneErrorController : ControllerBase
     {
-
+        /*Controlador de la relación ContieneError
+            Métodos: 
+                    - Get All
+                    - Get By Reporte Id
+                    - Insertar múltiples
+         */
         private readonly IContieneErrorRepository _repo;
         public ContieneErrorController(IContieneErrorRepository repo)
         {

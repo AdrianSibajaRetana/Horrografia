@@ -45,8 +45,15 @@ namespace Horrografia.Server.Data.Repos.Implementations
         //DELETE
         public async Task DeleteItem(int idItem)
         {
-            string sql = "delete from item where id = @idItem;
+            string sql = "delete from item where id = @idItem";
             await _dbContext.SaveData(sql, new { idItem = idItem }, ConectionString);
+        }
+
+        //UPDATE
+        public async Task UpdateData(ItemModel i)
+        {
+            string sql = "update item set FormaCorrecta = @FormaCorrecta, FormaIncorrecta = @FormaIncorrecta, PistaId = @PistaId where id = @id";
+            await _dbContext.SaveData(sql, new { FormaCorrecta = i.FormaCorrecta, FormaIncorrecta = i.FormaIncorrecta, PistaId = i.PistaId, id = i.Id }, ConectionString);
         }
     }
 }

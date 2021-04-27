@@ -10,5 +10,6 @@ namespace Horrografia.Server.Data.Repos.Interfaces
         Task<List<ItemModel>> GetAllAsync();
         Task<ItemModel> GetItemById(int idItem);
         Task InsertData(ItemModel i);
+        Task UpdateData(ItemModel i);
     }
 }
