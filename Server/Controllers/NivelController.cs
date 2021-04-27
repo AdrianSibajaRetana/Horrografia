@@ -13,42 +13,45 @@ namespace Horrografia.Server.Controllers
     [ApiController]
     public class NivelController : ControllerBase
     {
+        /*Controlador de la tabla Nivel
+            Métodos: 
+                    - Get All
+                    - Insert Item
+                    - Update Item
+                    - Delete Item 
+         */
         private readonly INivelRepository _repo;
         public NivelController(INivelRepository repo)
         {
             _repo = repo;
         }
 
-        // GET: api/<NivelController>
+        // GET: api/Nivel
         [HttpGet]
-        public IEnumerable<string> Get()
+        public List<NivelModel> Get()
         {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET api/<NivelController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
+            return _repo.GetAllAsync().Result;
         }
 
         // POST api/<NivelController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public void Post(NivelModel n)
         {
+            _repo.InsertData(n);
         }
 
         // PUT api/<NivelController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut]
+        public void Put(NivelModel n)
         {
+            _repo.UpdateData(n);
         }
 
         // DELETE api/<NivelController>/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+            _repo.DeleteNivel(id);
         }
     }
 }

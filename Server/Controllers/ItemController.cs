@@ -49,7 +49,7 @@ namespace Horrografia.Server.Controllers
         }
 
         // PUT api/<ItemController>/5
-        [HttpPut("{id}")]
+        [HttpPut]
         public void Put(ItemModel i)
         {
             _repo.UpdateData(i);

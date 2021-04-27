@@ -8,7 +8,8 @@ namespace Horrografia.Server.Data.Repos.Interfaces
     {
         Task DeleteNivel(int idNivel);
         Task<List<NivelModel>> GetAllAsync();
-        Task<NivelModel> GetNivelById(int idNivel);
+        //Task<NivelModel> GetNivelById(int idNivel);
         Task InsertData(NivelModel n);
+        Task UpdateData(NivelModel n);
     }
 }
