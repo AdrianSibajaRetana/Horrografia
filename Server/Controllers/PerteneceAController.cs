@@ -5,7 +5,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Horrografia.Server.Data.Repos.Interfaces;
 using Horrografia.Shared.Models;
-
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 
 namespace Horrografia.Server.Controllers
 {
@@ -21,37 +22,79 @@ namespace Horrografia.Server.Controllers
                     - Delete Item 
          */
         private readonly IPerteneceARepository _repo;
-        public PerteneceAController(IPerteneceARepository repo)
+        private readonly ILogger<PerteneceAController> _logger;
+        public PerteneceAController(IPerteneceARepository repo, ILogger<PerteneceAController> logger)
         {
             _repo = repo;
+            _logger = logger; 
         }
 
         // GET: api/<PerteneceAController>
         [HttpGet]
-        public List<PerteneceAModel> Get()
+        public IActionResult Get()
         {
-            return _repo.GetAllAsync().Result;
+            try
+            {
+                var relations = _repo.GetAllAsync().Result;
+                return Ok(relations);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "An error occurred while fetching from db");
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }
         }
 
         // GET api/<PerteneceAController>/5
         [HttpGet("{id}")]
-        public List<PerteneceAModel> Get(int id)
+        public IActionResult Get(int id)
         {
-            return _repo.GetPerteneceAByLevelId(id).Result;
+            try
+            {
+                var levelRelations = _repo.GetPerteneceAByLevelId(id).Result;
+                if (levelRelations == null)
+                {
+                    return NotFound();
+                }
+                return Ok(levelRelations);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "An error occurred while fetching from db");
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }
         }
 
         // POST api/<PerteneceAController>
         [HttpPost]
-        public void Post(PerteneceAModel p)
+        public IActionResult Post(PerteneceAModel p)
         {
-            _repo.InsertData(p);
+            try
+            {
+                _repo.InsertData(p);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "An error occurred while posting to db");
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }
         }
 
         // DELETE api/<PerteneceAController>/model p
         [HttpDelete]
-        public void Delete(PerteneceAModel p)
+        public IActionResult Delete(PerteneceAModel p)
         {
-            _repo.DeleteRelation(p);
+            try
+            {
+                _repo.DeleteRelation(p);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "An error occurred while updating to db");
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }   
         }
     }
 }

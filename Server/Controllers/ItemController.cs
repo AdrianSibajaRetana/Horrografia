@@ -5,6 +5,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Horrografia.Server.Data.Repos.Interfaces;
 using Horrografia.Shared.Models;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 
 
 namespace Horrografia.Server.Controllers
@@ -22,44 +24,95 @@ namespace Horrografia.Server.Controllers
                     - Delete Item 
          */
         private readonly IItemRepository _repo;
-        public ItemController(IItemRepository repo)
+        private readonly ILogger<ItemController> _logger;
+        public ItemController(IItemRepository repo, ILogger<ItemController> logger)
         {
             _repo = repo;
+            _logger = logger; 
         }
 
         // GET: api/Item
         [HttpGet]
-        public List<ItemModel> Get()
+        public IActionResult Get()
         {
-            return _repo.GetAllAsync().Result;
+            try
+            {
+                var items = _repo.GetAllAsync().Result;
+                return Ok(items);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "An error occurred while fetching from db");
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }
         }
 
         // GET api/<ItemController>/5
         [HttpGet("{id}")]
-        public ItemModel Get(int id)
+        public IActionResult Get(int id)
         {
-            return _repo.GetItemById(id).Result;
+            try
+            {
+                var item = _repo.GetItemById(id).Result;
+                if (item == null)
+                {
+                    return NotFound();
+                }
+                return Ok(item);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "An error occurred while fetching from db");
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }
         }
 
         // POST api/<ItemController>
         [HttpPost]
-        public void Post(ItemModel p)
+        public IActionResult Post(ItemModel i)
         {
-            _repo.InsertData(p);
+            try
+            {
+                _repo.InsertData(i);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "An error occurred while writing to db");
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }
         }
 
         // PUT api/<ItemController>/5
         [HttpPut]
-        public void Put(ItemModel i)
+        public IActionResult Put(ItemModel i)
         {
-            _repo.UpdateData(i);
+            try
+            {
+                _repo.UpdateData(i);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "An error occurred while updating to db");
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }
         }
 
         // DELETE api/<ItemController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
-            _repo.DeleteItem(id);
+            try
+            {
+                _repo.DeleteItem(id);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "An error occurred while deleting from db");
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }
         }
     }
 }

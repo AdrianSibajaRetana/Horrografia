@@ -5,6 +5,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Horrografia.Server.Data.Repos.Interfaces;
 using Horrografia.Shared.Models;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 
 
 namespace Horrografia.Server.Controllers
@@ -14,37 +16,79 @@ namespace Horrografia.Server.Controllers
     public class PistaController : ControllerBase
     {
         private readonly IPistaRepository _repo;
-        public PistaController(IPistaRepository repo)
+        private readonly ILogger<PistaController> _logger;
+        public PistaController(IPistaRepository repo, ILogger<PistaController> logger)
         {
             _repo = repo;
+            _logger = logger; 
         }
 
         // GET: api/<PistaController>
         [HttpGet]
-        public List<PistaModel> Get()
+        public IActionResult Get()
         {
-            return _repo.GetAllAsync().Result;
+            try
+            {
+                var pistas = _repo.GetAllAsync().Result;
+                return Ok(pistas);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "An error occurred while fetching from db");
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }
         }
 
         // GET api/<PistaController>/5
         [HttpGet("{id}")]
-        public PistaModel Get(int id)
+        public IActionResult Get(int id)
         {
-            return _repo.GetPistaById(id).Result;
+            try
+            {
+                var pista = _repo.GetPistaById(id).Result;
+                if (pista == null)
+                {
+                    return NotFound();
+                }
+                return Ok(pista);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "An error occurred while fetching from db");
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }
         }
 
         // POST api/<PistaController>
         [HttpPost]
-        public void Post(PistaModel p)
+        public IActionResult Post(PistaModel p)
         {
-            _repo.InsertData(p);
+            try
+            {
+                _repo.InsertData(p);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "An error occurred while posting to db");
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }
         }
 
         // DELETE api/<PistaController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
-            _repo.DeletePistaById(id);
+            try
+            {
+                _repo.DeletePistaById(id);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "An error occurred while deleting from db");
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }
         }
     }
 }

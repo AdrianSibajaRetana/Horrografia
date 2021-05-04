@@ -5,6 +5,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Horrografia.Server.Data.Repos.Interfaces;
 using Horrografia.Shared.Models;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 
 namespace Horrografia.Server.Controllers
 {
@@ -13,6 +15,7 @@ namespace Horrografia.Server.Controllers
     public class PersonController : ControllerBase
     {
         private readonly IPersonRepository _repo;
+        private readonly ILogger<PersonController> _logger;
         public PersonController(IPersonRepository repo)
         {
             _repo = repo;
@@ -20,39 +23,89 @@ namespace Horrografia.Server.Controllers
 
         // GET: api/Person
         [HttpGet]
-        public List<PersonModel> Get()
+        public IActionResult Get()
         {
-            return _repo.GetAllAsync().Result;
+            try
+            {
+                var persons = _repo.GetAllAsync().Result;
+                return Ok(persons);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "An error occurred while fetching from db");
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }
         }
 
         // GET: api/Person/{int id}
         [HttpGet("{id}")]
-        public PersonModel Get(int id)
+        public IActionResult Get(int id)
         {
-            return _repo.GetPersonById(id).Result;
+            try
+            {
+                var person = _repo.GetPersonById(id).Result;
+                if (person == null)
+                {
+                    return NotFound();
+                }
+                return Ok(person);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "An error occurred while fetching from db");
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }
         }
 
         // POST api/Person/{Person p}
         [HttpPost]
-        public void Post(PersonModel val)
+        public IActionResult Post(PersonModel val)
         {
-            _repo.InsertData(val);
+            try
+            {
+                _repo.InsertData(val);                
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "An error occurred while posting to db");
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }
+            
         }
 
         // PUT api/<PersonController>/5
         [HttpPut("{id}")]
-        public void Put(int id, PersonModel p)
+        public IActionResult Put(int id, PersonModel p)
         {
-            string FirstName = p.FirstName;
-            string LastName = p.LastName;
-            _repo.UpdatePersonById(id, FirstName, LastName);
+            try
+            {
+                string FirstName = p.FirstName;
+                string LastName = p.LastName;
+                _repo.UpdatePersonById(id, FirstName, LastName);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "An error occurred while updating to db");
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }
         }
 
         // DELETE api/<PersonController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
-            _repo.DeletePersonById(id);
+            try
+            {
+                _repo.DeletePersonById(id);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "An error occurred while updating to db");
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }
         }
     }
 }

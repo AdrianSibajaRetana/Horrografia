@@ -5,6 +5,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Horrografia.Server.Data.Repos.Interfaces;
 using Horrografia.Shared.Models;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 
 
 namespace Horrografia.Server.Controllers
@@ -14,37 +16,79 @@ namespace Horrografia.Server.Controllers
     public class ReporteController : ControllerBase
     {
         private readonly IReporteRepository _repo;
-        public ReporteController(IReporteRepository repo)
+        private readonly ILogger<ReporteController> _logger;
+        public ReporteController(IReporteRepository repo, ILogger<ReporteController> logger)
         {
             _repo = repo;
+            _logger = logger; 
         }
 
         // GET: api/<ReporteController>
         [HttpGet]
-        public List<ReporteModel> Get()
+        public IActionResult Get()
         {
-            return _repo.GetAllAsync().Result;
+            try
+            {
+                var reportes = _repo.GetAllAsync().Result;
+                return Ok(reportes);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "An error occurred while fetching from db");
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }
         }
 
         // GET api/<ReporteController>/5
         [HttpGet("{id}")]
-        public List<ReporteModel> Get(int id)
+        public IActionResult Get(int id)
         {
-            return _repo.GetUserReports(id).Result;
+            try
+            {
+                var reportes = _repo.GetUserReports(id).Result;
+                if (reportes == null)
+                {
+                    return NotFound();
+                }
+                return Ok(reportes);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "An error occurred while fetching from db");
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }
         }
 
         // POST api/<ReporteController>
         [HttpPost]
-        public void Post(ReporteModel r)
+        public IActionResult Post(ReporteModel r)
         {
-            _repo.InsertData(r);
+            try
+            {
+                _repo.InsertData(r);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "An error occurred while posting to db");
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }    
         }
 
         // DELETE api/<ReporteController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
-            _repo.DeleteReporteById(id);
+            try
+            {
+                _repo.DeleteReporteById(id);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "An error occurred while deleting from db");
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }
         }
     }
 }

@@ -5,6 +5,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Horrografia.Server.Data.Repos.Interfaces;
 using Horrografia.Shared.Models;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 
 namespace Horrografia.Server.Controllers
 {
@@ -19,30 +21,63 @@ namespace Horrografia.Server.Controllers
                     - Insertar múltiples
          */
         private readonly IContieneErrorRepository _repo;
-        public ContieneErrorController(IContieneErrorRepository repo)
+        private readonly ILogger<ContieneErrorController> _logger;
+        public ContieneErrorController(IContieneErrorRepository repo, ILogger<ContieneErrorController> logger)
         {
             _repo = repo;
+            _logger = logger; 
         }
 
         // GET: api/<ContieneErrorController>
         [HttpGet]
-        public List<ContieneErrorModel> Get()
+        public IActionResult Get()
         {
-            return _repo.GetAllAsync().Result;
+            try
+            {
+                var errores = _repo.GetAllAsync().Result;
+                return Ok(errores);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "An error occurred while fetching from db");
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }
         }
 
         // GET api/<ContieneErrorController>/5
         [HttpGet("{id}")]
-        public List<ContieneErrorModel> Get(int id)
+        public IActionResult Get(int id)
         {
-            return _repo.GetErroresByReporteId(id).Result;
+            try
+            {
+                var errores = _repo.GetErroresByReporteId(id).Result;
+                if (errores == null)
+                {
+                    return NotFound();
+                }
+                return Ok(errores);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "An error occurred while fetching from db");
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }
         }
 
         // POST api/<ContieneErrorController>
         [HttpPost]
-        public void Post(List<ContieneErrorModel> clist)
+        public IActionResult Post(List<ContieneErrorModel> clist)
         {
-            _repo.InsertMultiple(clist);
+            try
+            {
+                _repo.InsertMultiple(clist);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "An error occurred while writing to db");
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }
         }
     }
 }

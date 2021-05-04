@@ -4,6 +4,7 @@ using Horrografia.Shared.Models;
 using DataLibrary;
 using Microsoft.Extensions.Configuration;
 using Horrografia.Server.Data.Repos.Interfaces;
+using System.Linq;
 
 namespace Horrografia.Server.Data.Repos.Implementations
 {
@@ -35,12 +36,8 @@ namespace Horrografia.Server.Data.Repos.Implementations
         {
             var returnedPerson = new PersonModel();
             string sql = $"SELECT * FROM people WHERE id = @id";
-            var people = await _dbContext.LoadData<PersonModel, dynamic>(sql, new { id = PersonId }, ConectionString);
-            if (people.Count > 0)
-            {
-                returnedPerson = people[0];
-            }
-            return returnedPerson;
+            var person = await _dbContext.LoadData<PersonModel, dynamic>(sql, new { id = PersonId }, ConectionString);
+            return person.FirstOrDefault();
         }
 
         public async Task InsertData(PersonModel p)

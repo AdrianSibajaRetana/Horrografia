@@ -5,7 +5,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Horrografia.Server.Data.Repos.Interfaces;
 using Horrografia.Shared.Models;
-
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 
 namespace Horrografia.Server.Controllers
 {
@@ -21,37 +22,77 @@ namespace Horrografia.Server.Controllers
                     - Delete Item 
          */
         private readonly INivelRepository _repo;
-        public NivelController(INivelRepository repo)
+        private readonly ILogger<NivelController> _logger;
+        public NivelController(INivelRepository repo, ILogger<NivelController> logger)
         {
             _repo = repo;
+            _logger = logger;
+
         }
 
         // GET: api/Nivel
         [HttpGet]
-        public List<NivelModel> Get()
+        public IActionResult Get()
         {
-            return _repo.GetAllAsync().Result;
+            try
+            {
+                var niveles = _repo.GetAllAsync().Result;
+                return Ok(niveles);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "An error occurred while fetching from db");
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }
         }
 
         // POST api/<NivelController>
         [HttpPost]
-        public void Post(NivelModel n)
+        public IActionResult Post(NivelModel n)
         {
-            _repo.InsertData(n);
+            try
+            {
+                _repo.InsertData(n);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "An error occurred while writing to db");
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }
         }
 
         // PUT api/<NivelController>/5
         [HttpPut]
-        public void Put(NivelModel n)
+        public IActionResult Put(NivelModel n)
         {
-            _repo.UpdateData(n);
+            try
+            {
+                _repo.UpdateData(n);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "An error occurred while updating to db");
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }
         }
 
         // DELETE api/<NivelController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
-            _repo.DeleteNivel(id);
+            try
+            {
+                _repo.DeleteNivel(id);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "An error occurred while deleting from db");
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }
+
         }
     }
 }
