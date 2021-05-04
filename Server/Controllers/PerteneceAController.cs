@@ -31,11 +31,11 @@ namespace Horrografia.Server.Controllers
 
         // GET: api/<PerteneceAController>
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
             try
             {
-                var relations = _repo.GetAllAsync().Result;
+                var relations = await _repo.GetAllAsync();
                 return Ok(relations);
             }
             catch (Exception e)
@@ -47,11 +47,11 @@ namespace Horrografia.Server.Controllers
 
         // GET api/<PerteneceAController>/5
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
             try
             {
-                var levelRelations = _repo.GetPerteneceAByLevelId(id).Result;
+                var levelRelations = await _repo.GetPerteneceAByLevelId(id);
                 if (levelRelations == null)
                 {
                     return NotFound();
@@ -67,11 +67,11 @@ namespace Horrografia.Server.Controllers
 
         // POST api/<PerteneceAController>
         [HttpPost]
-        public IActionResult Post(PerteneceAModel p)
+        public async Task<IActionResult> Post(PerteneceAModel p)
         {
             try
             {
-                _repo.InsertData(p);
+                await _repo.InsertData(p);
                 return Ok();
             }
             catch (Exception e)
@@ -83,11 +83,11 @@ namespace Horrografia.Server.Controllers
 
         // DELETE api/<PerteneceAController>/model p
         [HttpDelete]
-        public IActionResult Delete(PerteneceAModel p)
+        public async Task<IActionResult> Delete(PerteneceAModel p)
         {
             try
             {
-                _repo.DeleteRelation(p);
+                await _repo.DeleteRelation(p);
                 return Ok();
             }
             catch (Exception e)

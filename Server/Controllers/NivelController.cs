@@ -32,11 +32,11 @@ namespace Horrografia.Server.Controllers
 
         // GET: api/Nivel
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
             try
             {
-                var niveles = _repo.GetAllAsync().Result;
+                var niveles = await _repo.GetAllAsync();
                 return Ok(niveles);
             }
             catch (Exception e)
@@ -48,11 +48,11 @@ namespace Horrografia.Server.Controllers
 
         // POST api/<NivelController>
         [HttpPost]
-        public IActionResult Post(NivelModel n)
+        public async Task<IActionResult> Post(NivelModel n)
         {
             try
             {
-                _repo.InsertData(n);
+                await _repo.InsertData(n);
                 return Ok();
             }
             catch (Exception e)
@@ -64,11 +64,11 @@ namespace Horrografia.Server.Controllers
 
         // PUT api/<NivelController>/5
         [HttpPut]
-        public IActionResult Put(NivelModel n)
+        public async Task<IActionResult> Put(NivelModel n)
         {
             try
             {
-                _repo.UpdateData(n);
+                await _repo.UpdateData(n);
                 return Ok();
             }
             catch (Exception e)
@@ -80,11 +80,11 @@ namespace Horrografia.Server.Controllers
 
         // DELETE api/<NivelController>/5
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             try
             {
-                _repo.DeleteNivel(id);
+                await _repo.DeleteNivel(id);
                 return Ok();
             }
             catch (Exception e)

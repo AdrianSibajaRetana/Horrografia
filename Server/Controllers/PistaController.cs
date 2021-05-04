@@ -25,11 +25,11 @@ namespace Horrografia.Server.Controllers
 
         // GET: api/<PistaController>
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
             try
             {
-                var pistas = _repo.GetAllAsync().Result;
+                var pistas = await _repo.GetAllAsync();
                 return Ok(pistas);
             }
             catch (Exception e)
@@ -41,11 +41,11 @@ namespace Horrografia.Server.Controllers
 
         // GET api/<PistaController>/5
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
             try
             {
-                var pista = _repo.GetPistaById(id).Result;
+                var pista = await _repo.GetPistaById(id);
                 if (pista == null)
                 {
                     return NotFound();
@@ -61,11 +61,11 @@ namespace Horrografia.Server.Controllers
 
         // POST api/<PistaController>
         [HttpPost]
-        public IActionResult Post(PistaModel p)
+        public async Task<IActionResult> Post(PistaModel p)
         {
             try
             {
-                _repo.InsertData(p);
+                await _repo.InsertData(p);
                 return Ok();
             }
             catch (Exception e)
@@ -77,11 +77,11 @@ namespace Horrografia.Server.Controllers
 
         // DELETE api/<PistaController>/5
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             try
             {
-                _repo.DeletePistaById(id);
+                await _repo.DeletePistaById(id);
                 return Ok();
             }
             catch (Exception e)

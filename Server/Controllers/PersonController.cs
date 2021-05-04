@@ -23,11 +23,11 @@ namespace Horrografia.Server.Controllers
 
         // GET: api/Person
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
             try
             {
-                var persons = _repo.GetAllAsync().Result;
+                var persons = await _repo.GetAllAsync();
                 return Ok(persons);
             }
             catch (Exception e)
@@ -39,11 +39,11 @@ namespace Horrografia.Server.Controllers
 
         // GET: api/Person/{int id}
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
             try
             {
-                var person = _repo.GetPersonById(id).Result;
+                var person = await _repo.GetPersonById(id);
                 if (person == null)
                 {
                     return NotFound();
@@ -59,11 +59,11 @@ namespace Horrografia.Server.Controllers
 
         // POST api/Person/{Person p}
         [HttpPost]
-        public IActionResult Post(PersonModel val)
+        public async Task<IActionResult> Post(PersonModel val)
         {
             try
             {
-                _repo.InsertData(val);                
+                await _repo.InsertData(val);                
                 return Ok();
             }
             catch (Exception e)
@@ -76,13 +76,13 @@ namespace Horrografia.Server.Controllers
 
         // PUT api/<PersonController>/5
         [HttpPut("{id}")]
-        public IActionResult Put(int id, PersonModel p)
+        public async Task<IActionResult> Put(int id, PersonModel p)
         {
             try
             {
                 string FirstName = p.FirstName;
                 string LastName = p.LastName;
-                _repo.UpdatePersonById(id, FirstName, LastName);
+                await _repo.UpdatePersonById(id, FirstName, LastName);
                 return Ok();
             }
             catch (Exception e)
@@ -94,11 +94,11 @@ namespace Horrografia.Server.Controllers
 
         // DELETE api/<PersonController>/5
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             try
             {
-                _repo.DeletePersonById(id);
+                await _repo.DeletePersonById(id);
                 return Ok();
             }
             catch (Exception e)

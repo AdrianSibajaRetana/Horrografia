@@ -30,11 +30,11 @@ namespace Horrografia.Server.Controllers
 
         // GET: api/<ContieneErrorController>
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
             try
             {
-                var errores = _repo.GetAllAsync().Result;
+                var errores = await _repo.GetAllAsync();
                 return Ok(errores);
             }
             catch (Exception e)
@@ -46,11 +46,11 @@ namespace Horrografia.Server.Controllers
 
         // GET api/<ContieneErrorController>/5
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
             try
             {
-                var errores = _repo.GetErroresByReporteId(id).Result;
+                var errores = await _repo.GetErroresByReporteId(id);
                 if (errores == null)
                 {
                     return NotFound();
@@ -66,11 +66,11 @@ namespace Horrografia.Server.Controllers
 
         // POST api/<ContieneErrorController>
         [HttpPost]
-        public IActionResult Post(List<ContieneErrorModel> clist)
+        public async Task<IActionResult> Post(List<ContieneErrorModel> clist)
         {
             try
             {
-                _repo.InsertMultiple(clist);
+                await _repo.InsertMultiple(clist);
                 return Ok();
             }
             catch (Exception e)

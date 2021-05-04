@@ -33,11 +33,11 @@ namespace Horrografia.Server.Controllers
 
         // GET: api/Item
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
             try
             {
-                var items = _repo.GetAllAsync().Result;
+                var items = await _repo.GetAllAsync();
                 return Ok(items);
             }
             catch (Exception e)
@@ -49,11 +49,11 @@ namespace Horrografia.Server.Controllers
 
         // GET api/<ItemController>/5
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
             try
             {
-                var item = _repo.GetItemById(id).Result;
+                var item = await _repo.GetItemById(id);
                 if (item == null)
                 {
                     return NotFound();
@@ -69,11 +69,11 @@ namespace Horrografia.Server.Controllers
 
         // POST api/<ItemController>
         [HttpPost]
-        public IActionResult Post(ItemModel i)
+        public async Task<IActionResult> Post(ItemModel i)
         {
             try
             {
-                _repo.InsertData(i);
+                await _repo.InsertData(i);
                 return Ok();
             }
             catch (Exception e)
@@ -85,11 +85,11 @@ namespace Horrografia.Server.Controllers
 
         // PUT api/<ItemController>/5
         [HttpPut]
-        public IActionResult Put(ItemModel i)
+        public async Task<IActionResult> Put(ItemModel i)
         {
             try
             {
-                _repo.UpdateData(i);
+                await _repo.UpdateData(i);
                 return Ok();
             }
             catch (Exception e)
@@ -101,11 +101,11 @@ namespace Horrografia.Server.Controllers
 
         // DELETE api/<ItemController>/5
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             try
             {
-                _repo.DeleteItem(id);
+                await _repo.DeleteItem(id);
                 return Ok();
             }
             catch (Exception e)

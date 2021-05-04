@@ -25,11 +25,11 @@ namespace Horrografia.Server.Controllers
 
         // GET: api/<ReporteController>
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
             try
             {
-                var reportes = _repo.GetAllAsync().Result;
+                var reportes = await _repo.GetAllAsync();
                 return Ok(reportes);
             }
             catch (Exception e)
@@ -41,11 +41,11 @@ namespace Horrografia.Server.Controllers
 
         // GET api/<ReporteController>/5
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public async Task<IActionResult> Get(int id)
         {
             try
             {
-                var reportes = _repo.GetUserReports(id).Result;
+                var reportes = await _repo.GetUserReports(id);
                 if (reportes == null)
                 {
                     return NotFound();
@@ -61,11 +61,11 @@ namespace Horrografia.Server.Controllers
 
         // POST api/<ReporteController>
         [HttpPost]
-        public IActionResult Post(ReporteModel r)
+        public async Task<IActionResult> Post(ReporteModel r)
         {
             try
             {
-                _repo.InsertData(r);
+                await _repo.InsertData(r);
                 return Ok();
             }
             catch (Exception e)
@@ -77,11 +77,11 @@ namespace Horrografia.Server.Controllers
 
         // DELETE api/<ReporteController>/5
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
             try
             {
-                _repo.DeleteReporteById(id);
+                await _repo.DeleteReporteById(id);
                 return Ok();
             }
             catch (Exception e)
