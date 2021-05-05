@@ -1,14 +1,39 @@
 ﻿@page "/people"
 @using Microsoft.AspNetCore.Authorization
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
-@using Horrografia.Shared
-@attribute [Authorize]
-@inject HttpClient Http
+@using Horrografia.Shared.Models
+@using Horrografia.Client.Data.Services.Interfaces
 
-<h1>Personas </h1>
+@inject IPersonService PersonService
 
-<p>This component demonstrates fetching data from the server.</p>
+<h3>People</h3>
+@if (people == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    @*
+    <button class="btn btn-primary" @onclick="InsertData">Insert</button>
+    <button class="btn btn-warning" @onclick="UpdateData">Update</button>
+    <button class="btn btn-danger" @onclick="DeleteData">Delete</button>
+    *@
+    @foreach (var p in people)
+    {
+        <tr>
+            <td>@p.Id</td>
+            <td>@p.FirstName</td>
+            <td>@p.LastName</td>
+        </tr>
+    }
+}
 
 @code {
+    private List<PersonModel> people;
+
+    protected override async Task OnInitializedAsync()
+    {
+        people = await PersonService.GetAsync();
+    }
 
 }

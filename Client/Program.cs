@@ -8,6 +8,8 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Horrografia.Client.Data.Services.Implementations;
+using Horrografia.Client.Data.Services.Interfaces;
 
 namespace Horrografia.Client
 {
@@ -25,6 +27,9 @@ namespace Horrografia.Client
             builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("Horrografia.ServerAPI"));
 
             builder.Services.AddApiAuthorization();
+
+            //Mis servicios
+            builder.Services.AddTransient<IPersonService, PersonService>();
 
             await builder.Build().RunAsync();
         }

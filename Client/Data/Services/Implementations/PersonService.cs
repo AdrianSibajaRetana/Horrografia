@@ -4,10 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Net.Http;
 using Horrografia.Shared.Models;
+using System.Net.Http.Json;
+using Horrografia.Client.Data.Services.Interfaces;
 
 namespace Horrografia.Client.Data.Services.Implementations
 {
-    public class PersonService
+    public class PersonService : IPersonService
     {
         private readonly HttpClient _client;
         public PersonService(HttpClient client)
@@ -15,16 +17,22 @@ namespace Horrografia.Client.Data.Services.Implementations
             _client = client;
         }
 
-        public async Task<List<PersonModel>> getAsync() 
+        public async Task<List<PersonModel>> GetAsync()
         {
             try
             {
-                var forecasts = await _client.GetFromJsonAsync<WeatherForecast[]>("WeatherForecast");
+                var response = await _client.GetAsync("api/Person");
+                if (response.IsSuccessStatusCode)
+                {
+                    var persons = await response.Content.ReadFromJsonAsync<List<PersonModel>>();
+                    return persons;
+                }
             }
-            catch
-            { 
-            
+            catch (Exception e)
+            {
+                return null;
             }
+            return null;
         }
     }
 }

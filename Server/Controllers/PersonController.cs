@@ -16,9 +16,10 @@ namespace Horrografia.Server.Controllers
     {
         private readonly IPersonRepository _repo;
         private readonly ILogger<PersonController> _logger;
-        public PersonController(IPersonRepository repo)
+        public PersonController(IPersonRepository repo, ILogger<PersonController> logger)
         {
             _repo = repo;
+            _logger = logger;
         }
 
         // GET: api/Person

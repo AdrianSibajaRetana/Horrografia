@@ -18,8 +18,4 @@
     <ProjectReference Include="..\Shared\Horrografia.Shared.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Data\Services\Interfaces\" />
-  </ItemGroup>
-
 </Project>
