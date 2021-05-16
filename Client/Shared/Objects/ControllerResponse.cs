@@ -21,9 +21,9 @@ namespace Horrografia.Client.Shared.Objects
             get => _responseStatus;
             set
             {
-                if (value == Constants.Constants.OKSTATUS || 
-                    value == Constants.Constants.NOTFOUNDSTATUS || 
-                    value == Constants.Constants.INTERNALERRORSTATUS)
+                if (value == Constantes.OKSTATUS|| 
+                    value == Constantes.NOTFOUNDSTATUS || 
+                    value == Constantes.INTERNALERRORSTATUS)
                 {
                     _responseStatus = value;
                 }

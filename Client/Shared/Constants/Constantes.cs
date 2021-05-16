@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Horrografia.Client.Shared.Constants
 {
-    public static class Constants
+    public static class Constantes
     {
         public const int OKSTATUS = 200;
         public const int NOTFOUNDSTATUS = 404;
