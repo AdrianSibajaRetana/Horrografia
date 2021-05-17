@@ -10,7 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Horrografia.Client.Data.Services.Implementations;
 using Horrografia.Client.Data.Services.Interfaces;
-
+using MudBlazor.Services;
 namespace Horrografia.Client
 {
     public class Program
@@ -27,7 +27,7 @@ namespace Horrografia.Client
             builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("Horrografia.ServerAPI"));
 
             builder.Services.AddApiAuthorization();
-
+            builder.Services.AddMudServices();
             //Mis servicios
             builder.Services.AddTransient<IPersonService, PersonService>();
 

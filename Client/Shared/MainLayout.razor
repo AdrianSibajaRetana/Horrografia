@@ -1,16 +1,46 @@
-﻿@inherits LayoutComponentBase
+﻿@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 
-<div class="sidebar">
-    <NavMenu />
-</div>
+@inject NavigationManager Navigation
+@inject SignOutSessionStateManager SignOutManager
 
-<div class="main">
-    <div class="top-row px-4 auth">
-        <LoginDisplay />
-        <a href="https://docs.microsoft.com/aspnet/" target="_blank">About</a>
-    </div>
+@inherits LayoutComponentBase
+<MudThemeProvider />
 
-    <div class="content px-4">
+<MudLayout>
+    <MudAppBar Elevation="1">
+        <MudIconButton Icon="@Icons.Material.Filled.Home" Color="Color.Inherit" Link="/" />
+        <MudText Typo="Typo.h5" Class="ml-3">Application</MudText>
+        <MudAppBarSpacer/>        
+        <MudIconButton Icon="@Icons.Material.Filled.Dashboard" Color="Color.Inherit" Link="/dashboard" />
+        <MudIconButton Icon="@Icons.Material.Filled.Groups" Color="Color.Inherit" Link="/sobre" />
+        <MudDivider Vertical="true" FlexItem="true" DividerType="DividerType.Middle" Class="mx-4 my-3" />
+        <AuthorizeView>
+            <Authorized>
+                <MudIconButton Icon="@Icons.Material.Filled.Person" Color="Color.Inherit" Link="/perfil" />
+                @*<a href="authentication/profile">Hello, @context.User.Identity.Name!</a>*@
+                <MudIconButton Icon="@Icons.Material.Filled.Logout" Color="Color.Inherit" OnClick="BeginSignOut" />
+            </Authorized>
+            <NotAuthorized>
+                <MudIconButton Icon="@Icons.Material.Filled.Login" Color="Color.Inherit" Link="authentication/login" />
+                <MudIconButton Icon="@Icons.Material.Filled.PersonAdd" Color="Color.Inherit" Link="authentication/register" />
+            </NotAuthorized>
+        </AuthorizeView>
+
+    </MudAppBar>
+    <MudMainContent>
         @Body
-    </div>
-</div>
+    </MudMainContent>
+</MudLayout>
+
+<MudThemeProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+@code{
+    private async Task BeginSignOut(MouseEventArgs args)
+    {
+        await SignOutManager.SetSignOutState();
+        Navigation.NavigateTo("authentication/logout");
+    }
+}
