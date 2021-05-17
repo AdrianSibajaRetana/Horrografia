@@ -5,6 +5,7 @@
                 <NotAuthorized>
                     @if (!context.User.Identity.IsAuthenticated)
                     {
+                        //Si no está autorizaco mandelo aqui
                         <RedirectToLogin />
                     }
                     else
