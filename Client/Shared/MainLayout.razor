@@ -8,25 +8,38 @@
 <MudThemeProvider />
 
 <MudLayout>
-    <MudAppBar Elevation="1">
-        <MudIconButton Icon="@Icons.Material.Filled.Home" Color="Color.Inherit" Link="/" />
+    <MudAppBar Elevation="1" Class="blue grey lighten3">
+        <MudTooltip Text="Inicio">
+            <MudIconButton Icon="@Icons.Material.Filled.Home" Color="Color.Inherit" Link="/" />
+        </MudTooltip>
         <MudText Typo="Typo.h5" Class="ml-3">Application</MudText>
-        <MudAppBarSpacer/>        
-        <MudIconButton Icon="@Icons.Material.Filled.Dashboard" Color="Color.Inherit" Link="/dashboard" />
-        <MudIconButton Icon="@Icons.Material.Filled.Groups" Color="Color.Inherit" Link="/sobre" />
+        <MudAppBarSpacer />
+        <MudTooltip Text="Dashboard administrativo">
+            <MudIconButton Icon="@Icons.Material.Filled.Dashboard" Color="Color.Inherit" Link="/dashboard" />
+        </MudTooltip>
+        <MudTooltip Text="Sobre nosotros">
+            <MudIconButton Icon="@Icons.Material.Filled.Groups" Color="Color.Inherit" Link="/sobre" />
+        </MudTooltip>
         <MudDivider Vertical="true" FlexItem="true" DividerType="DividerType.Middle" Class="mx-4 my-3" />
         <AuthorizeView>
             <Authorized>
-                <MudIconButton Icon="@Icons.Material.Filled.Person" Color="Color.Inherit" Link="/perfil" />
+                <MudTooltip Text="Mi Perfil">
+                    <MudIconButton Icon="@Icons.Material.Filled.Person" Color="Color.Inherit" Link="/perfil" />
+                </MudTooltip>
                 @*<a href="authentication/profile">Hello, @context.User.Identity.Name!</a>*@
-                <MudIconButton Icon="@Icons.Material.Filled.Logout" Color="Color.Inherit" OnClick="BeginSignOut" />
+                <MudTooltip Text="Cerrar Sesión">                    
+                    <MudIconButton Icon="@Icons.Material.Filled.Logout" Color="Color.Inherit" OnClick="BeginSignOut" />
+                </MudTooltip>
             </Authorized>
             <NotAuthorized>
-                <MudIconButton Icon="@Icons.Material.Filled.Login" Color="Color.Inherit" Link="authentication/login" />
-                <MudIconButton Icon="@Icons.Material.Filled.PersonAdd" Color="Color.Inherit" Link="authentication/register" />
+                <MudTooltip Text="Iniciar Sesión">
+                    <MudIconButton Icon="@Icons.Material.Filled.Login" Color="Color.Inherit" Link="authentication/login" />
+                </MudTooltip>
+                <MudTooltip Text="Registrarse">                    
+                    <MudIconButton Icon="@Icons.Material.Filled.PersonAdd" Color="Color.Inherit" Link="authentication/register" />
+                </MudTooltip>
             </NotAuthorized>
         </AuthorizeView>
-
     </MudAppBar>
     <MudMainContent>
         @Body

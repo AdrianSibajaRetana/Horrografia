@@ -2,36 +2,72 @@
 
 
 <MudContainer Class="mt-16 px-8" MaxWidth="MaxWidth.False">
-    <MudGrid>
+    <MudGrid>        
         <MudItem xs="12" sm="6" md="4">
-            <MudCard Elevation="2" Class="pa-4" Style="height: 200px;">
-                <MudCardHeader>
-                    <CardHeaderContent>
-                        <MudText Typo="Typo.h6">Usuarios registrados</MudText>
-                    </CardHeaderContent>
-                    <CardHeaderActions>
-                        <MudIcon Icon="@Icons.Material.Filled.People" Color="Color.Default" />
-                    </CardHeaderActions>
-                </MudCardHeader>
+            <MudCard Elevation="2" Class="pa-4" Style="height: 150px; width: 350px; margin-left: auto; margin-right:auto">
                 <MudCardContent>
-                    <MudText>Total:</MudText>
-                    <MudText Class="ml-auto"><b>69</b></MudText>
+                    <MudGrid>
+                        <MudItem Style="margin-left: auto; margin-right: auto">
+                            <MudText Typo="Typo.h3">28</MudText>
+                            <MudText Typo="Typo.subtitle1">Usuarios registrados</MudText>
+                        </MudItem>
+                        <MudItem Style="margin-left: auto; margin-right: auto">
+                            <MudAvatar Size="Size.Large" Class="red lighten4 ma-2">
+                                <MudIcon Icon="@Icons.Material.Filled.AccessibilityNew" />
+                            </MudAvatar>
+                        </MudItem>
+                    </MudGrid>
                 </MudCardContent>
-                <MudCardActions>
-                    <MudButton Variant="Variant.Text" Color="Color.Primary">Learn More</MudButton>
-                </MudCardActions>
             </MudCard>
         </MudItem>
         <MudItem xs="12" sm="6" md="4">
-            <MudPaper Elevation="2" Class="pa-4" Style="height: 200px;"></MudPaper>
+            <MudCard Elevation="2" Class="pa-4" Style="height: 150px; width: 350px; margin-left: auto; margin-right:auto">
+                <MudCardContent>
+                    <MudGrid>
+                        <MudItem Style="margin-left: auto; margin-right: auto">
+                            <MudText Typo="Typo.h3">49</MudText>
+                            <MudText Typo="Typo.subtitle1">Partidas jugadas</MudText>
+                        </MudItem>
+                        <MudItem Style="margin-left: auto; margin-right: auto">
+                            <MudAvatar Size="Size.Large" Class="teal lighten4 ma-2">
+                                <MudIcon Icon="@Icons.Material.Filled.AssignmentTurnedIn" />
+                            </MudAvatar>
+                        </MudItem>
+                    </MudGrid>
+                    </MudCardContent>
+            </MudCard>
         </MudItem>
         <MudItem xs="12" sm="12" md="4">
-            <MudPaper Elevation="2" Class="pa-4" Style="height: 200px;"></MudPaper>
+            <MudCard Elevation="2" Class="pa-4" Style="height: 150px; width: 350px; margin-left: auto; margin-right:auto">
+                <MudCardContent>
+                    <MudGrid>
+                        <MudItem Style="margin-left: auto; margin-right: auto">
+                            <MudText Typo="Typo.h3">240</MudText>
+                            <MudText Typo="Typo.subtitle1">Errores totales</MudText>
+                        </MudItem>
+                        <MudItem Style="margin-left: auto; margin-right: auto">
+                            <MudAvatar Size="Size.Large"  Class="indigo lighten4 ma-2">
+                                <MudIcon Icon="@Icons.Material.Filled.ThumbDown" />
+                            </MudAvatar>
+                        </MudItem>
+                    </MudGrid>
+                </MudCardContent>
+            </MudCard>
         </MudItem>
         <MudItem xs="12" sm="6">
             <MudGrid>
-                <MudItem xs="12">
-                    <MudPaper Elevation="2" Class="pa-4" Style="height: 200px;"></MudPaper>
+                <MudItem xs="12">   
+                    <MudCard  Elevation="2" Class="pa-4" Style="height: 200px;">
+                        <MudCardContent>
+                            <MudText Align="Align.Center" Typo="Typo.h4">Administrar niveles</MudText>
+                            <MudText Align="Align.Center" Typo="Typo.subtitle1">Editar, añadir o eliminar niveles</MudText>
+                        </MudCardContent>
+                        <MudCardActions>
+                            <MudItem Style="margin-left: auto; margin-right: auto">
+                                <MudButton Variant="Variant.Filled" EndIcon="@Icons.Material.Filled.Edit" Class="teal darken4">Administrar</MudButton>
+                            </MudItem>
+                        </MudCardActions>
+                    </MudCard>
                 </MudItem>
                 <MudItem xs="12">
                     <MudPaper Elevation="2" Class="pa-4" Style="height: 200px;"></MudPaper>
