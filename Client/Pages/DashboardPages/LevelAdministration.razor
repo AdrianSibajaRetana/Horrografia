@@ -2,6 +2,8 @@
 @using Horrografia.Client.Shared.Components.General
 @using Horrografia.Client.Shared.Constants
 @using Microsoft.AspNetCore.Authorization
+@using Horrografia.Client.Shared.Components.Dashboard.Level_Creation
+
 @attribute [Authorize]
 
 <PageLoading Titulo="Administración de niveles" IsLoading="IsLoading">
@@ -10,8 +12,26 @@
         @if (!Niveles.Any())
         {
             @*No se encontraron niveles*@
-            <MudText Align="Align.Center" Typo="Typo.h4">No se encontraron niveles</MudText>
+            <MudContainer Style="position: absolute; top: 30vh; width: 100%;">
+                <MudText Typo="Typo.h3" Align="Align.Center" GutterBottom="true">
+                    No se encontraron niveles.
+                </MudText>
+                <MudText Typo="Typo.body1" Align="Align.Center" GutterBottom="true">
+                    No existen niveles registrados en la base de datos.
+                </MudText>
+                <MudGrid Justify="Justify.Center">
+                    <MudItem>
+                        <MudButton Variant="Variant.Filled" Color="Color.Success">
+                            Crear nivel
+                        </MudButton>
+                    </MudItem>
+                </MudGrid>
+            </MudContainer>
 
+            /*
+            <LevelCreationDialogue ShowDialogue="true"
+                                   ExistenNiveles="false" />
+            */
         }
         else
         {
