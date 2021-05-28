@@ -30,6 +30,7 @@ namespace Horrografia.Client
             builder.Services.AddMudServices();
             //Mis servicios
             builder.Services.AddTransient<IPersonService, PersonService>();
+            builder.Services.AddTransient<INivelService, NivelService>();
 
             await builder.Build().RunAsync();
         }

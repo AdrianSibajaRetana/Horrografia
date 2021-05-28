@@ -1,12 +1,26 @@
 ﻿@page "/dashboard/niveles"
 @using Horrografia.Client.Shared.Components.General
+@using Horrografia.Client.Shared.Constants
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize]
 
-<PageLoading Titulo="Administración de niveles" IsLoading="customers is null">
-    
-    
-    
+<PageLoading Titulo="Administración de niveles" IsLoading="IsLoading">
+    @if (InitialLoadStatus == Constantes.OKSTATUS)
+    {
+        @if (!Niveles.Any())
+        {
+            @*No se encontraron niveles*@
+            <MudText Align="Align.Center" Typo="Typo.h4">No se encontraron niveles</MudText>
+
+        }
+        else
+        {
+            @*Se encontraron niveles*@
+
+        }
+    }
+    else
+    {
+        <ErrorMessage />
+    }
 </PageLoading>>
-
-@code {
-    private List<string> customers;
-}

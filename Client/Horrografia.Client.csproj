@@ -17,4 +17,8 @@
     <ProjectReference Include="..\Shared\Horrografia.Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Shared\Components\Dashboard\Level Creation\" />
+  </ItemGroup>
+
 </Project>

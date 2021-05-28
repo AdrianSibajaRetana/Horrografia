@@ -8,11 +8,11 @@ using Horrografia.Client.Shared.Objects;
 using Horrografia.Shared.Models;
 using Microsoft.Extensions.Logging;
 using Horrografia.Client.Shared.Constants;
-
+using Horrografia.Client.Data.Services.Interfaces;
 
 namespace Horrografia.Client.Data.Services.Implementations
 {
-    public class NivelService
+    public class NivelService : INivelService
     {
         private readonly HttpClient _http;
         private readonly ILogger<NivelService> _logger;
@@ -36,11 +36,13 @@ namespace Horrografia.Client.Data.Services.Implementations
                     return _controllerResponse;
                 }
                 _controllerResponse.Status = Constantes.INTERNALERRORSTATUS;
+                _controllerResponse.Response = new List<NivelModel>();
                 return _controllerResponse;
             }
             catch (Exception e)
             {
                 _controllerResponse.Status = Constantes.INTERNALERRORSTATUS;
+                _controllerResponse.Response = new List<NivelModel>();
                 _logger.LogError(e, "An error occurred while fetching from db");
                 return _controllerResponse;
             }
