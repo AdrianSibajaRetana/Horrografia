@@ -1,0 +1,27 @@
+﻿
+@if (IsLoading)
+{
+    <MudContainer Style="position: absolute; top: 30vh; width: 100%;">
+        <MudText Typo="Typo.h3" Align="Align.Center" GutterBottom="true">@Titulo</MudText>
+        <MudGrid Justify="Justify.Center">
+            <MudItem>
+                <MudProgressCircular Color="Color.Success" Indeterminate="true" />
+            </MudItem>
+        </MudGrid>
+    </MudContainer>
+}
+else
+{ 
+    @ChildContent
+}
+
+@code {
+    [Parameter]
+    public string Titulo { get; set; }
+
+    [Parameter]
+    public bool IsLoading { get; set; }
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+}

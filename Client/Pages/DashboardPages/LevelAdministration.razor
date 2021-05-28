@@ -1,9 +1,12 @@
 ﻿@page "/dashboard/niveles"
+@using Horrografia.Client.Shared.Components.General
 
-<MudContainer Class="mt-16" MaxWidth="MaxWidth.Medium">
-    <MudText Typo="Typo.h3" Align="Align.Center" GutterBottom="true">Administración de niveles</MudText>
-</MudContainer>
+<PageLoading Titulo="Administración de niveles" IsLoading="customers is null">
+    
+    
+    
+</PageLoading>>
 
 @code {
-
+    private List<string> customers;
 }
