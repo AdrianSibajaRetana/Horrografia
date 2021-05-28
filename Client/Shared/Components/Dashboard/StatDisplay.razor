@@ -1,0 +1,30 @@
+﻿<MudCard Elevation="2" Class="pa-4" Style="height: 150px; width: 350px; margin-left: auto; margin-right:auto">
+    <MudCardContent>
+        <MudGrid>
+            <MudItem Style="margin-left: auto; margin-right: auto">
+                <MudText Typo="Typo.h3">@Numero</MudText>
+                <MudText Typo="Typo.subtitle1">@Titulo</MudText>
+            </MudItem>
+            <MudItem Style="margin-left: auto; margin-right: auto">
+                <MudAvatar Size="Size.Large" Class=@Clase>
+                    <MudIcon Icon=@Icono />
+                </MudAvatar>
+            </MudItem>
+        </MudGrid>
+    </MudCardContent>
+</MudCard>
+
+
+@code {
+    [Parameter]
+    public string Numero { get; set; }
+
+    [Parameter]
+    public string Titulo { get; set; }
+
+    [Parameter]
+    public string Clase { get; set; }
+
+    [Parameter]
+    public string Icono { get; set; }
+}

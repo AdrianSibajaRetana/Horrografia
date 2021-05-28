@@ -1,73 +1,37 @@
 ﻿@page "/dashboard"
-
+@using Horrografia.Client.Shared.Components.Dashboard
 
 <MudContainer Class="mt-16 px-8" MaxWidth="MaxWidth.False">
     <MudGrid>        
         <MudItem xs="12" sm="6" md="4">
-            <MudCard Elevation="2" Class="pa-4" Style="height: 150px; width: 350px; margin-left: auto; margin-right:auto">
-                <MudCardContent>
-                    <MudGrid>
-                        <MudItem Style="margin-left: auto; margin-right: auto">
-                            <MudText Typo="Typo.h3">28</MudText>
-                            <MudText Typo="Typo.subtitle1">Usuarios registrados</MudText>
-                        </MudItem>
-                        <MudItem Style="margin-left: auto; margin-right: auto">
-                            <MudAvatar Size="Size.Large" Class="red darken-1 ma-2">
-                                <MudIcon Icon="@Icons.Material.Filled.AccessibilityNew" />
-                            </MudAvatar>
-                        </MudItem>
-                    </MudGrid>
-                </MudCardContent>
-            </MudCard>
+            <StatDisplay 
+                         Numero="28" 
+                         Titulo="Usuarios registrados"
+                         Clase="red darken-1 ma-2"
+                         Icono="@Icons.Material.Filled.AccessibilityNew"/>
         </MudItem>
         <MudItem xs="12" sm="6" md="4">
-            <MudCard Elevation="2" Class="pa-4" Style="height: 150px; width: 350px; margin-left: auto; margin-right:auto">
-                <MudCardContent>
-                    <MudGrid>
-                        <MudItem Style="margin-left: auto; margin-right: auto">
-                            <MudText Typo="Typo.h3">49</MudText>
-                            <MudText Typo="Typo.subtitle1">Partidas jugadas</MudText>
-                        </MudItem>
-                        <MudItem Style="margin-left: auto; margin-right: auto">
-                            <MudAvatar Size="Size.Large" Class="teal darken-1 ma-2">
-                                <MudIcon Icon="@Icons.Material.Filled.AssignmentTurnedIn" />
-                            </MudAvatar>
-                        </MudItem>
-                    </MudGrid>
-                    </MudCardContent>
-            </MudCard>
+            <StatDisplay Numero="49"
+                         Titulo="Partidas jugadas"
+                         Clase="teal darken-1 ma-2"
+                         Icono="@Icons.Material.Filled.AssignmentTurnedIn" />
         </MudItem>
         <MudItem xs="12" sm="12" md="4">
-            <MudCard Elevation="2" Class="pa-4" Style="height: 150px; width: 350px; margin-left: auto; margin-right:auto">
-                <MudCardContent>
-                    <MudGrid>
-                        <MudItem Style="margin-left: auto; margin-right: auto">
-                            <MudText Typo="Typo.h3">240</MudText>
-                            <MudText Typo="Typo.subtitle1">Errores totales</MudText>
-                        </MudItem>
-                        <MudItem Style="margin-left: auto; margin-right: auto">
-                            <MudAvatar Size="Size.Large"  Class="indigo darken-1 ma-2">
-                                <MudIcon Icon="@Icons.Material.Filled.ThumbDown" />
-                            </MudAvatar>
-                        </MudItem>
-                    </MudGrid>
-                </MudCardContent>
-            </MudCard>
+            <StatDisplay Numero="240"
+                         Titulo="Errores totales"
+                         Clase="indigo darken-1 ma-2"
+                         Icono="@Icons.Material.Filled.ThumbDown" />
         </MudItem>
         <MudItem xs="12" sm="6">
             <MudGrid>
                 <MudItem xs="12">   
-                    <MudCard  Elevation="2" Class="pa-4" Style="height: 200px;">
-                        <MudCardContent>
-                            <MudText Align="Align.Center" Typo="Typo.h4">Administrar niveles</MudText>
-                            <MudText Align="Align.Center" Typo="Typo.subtitle1">Editar, añadir o eliminar niveles</MudText>
-                        </MudCardContent>
-                        <MudCardActions>
-                            <MudItem Style="margin-left: auto; margin-right: auto">
-                                <MudButton Variant="Variant.Filled" EndIcon="@Icons.Material.Filled.Edit" Class="teal">Administrar</MudButton>
-                            </MudItem>
-                        </MudCardActions>
-                    </MudCard>
+                    <DataAdministration Titulo="Administrar niveles"
+                                        Subtitulo="Editar, añadir o eliminar niveles"
+                                        IconoBoton="@Icons.Material.Filled.Edit"
+                                        ClaseBoton="teal"
+                                        TextoBoton="Administrar"
+                                        LinkBoton="/dashboard/niveles"
+                                        />
                 </MudItem>
                 <MudItem xs="12">
                     <MudPaper Elevation="2" Class="pa-4" Style="height: 200px;"></MudPaper>

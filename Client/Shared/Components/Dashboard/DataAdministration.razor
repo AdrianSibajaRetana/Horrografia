@@ -1,0 +1,31 @@
+﻿<MudCard Elevation="2" Class="pa-4" Style="height: 200px;">
+    <MudCardContent>
+        <MudText Align="Align.Center" Typo="Typo.h4">@Titulo</MudText>
+        <MudText Align="Align.Center" Typo="Typo.subtitle1">@Subtitulo</MudText>
+    </MudCardContent>
+    <MudCardActions>
+        <MudItem Style="margin-left: auto; margin-right: auto">
+            <MudButton Link=@LinkBoton Variant="Variant.Filled" EndIcon=@IconoBoton Class=@ClaseBoton>@TextoBoton</MudButton>
+        </MudItem>
+    </MudCardActions>
+</MudCard>
+
+@code {
+    [Parameter]
+    public string Titulo { get; set; }
+
+    [Parameter]
+    public string Subtitulo { get; set; }
+
+    [Parameter]
+    public string IconoBoton { get; set; }
+
+    [Parameter]
+    public string ClaseBoton { get; set; }
+
+    [Parameter]
+    public string TextoBoton { get; set; }
+
+    [Parameter]
+    public string LinkBoton { get; set; }
+}
