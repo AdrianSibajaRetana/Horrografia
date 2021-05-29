@@ -1,6 +1,6 @@
 ﻿@inject IDialogService DialogService
 
-<MudDialog @bind-IsVisible="@ShowDialogue">
+<MudDialog @bind-IsVisible="ShowDialogue">
     <TitleContent>
         <MudText Typo="Typo.h6">
             <MudIcon Icon="@Icons.Material.Filled.Edit" Class="mr-3" /> Crear nivel
@@ -16,18 +16,7 @@
         <MudText Typo="Typo.body1">bing elit. Quos blanditiis tenetur un</MudText>
     </DialogContent>
     <DialogActions>
-        <MudButton Variant="Variant.Filled" Color="Color.Error" OnClick="Submit" Class="px-10">Cerrar</MudButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Error" OnClick="CloseDialog" Class="px-10">Cerrar</MudButton>
+        <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="CreateLevel" Class="px-10">Crear Nivel</MudButton>
     </DialogActions>
 </MudDialog>
-
-
-
-@code {
-    [Parameter]
-    public bool ShowDialogue { get; set; }
-
-    [Parameter]
-    public bool ExistenNiveles { get; set; }
-
-    void Submit() => ShowDialogue = false;
-}

@@ -23,9 +23,12 @@ namespace Horrografia.Client.Pages.DashboardPages
         public bool IsLoading { get; set; }
         public int InitialLoadStatus { get; set; }
 
+        public bool ShowCreateLevelDialog { get; set; }
+
         public LevelAdministration()
         {
-            IsLoading = true;     
+            IsLoading = true;
+            ShowCreateLevelDialog = false;
         }
 
         /*Carga los niveles existentes y notifica el estado actual*/
@@ -45,5 +48,21 @@ namespace Horrografia.Client.Pages.DashboardPages
             //Muestra la notifiación
             _snackbar.Add(mensaje, s);
         }
+
+        public void ShowCrearNivel()
+        {
+            ShowCreateLevelDialog = true;            
+        }
+
+        protected void CloseDialogWindow()
+        {
+            ShowCreateLevelDialog = false;
+        }
+
+        protected void CreateLevel()
+        {
+            _snackbar.Add("Se creó nivel", Severity.Success);
+        }
+
     }
 }
