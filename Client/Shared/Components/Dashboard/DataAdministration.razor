@@ -4,9 +4,11 @@
         <MudText Align="Align.Center" Typo="Typo.subtitle1">@Subtitulo</MudText>
     </MudCardContent>
     <MudCardActions>
-        <MudItem Style="margin-left: auto; margin-right: auto">
-            <MudButton Link=@LinkBoton Variant="Variant.Filled" EndIcon=@IconoBoton Class=@ClaseBoton>@TextoBoton</MudButton>
-        </MudItem>
+        <MudGrid Justify="Justify.Center">
+            <MudItem>
+                <MudButton Link=@LinkBoton Variant="Variant.Filled" EndIcon=@IconoBoton Class=@ClaseBoton>@TextoBoton</MudButton>
+            </MudItem>
+        </MudGrid>
     </MudCardActions>
 </MudCard>
 
