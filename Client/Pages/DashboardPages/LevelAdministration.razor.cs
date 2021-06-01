@@ -33,22 +33,34 @@ namespace Horrografia.Client.Pages.DashboardPages
         // Cambiar de descripción a nombre. 
         Func<NivelModel, string> converter = p => p?.Nombre;
 
+
         public LevelAdministration()
         {
-            IsLoading = true;
             ShowCreateLevelDialog = false;
         }
 
         /*Carga los niveles existentes y notifica el estado actual*/
         protected override async Task OnInitializedAsync()
         {
+            await CargarDatos(true);
+        }
+
+        public async Task CargarDatos(bool primerLoad)
+        {
+            IsLoading = true;
             var response = await _nivelService.GetAsync();
             InitialLoadStatus = response.Status;
             Niveles = response.Response;
             IsLoading = false;
-            ShowNotification("Se leyeron los niveles de la base de datos exitosamente", Severity.Success, true);
+            if (response.isResponseSuccesfull())
+            {
+                ShowNotification("Se leyeron los niveles de la base de datos exitosamente", Severity.Success, primerLoad);
+            }
+            else
+            {
+                ShowNotification("Hubo un error al cargar los niveles de la base de datos.", Severity.Error, primerLoad);
+            }
         }
-
 
         public void ShowNotification(string mensaje, Severity s, bool firstMessage)
         {
@@ -83,9 +95,7 @@ namespace Horrografia.Client.Pages.DashboardPages
             {
                 ShowNotification("Hubo un error al crear el nivel.", Severity.Error, false);
             }
-            // Añadir a que la pantalla cambie sola
-            StateHasChanged();
+            await CargarDatos(false);
         }
-
     }
 }
