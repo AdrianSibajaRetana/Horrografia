@@ -33,5 +33,16 @@ namespace Horrografia.Client.Shared.Objects
                 }
             }
         }
+
+        public bool isResponseSuccesfull()
+        {
+            bool apiControllerResponseStatus = false;
+            if (_responseStatus == Constantes.OKSTATUS)
+            {
+                apiControllerResponseStatus = true;
+            }
+            return apiControllerResponseStatus;
+        }
+
     }
 }

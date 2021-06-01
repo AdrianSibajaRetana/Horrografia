@@ -37,6 +37,7 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation
         public async Task CreateLevel(EditContext context)
         {
             NivelModel _nivelModel = model.CreateNivelModel();
+            model = new(); 
             await OnLevelCreation.InvokeAsync(_nivelModel);
         }
 

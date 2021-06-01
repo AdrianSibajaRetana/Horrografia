@@ -3,7 +3,8 @@
 @using Horrografia.Client.Shared.Constants
 @using Microsoft.AspNetCore.Authorization
 @using Horrografia.Client.Shared.Components.Dashboard.Level_Creation
-
+@using Horrografia.Shared.Models
+ 
 @attribute [Authorize]
 @inject IDialogService DialogService
 
@@ -23,23 +24,60 @@
                 </MudText>
                 <MudGrid Justify="Justify.Center">
                     <MudItem>
-                        <MudButton OnClick="ShowCrearNivel"  Variant="Variant.Filled" Color="Color.Success">
+                        <MudButton OnClick="ShowCrearNivel" Variant="Variant.Filled" Color="Color.Success">
                             Crear nivel
                         </MudButton>
                     </MudItem>
                 </MudGrid>
             </MudContainer>
-            
+
             <LevelCreationDialog ShowDialogue="ShowCreateLevelDialog"
-                                   ExistenNiveles="false"
-                                   OnDialogClosed="CloseDialogWindow"
-                                   OnLevelCreation="CreateLevel"/>
-            
+                                 ExistenNiveles="false"
+                                 OnDialogClosed="CloseDialogWindow"
+                                 OnLevelCreation="CreateLevel" />
+
         }
         else
         {
             @*Se encontraron niveles*@
-
+            <MudContainer Style="position: absolute; top: 30vh; width: 100%;">
+                <MudText Typo="Typo.h3" Align="Align.Center" GutterBottom="true">
+                    Se encontraron niveles.
+                </MudText>
+                <MudGrid Justify="Justify.Center">
+                    @*Dropdown de niveles*@
+                    <MudItem>
+                        <MudSelect T="NivelModel" @bind-Value="@nivelActual" Label="Escoja el nivel" Variant="Variant.Outlined" ToStringFunc="@converter" OffsetY="true">
+                            @foreach (var Nivel in Niveles)
+                            {
+                                <MudSelectItem Value="@Nivel" />
+                            }
+                        </MudSelect>
+                    </MudItem>
+                    @*Señalador de que el dropdown sirve*@
+                    <MudItem xs="12" sm="6" md="4">
+                        @if (nivelActual == null)
+                        {
+                            <MudText Class="mt-5">Nothing selected yet.</MudText>
+                        }
+                        else
+                        {
+                            <MudText Class="mt-5">@nivelActual.Descripcion</MudText>
+                        }
+                    </MudItem>  
+                    @*Boton de creación*@
+                    <MudItem>
+                        <MudButton OnClick="ShowCrearNivel" Variant="Variant.Filled" Color="Color.Success">
+                            Crear nivel
+                        </MudButton>
+                    </MudItem>                    
+                </MudGrid>
+            </MudContainer>
+            @*Dialogo de creación*@
+            <LevelCreationDialog ShowDialogue="ShowCreateLevelDialog"
+                                 ExistenNiveles="true"
+                                 OnDialogClosed="CloseDialogWindow"
+                                 OnLevelCreation="CreateLevel" />
         }
     }
     else

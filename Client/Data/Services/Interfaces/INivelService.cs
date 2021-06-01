@@ -7,6 +7,6 @@ namespace Horrografia.Client.Data.Services.Interfaces
     public interface INivelService
     {
         Task<ControllerResponse<NivelModel>> GetAsync();
-        Task<int> PostAsync(NivelModel n);
+        Task<ControllerResponse<NivelModel>> PostAsync(NivelModel n);
     }
 }
