@@ -59,9 +59,10 @@ namespace Horrografia.Client.Pages.DashboardPages
             ShowCreateLevelDialog = false;
         }
 
-        protected void CreateLevel()
+        protected void CreateLevel(NivelModel n)
         {
-            _snackbar.Add("Se creó nivel", Severity.Success);
+            ShowCreateLevelDialog = false;
+            _snackbar.Add($"Se creó nivel {n.Descripcion} {n.ErroresPermitidos} {n.NumeroDeItems}", Severity.Success);
         }
 
     }

@@ -1,4 +1,5 @@
 ﻿@inject IDialogService DialogService
+@using System.ComponentModel.DataAnnotations
 
 <MudDialog @bind-IsVisible="ShowDialogue">
     <TitleContent>
@@ -6,17 +7,38 @@
             <MudIcon Icon="@Icons.Material.Filled.Edit" Class="mr-3" /> Crear nivel
         </MudText>
         @if (!ExistenNiveles)
-        { 
+        {
             <MudText Typo="Typo.subtitle1">
                 No se han encontrado niveles en la base de datos. Cree el primer nivel
-            </MudText>        
+            </MudText>
         }
     </TitleContent>
     <DialogContent>
-        <MudText Typo="Typo.body1">bing elit. Quos blanditiis tenetur un</MudText>
+        <EditForm Model="@model" OnValidSubmit="CreateLevel">
+            <DataAnnotationsValidator />
+            <MudCard Elevation=0>
+                <MudCardContent>
+                    <MudTextField Label="Descripción" HelperText="La descripción del nivel que verá el usuario."
+                                  @bind-Value="model.Description" For="@(() => model.Description)" />
+                    <MudTextField Label="Errores permitidos" HelperText="La cantidad de errores permitidos por partida."
+                                  @bind-Value="model.PossibleErrors" For="@(() => model.PossibleErrors)" />
+                    <MudTextField Label="Numero de items" HelperText="El número de items máximo que tendrá este nivel."
+                                  @bind-Value="model.ItemNumber" For="@(() => model.ItemNumber)" />
+                </MudCardContent>
+                <MudCardActions>
+                    <MudGrid Justify="Justify.Center">
+                        <MudItem>
+                            <MudButton Variant="Variant.Filled" Color="Color.Error" OnClick="CloseDialog" Class="px-10">Cancelar</MudButton>
+                        </MudItem>
+                        <MudItem>
+                            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Success" Class="px-10">Crear Nivel</MudButton>
+                        </MudItem>
+                    </MudGrid>
+                </MudCardActions>
+            </MudCard>
+        </EditForm>
     </DialogContent>
-    <DialogActions>
-        <MudButton Variant="Variant.Filled" Color="Color.Error" OnClick="CloseDialog" Class="px-10">Cerrar</MudButton>
-        <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="CreateLevel" Class="px-10">Crear Nivel</MudButton>
-    </DialogActions>
+    @*<DialogActions>
+        </DialogActions>
+    *@
 </MudDialog>
