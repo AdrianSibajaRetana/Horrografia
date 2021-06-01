@@ -31,7 +31,7 @@ namespace Horrografia.Client.Pages.DashboardPages
 
         //Función que utiliza el dropdown para desplegar el nivel.
         // Cambiar de descripción a nombre. 
-        Func<NivelModel, string> converter = p => p?.Descripcion;
+        Func<NivelModel, string> converter = p => p?.Nombre;
 
         public LevelAdministration()
         {

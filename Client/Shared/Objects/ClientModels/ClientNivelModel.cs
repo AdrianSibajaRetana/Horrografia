@@ -9,6 +9,10 @@ namespace Horrografia.Client.Shared.Objects.ClientModels
 {
     public class ClientNivelModel
     {
+        [Required(ErrorMessage = "El nombre es obligatorio.")]
+        [StringLength(30, ErrorMessage = "El nombre no puede ser mayor a 30 caracteres.")]
+        public string Name { get; set; }
+
         [Required(ErrorMessage = "La descripción es obligatoria.")]
         [StringLength(250, ErrorMessage = "La descripción no puede ser mayor a 250 caracteres.")]
         public string Description { get; set; }
@@ -24,6 +28,7 @@ namespace Horrografia.Client.Shared.Objects.ClientModels
         public NivelModel CreateNivelModel()
         {
             NivelModel _model = new();
+            _model.Nombre = Name;
             _model.Descripcion = Description;
             _model.ErroresPermitidos = PossibleErrors;
             _model.NumeroDeItems = ItemNumber;

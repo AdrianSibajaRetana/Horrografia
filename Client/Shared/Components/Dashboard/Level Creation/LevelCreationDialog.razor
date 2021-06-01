@@ -18,6 +18,8 @@
             <DataAnnotationsValidator />
             <MudCard Elevation=0>
                 <MudCardContent>
+                    <MudTextField Label="Nombre" HelperText="El nombre del nivel a crear."
+                                  @bind-Value="model.Name" For="@(() => model.Name)" />
                     <MudTextField Label="Descripción" HelperText="La descripción del nivel que verá el usuario."
                                   @bind-Value="model.Description" For="@(() => model.Description)" />
                     <MudTextField Label="Errores permitidos" HelperText="La cantidad de errores permitidos por partida."

@@ -41,8 +41,8 @@ namespace Horrografia.Server.Data.Repos.Implementations
         //POST
         public async Task InsertData(NivelModel n)
         {
-            string sql = "insert into nivel (Descripcion, ErroresPermitidos, NumeroDeItems) values (@Descripcion, @ErroresPermitidos, @NumeroDeItems);";
-            await _dbContext.SaveData(sql, new { Descripcion = n.Descripcion, ErroresPermitidos = n.ErroresPermitidos, NumeroDeItems = n.NumeroDeItems }, ConectionString);
+            string sql = "insert into nivel (Nombre, Descripcion, ErroresPermitidos, NumeroDeItems) values (@Nombre, @Descripcion, @ErroresPermitidos, @NumeroDeItems);";
+            await _dbContext.SaveData(sql, new { Nombre = n.Nombre, Descripcion = n.Descripcion, ErroresPermitidos = n.ErroresPermitidos, NumeroDeItems = n.NumeroDeItems }, ConectionString);
         }
 
         //DELETE
@@ -54,8 +54,8 @@ namespace Horrografia.Server.Data.Repos.Implementations
 
         public async Task UpdateData(NivelModel n)
         {
-            string sql = "update nivel set Descripcion = @Descripcion, ErroresPermitidos = @ErroresPermitidos, NumeroDeItems = @NumeroDeItems where id = @id";
-            await _dbContext.SaveData(sql, new { Descripcion = n.Descripcion, ErroresPermitidos = n.ErroresPermitidos, NumeroDeItems = n.NumeroDeItems, id = n.Id }, ConectionString);
+            string sql = "update nivel set Nombre = @Nombre, Descripcion = @Descripcion, ErroresPermitidos = @ErroresPermitidos, NumeroDeItems = @NumeroDeItems where id = @id";
+            await _dbContext.SaveData(sql, new { Nombre = n.Nombre, Descripcion = n.Descripcion, ErroresPermitidos = n.ErroresPermitidos, NumeroDeItems = n.NumeroDeItems, id = n.Id }, ConectionString);
         }
     }
 }
