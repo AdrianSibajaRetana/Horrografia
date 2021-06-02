@@ -39,47 +39,99 @@
         }
         else
         {
-            @*Se encontraron niveles*@
-            <MudContainer Style="position: absolute; top: 30vh; width: 100%;">
-                <MudText Typo="Typo.h3" Align="Align.Center" GutterBottom="true">
-                    Se encontraron niveles.
-                </MudText>
-                <MudGrid Justify="Justify.Center">
-                    @*Dropdown de niveles*@
-                    <MudItem>
-                        <MudSelect T="NivelModel" @bind-Value="@nivelActual" Label="Escoja el nivel" Variant="Variant.Outlined" ToStringFunc="@converter" OffsetY="true">
-                            @foreach (var Nivel in Niveles)
-                            {
-                                <MudSelectItem Value="@Nivel" />
-                            }
-                        </MudSelect>
+            <MudContainer Class="mt-4 px-8" MaxWidth="MaxWidth.False">
+                <MudGrid>
+                    <MudItem xs="12" sm="12" md="12">
+                        <MudCard Elevation="2" Class="pa-4" Style="height: 200px;" Outlined="true">
+                            <MudCardHeader>
+                                <CardHeaderContent>
+                                    <MudText Typo="Typo.h5">Administración de niveles</MudText>
+                                </CardHeaderContent>
+                                <CardHeaderActions>
+                                    <MudItem>
+                                        <MudGrid Spacing=2>
+                                            <MudItem>
+                                                <MudButton OnClick="ShowCrearNivel" Variant="Variant.Filled" Color="Color.Success">
+                                                    Crear nivel
+                                                </MudButton>
+                                            </MudItem>
+                                            @if (nivelActual != null)
+                                            {
+                                                <MudItem>
+                                                    <MudButton OnClick="ShowCrearNivel" Variant="Variant.Filled" Color="Color.Info">
+                                                        Editar nivel
+                                                    </MudButton>
+                                                </MudItem>
+                                                <MudItem>
+                                                    <MudButton OnClick="ShowCrearNivel" Variant="Variant.Filled" Color="Color.Error">
+                                                        Borrar nivel
+                                                    </MudButton>
+                                                </MudItem>
+                                            }
+                                        </MudGrid>
+                                    </MudItem>
+                                </CardHeaderActions>
+                            </MudCardHeader>
+                            <MudCardContent>
+                                <MudSelect T="NivelModel" @bind-Value="@nivelActual" Label="Escoja el nivel" Variant="Variant.Outlined" ToStringFunc="@converter" OffsetY="true">
+                                    @foreach (var Nivel in Niveles)
+                                    {
+                                        <MudSelectItem Value="@Nivel" />
+                                    }
+                                </MudSelect>
+                            </MudCardContent>
+                        </MudCard>
                     </MudItem>
-                    @*Señalador de que el dropdown sirve*@
-                    <MudItem xs="12" sm="6" md="4">
-                        @if (nivelActual == null)
-                        {
-                            <MudText Class="mt-5">Nothing selected yet.</MudText>
-                        }
-                        else
-                        {
-                            <MudText Class="mt-5">@nivelActual.Nombre</MudText>
-                        }
-                    </MudItem>  
-                    @*Boton de creación*@
-                    <MudItem>
-                        <MudButton OnClick="ShowCrearNivel" Variant="Variant.Filled" Color="Color.Success">
-                            Crear nivel
-                        </MudButton>
-                    </MudItem>                    
+                    <MudItem xs="12" sm="12" md="12">
+                        <MudTabs Elevation="2" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-6">
+                            <MudTabPanel Text="Datos">
+                                <MudItem>
+                                    @if (nivelActual == null)
+                                    {
+                                        <MudText Class="mt-5">No se ha seleccionado nivel.</MudText>
+                                    }
+                                    else
+                                    {
+                                        <MudSimpleTable Hover="true" Striped="true">
+                                            <thead>
+                                                <tr>
+                                                    <th>Propiedad</th>
+                                                    <th>Valor</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>Descripción del nivel</td>
+                                                    <td>@nivelActual.Descripcion</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Máximo de items</td>
+                                                    <td>@nivelActual.NumeroDeItems</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Errores máximos</td>
+                                                    <td>@nivelActual.ErroresPermitidos</td>
+                                                </tr>
+                                            </tbody>
+                                        </MudSimpleTable>
+                                    }
+                                </MudItem>
+                            </MudTabPanel>
+                            <MudTabPanel Text="Items">
+                                <MudText>Content Two</MudText>
+                            </MudTabPanel>
+                        </MudTabs>
+                    </MudItem>
                 </MudGrid>
             </MudContainer>
-            @*Dialogo de creación*@
-            <LevelCreationDialog ShowDialogue="ShowCreateLevelDialog"
-                                 ExistenNiveles="true"
-                                 OnDialogClosed="CloseDialogWindow"
-                                 OnLevelCreation="CreateLevel" />
+
+        @*Dialogo de creación*@
+        <LevelCreationDialog ShowDialogue="ShowCreateLevelDialog"
+                                ExistenNiveles="true"
+                                OnDialogClosed="CloseDialogWindow"
+                                OnLevelCreation="CreateLevel" />
         }
-    }
+     }
     else
     {
         <ErrorMessage />

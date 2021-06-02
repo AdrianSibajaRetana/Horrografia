@@ -19,13 +19,13 @@
             <MudCard Elevation=0>
                 <MudCardContent>
                     <MudTextField Label="Nombre" HelperText="El nombre del nivel a crear."
-                                  @bind-Value="model.Name" For="@(() => model.Name)" />
-                    <MudTextField Label="Descripción" HelperText="La descripción del nivel que verá el usuario."
-                                  @bind-Value="model.Description" For="@(() => model.Description)" />
-                    <MudTextField Label="Errores permitidos" HelperText="La cantidad de errores permitidos por partida."
-                                  @bind-Value="model.PossibleErrors" For="@(() => model.PossibleErrors)" />
-                    <MudTextField Label="Numero de items" HelperText="El número de items máximo que tendrá este nivel."
-                                  @bind-Value="model.ItemNumber" For="@(() => model.ItemNumber)" />
+                                  @bind-Value="model.Name" For="@(() => model.Name)" Variant="Variant.Outlined" />
+                    <MudTextField Class="mt-4" Label="Descripción" HelperText="La descripción del nivel que verá el usuario."
+                                  @bind-Value="model.Description" For="@(() => model.Description)" Lines="3" Variant="Variant.Outlined" />
+                    <MudTextField Class="mt-4" Label="Errores permitidos" HelperText="La cantidad de errores permitidos por partida. [1 a 5 errores]."
+                                  @bind-Value="model.PossibleErrors" For="@(() => model.PossibleErrors)" Variant="Variant.Outlined" />
+                    <MudTextField Class="mt-4" Label="Numero de items" HelperText="El número de items máximo que tendrá este nivel. [5 a 15 items]."
+                                  @bind-Value="model.ItemNumber" For="@(() => model.ItemNumber)" Variant="Variant.Outlined" />
                 </MudCardContent>
                 <MudCardActions>
                     <MudGrid Justify="Justify.Center">
