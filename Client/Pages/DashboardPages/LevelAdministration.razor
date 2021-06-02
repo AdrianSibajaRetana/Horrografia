@@ -42,35 +42,37 @@
             <MudContainer Class="mt-4 px-8" MaxWidth="MaxWidth.False">
                 <MudGrid>
                     <MudItem xs="12" sm="12" md="12">
-                        <MudCard Elevation="2" Class="pa-4" Style="height: 200px;" Outlined="true">
+                        <MudCard Elevation="2" Class="pa-4" Outlined="true">
                             <MudCardHeader>
                                 <CardHeaderContent>
-                                    <MudText Typo="Typo.h5">Administración de niveles</MudText>
+                                    <MudGrid>
+                                        <MudItem xs="12" sm="12" md="8">
+                                            <MudText Typo="Typo.h5">Administración de niveles</MudText>
+                                        </MudItem>
+                                        <MudItem xs="12" sm="12" md="4" >
+                                            <MudGrid Spacing=1>
+                                                <MudItem Class="ml-auto">
+                                                    <MudButton OnClick="ShowCrearNivel" Variant="Variant.Filled" Color="Color.Success">
+                                                        Crear nivel
+                                                    </MudButton>
+                                                </MudItem>
+                                                @if (nivelActual != null)
+                                                {
+                                                    <MudItem Class="ml-auto">
+                                                        <MudButton OnClick="ShowCrearNivel" Variant="Variant.Filled" Color="Color.Info">
+                                                            Editar nivel
+                                                        </MudButton>
+                                                    </MudItem>
+                                                    <MudItem Class="ml-auto">
+                                                        <MudButton OnClick="ShowCrearNivel" Variant="Variant.Filled" Color="Color.Error">
+                                                            Borrar nivel
+                                                        </MudButton>
+                                                    </MudItem>
+                                                }
+                                            </MudGrid>
+                                        </MudItem>
+                                    </MudGrid>                                    
                                 </CardHeaderContent>
-                                <CardHeaderActions>
-                                    <MudItem>
-                                        <MudGrid Spacing=2>
-                                            <MudItem>
-                                                <MudButton OnClick="ShowCrearNivel" Variant="Variant.Filled" Color="Color.Success">
-                                                    Crear nivel
-                                                </MudButton>
-                                            </MudItem>
-                                            @if (nivelActual != null)
-                                            {
-                                                <MudItem>
-                                                    <MudButton OnClick="ShowCrearNivel" Variant="Variant.Filled" Color="Color.Info">
-                                                        Editar nivel
-                                                    </MudButton>
-                                                </MudItem>
-                                                <MudItem>
-                                                    <MudButton OnClick="ShowCrearNivel" Variant="Variant.Filled" Color="Color.Error">
-                                                        Borrar nivel
-                                                    </MudButton>
-                                                </MudItem>
-                                            }
-                                        </MudGrid>
-                                    </MudItem>
-                                </CardHeaderActions>
                             </MudCardHeader>
                             <MudCardContent>
                                 <MudSelect T="NivelModel" @bind-Value="@nivelActual" Label="Escoja el nivel" Variant="Variant.Outlined" ToStringFunc="@converter" OffsetY="true">
@@ -82,7 +84,7 @@
                             </MudCardContent>
                         </MudCard>
                     </MudItem>
-                    <MudItem xs="12" sm="12" md="12">
+                    <MudItem xs="12" sm="12" md="12" Class="mt-4">
                         <MudTabs Elevation="2" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-6">
                             <MudTabPanel Text="Datos">
                                 <MudItem>
