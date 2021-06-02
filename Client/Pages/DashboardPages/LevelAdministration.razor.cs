@@ -25,6 +25,7 @@ namespace Horrografia.Client.Pages.DashboardPages
         public int InitialLoadStatus { get; set; }
 
         public bool ShowCreateLevelDialog { get; set; }
+        public bool ShowDeleteLevelDialog { get; set; }
 
         //Nivel que se está enseñando en el UI
         public NivelModel nivelActual { get; set; }
@@ -37,6 +38,7 @@ namespace Horrografia.Client.Pages.DashboardPages
         public LevelAdministration()
         {
             ShowCreateLevelDialog = false;
+            ShowDeleteLevelDialog = false;
         }
 
         /*Carga los niveles existentes y notifica el estado actual*/
@@ -73,14 +75,28 @@ namespace Horrografia.Client.Pages.DashboardPages
             _snackbar.Add(mensaje, s);
         }
 
+        // Abre dialogo para crear niveles
         public void ShowCrearNivel()
         {
             ShowCreateLevelDialog = true;            
         }
 
+        // Cierra dialogo para crear niveles
         protected void CloseDialogWindow()
         {
             ShowCreateLevelDialog = false;
+        }
+
+        // Abre dialogo para borrar niveles
+        public void ShowDeleteNivel()
+        {
+            ShowDeleteLevelDialog = true;
+        }
+
+        // Cierra dialogo para borrar niveles
+        protected void CloseDeletionDialog()
+        {
+            ShowDeleteLevelDialog = false;
         }
 
         protected async Task CreateLevel(NivelModel n)

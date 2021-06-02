@@ -64,7 +64,7 @@
                                                         </MudButton>
                                                     </MudItem>
                                                     <MudItem Class="ml-auto">
-                                                        <MudButton OnClick="ShowCrearNivel" Variant="Variant.Filled" Color="Color.Error">
+                                                        <MudButton OnClick="ShowDeleteNivel" Variant="Variant.Filled" Color="Color.Error">
                                                             Borrar nivel
                                                         </MudButton>
                                                     </MudItem>
@@ -99,11 +99,15 @@
                 </MudGrid>
             </MudContainer>
 
-        @*Dialogo de creación*@
-        <LevelCreationDialog ShowDialogue="ShowCreateLevelDialog"
-                                ExistenNiveles="true"
-                                OnDialogClosed="CloseDialogWindow"
-                                OnLevelCreation="CreateLevel" />
+            @*Dialogo de creación*@
+            <LevelCreationDialog ShowDialogue="ShowCreateLevelDialog"
+                                    ExistenNiveles="true"
+                                    OnDialogClosed="CloseDialogWindow"
+                                    OnLevelCreation="CreateLevel" />
+            @*Dialodo de borrado*@
+            <LevelDeletionDialog ShowDialogue="ShowDeleteLevelDialog"
+                                 OnDialogClosed="CloseDeletionDialog"
+                                 model="nivelActual"/>
         }
      }
     else

@@ -1,0 +1,21 @@
+﻿<MudDialog @bind-IsVisible="ShowDialogue">
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.DeleteForever" Class="mr-3" /> Eliminar nivel
+        </MudText>
+        <MudText Typo="Typo.subtitle1">
+            ¿Está seguro que desea eliminar el siguiente nivel? La acción no es reversible.
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudTextField @bind-Value="@model.Nombre" Label="Nombre" ReadOnly="true" Class="mt-4"/>
+        <MudTextField @bind-Value="@model.Descripcion" Label="Descripción" ReadOnly="true"  Lines="3" Class="mt-4"/>
+        <MudTextField @bind-Value="@model.ErroresPermitidos" Label="Errores Permitidos" ReadOnly="true" Class="mt-4"/>
+        <MudTextField @bind-Value="@model.NumeroDeItems" Label="Numero máximo de items" ReadOnly="true"  Class="mt-4"/>
+    </DialogContent>
+    <DialogActions>
+        <MudButton Variant="Variant.Text" OnClick="CloseDialog">Cancelar</MudButton>
+        <MudButton Variant="Variant.Text" Color="Color.Error">Borrar nivel</MudButton>
+    </DialogActions>
+
+</MudDialog>
