@@ -88,35 +88,7 @@
                         <MudTabs Elevation="2" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-6">
                             <MudTabPanel Text="Datos">
                                 <MudItem>
-                                    @if (nivelActual == null)
-                                    {
-                                        <MudText Class="mt-5">No se ha seleccionado nivel.</MudText>
-                                    }
-                                    else
-                                    {
-                                        <MudSimpleTable Hover="true" Striped="true">
-                                            <thead>
-                                                <tr>
-                                                    <th>Propiedad</th>
-                                                    <th>Valor</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>Descripción del nivel</td>
-                                                    <td>@nivelActual.Descripcion</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Máximo de items</td>
-                                                    <td>@nivelActual.NumeroDeItems</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Errores máximos</td>
-                                                    <td>@nivelActual.ErroresPermitidos</td>
-                                                </tr>
-                                            </tbody>
-                                        </MudSimpleTable>
-                                    }
+                                    <LevelData nivelADesplegar="@nivelActual"/>
                                 </MudItem>
                             </MudTabPanel>
                             <MudTabPanel Text="Items">

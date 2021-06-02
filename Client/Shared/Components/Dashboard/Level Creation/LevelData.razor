@@ -1,0 +1,36 @@
+﻿@using Horrografia.Shared.Models 
+
+@if (nivelADesplegar == null)
+{
+    <MudText Class="mt-5">No se ha seleccionado nivel.</MudText>
+}
+else
+{
+    <MudSimpleTable Hover="true" Striped="true">
+        <thead>
+            <tr>
+                <th>Propiedad</th>
+                <th>Valor</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>Descripción del nivel</td>
+                <td>@nivelADesplegar.Descripcion</td>
+            </tr>
+            <tr>
+                <td>Máximo de items</td>
+                <td>@nivelADesplegar.NumeroDeItems</td>
+            </tr>
+            <tr>
+                <td>Errores máximos</td>
+                <td>@nivelADesplegar.ErroresPermitidos</td>
+            </tr>
+        </tbody>
+    </MudSimpleTable>
+}
+
+@code {
+    [Parameter]
+    public NivelModel nivelADesplegar { get; set; }
+}
