@@ -22,12 +22,10 @@
                                   @bind-Value="newModel.ItemNumber" For="@(() => newModel.ItemNumber)" Variant="Variant.Outlined" />
                 </MudCardContent>
                 <MudCardActions>
-                    <MudGrid Justify="Justify.Center">
-                        <MudItem>
-                            <MudButton Variant="Variant.Filled" Color="Color.Error" OnClick="CloseDialog" Class="px-10">Cancelar</MudButton>
-                        </MudItem>
-                        <MudItem>
-                            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Info" Class="px-10">Editar Nivel</MudButton>
+                    <MudGrid>
+                        <MudItem Class="ml-auto">
+                            <MudButton Variant="Variant.Text" OnClick="CloseDialog" >Cancelar</MudButton>
+                            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Text" Color="Color.Info" >Editar Nivel</MudButton>
                         </MudItem>
                     </MudGrid>
                 </MudCardActions>

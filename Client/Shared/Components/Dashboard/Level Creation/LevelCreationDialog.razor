@@ -28,12 +28,10 @@
                                   @bind-Value="model.ItemNumber" For="@(() => model.ItemNumber)" Variant="Variant.Outlined" />
                 </MudCardContent>
                 <MudCardActions>
-                    <MudGrid Justify="Justify.Center">
-                        <MudItem>
-                            <MudButton Variant="Variant.Filled" Color="Color.Error" OnClick="CloseDialog" Class="px-10">Cancelar</MudButton>
-                        </MudItem>
-                        <MudItem>
-                            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Success" Class="px-10">Crear Nivel</MudButton>
+                    <MudGrid>
+                        <MudItem  Class="ml-auto">
+                            <MudButton Variant="Variant.Text" OnClick="CloseDialog">Cancelar</MudButton>
+                            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Text" Color="Color.Success">Crear Nivel</MudButton>
                         </MudItem>
                     </MudGrid>
                 </MudCardActions>
