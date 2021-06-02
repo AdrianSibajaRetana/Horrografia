@@ -113,5 +113,21 @@ namespace Horrografia.Client.Pages.DashboardPages
             }
             await CargarDatos(false);
         }
+
+        protected async Task DeleteLevel(NivelModel n)
+        {
+            ShowDeleteLevelDialog = false;
+            var response = await _nivelService.DeleteAsync(n);
+            if (response.isResponseSuccesfull())
+            {
+                ShowNotification("¡Se eliminó el nivel exitosamente!", Severity.Success, false);
+            }
+            else
+            {
+                ShowNotification("Hubo un error al eliminar el nivel.", Severity.Error, false);
+            }
+            nivelActual = null; 
+            await CargarDatos(false);
+        }
     }
 }

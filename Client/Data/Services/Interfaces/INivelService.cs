@@ -8,5 +8,6 @@ namespace Horrografia.Client.Data.Services.Interfaces
     {
         Task<ControllerResponse<NivelModel>> GetAsync();
         Task<ControllerResponse<NivelModel>> PostAsync(NivelModel n);
+        Task<ControllerResponse<NivelModel>> DeleteAsync(NivelModel n);
     }
 }

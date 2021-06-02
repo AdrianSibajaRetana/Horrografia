@@ -28,13 +28,11 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation
             await OnDialogClosed.InvokeAsync();
         }
 
-        /*
-        public async Task CreateLevel(EditContext context)
+        
+        public async Task DeleteLevel()
         {
-            NivelModel _nivelModel = model.CreateNivelModel();
-            model = new();
-            await OnLevelCreation.InvokeAsync(_nivelModel);
+            await OnLevelDeletion.InvokeAsync(model);
         }
-        */
+
     }
 }
