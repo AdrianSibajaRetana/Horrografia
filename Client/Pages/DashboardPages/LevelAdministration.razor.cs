@@ -26,6 +26,7 @@ namespace Horrografia.Client.Pages.DashboardPages
 
         public bool ShowCreateLevelDialog { get; set; }
         public bool ShowDeleteLevelDialog { get; set; }
+        public bool ShowUpdateLevelDialog { get; set; }
 
         //Nivel que se está enseñando en el UI
         public NivelModel nivelActual { get; set; }
@@ -39,6 +40,7 @@ namespace Horrografia.Client.Pages.DashboardPages
         {
             ShowCreateLevelDialog = false;
             ShowDeleteLevelDialog = false;
+            ShowUpdateLevelDialog = false;
         }
 
         /*Carga los niveles existentes y notifica el estado actual*/
@@ -99,6 +101,18 @@ namespace Horrografia.Client.Pages.DashboardPages
             ShowDeleteLevelDialog = false;
         }
 
+        // Abre el dialogo para actualizar los datos del nivel.
+        public void ShowUpdateNivel()
+        {
+            ShowUpdateLevelDialog = true;
+        }
+
+        // Cierra el dialogo para actualizar los datos del nivel.
+        protected void CloseUpdateDialog()
+        {
+            ShowUpdateLevelDialog = false;
+        }
+
         protected async Task CreateLevel(NivelModel n)
         {
             ShowCreateLevelDialog = false;
@@ -127,6 +141,22 @@ namespace Horrografia.Client.Pages.DashboardPages
                 ShowNotification("Hubo un error al eliminar el nivel.", Severity.Error, false);
             }
             nivelActual = null; 
+            await CargarDatos(false);
+        }
+
+        protected async Task UpdateLevel(NivelModel n)
+        {
+            ShowUpdateLevelDialog = false;
+            var response = await _nivelService.UpdateAsync(n);
+            if (response.isResponseSuccesfull())
+            {
+                ShowNotification($"¡Se actualizó el nivel exitosamente!", Severity.Success, false);
+            }
+            else
+            {
+                ShowNotification("Hubo un error al actualizar el nivel.", Severity.Error, false);
+            }
+            nivelActual = null;
             await CargarDatos(false);
         }
     }

@@ -93,5 +93,27 @@ namespace Horrografia.Client.Data.Services.Implementations
             }
 
         }
+
+        public async Task<ControllerResponse<NivelModel>> UpdateAsync(NivelModel n)
+        {
+            ControllerResponse<NivelModel> _controllerResponse = new ControllerResponse<NivelModel>();
+            try
+            {
+                var response = await _http.PutAsJsonAsync("api/Nivel", n);
+                if (response.IsSuccessStatusCode)
+                {
+                    _controllerResponse.Status = Constantes.OKSTATUS;
+                    return _controllerResponse;
+                }
+                _controllerResponse.Status = Constantes.INTERNALERRORSTATUS;
+                return _controllerResponse;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "An error occurred while fetching from db");
+                _controllerResponse.Status = Constantes.INTERNALERRORSTATUS;
+                return _controllerResponse;
+            }
+        }
     }
 }

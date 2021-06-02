@@ -25,14 +25,28 @@ namespace Horrografia.Client.Shared.Objects.ClientModels
         [Range(5, 15, ErrorMessage = "Un nivel puede tener de 5 a 15 items.")]
         public int ItemNumber { get; set; }
 
+        public int Id { get; set; }
+
+        // Se construye un modelo a partir de un clientModel.
         public NivelModel CreateNivelModel()
         {
             NivelModel _model = new();
+            _model.Id = Id;
             _model.Nombre = Name;
             _model.Descripcion = Description;
             _model.ErroresPermitidos = PossibleErrors;
             _model.NumeroDeItems = ItemNumber;
             return _model;
+        }
+
+        // Construyo un clientModel a partir de un modelo existente. 
+        public void setDataFromModel(NivelModel model)
+        {
+            Id = model.Id;
+            Name = model.Nombre;            
+            Description = model.Descripcion;
+            PossibleErrors = model.ErroresPermitidos;
+            ItemNumber = model.NumeroDeItems;
         }
 
     }

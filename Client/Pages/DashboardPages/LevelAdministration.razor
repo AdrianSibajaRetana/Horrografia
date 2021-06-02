@@ -59,7 +59,7 @@
                                                 @if (nivelActual != null)
                                                 {
                                                     <MudItem Class="ml-auto">
-                                                        <MudButton OnClick="ShowCrearNivel" Variant="Variant.Filled" Color="Color.Info">
+                                                        <MudButton OnClick="ShowUpdateNivel" Variant="Variant.Filled" Color="Color.Info">
                                                             Editar nivel
                                                         </MudButton>
                                                     </MudItem>
@@ -109,6 +109,12 @@
                                  OnDialogClosed="CloseDeletionDialog"
                                  model="nivelActual"
                                  OnLevelDeletion="DeleteLevel"/>
+
+            @*Dialogo de actualización*@
+            <LevelUpdateDialog ShowDialogue="ShowUpdateLevelDialog"
+                               OnDialogClosed="CloseUpdateDialog"
+                               model="nivelActual"
+                               OnLevelUpdate="UpdateLevel"/>
         }
      }
     else
