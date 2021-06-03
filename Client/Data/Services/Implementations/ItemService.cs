@@ -12,71 +12,48 @@ using Horrografia.Client.Data.Services.Interfaces;
 
 namespace Horrografia.Client.Data.Services.Implementations
 {
-    public class NivelService : INivelService
+    public class ItemService : IItemService
     {
         private readonly HttpClient _http;
-        private readonly ILogger<NivelService> _logger;
-        public NivelService(HttpClient client, ILogger<NivelService> logger)
+        private readonly ILogger<ItemService> _logger;
+        public ItemService(HttpClient client, ILogger<ItemService> logger)
         {
             _http = client;
             _logger = logger;
         }
 
-        public async Task<ControllerResponse<NivelModel>> GetAsync()
+        public async Task<ControllerResponse<ItemModel>> GetAsync()
         {
-            ControllerResponse<NivelModel> _controllerResponse = new ControllerResponse<NivelModel>();
+            ControllerResponse<ItemModel> _controllerResponse = new();
             try
             {
-                var response = await _http.GetAsync("api/Nivel");
+                var response = await _http.GetAsync("api/Item");
                 if (response.IsSuccessStatusCode)
                 {
-                    var niveles = await response.Content.ReadFromJsonAsync<List<NivelModel>>();
+                    var items = await response.Content.ReadFromJsonAsync<List<ItemModel>>();
                     _controllerResponse.Status = Constantes.OKSTATUS;
-                    _controllerResponse.Response = niveles;
+                    _controllerResponse.Response = items;
                     return _controllerResponse;
                 }
                 _controllerResponse.Status = Constantes.INTERNALERRORSTATUS;
-                _controllerResponse.Response = new List<NivelModel>();
+                _controllerResponse.Response = new List<ItemModel>();
                 return _controllerResponse;
             }
             catch (Exception e)
             {
                 _controllerResponse.Status = Constantes.INTERNALERRORSTATUS;
-                _controllerResponse.Response = new List<NivelModel>();
+                _controllerResponse.Response = new List<ItemModel>();
                 _logger.LogError(e, "An error occurred while fetching from db");
                 return _controllerResponse;
             }
         }
 
-        public async Task<ControllerResponse<NivelModel>> PostAsync(NivelModel n)
+        public async Task<ControllerResponse<ItemModel>> PostAsync(ItemModel i) 
         {
-            ControllerResponse<NivelModel> _controllerResponse = new ControllerResponse<NivelModel>();
+            ControllerResponse<ItemModel> _controllerResponse = new ();
             try
             {
-                var response = await _http.PostAsJsonAsync("api/Nivel", n);
-                if (response.IsSuccessStatusCode)
-                {
-                    _controllerResponse.Status = Constantes.OKSTATUS;
-                    return _controllerResponse;
-                }
-                _controllerResponse.Status = Constantes.INTERNALERRORSTATUS;
-                return _controllerResponse;
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e, "An error occurred while fetching from db");
-                _controllerResponse.Status = Constantes.INTERNALERRORSTATUS;
-                return _controllerResponse;
-            }
-        }
-
-        public async Task<ControllerResponse<NivelModel>> DeleteAsync(NivelModel n)
-        {
-            ControllerResponse<NivelModel> _controllerResponse = new ControllerResponse<NivelModel>();
-            try
-            {
-
-                var response = await _http.DeleteAsync($"api/Nivel/{n.Id}");
+                var response = await _http.PostAsJsonAsync("api/Item", i);
                 if (response.IsSuccessStatusCode)
                 {
                     _controllerResponse.Status = Constantes.OKSTATUS;
@@ -93,12 +70,13 @@ namespace Horrografia.Client.Data.Services.Implementations
             }
         }
 
-        public async Task<ControllerResponse<NivelModel>> UpdateAsync(NivelModel n)
+        public async Task<ControllerResponse<ItemModel>> DeleteAsync(ItemModel i)
         {
-            ControllerResponse<NivelModel> _controllerResponse = new ControllerResponse<NivelModel>();
+            ControllerResponse<ItemModel> _controllerResponse = new();
             try
             {
-                var response = await _http.PutAsJsonAsync("api/Nivel", n);
+
+                var response = await _http.DeleteAsync($"api/Item/{i.Id}");
                 if (response.IsSuccessStatusCode)
                 {
                     _controllerResponse.Status = Constantes.OKSTATUS;
@@ -114,5 +92,28 @@ namespace Horrografia.Client.Data.Services.Implementations
                 return _controllerResponse;
             }
         }
+
+        public async Task<ControllerResponse<ItemModel>> UpdateAsync(ItemModel i)
+        {
+            ControllerResponse<ItemModel> _controllerResponse = new();
+            try
+            {
+                var response = await _http.PutAsJsonAsync("api/Item", i);
+                if (response.IsSuccessStatusCode)
+                {
+                    _controllerResponse.Status = Constantes.OKSTATUS;
+                    return _controllerResponse;
+                }
+                _controllerResponse.Status = Constantes.INTERNALERRORSTATUS;
+                return _controllerResponse;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "An error occurred while fetching from db");
+                _controllerResponse.Status = Constantes.INTERNALERRORSTATUS;
+                return _controllerResponse;
+            }
+        }
+
     }
 }

@@ -22,6 +22,9 @@ namespace Horrografia.Client.Pages.DashboardPages
         [Inject]
         protected IPerteneceAService _perteneceAService { get; set; }
 
+        [Inject]
+        protected IItemService _itemService { get; set; }
+
         private List<NivelModel> Niveles { get; set; }
         private bool IsLoading { get; set; }
         private int InitialLoadStatus { get; set; }
@@ -40,6 +43,9 @@ namespace Horrografia.Client.Pages.DashboardPages
 
         // Todas las relaciones entre items y niveles.
         private List<PerteneceAModel> RelacionesNivelItem { get; set; }
+
+        // Todos los items
+        private List<ItemModel> ItemsTotales { get; set; }
 
         // Diccionario que se construye a partir de las relaciones existentes. 
         private IDictionary<NivelModel, List<ItemModel>> ItemsPorNivel{get; set;}
@@ -64,17 +70,39 @@ namespace Horrografia.Client.Pages.DashboardPages
             IsLoading = true;
             var nivelesResponse = await _nivelService.GetAsync();
             var relacionesResponse = await _perteneceAService.GetAsync();
-            IsLoading = false;
-            if (nivelesResponse.isResponseSuccesfull() && relacionesResponse.isResponseSuccesfull())
+            var itemsResponse = await _itemService.GetAsync();
+            if (
+                    nivelesResponse.isResponseSuccesfull() 
+                    && relacionesResponse.isResponseSuccesfull()
+                    && itemsResponse.isResponseSuccesfull()
+                )
             {
-                InitialLoadStatus = nivelesResponse.Status;
+                InitialLoadStatus = Constantes.OKSTATUS;
                 Niveles = nivelesResponse.Response;
                 RelacionesNivelItem = relacionesResponse.Response;
+                ItemsTotales = itemsResponse.Response;
+                GenerarDiccionario();
                 ShowNotification("Se leyeron los niveles de la base de datos exitosamente", Severity.Success, primerLoad);
             }
             else
             {
                 ShowNotification("Hubo un error al cargar los niveles de la base de datos.", Severity.Error, primerLoad);
+            }
+            IsLoading = false; 
+        }
+
+        private void GenerarDiccionario()
+        {
+            foreach (var nivel in Niveles)
+            {
+                List<ItemModel> listaDeItems = new();
+                ItemsPorNivel.Add(nivel, listaDeItems);
+                var relacionesDeNivel = RelacionesNivelItem.Where(i => i.IdNivel == nivel.Id);
+                foreach (var relacion in relacionesDeNivel)
+                {
+                    var item = ItemsTotales.Find(i => i.Id == relacion.IdItem);
+                    ItemsPorNivel[nivel].Add(item);
+                }
             }
         }
 
