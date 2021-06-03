@@ -19,21 +19,31 @@ namespace Horrografia.Client.Pages.DashboardPages
         [Inject]
         protected ISnackbar _snackbar { get; set; }
 
+        [Inject]
+        protected IPerteneceAService _perteneceAService { get; set; }
 
-        public List<NivelModel> Niveles { get; set; }
-        public bool IsLoading { get; set; }
-        public int InitialLoadStatus { get; set; }
-
-        public bool ShowCreateLevelDialog { get; set; }
-        public bool ShowDeleteLevelDialog { get; set; }
-        public bool ShowUpdateLevelDialog { get; set; }
-
-        //Nivel que se está enseñando en el UI
-        public NivelModel nivelActual { get; set; }
+        private List<NivelModel> Niveles { get; set; }
+        private bool IsLoading { get; set; }
+        private int InitialLoadStatus { get; set; }
 
         //Función que utiliza el dropdown para desplegar el nivel.
         // Cambiar de descripción a nombre. 
         Func<NivelModel, string> converter = p => p?.Nombre;
+
+        // Booleanos que controlan la visión de los dialogos
+        private bool ShowCreateLevelDialog { get; set; }
+        private bool ShowDeleteLevelDialog { get; set; }
+        private bool ShowUpdateLevelDialog { get; set; }
+
+        //Nivel que se está enseñando en el UI
+        private NivelModel nivelActual { get; set; }
+
+        // Todas las relaciones entre items y niveles.
+        private List<PerteneceAModel> RelacionesNivelItem { get; set; }
+
+        // Diccionario que se construye a partir de las relaciones existentes. 
+        private IDictionary<NivelModel, List<ItemModel>> ItemsPorNivel{get; set;}
+
 
 
         public LevelAdministration()
@@ -52,12 +62,14 @@ namespace Horrografia.Client.Pages.DashboardPages
         public async Task CargarDatos(bool primerLoad)
         {
             IsLoading = true;
-            var response = await _nivelService.GetAsync();
-            InitialLoadStatus = response.Status;
-            Niveles = response.Response;
+            var nivelesResponse = await _nivelService.GetAsync();
+            var relacionesResponse = await _perteneceAService.GetAsync();
             IsLoading = false;
-            if (response.isResponseSuccesfull())
+            if (nivelesResponse.isResponseSuccesfull() && relacionesResponse.isResponseSuccesfull())
             {
+                InitialLoadStatus = nivelesResponse.Status;
+                Niveles = nivelesResponse.Response;
+                RelacionesNivelItem = relacionesResponse.Response;
                 ShowNotification("Se leyeron los niveles de la base de datos exitosamente", Severity.Success, primerLoad);
             }
             else
