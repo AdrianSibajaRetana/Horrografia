@@ -48,6 +48,7 @@ namespace Horrografia.Client
             //Mis servicios
             builder.Services.AddTransient<IPersonService, PersonService>();
             builder.Services.AddTransient<INivelService, NivelService>();
+            builder.Services.AddTransient<IPerteneceAService, PerteneceAService>(); 
 
             await builder.Build().RunAsync();
         }

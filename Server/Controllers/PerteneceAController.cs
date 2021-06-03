@@ -81,12 +81,15 @@ namespace Horrografia.Server.Controllers
             }
         }
 
-        // DELETE api/<PerteneceAController>/model p
-        [HttpDelete]
-        public async Task<IActionResult> Delete(PerteneceAModel p)
+        // DELETE api/<PerteneceAController>/idNivel/idItem
+        [HttpDelete("{idNivel}/{idItem}")]
+        public async Task<IActionResult> Delete(int idNivel, int idItem)
         {
             try
             {
+                PerteneceAModel p = new();
+                p.IdItem = idItem;
+                p.IdNivel = idNivel;
                 await _repo.DeleteRelation(p);
                 return Ok();
             }
