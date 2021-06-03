@@ -1,5 +1,42 @@
-﻿<h3>LevelItemTable</h3>
-
-@code {
-
+﻿
+@if (ItemsDeNivel.Any())
+{
+    <MudTable Items="@ItemsDeNivel" Hover="true">
+        <HeaderContent>
+            <MudTh>Id</MudTh>
+            <MudTh>Forma Correcta</MudTh>
+            <MudTh>Forma Incorrecta</MudTh>
+            <MudTh>Pista</MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="Id">@context.Id</MudTd>
+            <MudTd DataLabel="Forma Correcta">@context.FormaCorrecta</MudTd>
+            <MudTd DataLabel="Forma Incorrecta">@context.FormaIncorrecta</MudTd>
+            <MudTd DataLabel="Pista">@context.PistaId</MudTd>
+        </RowTemplate>
+    </MudTable>
+}
+else
+{    
+    <MudGrid Justify="Justify.Center">
+        <MudItem xs="12" sm="12" md="12">
+            <MudText Typo="Typo.h5" GutterBottom="true" Align="Align.Center">
+                El nivel no tiene items.
+            </MudText>
+        </MudItem>
+        <MudItem xs="12" sm="12" md="12">
+            <MudText Typo="Typo.subtitle1" Align="Align.Center" GutterBottom="true">
+                No existen items registrados en este nivel en la base de datos.
+            </MudText>
+        </MudItem>     
+        <MudItem xs="12" sm="12" md="12">
+            <MudGrid Justify="Justify.Center">
+                <MudItem>
+                    <MudButton Variant="Variant.Filled" Color="Color.Success" >
+                        Crear item
+                    </MudButton>
+                </MudItem>
+            </MudGrid>
+        </MudItem>            
+    </MudGrid>
 }

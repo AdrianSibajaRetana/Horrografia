@@ -92,7 +92,14 @@
                                 </MudItem>
                             </MudTabPanel>
                             <MudTabPanel Text="Items">
-                                <MudText>Content Two</MudText>
+                                @if (nivelActual == null)
+                                {
+                                    <MudText Class="mt-5">No se ha seleccionado nivel.</MudText>
+                                }
+                                else
+                                {
+                                    <LevelItemTable ItemsDeNivel="ItemsPorNivel[nivelActual]" />
+                                }
                             </MudTabPanel>
                         </MudTabs>
                     </MudItem>

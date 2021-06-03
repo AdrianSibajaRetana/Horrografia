@@ -48,7 +48,7 @@ namespace Horrografia.Client.Pages.DashboardPages
         private List<ItemModel> ItemsTotales { get; set; }
 
         // Diccionario que se construye a partir de las relaciones existentes. 
-        private IDictionary<NivelModel, List<ItemModel>> ItemsPorNivel{get; set;}
+        private Dictionary<NivelModel, List<ItemModel>> ItemsPorNivel{get; set;}
 
 
 
@@ -57,6 +57,7 @@ namespace Horrografia.Client.Pages.DashboardPages
             ShowCreateLevelDialog = false;
             ShowDeleteLevelDialog = false;
             ShowUpdateLevelDialog = false;
+            ItemsPorNivel = new();
         }
 
         /*Carga los niveles existentes y notifica el estado actual*/
