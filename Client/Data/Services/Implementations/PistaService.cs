@@ -12,70 +12,48 @@ using Horrografia.Client.Data.Services.Interfaces;
 
 namespace Horrografia.Client.Data.Services.Implementations
 {
-    public class PerteneceAService : IPerteneceAService
+    public class PistaService : IPistaService
     {
         private readonly HttpClient _http;
-        private readonly ILogger<PerteneceAService> _logger;
-        public PerteneceAService(HttpClient client, ILogger<PerteneceAService> logger)
+        private readonly ILogger<PistaService> _logger;
+        public PistaService(HttpClient client, ILogger<PistaService> logger)
         {
             _http = client;
             _logger = logger;
         }
 
-        public async Task<ControllerResponse<PerteneceAModel>> GetAsync()
+        public async Task<ControllerResponse<PistaModel>> GetAsync()
         {
-            ControllerResponse<PerteneceAModel> _controllerResponse = new ();
+            ControllerResponse<PistaModel> _controllerResponse = new();
             try
             {
-                var response = await _http.GetAsync("api/PerteneceA");
+                var response = await _http.GetAsync("api/Pista");
                 if (response.IsSuccessStatusCode)
                 {
-                    var relaciones = await response.Content.ReadFromJsonAsync<List<PerteneceAModel>>();
+                    var pistas = await response.Content.ReadFromJsonAsync<List<PistaModel>>();
                     _controllerResponse.Status = Constantes.OKSTATUS;
-                    _controllerResponse.Response = relaciones;
+                    _controllerResponse.Response = pistas;
                     return _controllerResponse;
                 }
                 _controllerResponse.Status = Constantes.INTERNALERRORSTATUS;
-                _controllerResponse.Response = new List<PerteneceAModel>();
+                _controllerResponse.Response = new List<PistaModel>();
                 return _controllerResponse;
             }
             catch (Exception e)
             {
                 _controllerResponse.Status = Constantes.INTERNALERRORSTATUS;
-                _controllerResponse.Response = new List<PerteneceAModel>();
+                _controllerResponse.Response = new List<PistaModel>();
                 _logger.LogError(e, "An error occurred while fetching from db");
                 return _controllerResponse;
             }
         }
 
-        public async Task<ControllerResponse<PerteneceAModel>> PostAsync(PerteneceAModel p)
+        public async Task<ControllerResponse<PistaModel>> DeleteAsync(PistaModel p)
         {
-            ControllerResponse<PerteneceAModel> _controllerResponse = new ();
+            ControllerResponse<PistaModel> _controllerResponse = new();
             try
             {
-                var response = await _http.PostAsJsonAsync("api/PerteneceA", p);
-                if (response.IsSuccessStatusCode)
-                {
-                    _controllerResponse.Status = Constantes.OKSTATUS;
-                    return _controllerResponse;
-                }
-                _controllerResponse.Status = Constantes.INTERNALERRORSTATUS;
-                return _controllerResponse;
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e, "An error occurred while fetching from db");
-                _controllerResponse.Status = Constantes.INTERNALERRORSTATUS;
-                return _controllerResponse;
-            }
-        }
-
-        public async Task<ControllerResponse<PerteneceAModel>> DeleteAsync(PerteneceAModel p)
-        {
-            ControllerResponse<PerteneceAModel> _controllerResponse = new();
-            try
-            {
-                var response = await _http.DeleteAsync($"api/PerteneceA/{p.IdNivel}/{p.IdItem}");
+                var response = await _http.DeleteAsync($"api/Pista/{p.Id}");
                 if (response.IsSuccessStatusCode)
                 {
                     _controllerResponse.Status = Constantes.OKSTATUS;
@@ -92,5 +70,48 @@ namespace Horrografia.Client.Data.Services.Implementations
             }
         }
 
+        public async Task<ControllerResponse<PistaModel>> PostAsync(PistaModel p)
+        {
+            ControllerResponse<PistaModel> _controllerResponse = new();
+            try
+            {
+                var response = await _http.PostAsJsonAsync("api/Pista", p);
+                if (response.IsSuccessStatusCode)
+                {
+                    _controllerResponse.Status = Constantes.OKSTATUS;
+                    return _controllerResponse;
+                }
+                _controllerResponse.Status = Constantes.INTERNALERRORSTATUS;
+                return _controllerResponse;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "An error occurred while fetching from db");
+                _controllerResponse.Status = Constantes.INTERNALERRORSTATUS;
+                return _controllerResponse;
+            }
+        }
+
+        public async Task<ControllerResponse<PistaModel>> UpdateAsync(PistaModel p)
+        {
+            ControllerResponse<PistaModel> _controllerResponse = new ();
+            try
+            {
+                var response = await _http.PutAsJsonAsync("api/Pista", p);
+                if (response.IsSuccessStatusCode)
+                {
+                    _controllerResponse.Status = Constantes.OKSTATUS;
+                    return _controllerResponse;
+                }
+                _controllerResponse.Status = Constantes.INTERNALERRORSTATUS;
+                return _controllerResponse;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "An error occurred while fetching from db");
+                _controllerResponse.Status = Constantes.INTERNALERRORSTATUS;
+                return _controllerResponse;
+            }
+        }
     }
 }

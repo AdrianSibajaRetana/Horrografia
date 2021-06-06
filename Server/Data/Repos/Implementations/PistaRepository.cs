@@ -27,14 +27,6 @@ namespace Horrografia.Server.Data.Repos.Implementations
             return pistas;
         }
 
-        //GET/{IdPista}
-        public async Task<PistaModel> GetPistaById(int idPista)
-        {
-            string sql = "SELECT * FROM pista WHERE id = @id";
-            var pista = await _dbContext.LoadData<PistaModel, dynamic>(sql, new { id = idPista }, ConectionString);
-            return pista.FirstOrDefault();
-        }
-
         //POST
         public async Task InsertData(PistaModel p)
         {
@@ -47,6 +39,12 @@ namespace Horrografia.Server.Data.Repos.Implementations
         {
             string sql = "delete from pista where id = @id";
             await _dbContext.SaveData(sql, new { id = PistaId }, ConectionString);
+        }
+
+        public async Task UpdateData(PistaModel p)
+        {   
+            string sql = "update pista set Pista = @Pista where id = @id";
+            await _dbContext.SaveData(sql, new { Pista = p.Pista, id = p.Id}, ConectionString);
         }
     }
 }

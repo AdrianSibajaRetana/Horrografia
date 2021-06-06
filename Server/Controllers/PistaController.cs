@@ -39,26 +39,6 @@ namespace Horrografia.Server.Controllers
             }
         }
 
-        // GET api/<PistaController>/5
-        [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
-        {
-            try
-            {
-                var pista = await _repo.GetPistaById(id);
-                if (pista == null)
-                {
-                    return NotFound();
-                }
-                return Ok(pista);
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(e, "An error occurred while fetching from db");
-                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
-            }
-        }
-
         // POST api/<PistaController>
         [HttpPost]
         public async Task<IActionResult> Post(PistaModel p)
@@ -87,6 +67,21 @@ namespace Horrografia.Server.Controllers
             catch (Exception e)
             {
                 _logger.LogError(e, "An error occurred while deleting from db");
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> Put(PistaModel p)
+        {
+            try
+            {
+                await _repo.UpdateData(p);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "An error occurred while updating to db");
                 return new StatusCodeResult(StatusCodes.Status500InternalServerError);
             }
         }

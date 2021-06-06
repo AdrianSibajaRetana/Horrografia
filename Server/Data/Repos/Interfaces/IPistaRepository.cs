@@ -8,7 +8,7 @@ namespace Horrografia.Server.Data.Repos.Interfaces
     {
         Task DeletePistaById(int PistaId);
         Task<List<PistaModel>> GetAllAsync();
-        Task<PistaModel> GetPistaById(int idPista);
         Task InsertData(PistaModel p);
+        Task UpdateData(PistaModel p);
     }
 }
