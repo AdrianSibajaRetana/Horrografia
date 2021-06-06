@@ -25,7 +25,9 @@ namespace Horrografia.Client.Pages.DashboardPages
         [Inject]
         protected IItemService _itemService { get; set; }
 
-        private List<NivelModel> Niveles { get; set; }
+        [Inject]
+        protected IPistaService _pistaService { get; set; }
+
         private bool IsLoading { get; set; }
         private int InitialLoadStatus { get; set; }
 
@@ -41,16 +43,20 @@ namespace Horrografia.Client.Pages.DashboardPages
         //Nivel que se está enseñando en el UI
         private NivelModel nivelActual { get; set; }
 
+        // Todos los niveles
+        private List<NivelModel> Niveles { get; set; }
+
         // Todas las relaciones entre items y niveles.
         private List<PerteneceAModel> RelacionesNivelItem { get; set; }
 
         // Todos los items
         private List<ItemModel> ItemsTotales { get; set; }
 
+        // Todas las pistas
+        private List<PistaModel> PistasTotales { get; set; }
+
         // Diccionario que se construye a partir de las relaciones existentes. 
         private Dictionary<NivelModel, List<ItemModel>> ItemsPorNivel{get; set;}
-
-
 
         public LevelAdministration()
         {
@@ -72,16 +78,19 @@ namespace Horrografia.Client.Pages.DashboardPages
             var nivelesResponse = await _nivelService.GetAsync();
             var relacionesResponse = await _perteneceAService.GetAsync();
             var itemsResponse = await _itemService.GetAsync();
+            var pistasResponse = await _pistaService.GetAsync();
             if (
                     nivelesResponse.isResponseSuccesfull() 
                     && relacionesResponse.isResponseSuccesfull()
                     && itemsResponse.isResponseSuccesfull()
+                    && pistasResponse.isResponseSuccesfull()
                 )
             {
                 InitialLoadStatus = Constantes.OKSTATUS;
                 Niveles = nivelesResponse.Response;
                 RelacionesNivelItem = relacionesResponse.Response;
                 ItemsTotales = itemsResponse.Response;
+                PistasTotales = pistasResponse.Response;
                 GenerarDiccionario();
                 ShowNotification("Se leyeron los niveles de la base de datos exitosamente", Severity.Success, primerLoad);
             }

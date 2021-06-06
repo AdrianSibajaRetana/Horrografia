@@ -1,0 +1,33 @@
+﻿@inject IDialogService DialogService
+@using System.ComponentModel.DataAnnotations
+
+<MudDialog @bind-IsVisible="ShowDialogue">
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Edit" Class="mr-3" /> Crear nivel
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <EditForm Model="@model" OnValidSubmit="CreateItem">
+            <DataAnnotationsValidator />
+            <MudCard Elevation=0>
+                <MudCardContent>
+                    <MudAutocomplete T="string" Label="Forma Correcta" @bind-Value="model.FormaCorrecta" SearchFunc="@BuscarItemsExistentes"
+                                     ResetValueOnEmptyText="true" CoerceValue="true" For="@(() => model.FormaCorrecta)" 
+                                     HelperText="El texto que se espera que el usuario escriba."/>
+                </MudCardContent>
+                <MudCardActions>
+                    <MudGrid>
+                        <MudItem Class="ml-auto">
+                            <MudButton Variant="Variant.Text" OnClick="CloseDialog">Cancelar</MudButton>
+                            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Text" Color="Color.Success">Crear Item</MudButton>
+                        </MudItem>
+                    </MudGrid>
+                </MudCardActions>
+            </MudCard>
+        </EditForm>
+    </DialogContent>
+    @*<DialogActions>
+        </DialogActions>
+    *@
+</MudDialog>

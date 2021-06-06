@@ -17,7 +17,30 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation
         [Parameter]
         public List<ItemModel> ItemsTotales { get; set;}
 
+        [Parameter]
+        public List<PistaModel> PistasTotales { get; set; }
 
-        
+        private bool _showItemCreationDialog { get; set; }
+
+        public LevelItemTable()
+        {
+            _showItemCreationDialog = false;
+        }
+
+        private string GetPistaById(int id)
+        {
+            return PistasTotales.FirstOrDefault(p => p.Id == id).Pista;
+        }
+
+        private void openItemCreationDialog()
+        {
+            _showItemCreationDialog = true;
+        }
+
+        protected void closeItemCreationDialog()
+        {
+            _showItemCreationDialog = false;
+        }
+
     }
 }

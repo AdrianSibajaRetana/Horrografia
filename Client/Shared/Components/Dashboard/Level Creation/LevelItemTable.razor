@@ -12,7 +12,7 @@
             <MudTd DataLabel="Id">@context.Id</MudTd>
             <MudTd DataLabel="Forma Correcta">@context.FormaCorrecta</MudTd>
             <MudTd DataLabel="Forma Incorrecta">@context.FormaIncorrecta</MudTd>
-            <MudTd DataLabel="Pista">@context.PistaId</MudTd>
+            <MudTd DataLabel="Pista">@GetPistaById(context.PistaId)</MudTd>
         </RowTemplate>
     </MudTable>
 }
@@ -32,11 +32,17 @@ else
         <MudItem xs="12" sm="12" md="12">
             <MudGrid Justify="Justify.Center">
                 <MudItem>
-                    <MudButton Variant="Variant.Filled" Color="Color.Success" >
+                    <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="openItemCreationDialog">
                         Crear item
                     </MudButton>
                 </MudItem>
             </MudGrid>
-        </MudItem>            
+        </MudItem>
+    
+        <ItemCreationDialog ShowDialogue="_showItemCreationDialog"
+                            ItemsTotales="ItemsTotales"
+                            OnDialogClosed="closeItemCreationDialog"
+                            OnLevelCreation="closeItemCreationDialog"/>
+
     </MudGrid>
 }
