@@ -30,15 +30,33 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation
         public EventCallback<int> OnRelationCreationRequest { get; set; }
 
         private bool _showItemCreationDialog { get; set; }
+        private bool _isLoading { get; set; }
+        private List<ItemModel> _itemList { get; set; } = new();
+        private List<PistaModel> _pistaList { get; set; } = new();
 
         public LevelItemTable()
         {
             _showItemCreationDialog = false;
         }
 
+
+        protected override void OnParametersSet()
+        {
+            _isLoading = true;
+            if (_itemList != ItemsDeNivel)
+            {
+                _itemList = ItemsDeNivel;
+            }
+            if (_pistaList != PistasTotales)
+            {
+                _pistaList = PistasTotales;
+            }
+            _isLoading = false;
+        }
+
         private string GetPistaById(int id)
         {
-            return PistasTotales.FirstOrDefault(p => p.Id == id).Pista;
+            return _pistaList.FirstOrDefault(p => p.Id == id).Pista;
         }
 
         private void openItemCreationDialog()

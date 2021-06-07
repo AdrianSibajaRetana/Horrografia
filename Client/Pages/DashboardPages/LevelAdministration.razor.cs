@@ -92,9 +92,12 @@ namespace Horrografia.Client.Pages.DashboardPages
                 ItemsTotales = itemsResponse.Response;
                 PistasTotales = pistasResponse.Response;
                 GenerarDiccionario();
-                ShowNotification("Se leyeron los niveles de la base de datos exitosamente", Severity.Success, primerLoad);
+                if (primerLoad)
+                { 
+                    ShowNotification("Se leyeron los niveles de la base de datos exitosamente", Severity.Success, primerLoad);                
+                }
             }
-            else
+            else if(primerLoad)
             {
                 ShowNotification("Hubo un error al cargar los niveles de la base de datos.", Severity.Error, primerLoad);
             }
@@ -213,34 +216,31 @@ namespace Horrografia.Client.Pages.DashboardPages
         protected async Task CreateClue(PistaModel p)
         {
             var response = await _pistaService.PostAsync(p);
-            if (response.isResponseSuccesfull())
-            {
-                ShowNotification($"¡Se actualizaron las pistas!", Severity.Success, false);
-            }
-            else
-            {
-                ShowNotification("Hubo un error al crear la pista.", Severity.Error, false);
-            }
             await CargarDatos(false);
         }
 
         protected async Task CreateItem(ItemModel i)
         {
             var response = await _itemService.PostAsync(i);
-            if (response.isResponseSuccesfull())
-            {
-                ShowNotification($"¡Se actualizaron creó el item!", Severity.Success, false);
-            }
-            else
-            {
-                ShowNotification("Hubo un error al crear el item.", Severity.Error, false);
-            }
             await CargarDatos(false);
         }
 
         protected async Task CreateRelation(int id)
         {
-            throw new NotImplementedException();
+            var nivelID = nivelActual.Id;
+            PerteneceAModel p = new();
+            p.IdNivel = nivelID;
+            p.IdItem = id;
+            var response = await _perteneceAService.PostAsync(p);
+            if (response.isResponseSuccesfull())
+            {
+                ShowNotification($"¡Se añadió el item en el nivel!", Severity.Success, false);
+            }
+            else
+            {
+                ShowNotification("Hubo un error al crear la relación.", Severity.Error, false);
+            }
+            await CargarDatos(false);
         }
     }
 }

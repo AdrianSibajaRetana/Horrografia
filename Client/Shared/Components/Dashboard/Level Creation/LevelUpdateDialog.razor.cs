@@ -18,12 +18,12 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation
         public EventCallback OnDialogClosed { get; set; }
 
         [Parameter]
-        public EventCallback<NivelModel> OnLevelUpdate { get; set; }
-
-        [Parameter]
         public NivelModel model { get; set; }
 
         [Parameter]
+        public EventCallback<NivelModel> OnLevelUpdate { get; set; }
+
+
         public ClientNivelModel newModel { get; set; }
 
         private NivelModel _model { get; set; }

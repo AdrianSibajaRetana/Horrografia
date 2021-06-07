@@ -33,16 +33,19 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation
         public EventCallback<int> OnRelationCreation { get; set; }
 
         private ClientItemModel _model { get; set; }
-        private ClientPistaModel _pista { get; set; }
+        private bool _isCreatingItem { get; set; }
+        private string _loadingStatus { get; set; }
+
 
         public ItemCreationDialog()
         {
             _model = new();
-            _pista = new();
+            _isCreatingItem = false;
         }
 
         public async Task CloseDialog()
         {
+            _model = new();
             await OnDialogClosed.InvokeAsync();
         }
 
@@ -52,15 +55,14 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation
             // Retraso sutil para la interfaz de creación. 
             await Task.Delay(5);
 
-            // Si la persona no ha puesto un input, devuelva toda la lista de los nombres.
+            // Si la persona no ha puesto un input, no muestre nada
             if (string.IsNullOrEmpty(value))
-            { 
-                var allItems = ItemsTotales.Select(i => i.FormaCorrecta).ToList();
-                return allItems;
+            {
+                return Array.Empty<string>();
             }
 
             var filteredList = ItemsTotales.Where(i => i.FormaCorrecta.Contains(value, StringComparison.InvariantCultureIgnoreCase));
-            var filteredItems = filteredList.Select(i => i.FormaCorrecta).ToList();
+            var filteredItems = filteredList.Select(i => i.FormaCorrecta).Distinct().ToList();
             return filteredItems;
         }
 
@@ -70,15 +72,14 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation
             // Retraso sutil para la interfaz de creación. 
             await Task.Delay(5);
 
-            // Si la persona no ha puesto un input, devuelva toda la lista de los nombres.
+            // Si la persona no ha puesto un input, no muestre nada
             if (string.IsNullOrEmpty(value))
             {
-                var allItems = ItemsTotales.Select(i => i.FormaIncorrecta).ToList();
-                return allItems;
+                return Array.Empty<string>();
             }
 
             var filteredList = ItemsTotales.Where(i => i.FormaIncorrecta.Contains(value, StringComparison.InvariantCultureIgnoreCase));
-            var filteredItems = filteredList.Select(i => i.FormaIncorrecta).ToList();
+            var filteredItems = filteredList.Select(i => i.FormaIncorrecta).Distinct().ToList();
             return filteredItems;
         }
 
@@ -88,37 +89,40 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation
             // Retraso sutil para la interfaz de creación. 
             await Task.Delay(5);
 
-            // Si la persona no ha puesto un input, devuelva toda la lista de los nombres.
+            // Si la persona no ha puesto un input, no muestre nada
             if (string.IsNullOrEmpty(value))
-            {                
-                var Pistas = PistasTotales.Select(p => p.Pista).ToList();
-                return Pistas;
+            {
+                return Array.Empty<string>();
             }
 
             var ListaFriltrada = PistasTotales.Where(p => p.Pista.Contains(value, StringComparison.InvariantCultureIgnoreCase));
-            var PistasFiltradas = ListaFriltrada.Select(p => p.Pista).ToList();
-
+            var PistasFiltradas = ListaFriltrada.Select(p => p.Pista).Distinct().ToList();
             return PistasFiltradas;
         }
 
         //Método que se llama cuando al crear un item en la forma.
-        private async Task CreateItem()
+        private async Task CreateItem(EditContext context)
         {
-
+            _isCreatingItem = true;
+            _loadingStatus = "Creando la pista del item.";
             await VerificarCreacionDePista();
+            _loadingStatus = "Creando el item.";
             await VerificarExistenciaDeItem();
-            //await CrearRelacion();
+            _loadingStatus = "Generando la relación en la base de datos.";
+            await CrearRelacion();
+            _isCreatingItem = false;
+            await CloseDialog();
         }
 
         
         //Si existe la pista se crea, si no no se hace nada.
         private async Task VerificarCreacionDePista()
         {
-            var PistaExistente = PistasTotales.Where(p => p.Pista == _pista.Pista).FirstOrDefault();
+            var PistaExistente = PistasTotales.Where(p => p.Pista == _model.Pista).FirstOrDefault();
             if (PistaExistente == null)
             {
                 PistaModel p = new();
-                p.Pista = _pista.Pista;
+                p.Pista = _model.Pista;
                 await CrearPista(p);
             }
         }
@@ -132,7 +136,7 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation
         //Si existe el item se crea, si no no se hace nada.
         private async Task VerificarExistenciaDeItem()
         {            
-            var PistaExistente = PistasTotales.Where(p => p.Pista == _pista.Pista).FirstOrDefault();
+            var PistaExistente = PistasTotales.Where(p => p.Pista == _model.Pista).FirstOrDefault();
             var ItemExistente = ItemsTotales.Where(i => i.FormaCorrecta == _model.FormaCorrecta &&
                                                         i.FormaIncorrecta == _model.FormaIncorrecta &&
                                                         i.PistaId == PistaExistente.Id)
@@ -156,7 +160,7 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation
         //Se crea la relación con el item y la pista.
         private async Task CrearRelacion()
         {
-            var PistaExistente = PistasTotales.Where(p => p.Pista == _pista.Pista).FirstOrDefault();
+            var PistaExistente = PistasTotales.Where(p => p.Pista == _model.Pista).FirstOrDefault();
             var ItemExistente = ItemsTotales.Where(i => i.FormaCorrecta == _model.FormaCorrecta &&
                                                         i.FormaIncorrecta == _model.FormaIncorrecta &&
                                                         i.PistaId == PistaExistente.Id)

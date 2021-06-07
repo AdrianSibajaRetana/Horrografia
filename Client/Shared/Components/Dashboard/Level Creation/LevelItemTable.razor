@@ -1,34 +1,31 @@
-﻿
-@if (ItemsDeNivel.Any())
-{
-    <MudTable Items="@ItemsDeNivel" Hover="true">
-        <HeaderContent>
-            <MudTh>Id</MudTh>
-            <MudTh>Forma Correcta</MudTh>
-            <MudTh>Forma Incorrecta</MudTh>
-            <MudTh>Pista</MudTh>
-        </HeaderContent>
-        <RowTemplate>
-            <MudTd DataLabel="Id">@context.Id</MudTd>
-            <MudTd DataLabel="Forma Correcta">@context.FormaCorrecta</MudTd>
-            <MudTd DataLabel="Forma Incorrecta">@context.FormaIncorrecta</MudTd>
-            <MudTd DataLabel="Pista">@GetPistaById(context.PistaId)</MudTd>
-        </RowTemplate>
-    </MudTable>
-}
-else
-{    
-    <MudGrid Justify="Justify.Center">
-        <MudItem xs="12" sm="12" md="12">
-            <MudText Typo="Typo.h5" GutterBottom="true" Align="Align.Center">
-                El nivel no tiene items.
-            </MudText>
-        </MudItem>
-        <MudItem xs="12" sm="12" md="12">
-            <MudText Typo="Typo.subtitle1" Align="Align.Center" GutterBottom="true">
-                No existen items registrados en este nivel en la base de datos.
-            </MudText>
-        </MudItem>     
+﻿@using Horrografia.Client.Shared.Components.General
+
+<PageLoading Titulo="Cargando items de nivel" IsLoading="_isLoading">
+    @if (_itemList.Any())
+    {
+        @*Se muestras los items del nivel*@
+        <MudSimpleTable Hover="true" Striped="true">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Forma Correcta</th>
+                    <th>Forma Incorrecta</th>
+                    <th>Pista</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in ItemsDeNivel)
+                {
+                    <tr>
+                        <td>@item.Id</td>
+                        <td>@item.FormaCorrecta</td>
+                        <td>@item.FormaIncorrecta</td>
+                        <td>@GetPistaById(item.PistaId)</td>
+                    </tr>
+                }
+            </tbody>
+        </MudSimpleTable>
+        @*Cambiar boton a on Floating action button.*@
         <MudItem xs="12" sm="12" md="12">
             <MudGrid Justify="Justify.Center">
                 <MudItem>
@@ -38,14 +35,46 @@ else
                 </MudItem>
             </MudGrid>
         </MudItem>
-    
+
         <ItemCreationDialog ShowDialogue="_showItemCreationDialog"
                             ItemsTotales="ItemsTotales"
                             PistasTotales="PistasTotales"
                             OnDialogClosed="closeItemCreationDialog"
                             OnItemCreation="ItemCreationRequest"
                             OnClueCreation="ClueCreationRequest"
-                            OnRelationCreation="RelationCreationRequest"/>
+                            OnRelationCreation="RelationCreationRequest" />
 
-    </MudGrid>
-}
+    }
+    else
+    {
+        @*Se despliega mensaje de que no hay items en el nviel*@
+        <MudGrid Justify="Justify.Center">
+            <MudItem xs="12" sm="12" md="12">
+                <MudText Typo="Typo.h5" GutterBottom="true" Align="Align.Center">
+                    El nivel no tiene items.
+                </MudText>
+            </MudItem>
+            <MudItem xs="12" sm="12" md="12">
+                <MudText Typo="Typo.subtitle1" Align="Align.Center" GutterBottom="true">
+                    No existen items registrados en este nivel en la base de datos.
+                </MudText>
+            </MudItem>
+            <MudItem xs="12" sm="12" md="12">
+                <MudGrid Justify="Justify.Center">
+                    <MudItem>
+                        <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="openItemCreationDialog">
+                            Crear item
+                        </MudButton>
+                    </MudItem>
+                </MudGrid>
+            </MudItem>
+            <ItemCreationDialog ShowDialogue="_showItemCreationDialog"
+                                ItemsTotales="ItemsTotales"
+                                PistasTotales="PistasTotales"
+                                OnDialogClosed="closeItemCreationDialog"
+                                OnItemCreation="ItemCreationRequest"
+                                OnClueCreation="ClueCreationRequest"
+                                OnRelationCreation="RelationCreationRequest" />
+        </MudGrid>
+    }
+</PageLoading>

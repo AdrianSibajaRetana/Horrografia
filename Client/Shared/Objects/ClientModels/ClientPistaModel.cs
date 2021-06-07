@@ -9,7 +9,7 @@ namespace Horrografia.Client.Shared.Objects.ClientModels
 {
     public class ClientPistaModel
     {
-        [Required(ErrorMessage = "Cada item debe tener una pista.")]
+        [Required(ErrorMessage = "La pista es obligatoria.")]
         [StringLength(100, ErrorMessage = "La pista no puede ser mayor a 100 caracteres.")]
         public string Pista { get; set; }
 

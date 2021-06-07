@@ -4,7 +4,7 @@
 <MudDialog @bind-IsVisible="ShowDialogue">
     <TitleContent>
         <MudText Typo="Typo.h6">
-            <MudIcon Icon="@Icons.Material.Filled.Edit" Class="mr-3" /> Crear nivel
+            <MudIcon Icon="@Icons.Material.Filled.Edit" Class="mr-3" /> Crear item
         </MudText>
     </TitleContent>
     <DialogContent>
@@ -12,42 +12,68 @@
             <DataAnnotationsValidator />
             <MudCard Elevation=0>
                 <MudCardContent>
-                    <MudAutocomplete T="string" 
+                    <MudAutocomplete T="string"
                                      Label="Forma Correcta"
-                                     @bind-Value="_model.FormaCorrecta" 
+                                     @bind-Value="_model.FormaCorrecta"
                                      SearchFunc="@BuscarFormasCorrectasExistentes"
-                                     ResetValueOnEmptyText="true" CoerceValue="true" 
+                                     ResetValueOnEmptyText="true"
+                                     CoerceValue="true"
+                                     MinCharacters="4"
+                                     Immediate="true"
                                      For="@(() => _model.FormaCorrecta)"
                                      HelperText="El texto que se espera que el usuario escriba." />
-                    <MudAutocomplete Class="mt-4" 
-                                     T="string" 
+                    <MudAutocomplete Class="mt-4"
+                                     T="string"
                                      Label="Forma Incorrecta"
-                                     @bind-Value="_model.FormaIncorrecta" 
+                                     @bind-Value="_model.FormaIncorrecta"
                                      SearchFunc="@BuscarFormasIncorrectasExistentes"
-                                     ResetValueOnEmptyText="true" CoerceValue="true" 
-                                     For="@(() => _model.FormaCorrecta)"
+                                     ResetValueOnEmptyText="true"
+                                     CoerceValue="true"
+                                     MinCharacters="4"
+                                     Immediate="true"
+                                     For="@(() => _model.FormaIncorrecta)"
                                      HelperText="El texto que verá el usuario." />
                     <MudAutocomplete Class="mt-4"
                                      T="string"
                                      Label="Pista"
-                                     @bind-Value="_pista.Pista"
+                                     @bind-Value="_model.Pista"
                                      SearchFunc="@BuscarPistasExistentes"
-                                     ResetValueOnEmptyText="true" CoerceValue="true"
-                                     For="@(() => _model.FormaCorrecta)"
-                                     HelperText="El texto de ayuda que el usuario puede solicitar." />
+                                     ResetValueOnEmptyText="true"
+                                     CoerceValue="true"
+                                     MinCharacters="2"
+                                     Immediate="true"
+                                     For="@(() =>_model.Pista)"
+                                     HelperText="La pista de ayuda que se le podrá dar al usuario." />
                 </MudCardContent>
                 <MudCardActions>
-                    <MudGrid>
-                        <MudItem Class="ml-auto">
-                            <MudButton Variant="Variant.Text" OnClick="CloseDialog">Cancelar</MudButton>
-                            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Text" Color="Color.Success">Crear Item</MudButton>
+                    @if (!_isCreatingItem)
+                    {
+                        <MudGrid>
+                            <MudItem Class="ml-auto">
+                                <MudButton Variant="Variant.Text" OnClick="CloseDialog">Cancelar</MudButton>
+                                <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Text" Color="Color.Success">Crear Item</MudButton>
+                            </MudItem>
+                        </MudGrid>
+                    }
+                    else
+                    {
+                        <MudItem xs="12" sm="12" md="12">
+                            <MudText Typo="Typo.subtitle1" Align="Align.Center" GutterBottom="true">
+                                @_loadingStatus
+                            </MudText>
                         </MudItem>
-                    </MudGrid>
+                        <MudItem xs="12" sm="12" md="12">
+                            <MudGrid Justify="Justify.Center">
+                                <MudItem>
+                                    <MudItem>
+                                        <MudProgressCircular Color="Color.Success" Indeterminate="true" />
+                                    </MudItem>
+                                </MudItem>
+                            </MudGrid>
+                        </MudItem>
+                    }
                 </MudCardActions>
             </MudCard>
         </EditForm>
     </DialogContent>
-    @*<DialogActions>
-        </DialogActions>
-    *@
 </MudDialog>
