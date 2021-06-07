@@ -8,13 +8,33 @@
         </MudText>
     </TitleContent>
     <DialogContent>
-        <EditForm Model="@model" OnValidSubmit="CreateItem">
+        <EditForm Model="@_model" OnValidSubmit="CreateItem">
             <DataAnnotationsValidator />
             <MudCard Elevation=0>
                 <MudCardContent>
-                    <MudAutocomplete T="string" Label="Forma Correcta" @bind-Value="model.FormaCorrecta" SearchFunc="@BuscarItemsExistentes"
-                                     ResetValueOnEmptyText="true" CoerceValue="true" For="@(() => model.FormaCorrecta)" 
-                                     HelperText="El texto que se espera que el usuario escriba."/>
+                    <MudAutocomplete T="string" 
+                                     Label="Forma Correcta"
+                                     @bind-Value="_model.FormaCorrecta" 
+                                     SearchFunc="@BuscarFormasCorrectasExistentes"
+                                     ResetValueOnEmptyText="true" CoerceValue="true" 
+                                     For="@(() => _model.FormaCorrecta)"
+                                     HelperText="El texto que se espera que el usuario escriba." />
+                    <MudAutocomplete Class="mt-4" 
+                                     T="string" 
+                                     Label="Forma Incorrecta"
+                                     @bind-Value="_model.FormaIncorrecta" 
+                                     SearchFunc="@BuscarFormasIncorrectasExistentes"
+                                     ResetValueOnEmptyText="true" CoerceValue="true" 
+                                     For="@(() => _model.FormaCorrecta)"
+                                     HelperText="El texto que verá el usuario." />
+                    <MudAutocomplete Class="mt-4"
+                                     T="string"
+                                     Label="Pista"
+                                     @bind-Value="_pista.Pista"
+                                     SearchFunc="@BuscarPistasExistentes"
+                                     ResetValueOnEmptyText="true" CoerceValue="true"
+                                     For="@(() => _model.FormaCorrecta)"
+                                     HelperText="El texto de ayuda que el usuario puede solicitar." />
                 </MudCardContent>
                 <MudCardActions>
                     <MudGrid>

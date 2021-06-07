@@ -56,7 +56,7 @@ namespace Horrografia.Client.Pages.DashboardPages
         private List<PistaModel> PistasTotales { get; set; }
 
         // Diccionario que se construye a partir de las relaciones existentes. 
-        private Dictionary<NivelModel, List<ItemModel>> ItemsPorNivel{get; set;}
+        private Dictionary<NivelModel, List<ItemModel>> ItemsPorNivel { get; set; }
 
         public LevelAdministration()
         {
@@ -80,7 +80,7 @@ namespace Horrografia.Client.Pages.DashboardPages
             var itemsResponse = await _itemService.GetAsync();
             var pistasResponse = await _pistaService.GetAsync();
             if (
-                    nivelesResponse.isResponseSuccesfull() 
+                    nivelesResponse.isResponseSuccesfull()
                     && relacionesResponse.isResponseSuccesfull()
                     && itemsResponse.isResponseSuccesfull()
                     && pistasResponse.isResponseSuccesfull()
@@ -98,7 +98,7 @@ namespace Horrografia.Client.Pages.DashboardPages
             {
                 ShowNotification("Hubo un error al cargar los niveles de la base de datos.", Severity.Error, primerLoad);
             }
-            IsLoading = false; 
+            IsLoading = false;
         }
 
         private void GenerarDiccionario()
@@ -118,8 +118,8 @@ namespace Horrografia.Client.Pages.DashboardPages
 
         public void ShowNotification(string mensaje, Severity s, bool firstMessage)
         {
-            if (firstMessage) 
-            { 
+            if (firstMessage)
+            {
                 //Configura la notificación en el centro.
                 _snackbar.Configuration.PositionClass = Defaults.Classes.Position.TopCenter;
             }
@@ -130,7 +130,7 @@ namespace Horrografia.Client.Pages.DashboardPages
         // Abre dialogo para crear niveles
         public void ShowCrearNivel()
         {
-            ShowCreateLevelDialog = true;            
+            ShowCreateLevelDialog = true;
         }
 
         // Cierra dialogo para crear niveles
@@ -190,7 +190,7 @@ namespace Horrografia.Client.Pages.DashboardPages
             {
                 ShowNotification("Hubo un error al eliminar el nivel.", Severity.Error, false);
             }
-            nivelActual = null; 
+            nivelActual = null;
             await CargarDatos(false);
         }
 
@@ -208,6 +208,39 @@ namespace Horrografia.Client.Pages.DashboardPages
             }
             nivelActual = null;
             await CargarDatos(false);
+        }
+
+        protected async Task CreateClue(PistaModel p)
+        {
+            var response = await _pistaService.PostAsync(p);
+            if (response.isResponseSuccesfull())
+            {
+                ShowNotification($"¡Se actualizaron las pistas!", Severity.Success, false);
+            }
+            else
+            {
+                ShowNotification("Hubo un error al crear la pista.", Severity.Error, false);
+            }
+            await CargarDatos(false);
+        }
+
+        protected async Task CreateItem(ItemModel i)
+        {
+            var response = await _itemService.PostAsync(i);
+            if (response.isResponseSuccesfull())
+            {
+                ShowNotification($"¡Se actualizaron creó el item!", Severity.Success, false);
+            }
+            else
+            {
+                ShowNotification("Hubo un error al crear el item.", Severity.Error, false);
+            }
+            await CargarDatos(false);
+        }
+
+        protected async Task CreateRelation(int id)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -41,8 +41,11 @@ else
     
         <ItemCreationDialog ShowDialogue="_showItemCreationDialog"
                             ItemsTotales="ItemsTotales"
+                            PistasTotales="PistasTotales"
                             OnDialogClosed="closeItemCreationDialog"
-                            OnLevelCreation="closeItemCreationDialog"/>
+                            OnItemCreation="ItemCreationRequest"
+                            OnClueCreation="ClueCreationRequest"
+                            OnRelationCreation="RelationCreationRequest"/>
 
     </MudGrid>
 }
