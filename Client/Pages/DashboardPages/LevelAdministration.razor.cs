@@ -55,9 +55,6 @@ namespace Horrografia.Client.Pages.DashboardPages
         // Todas las pistas
         private List<PistaModel> PistasTotales { get; set; }
 
-        // Diccionario que se construye a partir de las relaciones existentes. 
-        private Dictionary<NivelModel, List<ItemModel>> ItemsPorNivel { get; set; }
-
         // booleano que me indica que la renderización fue exitosa.
         private bool _lecturaExitosa { get; set; }
 
@@ -69,7 +66,6 @@ namespace Horrografia.Client.Pages.DashboardPages
             ShowDeleteLevelDialog = false;
             ShowUpdateLevelDialog = false;            
             _lecturaExitosa = false;
-            ItemsPorNivel = new();
         }
 
         /*Carga los niveles existentes y notifica el estado actual*/
@@ -99,7 +95,6 @@ namespace Horrografia.Client.Pages.DashboardPages
                 RelacionesNivelItem = relacionesResponse.Response;
                 ItemsTotales = itemsResponse.Response;
                 PistasTotales = pistasResponse.Response;
-                GenerarDiccionario();
             }
             else
             {
@@ -125,19 +120,16 @@ namespace Horrografia.Client.Pages.DashboardPages
             }                            
         }
 
-        private void GenerarDiccionario()
+        // Devuelve los items por nivel
+        private List<ItemModel> GetItems(NivelModel n)
         {
-            foreach (var nivel in Niveles)
-            {
-                List<ItemModel> listaDeItems = new();
-                ItemsPorNivel.Add(nivel, listaDeItems);
-                var relacionesDeNivel = RelacionesNivelItem.Where(i => i.IdNivel == nivel.Id);
-                foreach (var relacion in relacionesDeNivel)
-                {
-                    var item = ItemsTotales.Find(i => i.Id == relacion.IdItem);
-                    ItemsPorNivel[nivel].Add(item);
-                }
+            List<ItemModel> NivelItems = new();
+            if (n != null)
+            { 
+                var ItemIds = RelacionesNivelItem.Where(r => r.IdNivel == n.Id).Select(r => r.IdItem);
+                NivelItems = ItemsTotales.Where(i => ItemIds.Contains(i.Id)).ToList();            
             }
+            return NivelItems;
         }
 
         public void ShowNotification(string mensaje, Severity s)
