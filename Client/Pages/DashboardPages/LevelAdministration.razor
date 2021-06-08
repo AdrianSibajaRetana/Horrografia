@@ -9,7 +9,7 @@
 @inject IDialogService DialogService
 
 
-<PageLoading Titulo="Administración de niveles" IsLoading="IsLoading">
+<PageLoading Titulo="Administración de niveles" IsLoading="@IsLoading">
     @if (InitialLoadStatus == Constantes.OKSTATUS)
     {
         @if (!Niveles.Any())

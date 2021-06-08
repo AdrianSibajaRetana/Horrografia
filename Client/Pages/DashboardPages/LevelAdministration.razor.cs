@@ -58,23 +58,30 @@ namespace Horrografia.Client.Pages.DashboardPages
         // Diccionario que se construye a partir de las relaciones existentes. 
         private Dictionary<NivelModel, List<ItemModel>> ItemsPorNivel { get; set; }
 
+        // booleano que me indica que la renderización fue exitosa.
+        private bool _lecturaExitosa { get; set; }
+
+        // En primera creación de instancia se asignan los valores.
         public LevelAdministration()
         {
+            IsLoading = true;
             ShowCreateLevelDialog = false;
             ShowDeleteLevelDialog = false;
-            ShowUpdateLevelDialog = false;
+            ShowUpdateLevelDialog = false;            
+            _lecturaExitosa = false;
             ItemsPorNivel = new();
         }
 
         /*Carga los niveles existentes y notifica el estado actual*/
         protected override async Task OnInitializedAsync()
         {
+            Console.WriteLine("OnInitializedAsync llamado");
             await CargarDatos(true);
         }
 
         public async Task CargarDatos(bool primerLoad)
-        {
-            IsLoading = true;
+        {   
+            Console.WriteLine("Se entró a la carga incial");
             var nivelesResponse = await _nivelService.GetAsync();
             var relacionesResponse = await _perteneceAService.GetAsync();
             var itemsResponse = await _itemService.GetAsync();
@@ -86,22 +93,36 @@ namespace Horrografia.Client.Pages.DashboardPages
                     && pistasResponse.isResponseSuccesfull()
                 )
             {
-                InitialLoadStatus = Constantes.OKSTATUS;
+                Console.WriteLine("Carga inicial verdadera");
+                _lecturaExitosa = true;
                 Niveles = nivelesResponse.Response;
                 RelacionesNivelItem = relacionesResponse.Response;
                 ItemsTotales = itemsResponse.Response;
                 PistasTotales = pistasResponse.Response;
                 GenerarDiccionario();
-                if (primerLoad)
-                { 
-                    ShowNotification("Se leyeron los niveles de la base de datos exitosamente", Severity.Success, primerLoad);                
-                }
             }
-            else if(primerLoad)
+            else
             {
-                ShowNotification("Hubo un error al cargar los niveles de la base de datos.", Severity.Error, primerLoad);
+                _lecturaExitosa = false;
+                InitialLoadStatus = Constantes.INTERNALERRORSTATUS;
             }
+        }
+
+        //Método que se llama después del OnInitialized. 
+        protected override void OnParametersSet()
+        {
             IsLoading = false;
+            Console.WriteLine("Se entra al OnParametersSet is loading = " + IsLoading);
+            if (_lecturaExitosa)
+            {
+                _snackbar.Configuration.PositionClass = Defaults.Classes.Position.TopCenter;
+                InitialLoadStatus = Constantes.OKSTATUS;
+                ShowNotification("Se leyeron los niveles de la base de datos exitosamente", Severity.Success);
+            }
+            else
+            {
+                ShowNotification("Hubo un error al cargar los niveles de la base de datos.", Severity.Error);
+            }                            
         }
 
         private void GenerarDiccionario()
@@ -119,13 +140,8 @@ namespace Horrografia.Client.Pages.DashboardPages
             }
         }
 
-        public void ShowNotification(string mensaje, Severity s, bool firstMessage)
+        public void ShowNotification(string mensaje, Severity s)
         {
-            if (firstMessage)
-            {
-                //Configura la notificación en el centro.
-                _snackbar.Configuration.PositionClass = Defaults.Classes.Position.TopCenter;
-            }
             //Muestra la notifiación
             _snackbar.Add(mensaje, s);
         }
@@ -172,11 +188,11 @@ namespace Horrografia.Client.Pages.DashboardPages
             var response = await _nivelService.PostAsync(n);
             if (response.isResponseSuccesfull())
             {
-                ShowNotification("¡Se creó el nivel exitosamente!", Severity.Success, false);
+                ShowNotification("¡Se creó el nivel exitosamente!", Severity.Success);
             }
             else
             {
-                ShowNotification("Hubo un error al crear el nivel.", Severity.Error, false);
+                ShowNotification("Hubo un error al crear el nivel.", Severity.Error);
             }
             await CargarDatos(false);
         }
@@ -187,11 +203,11 @@ namespace Horrografia.Client.Pages.DashboardPages
             var response = await _nivelService.DeleteAsync(n);
             if (response.isResponseSuccesfull())
             {
-                ShowNotification("¡Se eliminó el nivel exitosamente!", Severity.Success, false);
+                ShowNotification("¡Se eliminó el nivel exitosamente!", Severity.Success);
             }
             else
             {
-                ShowNotification("Hubo un error al eliminar el nivel.", Severity.Error, false);
+                ShowNotification("Hubo un error al eliminar el nivel.", Severity.Error);
             }
             nivelActual = null;
             await CargarDatos(false);
@@ -203,11 +219,11 @@ namespace Horrografia.Client.Pages.DashboardPages
             var response = await _nivelService.UpdateAsync(n);
             if (response.isResponseSuccesfull())
             {
-                ShowNotification($"¡Se actualizó el nivel exitosamente!", Severity.Success, false);
+                ShowNotification($"¡Se actualizó el nivel exitosamente!", Severity.Success);
             }
             else
             {
-                ShowNotification("Hubo un error al actualizar el nivel.", Severity.Error, false);
+                ShowNotification("Hubo un error al actualizar el nivel.", Severity.Error);
             }
             nivelActual = null;
             await CargarDatos(false);
@@ -227,18 +243,17 @@ namespace Horrografia.Client.Pages.DashboardPages
 
         protected async Task CreateRelation(int id)
         {
-            var nivelID = nivelActual.Id;
             PerteneceAModel p = new();
-            p.IdNivel = nivelID;
+            p.IdNivel = nivelActual.Id;
             p.IdItem = id;
             var response = await _perteneceAService.PostAsync(p);
             if (response.isResponseSuccesfull())
             {
-                ShowNotification($"¡Se añadió el item en el nivel!", Severity.Success, false);
+                ShowNotification($"¡Se añadió el item en el nivel!", Severity.Success);
             }
             else
             {
-                ShowNotification("Hubo un error al crear la relación.", Severity.Error, false);
+                ShowNotification("Hubo un error al crear la relación.", Severity.Error);
             }
             await CargarDatos(false);
         }
