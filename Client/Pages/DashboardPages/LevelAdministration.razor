@@ -42,7 +42,7 @@
             <MudContainer Class="mt-4 px-8" MaxWidth="MaxWidth.False">
                 <MudGrid>
                     <MudItem xs="12" sm="12" md="12">
-                        <MudCard Elevation="2" Class="pa-4" Outlined="true">
+                        <MudCard Elevation="2" Class="px-auto pt-1 pb-1" Outlined="true">
                             <MudCardHeader>
                                 <CardHeaderContent>
                                     <MudGrid>
@@ -51,20 +51,20 @@
                                         </MudItem>
                                         <MudItem xs="12" sm="12" md="4" >
                                             <MudGrid Spacing=1>
-                                                <MudItem Class="ml-auto">
-                                                    <MudButton OnClick="ShowCrearNivel" Variant="Variant.Filled" Color="Color.Success">
+                                                <MudItem Class="ml-auto" xs="12" sm="12" md="4">
+                                                    <MudButton OnClick="ShowCrearNivel" Variant="Variant.Filled" Color="Color.Success" Size="Size.Small">
                                                         Crear nivel
                                                     </MudButton>
                                                 </MudItem>
                                                 @if (nivelActual != null)
                                                 {
-                                                    <MudItem Class="ml-auto">
-                                                        <MudButton OnClick="ShowUpdateNivel" Variant="Variant.Filled" Color="Color.Info">
+                                                    <MudItem Class="ml-auto" xs="12" sm="12" md="4">
+                                                        <MudButton OnClick="ShowUpdateNivel" Variant="Variant.Filled" Color="Color.Info" Size="Size.Small">
                                                             Editar nivel
                                                         </MudButton>
                                                     </MudItem>
-                                                    <MudItem Class="ml-auto">
-                                                        <MudButton OnClick="ShowDeleteNivel" Variant="Variant.Filled" Color="Color.Error">
+                                                    <MudItem Class="ml-auto" xs="12" sm="12" md="4">
+                                                        <MudButton OnClick="ShowDeleteNivel" Variant="Variant.Filled" Color="Color.Error" Size="Size.Small">
                                                             Borrar nivel
                                                         </MudButton>
                                                     </MudItem>
@@ -84,27 +84,30 @@
                             </MudCardContent>
                         </MudCard>
                     </MudItem>
-                    <MudItem xs="12" sm="12" md="12" Class="mt-4">
-                        <MudTabs Elevation="2" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-6">
+                    <MudItem xs="12" sm="12" md="12" Class="mt-2">
+                        <MudTabs Elevation="2" Rounded="true" ApplyEffectsToContainer="true" PanelClass="py-1">
                             <MudTabPanel Text="Datos">
-                                <MudItem>
+                                <MudItem Style="height: auto;">
                                     <LevelData nivelADesplegar="@nivelActual"/>
                                 </MudItem>
                             </MudTabPanel>
                             <MudTabPanel Text="Items">
-                                @if (nivelActual == null)
-                                {
-                                    <MudText Class="mt-5">No se ha seleccionado nivel.</MudText>
-                                }
-                                else
-                                {
-                                    <LevelItemTable ItemsDeNivel="GetItems(nivelActual)" 
-                                                    ItemsTotales="ItemsTotales"
-                                                    PistasTotales="PistasTotales"
-                                                    OnItemCreationRequest="CreateItem"
-                                                    OnClueCreationRequest="CreateClue"
-                                                    OnRelationCreationRequest="CreateRelation"/>
-                                }
+                                <MudItem Style="height: auto;">
+                                    @if (nivelActual == null)
+                                    {
+                                        <MudText Typo="Typo.body1" Align="Align.Center">No se ha seleccionado nivel</MudText>
+                                    }
+                                    else
+                                    {
+                                    
+                                            <LevelItemTable ItemsDeNivel="GetItems(nivelActual)" 
+                                                            ItemsTotales="ItemsTotales"
+                                                            PistasTotales="PistasTotales"
+                                                            OnItemCreationRequest="CreateItem"
+                                                            OnClueCreationRequest="CreateClue"
+                                                            OnRelationCreationRequest="CreateRelation"/>
+                                    }
+                                </MudItem>
                             </MudTabPanel>
                         </MudTabs>
                     </MudItem>

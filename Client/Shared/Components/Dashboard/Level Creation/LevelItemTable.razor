@@ -3,39 +3,40 @@
 <PageLoading Titulo="Cargando items de nivel" IsLoading="_isLoading">
     @if (_itemList.Any())
     {
-        @*Se muestras los items del nivel*@
-        <MudSimpleTable Hover="true" Striped="true">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Forma Correcta</th>
-                    <th>Forma Incorrecta</th>
-                    <th>Pista</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in ItemsDeNivel)
-                {
-                    <tr>
-                        <td>@item.Id</td>
-                        <td>@item.FormaCorrecta</td>
-                        <td>@item.FormaIncorrecta</td>
-                        <td>@GetPistaById(item.PistaId)</td>
-                    </tr>
-                }
-            </tbody>
-        </MudSimpleTable>
-        @*Cambiar boton a on Floating action button.*@
-        <MudItem xs="12" sm="12" md="12">
-            <MudGrid Justify="Justify.Center">
-                <MudItem>
-                    <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="openItemCreationDialog">
-                        Crear item
-                    </MudButton>
-                </MudItem>
-            </MudGrid>
-        </MudItem>
-
+        <MudGrid>
+            <MudItem Class="mx-2" xs="12" sm="12" md="12">
+                <MudSimpleTable Hover="true" Striped="true" FixedHeader="true" Style="height: 300px; " Elevation="0">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Forma Correcta</th>
+                            <th>Forma Incorrecta</th>
+                            <th>Pista</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in ItemsDeNivel)
+                        {
+                            <tr>
+                                <td>@item.Id</td>
+                                <td>@item.FormaCorrecta</td>
+                                <td>@item.FormaIncorrecta</td>
+                                <td>@GetPistaById(item.PistaId)</td>
+                            </tr>
+                        }
+                    </tbody>
+                </MudSimpleTable>
+            </MudItem>
+            <MudItem xs="12" sm="12" md="12" Class="my-2">
+                <MudGrid Justify="Justify.Center">
+                    <MudItem>
+                        <MudButton Variant="Variant.Outlined" Color="Color.Success" OnClick="openItemCreationDialog">
+                            Agregar item
+                        </MudButton>
+                    </MudItem>
+                </MudGrid>
+            </MudItem>
+        </MudGrid>
         <ItemCreationDialog ShowDialogue="_showItemCreationDialog"
                             ItemsTotales="ItemsTotales"
                             PistasTotales="PistasTotales"

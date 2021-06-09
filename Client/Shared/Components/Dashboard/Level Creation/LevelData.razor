@@ -1,12 +1,12 @@
-﻿@using Horrografia.Shared.Models 
+﻿@using Horrografia.Shared.Models
 
 @if (nivelADesplegar == null)
 {
-    <MudText Class="mt-5">No se ha seleccionado nivel.</MudText>
+    <MudText Typo="Typo.body1" Align="Align.Center">No se ha seleccionado nivel</MudText>
 }
 else
 {
-    <MudSimpleTable Hover="true" Striped="true">
+    <MudSimpleTable Hover="true" Striped="true" Style="height: inherit" FixedHeader="true" Elevation="0">
         <thead>
             <tr>
                 <th>Propiedad</th>
