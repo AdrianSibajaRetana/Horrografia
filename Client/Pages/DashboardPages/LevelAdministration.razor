@@ -49,24 +49,18 @@
                                         <MudItem xs="12" sm="12" md="8">
                                             <MudText Typo="Typo.h5">Administración de niveles</MudText>
                                         </MudItem>
-                                        <MudItem xs="12" sm="12" md="4" >
+                                        <MudItem xs="12" sm="12" md="2" Class="ml-auto">
                                             <MudGrid Spacing=1>
-                                                <MudItem Class="ml-auto" xs="12" sm="12" md="4">
-                                                    <MudButton OnClick="ShowCrearNivel" Variant="Variant.Filled" Color="Color.Success" Size="Size.Small">
-                                                        Crear nivel
-                                                    </MudButton>
+                                                <MudItem Class="ml-auto" xs="4" sm="4" md="4">
+                                                    <MudFab Color="Color.Success" Icon="@Icons.Material.Filled.Add" Size="Size.Medium" IconSize="Size.Medium" DisableElevation="true" OnClick="ShowCrearNivel" />
                                                 </MudItem>
                                                 @if (nivelActual != null)
                                                 {
-                                                    <MudItem Class="ml-auto" xs="12" sm="12" md="4">
-                                                        <MudButton OnClick="ShowUpdateNivel" Variant="Variant.Filled" Color="Color.Info" Size="Size.Small">
-                                                            Editar nivel
-                                                        </MudButton>
+                                                    <MudItem Class="ml-auto" xs="4" sm="4" md="4">
+                                                        <MudFab Color="Color.Info" Icon="@Icons.Material.Filled.Edit" Size="Size.Medium" IconSize="Size.Medium" DisableElevation="true" OnClick="ShowUpdateNivel"/>
                                                     </MudItem>
-                                                    <MudItem Class="ml-auto" xs="12" sm="12" md="4">
-                                                        <MudButton OnClick="ShowDeleteNivel" Variant="Variant.Filled" Color="Color.Error" Size="Size.Small">
-                                                            Borrar nivel
-                                                        </MudButton>
+                                                    <MudItem Class="ml-auto" xs="4" sm="4" md="4">
+                                                        <MudFab Color="Color.Error" Icon="@Icons.Material.Filled.Delete" Size="Size.Medium" IconSize="Size.Medium" DisableElevation="true" OnClick="ShowDeleteNivel"/>
                                                     </MudItem>
                                                 }
                                             </MudGrid>
