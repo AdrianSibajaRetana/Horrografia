@@ -12,6 +12,7 @@
                             <th>Forma Correcta</th>
                             <th>Forma Incorrecta</th>
                             <th>Pista</th>
+                            <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -22,6 +23,16 @@
                                 <td>@item.FormaCorrecta</td>
                                 <td>@item.FormaIncorrecta</td>
                                 <td>@GetPistaById(item.PistaId)</td>
+                                <td>
+                                    <MudGrid Spacing="1">
+                                        <MudItem>
+                                            <MudFab Color="Color.Info" Icon="@Icons.Material.Filled.Edit" Size="Size.Small" IconSize="Size.Small" DisableElevation="true"/>
+                                        </MudItem>
+                                        <MudItem>
+                                            <MudFab Color="Color.Error" Icon="@Icons.Material.Filled.Delete" Size="Size.Small" IconSize="Size.Small" DisableElevation="true"/>
+                                        </MudItem>
+                                    </MudGrid>
+                                </td>
                             </tr>
                         }
                     </tbody>
