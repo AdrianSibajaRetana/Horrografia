@@ -16,7 +16,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in ItemsDeNivel)
+                        @foreach (var item in _itemList)
                         {
                             <tr>
                                 <td>@item.Id</td>
@@ -41,7 +41,7 @@
             <MudItem xs="12" sm="12" md="12" Class="my-2">
                 <MudGrid Justify="Justify.Center">
                     <MudItem>
-                        <MudButton Variant="Variant.Outlined" Color="Color.Success" OnClick="openItemCreationDialog">
+                        <MudButton Variant="Variant.Outlined" Color="Color.Success" OnClick="openItemCreationDialog" Disabled="GetCreationButtonState()">
                             Agregar item
                         </MudButton>
                     </MudItem>

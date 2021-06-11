@@ -85,8 +85,8 @@
                         </MudCard>
                     </MudItem>
                     <MudItem xs="12" sm="12" md="12" Class="mt-2">
-                        <MudTabs Elevation="2" Rounded="true" ApplyEffectsToContainer="true" PanelClass="py-1">
-                            <MudTabPanel Text="Datos">
+                        <MudTabs Elevation="2" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pt-1">
+                            <MudTabPanel Text="Descripción">
                                 <MudItem Style="height: auto;">
                                     <LevelData nivelADesplegar="@nivelActual"/>
                                 </MudItem>
@@ -105,7 +105,8 @@
                                                             PistasTotales="PistasTotales"
                                                             OnItemCreationRequest="CreateItem"
                                                             OnClueCreationRequest="CreateClue"
-                                                            OnRelationCreationRequest="CreateRelation"/>
+                                                            OnRelationCreationRequest="CreateRelation"
+                                                            ItemsMaximos="GetMaxItems(nivelActual)"/>
                                     }
                                 </MudItem>
                             </MudTabPanel>

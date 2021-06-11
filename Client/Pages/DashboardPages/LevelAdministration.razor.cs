@@ -132,6 +132,11 @@ namespace Horrografia.Client.Pages.DashboardPages
             return NivelItems;
         }
 
+        private int GetMaxItems(NivelModel n)
+        {
+            return n.NumeroDeItems;
+        }
+
         public void ShowNotification(string mensaje, Severity s)
         {
             //Muestra la notifiación

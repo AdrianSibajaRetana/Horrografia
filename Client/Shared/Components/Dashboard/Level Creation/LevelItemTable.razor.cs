@@ -29,10 +29,14 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation
         [Parameter]
         public EventCallback<int> OnRelationCreationRequest { get; set; }
 
+        [Parameter]
+        public int ItemsMaximos { get; set; }
+
         private bool _showItemCreationDialog { get; set; }
         private bool _isLoading { get; set; }
         private List<ItemModel> _itemList { get; set; } = new();
         private List<PistaModel> _pistaList { get; set; } = new();
+        private int _maxitems { get; set; }
 
         public LevelItemTable()
         {
@@ -51,12 +55,26 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation
             {
                 _pistaList = PistasTotales;
             }
+            if (_maxitems != ItemsMaximos)
+            {
+                _maxitems = ItemsMaximos;
+            }
             _isLoading = false;
         }
 
         private string GetPistaById(int id)
         {
             return _pistaList.FirstOrDefault(p => p.Id == id).Pista;
+        }
+
+        private bool GetCreationButtonState()
+        {
+            bool creationButtonDisabled = true;
+            if (_itemList.Count < _maxitems)
+            {
+                creationButtonDisabled = false;
+            }            
+            return creationButtonDisabled;
         }
 
         private void openItemCreationDialog()

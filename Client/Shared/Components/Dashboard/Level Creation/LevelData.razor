@@ -6,28 +6,30 @@
 }
 else
 {
-    <MudSimpleTable Hover="true" Striped="true" Style="height: inherit" FixedHeader="true" Elevation="0">
+<MudSimpleTable Hover="true" Striped="true" Style="height: inherit" FixedHeader="true" Elevation="0">
+    @*
         <thead>
             <tr>
                 <th>Propiedad</th>
                 <th>Valor</th>
             </tr>
         </thead>
-        <tbody>
-            <tr>
-                <td>Descripción del nivel</td>
-                <td>@nivelADesplegar.Descripcion</td>
-            </tr>
-            <tr>
-                <td>Máximo de items</td>
-                <td>@nivelADesplegar.NumeroDeItems</td>
-            </tr>
-            <tr>
-                <td>Errores máximos</td>
-                <td>@nivelADesplegar.ErroresPermitidos</td>
-            </tr>
-        </tbody>
-    </MudSimpleTable>
+    *@
+    <tbody>
+        <tr>
+            <td>Descripción del nivel</td>
+            <td>@nivelADesplegar.Descripcion</td>
+        </tr>
+        <tr>
+            <td>Máximo de items</td>
+            <td>@nivelADesplegar.NumeroDeItems</td>
+        </tr>
+        <tr>
+            <td>Errores máximos</td>
+            <td>@nivelADesplegar.ErroresPermitidos</td>
+        </tr>
+    </tbody>
+</MudSimpleTable>
 }
 
 @code {
