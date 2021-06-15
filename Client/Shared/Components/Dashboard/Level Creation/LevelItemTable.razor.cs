@@ -33,6 +33,9 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation
         public int ItemsMaximos { get; set; }
 
         private bool _showItemCreationDialog { get; set; }
+        private bool _showItemEditionDialog { get; set; }
+        private bool _showItemDeletionDialog { get; set; }
+        private ItemModel _itemSelectedForCrudAction { get; set; }
         private bool _isLoading { get; set; }
         private List<ItemModel> _itemList { get; set; } = new();
         private List<PistaModel> _pistaList { get; set; } = new();
@@ -41,6 +44,9 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation
         public LevelItemTable()
         {
             _showItemCreationDialog = false;
+            _showItemEditionDialog = false;
+            _showItemDeletionDialog = false;
+            _itemSelectedForCrudAction = new();
         }
 
 
@@ -82,9 +88,31 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation
             _showItemCreationDialog = true;
         }
 
+        private void openItemEditionDialog(ItemModel i)
+        {
+            _showItemEditionDialog = true;
+            _itemSelectedForCrudAction = i;
+        }
+
+        private void openItemDeletionDialog(ItemModel i)
+        {
+            _showItemDeletionDialog = true;
+            _itemSelectedForCrudAction = i;
+        }
+
         protected void closeItemCreationDialog()
         {
             _showItemCreationDialog = false;
+        }
+
+        protected void closeItemEditionDialog()
+        {
+            _showItemEditionDialog = false;
+        }
+
+        protected void closeItemDeletionDialog()
+        {
+            _showItemDeletionDialog = false;
         }
 
         protected async Task ItemCreationRequest(ItemModel i)

@@ -27,12 +27,12 @@
                                     <MudGrid Spacing="1">
                                         <MudItem>
                                             <MudTooltip Text="Editar Item">
-                                                <MudFab Color="Color.Info" Icon="@Icons.Material.Filled.Edit" Size="Size.Small" IconSize="Size.Small" DisableElevation="true" />
+                                                <MudFab Color="Color.Info" Icon="@Icons.Material.Filled.Edit" Size="Size.Small" IconSize="Size.Small" DisableElevation="true" OnClick="() => openItemEditionDialog(item)"/>
                                             </MudTooltip>
                                         </MudItem>
                                         <MudItem>
                                             <MudTooltip Text="Borrar Item">
-                                                <MudFab Color="Color.Error" Icon="@Icons.Material.Filled.Delete" Size="Size.Small" IconSize="Size.Small" DisableElevation="true" />
+                                                <MudFab Color="Color.Error" Icon="@Icons.Material.Filled.Delete" Size="Size.Small" IconSize="Size.Small" DisableElevation="true" OnClick="() => openItemDeletionDialog(item)"/>
                                             </MudTooltip>
                                         </MudItem>
                                     </MudGrid>

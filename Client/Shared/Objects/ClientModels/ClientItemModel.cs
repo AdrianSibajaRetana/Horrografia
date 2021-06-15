@@ -35,5 +35,14 @@ namespace Horrografia.Client.Shared.Objects.ClientModels
             Pistaid = model.PistaId;
         }
 
+        public ItemModel GetItemModel()
+        {
+            ItemModel i = new();
+            i.Id = Id;
+            i.FormaCorrecta = FormaCorrecta;
+            i.FormaIncorrecta = FormaIncorrecta;
+            i.PistaId = Pistaid;
+            return i;
+        }
     }
 }
