@@ -52,15 +52,21 @@
                                         <MudItem xs="12" sm="12" md="2" Class="ml-auto">
                                             <MudGrid Spacing=1>
                                                 <MudItem Class="ml-auto" xs="4" sm="4" md="4">
-                                                    <MudFab Color="Color.Success" Icon="@Icons.Material.Filled.Add" Size="Size.Medium" IconSize="Size.Medium" DisableElevation="true" OnClick="ShowCrearNivel" />
+                                                    <MudTooltip Text="Crear Nivel">
+                                                        <MudFab Color="Color.Success" Icon="@Icons.Material.Filled.Add" Size="Size.Medium" IconSize="Size.Medium" DisableElevation="true" OnClick="ShowCrearNivel" />
+                                                    </MudTooltip>
                                                 </MudItem>
                                                 @if (nivelActual != null)
                                                 {
                                                     <MudItem Class="ml-auto" xs="4" sm="4" md="4">
-                                                        <MudFab Color="Color.Info" Icon="@Icons.Material.Filled.Edit" Size="Size.Medium" IconSize="Size.Medium" DisableElevation="true" OnClick="ShowUpdateNivel"/>
+                                                        <MudTooltip Text="Editar Nivel">
+                                                            <MudFab Color="Color.Info" Icon="@Icons.Material.Filled.Edit" Size="Size.Medium" IconSize="Size.Medium" DisableElevation="true" OnClick="ShowUpdateNivel"/>
+                                                        </MudTooltip>
                                                     </MudItem>
                                                     <MudItem Class="ml-auto" xs="4" sm="4" md="4">
-                                                        <MudFab Color="Color.Error" Icon="@Icons.Material.Filled.Delete" Size="Size.Medium" IconSize="Size.Medium" DisableElevation="true" OnClick="ShowDeleteNivel"/>
+                                                        <MudTooltip Text="Borrar Nivel">
+                                                            <MudFab Color="Color.Error" Icon="@Icons.Material.Filled.Delete" Size="Size.Medium" IconSize="Size.Medium" DisableElevation="true" OnClick="ShowDeleteNivel" />
+                                                        </MudTooltip>   
                                                     </MudItem>
                                                 }
                                             </MudGrid>
