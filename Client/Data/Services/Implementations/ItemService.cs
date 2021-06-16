@@ -48,6 +48,32 @@ namespace Horrografia.Client.Data.Services.Implementations
             }
         }
 
+        public async Task<ControllerResponse<ItemModel>> GetAsyncByLevelId(int id)
+        {
+            ControllerResponse<ItemModel> _controllerResponse = new();
+            try
+            {
+                var response = await _http.GetAsync($"api/Item/{id}");
+                if (response.IsSuccessStatusCode)
+                {
+                    var items = await response.Content.ReadFromJsonAsync<List<ItemModel>>();
+                    _controllerResponse.Status = Constantes.OKSTATUS;
+                    _controllerResponse.Response = items;
+                    return _controllerResponse;
+                }
+                _controllerResponse.Status = Constantes.INTERNALERRORSTATUS;
+                _controllerResponse.Response = new List<ItemModel>();
+                return _controllerResponse;
+            }
+            catch (Exception e)
+            {
+                _controllerResponse.Status = Constantes.INTERNALERRORSTATUS;
+                _controllerResponse.Response = new List<ItemModel>();
+                _logger.LogError(e, "An error occurred while fetching from db");
+                return _controllerResponse;
+            }
+        }
+
         public async Task<ControllerResponse<ItemModel>> PostAsync(ItemModel i) 
         {
             ControllerResponse<ItemModel> _controllerResponse = new ();
