@@ -8,7 +8,7 @@ namespace Horrografia.Server.Data.Repos.Interfaces
     {
         Task DeleteItem(int idItem);
         Task<List<ItemModel>> GetAllAsync();
-        Task<ItemModel> GetItemById(int idItem);
+        Task<List<ItemModel>> GetItemsByLevelId(int idItem);
         Task InsertData(ItemModel i);
         Task UpdateData(ItemModel i);
     }

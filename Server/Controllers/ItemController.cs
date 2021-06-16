@@ -53,7 +53,7 @@ namespace Horrografia.Server.Controllers
         {
             try
             {
-                var item = await _repo.GetItemById(id);
+                var item = await _repo.GetItemsByLevelId(id);
                 if (item == null)
                 {
                     return NotFound();

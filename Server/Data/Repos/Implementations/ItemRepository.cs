@@ -27,12 +27,12 @@ namespace Horrografia.Server.Data.Repos.Implementations
             return items;
         }
 
-        //GET/{IdPista}
-        public async Task<ItemModel> GetItemById(int idItem)
+        //GET/{idNivel}
+        public async Task<List<ItemModel>> GetItemsByLevelId(int idNivel)
         {
-            string sql = "SELECT * FROM item WHERE id = @idItem";
-            var nivel = await _dbContext.LoadData<ItemModel, dynamic>(sql, new { idItem = idItem }, ConectionString);
-            return nivel.FirstOrDefault();
+            string sql = "SELECT * FROM Item JOIN pertenecea ON item.id = pertenecea.idItem WHERE pertenecea.idNivel = @idNivel";            
+            var items = await _dbContext.LoadData<ItemModel, dynamic>(sql, new { idNivel = idNivel }, ConectionString);
+            return items;
         }
 
         //POST
