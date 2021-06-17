@@ -85,4 +85,12 @@
                         OnItemCreation="ItemCreationRequest"
                         OnClueCreation="ClueCreationRequest"
                         OnRelationCreation="RelationCreationRequest" />
+
+    <ItemEditionDialog ShowDialogue="_showItemEditionDialog"
+                       ItemToChange="_itemSelectedForCrudAction"
+                       PistasTotales="PistasTotales"
+                       OnDialogClosed="closeItemEditionDialog"
+                       OnItemUpdate="ItemEditionRequest"
+                       OnPistaUpdate="ClueCreationRequest"                       
+                       />
 </PageLoading>

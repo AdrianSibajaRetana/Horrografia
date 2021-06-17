@@ -24,10 +24,20 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation
         public EventCallback<ItemModel> OnItemCreationRequest { get; set; }
 
         [Parameter]
+        public EventCallback<ItemModel> OnItemUpdateRequest { get; set; }
+
+        [Parameter]
+        public EventCallback<ItemModel> OnItemDeletionRequest { get; set; }
+
+        [Parameter]
+        public EventCallback<ItemModel> OnRelationDeletionRequest { get; set; }
+
+        [Parameter]
         public EventCallback<PistaModel> OnClueCreationRequest { get; set; }
 
         [Parameter]
         public EventCallback<int> OnRelationCreationRequest { get; set; }
+
 
         [Parameter]
         public int ItemsMaximos { get; set; }
@@ -46,7 +56,6 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation
             _showItemCreationDialog = false;
             _showItemEditionDialog = false;
             _showItemDeletionDialog = false;
-            _itemSelectedForCrudAction = new();
         }
 
 
@@ -90,14 +99,14 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation
 
         private void openItemEditionDialog(ItemModel i)
         {
-            _showItemEditionDialog = true;
             _itemSelectedForCrudAction = i;
+            _showItemEditionDialog = true;
         }
 
         private void openItemDeletionDialog(ItemModel i)
         {
-            _showItemDeletionDialog = true;
             _itemSelectedForCrudAction = i;
+            _showItemDeletionDialog = true;
         }
 
         protected void closeItemCreationDialog()
@@ -118,6 +127,11 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation
         protected async Task ItemCreationRequest(ItemModel i)
         {
             await OnItemCreationRequest.InvokeAsync(i);
+        }
+
+        protected async Task ItemEditionRequest(ItemModel i)
+        {
+            await OnItemUpdateRequest.InvokeAsync(i);
         }
 
         protected async Task ClueCreationRequest(PistaModel p)

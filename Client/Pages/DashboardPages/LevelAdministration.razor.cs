@@ -71,13 +71,11 @@ namespace Horrografia.Client.Pages.DashboardPages
         /*Carga los niveles existentes y notifica el estado actual*/
         protected override async Task OnInitializedAsync()
         {
-            Console.WriteLine("OnInitializedAsync llamado");
-            await CargarDatos(true);
+            await CargarDatos();
         }
 
-        public async Task CargarDatos(bool primerLoad)
+        public async Task CargarDatos()
         {   
-            Console.WriteLine("Se entró a la carga incial");
             var nivelesResponse = await _nivelService.GetAsync();
             var relacionesResponse = await _perteneceAService.GetAsync();
             var itemsResponse = await _itemService.GetAsync();
@@ -89,7 +87,6 @@ namespace Horrografia.Client.Pages.DashboardPages
                     && pistasResponse.isResponseSuccesfull()
                 )
             {
-                Console.WriteLine("Carga inicial verdadera");
                 _lecturaExitosa = true;
                 Niveles = nivelesResponse.Response;
                 RelacionesNivelItem = relacionesResponse.Response;
@@ -107,7 +104,6 @@ namespace Horrografia.Client.Pages.DashboardPages
         protected override void OnParametersSet()
         {
             IsLoading = false;
-            Console.WriteLine("Se entra al OnParametersSet is loading = " + IsLoading);
             if (_lecturaExitosa)
             {
                 _snackbar.Configuration.PositionClass = Defaults.Classes.Position.TopCenter;
@@ -191,7 +187,7 @@ namespace Horrografia.Client.Pages.DashboardPages
             {
                 ShowNotification("Hubo un error al crear el nivel.", Severity.Error);
             }
-            await CargarDatos(false);
+            await CargarDatos();
         }
 
         protected async Task DeleteLevel(NivelModel n)
@@ -207,7 +203,7 @@ namespace Horrografia.Client.Pages.DashboardPages
                 ShowNotification("Hubo un error al eliminar el nivel.", Severity.Error);
             }
             nivelActual = null;
-            await CargarDatos(false);
+            await CargarDatos();
         }
 
         protected async Task UpdateLevel(NivelModel n)
@@ -223,19 +219,47 @@ namespace Horrografia.Client.Pages.DashboardPages
                 ShowNotification("Hubo un error al actualizar el nivel.", Severity.Error);
             }
             nivelActual = null;
-            await CargarDatos(false);
+            await CargarDatos();
         }
 
         protected async Task CreateClue(PistaModel p)
         {
             var response = await _pistaService.PostAsync(p);
-            await CargarDatos(false);
+            await CargarDatos();
         }
 
         protected async Task CreateItem(ItemModel i)
         {
             var response = await _itemService.PostAsync(i);
-            await CargarDatos(false);
+            await CargarDatos();
+        }
+
+        protected async Task UpdateItem(ItemModel i)
+        {
+            var response = await _itemService.UpdateAsync(i);
+            if (response.isResponseSuccesfull())
+            {
+                ShowNotification($"¡Se actualizó el item!", Severity.Success);
+            }
+            else
+            {
+                ShowNotification("Hubo un error al actualizar el item.", Severity.Error);
+            }
+            await CargarDatos();
+        }
+
+        protected async Task DeleteItem(ItemModel i)
+        {
+            var response = await _itemService.DeleteAsync(i);
+            if (response.isResponseSuccesfull())
+            {
+                ShowNotification($"¡Se eliminó el item exitosamente!", Severity.Success);
+            }
+            else
+            {
+                ShowNotification("Hubo un error al borrar el item.", Severity.Error);
+            }
+            await CargarDatos();
         }
 
         protected async Task CreateRelation(int id)
@@ -252,7 +276,7 @@ namespace Horrografia.Client.Pages.DashboardPages
             {
                 ShowNotification("Hubo un error al crear la relación.", Severity.Error);
             }
-            await CargarDatos(false);
+            await CargarDatos();
         }
     }
 }
