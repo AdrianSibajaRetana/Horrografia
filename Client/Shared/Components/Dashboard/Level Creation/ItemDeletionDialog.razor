@@ -1,5 +1,27 @@
-﻿<h3>ItemDeletionDialog</h3>
+﻿<MudDialog @bind-IsVisible="ShowDialogue">
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.DeleteForever" Class="mr-3" /> Eliminar nivel
+        </MudText>
+        <MudText Typo="Typo.subtitle1">
+            ¿Está seguro que desea eliminar el siguiente item? La acción no es reversible.
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudTextField @bind-Value="@_model.FormaCorrecta" Label="Forma Correcta" ReadOnly="true" Class="mt-4" />
+        <MudTextField @bind-Value="@_model.FormaIncorrecta" Label="Forma Incorrecta" ReadOnly="true" Class="mt-4" />
+        <MudTextField @bind-Value="@_model.Pista" Label="Pista" ReadOnly="true" Class="mt-4" />
+        <MudDivider DividerType="DividerType.Middle" Class="my-6" />
+        <MudText GutterBottom="true">Seleccione el tipo de borrado</MudText>
 
-@code {
+        <MudRadioGroup @bind-SelectedOption="@_selectedOption">
+                <MudRadio Option="@(0)" Color="Color.Primary">Borrar el item del nivel seleccionado.</MudRadio>
+                <MudRadio Option="@(1)" Color="Color.Primary">Borrar el item de todos los niveles.</MudRadio>
+        </MudRadioGroup>
 
-}
+    </DialogContent>
+    <DialogActions>
+        <MudButton Variant="Variant.Text" OnClick="CloseDialog">Cancelar</MudButton>
+        <MudButton Variant="Variant.Text" OnClick="DeleteItem" Color="Color.Error">Borrar item</MudButton>
+    </DialogActions>
+</MudDialog>

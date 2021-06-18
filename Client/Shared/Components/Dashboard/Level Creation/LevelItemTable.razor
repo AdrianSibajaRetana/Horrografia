@@ -91,6 +91,12 @@
                        PistasTotales="PistasTotales"
                        OnDialogClosed="closeItemEditionDialog"
                        OnItemUpdate="ItemEditionRequest"
-                       OnPistaUpdate="ClueCreationRequest"                       
-                       />
+                       OnPistaUpdate="ClueCreationRequest" />
+
+    <ItemDeletionDialog ShowDialogue="_showItemDeletionDialog"
+                        itemToChange="_itemSelectedForCrudAction"
+                        OnDialogClosed="closeItemDeletionDialog"
+                        OnItemDeletion="ItemDeletionRequest"
+                        OnRelationDeletion="RelationDeletionRequest"
+                        PistasTotales="PistasTotales" />
 </PageLoading>

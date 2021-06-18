@@ -134,6 +134,11 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation
             await OnItemUpdateRequest.InvokeAsync(i);
         }
 
+        protected async Task ItemDeletionRequest(ItemModel i)
+        {
+            await OnItemDeletionRequest.InvokeAsync(i);
+        }
+
         protected async Task ClueCreationRequest(PistaModel p)
         {
             await OnClueCreationRequest.InvokeAsync(p);
@@ -142,6 +147,11 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation
         protected async Task RelationCreationRequest(int id)
         {
             await OnRelationCreationRequest.InvokeAsync(id);
+        }
+
+        protected async Task RelationDeletionRequest(ItemModel i)
+        {
+            await OnRelationDeletionRequest.InvokeAsync(i);
         }
     }
 }
