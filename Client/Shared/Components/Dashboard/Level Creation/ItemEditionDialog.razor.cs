@@ -31,11 +31,15 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation
 
         private ClientItemModel _newModel { get; set; }
         private ItemModel _model { get; set; }
+        private bool _ActualizandoItem { get; set; }
+        private string _EstadoDeActualizacion { get; set; }
 
         public ItemEditionDialog()
         {
             _newModel = new();
             _model = new();
+            _ActualizandoItem = false;
+
         }
 
         protected override void OnParametersSet()
@@ -58,6 +62,27 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation
             return PistasTotales.FirstOrDefault(p => p.Id == id).Pista;
         }
 
+        private async Task UpdateItem()
+        {
+            //Se empieza a actualizar el item
+            _ActualizandoItem = true;
+            _EstadoDeActualizacion = "Actualizando la pista al item.";
+            //Se revisa si se tiene que crear una pista nueva
+            await VerificarCreacionDePista();
+            //Se asigna la pista escrita
+            AsignarPista();
+            _EstadoDeActualizacion = "Actualizando las formas del item.";
+            //Se crea el modelo a partir del modelo en el dominio
+            ItemModel updatedItemModel = _newModel.GetItemModel();
+            //Se crea el item
+            _EstadoDeActualizacion = "Escribiendo el item a la base de datos.";
+            await OnItemUpdate.InvokeAsync(updatedItemModel);
+            //Se cierra el diálogo
+            await CloseDialog();
+            //Se termina de actualizar el item
+            _ActualizandoItem = false;
+        }
+
         /*Función de búsqueda en el autocompletar de Pistas*/
         private async Task<IEnumerable<string>> BuscarPistasExistentes(string value)
         {
@@ -75,15 +100,31 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation
             return PistasFiltradas;
         }
 
-        public async Task CloseDialog()
+        //Si existe la pista se crea, si no no se hace nada.
+        private async Task VerificarCreacionDePista()
         {
-            await OnDialogClosed.InvokeAsync();
+            var PistaExistente = PistasTotales.Where(p => p.Pista == _newModel.Pista).FirstOrDefault();
+            if (PistaExistente == null)
+            {
+                PistaModel p = new();
+                p.Pista = _newModel.Pista;
+                await CrearPista(p);                
+            }
         }
 
-        public async Task UpdateItem()
+        private async Task CrearPista(PistaModel p)
         {
-            ItemModel updatedItemModel = _newModel.GetItemModel();
-            await OnItemUpdate.InvokeAsync(updatedItemModel);
+            await OnPistaUpdate.InvokeAsync(p);
+        }
+
+        private void AsignarPista()
+        {
+            var PistaExistenteId = PistasTotales.Where(p => p.Pista == _newModel.Pista).FirstOrDefault().Id;
+            _newModel.Pistaid = PistaExistenteId;
+        }
+
+        private async Task CloseDialog()
+        {
             await OnDialogClosed.InvokeAsync();
         }
 

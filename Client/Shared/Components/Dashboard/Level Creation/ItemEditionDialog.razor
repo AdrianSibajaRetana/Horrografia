@@ -38,10 +38,26 @@
                 </MudCardContent>
                 <MudCardActions>
                     <MudGrid>
-                        <MudItem Class="ml-auto">
-                            <MudButton Variant="Variant.Text" OnClick="CloseDialog">Cancelar</MudButton>
-                            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Text" Color="Color.Info">Editar Item</MudButton>
-                        </MudItem>
+                        @if (!_ActualizandoItem)
+                        {
+                            <MudItem Class="ml-auto">
+                                <MudButton Variant="Variant.Text" OnClick="CloseDialog">Cancelar</MudButton>
+                                <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Text" Color="Color.Info">Editar Item</MudButton>
+                            </MudItem>
+                        }
+                        else
+                        {
+                            <MudItem xs="12" sm="12" md="12">
+                                <MudGrid Justify="Justify.Center">
+                                    <MudItem Class="mx-auto">
+                                        <MudProgressCircular Color="Color.Success" Indeterminate="true"/>
+                                    </MudItem>
+                                </MudGrid>                                
+                            </MudItem>
+                            <MudItem  xs="12" sm="12" md="12">
+                                <MudText Typo="Typo.body1" Align="Align.Center">@_EstadoDeActualizacion</MudText>
+                            </MudItem>
+                        }
                     </MudGrid>
                 </MudCardActions>
             </MudCard>
