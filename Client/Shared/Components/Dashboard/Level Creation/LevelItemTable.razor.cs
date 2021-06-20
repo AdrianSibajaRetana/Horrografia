@@ -29,14 +29,15 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation
         [Parameter]
         public EventCallback<ItemModel> OnItemDeletionRequest { get; set; }
 
-        [Parameter]
-        public EventCallback<ItemModel> OnRelationDeletionRequest { get; set; }
 
         [Parameter]
         public EventCallback<PistaModel> OnClueCreationRequest { get; set; }
 
         [Parameter]
-        public EventCallback<int> OnRelationCreationRequest { get; set; }
+        public EventCallback<ItemModel> OnRelationCreationRequest { get; set; }
+
+        [Parameter]
+        public EventCallback<ItemModel> OnRelationDeletionRequest { get; set; }
 
 
         [Parameter]
@@ -144,9 +145,9 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation
             await OnClueCreationRequest.InvokeAsync(p);
         }
 
-        protected async Task RelationCreationRequest(int id)
+        protected async Task RelationCreationRequest(ItemModel i)
         {
-            await OnRelationCreationRequest.InvokeAsync(id);
+            await OnRelationCreationRequest.InvokeAsync(i);
         }
 
         protected async Task RelationDeletionRequest(ItemModel i)

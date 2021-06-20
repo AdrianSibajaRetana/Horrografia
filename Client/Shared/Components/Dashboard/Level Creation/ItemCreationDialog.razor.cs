@@ -30,7 +30,7 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation
         public EventCallback<PistaModel> OnClueCreation { get; set; }
 
         [Parameter]
-        public EventCallback<int> OnRelationCreation { get; set; }
+        public EventCallback<ItemModel> OnRelationCreation { get; set; }
 
         private ClientItemModel _model { get; set; }
         private bool _isCreatingItem { get; set; }
@@ -165,13 +165,13 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation
                                                         i.FormaIncorrecta == _model.FormaIncorrecta &&
                                                         i.PistaId == PistaExistente.Id)
                                                         .FirstOrDefault();
-            await GenerarRelacion(ItemExistente.Id);
+            await GenerarRelacion(ItemExistente);
         }
 
         //Se crea la relación
-        private async Task GenerarRelacion(int ItemId)
+        private async Task GenerarRelacion(ItemModel i)
         {
-            await OnRelationCreation.InvokeAsync(ItemId);
+            await OnRelationCreation.InvokeAsync(i);
         }
     }
 }
