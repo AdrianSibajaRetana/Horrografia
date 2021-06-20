@@ -294,7 +294,11 @@ namespace Horrografia.Client.Pages.DashboardPages
                 ShowNotification("Hubo un error al borrar la relación.", Severity.Error);
             }
             await CargarDatos();
+        }
 
+        protected void PopErrorNotificationMessage()
+        {
+            ShowNotification("Ocurrió un error inesperado en el proceso. Por favor intente de nuevo.", Severity.Error);
         }
     }
 }

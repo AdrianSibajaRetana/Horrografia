@@ -39,6 +39,8 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation
         [Parameter]
         public EventCallback<ItemModel> OnRelationDeletionRequest { get; set; }
 
+        [Parameter]
+        public EventCallback NotifyError { get; set; }
 
         [Parameter]
         public int ItemsMaximos { get; set; }
@@ -153,6 +155,11 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation
         protected async Task RelationDeletionRequest(ItemModel i)
         {
             await OnRelationDeletionRequest.InvokeAsync(i);
+        }
+
+        protected async Task NotifyErrorToPage()
+        {
+            await NotifyError.InvokeAsync();
         }
     }
 }

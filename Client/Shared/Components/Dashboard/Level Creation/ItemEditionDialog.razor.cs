@@ -29,6 +29,9 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation
         [Parameter]
         public EventCallback<PistaModel> OnPistaUpdate { get; set; }
 
+        [Parameter]
+        public EventCallback OnErrorOcurred { get; set; }
+
         private ClientItemModel _newModel { get; set; }
         private ItemModel _model { get; set; }
         private bool _ActualizandoItem { get; set; }
@@ -64,23 +67,31 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation
 
         private async Task UpdateItem()
         {
-            //Se empieza a actualizar el item
-            _ActualizandoItem = true;
-            _EstadoDeActualizacion = "Actualizando la pista al item.";
-            //Se revisa si se tiene que crear una pista nueva
-            await VerificarCreacionDePista();
-            //Se asigna la pista escrita
-            AsignarPista();
-            _EstadoDeActualizacion = "Actualizando las formas del item.";
-            //Se crea el modelo a partir del modelo en el dominio
-            ItemModel updatedItemModel = _newModel.GetItemModel();
-            //Se crea el item
-            _EstadoDeActualizacion = "Escribiendo el item a la base de datos.";
-            await OnItemUpdate.InvokeAsync(updatedItemModel);
-            //Se cierra el diálogo
-            await CloseDialog();
-            //Se termina de actualizar el item
-            _ActualizandoItem = false;
+            try 
+            { 
+                //Se empieza a actualizar el item
+                _ActualizandoItem = true;
+                _EstadoDeActualizacion = "Actualizando la pista al item.";
+                //Se revisa si se tiene que crear una pista nueva
+                await VerificarCreacionDePista();
+                //Se asigna la pista escrita
+                AsignarPista();
+                _EstadoDeActualizacion = "Actualizando las formas del item.";
+                //Se crea el modelo a partir del modelo en el dominio
+                ItemModel updatedItemModel = _newModel.GetItemModel();
+                //Se crea el item
+                _EstadoDeActualizacion = "Escribiendo el item a la base de datos.";
+                await OnItemUpdate.InvokeAsync(updatedItemModel);
+                //Se cierra el diálogo
+                await CloseDialog();
+                //Se termina de actualizar el item
+                _ActualizandoItem = false;
+            } 
+            catch 
+            {
+                await OnErrorOcurred.InvokeAsync();
+                await CloseDialog();
+            }
         }
 
         /*Función de búsqueda en el autocompletar de Pistas*/
