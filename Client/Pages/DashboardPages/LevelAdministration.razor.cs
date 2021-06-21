@@ -58,6 +58,14 @@ namespace Horrografia.Client.Pages.DashboardPages
         // booleano que me indica que la renderización fue exitosa.
         private bool _lecturaExitosa { get; set; }
 
+        enum ReloadFlag
+        { 
+            Niveles,
+            Items,
+            Relaciones,
+            Pistas
+        }
+
         // En primera creación de instancia se asignan los valores.
         public LevelAdministration()
         {
@@ -75,28 +83,104 @@ namespace Horrografia.Client.Pages.DashboardPages
         }
 
         public async Task CargarDatos()
-        {   
-            var nivelesResponse = await _nivelService.GetAsync();
-            var relacionesResponse = await _perteneceAService.GetAsync();
-            var itemsResponse = await _itemService.GetAsync();
-            var pistasResponse = await _pistaService.GetAsync();
-            if (
-                    nivelesResponse.isResponseSuccesfull()
-                    && relacionesResponse.isResponseSuccesfull()
-                    && itemsResponse.isResponseSuccesfull()
-                    && pistasResponse.isResponseSuccesfull()
-                )
+        {   try
             {
+                await CargarNiveles();
+                await CargarRelaciones();
+                await CargarItems();
+                await CargarPistas();
                 _lecturaExitosa = true;
+            }
+            catch(InvalidOperationException e)
+            {
+                _lecturaExitosa = false;
+                InitialLoadStatus = Constantes.INTERNALERRORSTATUS;
+                ShowNotification($"{e.Message}", Severity.Error);
+            }
+        }
+
+        private async Task CargarNiveles()
+        {            
+            var nivelesResponse = await _nivelService.GetAsync();
+            if (nivelesResponse.isResponseSuccesfull())
+            {
                 Niveles = nivelesResponse.Response;
+                Console.WriteLine("Se cambiaron los niveles");
+            }
+            else
+            {
+                string reporteError = "niveles";
+                throw new InvalidOperationException($"Error al cargar los {reporteError}.");
+            }
+        }
+
+        private async Task CargarRelaciones()
+        {
+            var relacionesResponse = await _perteneceAService.GetAsync();
+            if (relacionesResponse.isResponseSuccesfull())
+            {
                 RelacionesNivelItem = relacionesResponse.Response;
+            }
+            else
+            {
+                string reporteError = "relaciones";
+                throw new InvalidOperationException($"Error al cargar las {reporteError}.");
+            }
+        }
+
+        private async Task CargarItems()
+        {
+            var itemsResponse = await _itemService.GetAsync();
+            if (itemsResponse.isResponseSuccesfull())
+            {
                 ItemsTotales = itemsResponse.Response;
+            }
+            else
+            {
+                string reporteError = "items";
+                throw new InvalidOperationException($"Error al cargar los {reporteError}.");
+            }
+        }
+
+        private async Task CargarPistas()
+        {
+            var pistasResponse = await _pistaService.GetAsync();
+            if (pistasResponse.isResponseSuccesfull())
+            {
                 PistasTotales = pistasResponse.Response;
             }
             else
             {
-                _lecturaExitosa = false;
-                InitialLoadStatus = Constantes.INTERNALERRORSTATUS;
+                string reporteError = "Pistas";
+                throw new InvalidOperationException($"Error al cargar las {reporteError}.");
+            }
+        }
+
+        private async Task RecargarDatos(ReloadFlag flag)
+        {
+            try
+            {
+                switch (flag)
+                {
+                    case ReloadFlag.Niveles:
+                        await CargarNiveles();
+                        break;
+                    case ReloadFlag.Items:
+                        await CargarItems();
+                        break;
+                    case ReloadFlag.Relaciones:
+                        await CargarRelaciones();
+                        break;
+                    case ReloadFlag.Pistas:
+                        await CargarPistas();
+                        break;
+                    default:
+                        throw new InvalidOperationException("Parámetro no reconocido.");
+                }
+            }
+            catch (Exception e)
+            {
+                ShowNotification($"{e.Message}", Severity.Error);
             }
         }
 
@@ -187,7 +271,7 @@ namespace Horrografia.Client.Pages.DashboardPages
             {
                 ShowNotification("Hubo un error al crear el nivel.", Severity.Error);
             }
-            await CargarDatos();
+            await RecargarDatos(ReloadFlag.Niveles);
         }
 
         protected async Task DeleteLevel(NivelModel n)
@@ -203,7 +287,7 @@ namespace Horrografia.Client.Pages.DashboardPages
                 ShowNotification("Hubo un error al eliminar el nivel.", Severity.Error);
             }
             nivelActual = null;
-            await CargarDatos();
+            await RecargarDatos(ReloadFlag.Niveles);
         }
 
         protected async Task UpdateLevel(NivelModel n)
@@ -219,19 +303,19 @@ namespace Horrografia.Client.Pages.DashboardPages
                 ShowNotification("Hubo un error al actualizar el nivel.", Severity.Error);
             }
             nivelActual = null;
-            await CargarDatos();
+            await RecargarDatos(ReloadFlag.Niveles);
         }
 
         protected async Task CreateClue(PistaModel p)
         {
             var response = await _pistaService.PostAsync(p);
-            await CargarDatos();
+            await RecargarDatos(ReloadFlag.Pistas);
         }
 
         protected async Task CreateItem(ItemModel i)
         {
             var response = await _itemService.PostAsync(i);
-            await CargarDatos();
+            await RecargarDatos(ReloadFlag.Items);
         }
 
         protected async Task UpdateItem(ItemModel i)
@@ -245,7 +329,7 @@ namespace Horrografia.Client.Pages.DashboardPages
             {
                 ShowNotification("Hubo un error al actualizar el item.", Severity.Error);
             }
-            await CargarDatos();
+            await RecargarDatos(ReloadFlag.Items);
         }
 
         protected async Task DeleteItem(ItemModel i)
@@ -259,7 +343,7 @@ namespace Horrografia.Client.Pages.DashboardPages
             {
                 ShowNotification("Hubo un error al borrar el item.", Severity.Error);
             }
-            await CargarDatos();
+            await RecargarDatos(ReloadFlag.Items);
         }
 
         protected async Task CreateRelation(ItemModel i)
@@ -276,7 +360,7 @@ namespace Horrografia.Client.Pages.DashboardPages
             {
                 ShowNotification("Hubo un error al crear la relación.", Severity.Error);
             }
-            await CargarDatos();
+            await RecargarDatos(ReloadFlag.Relaciones);
         }
 
         protected async Task DeleteRelation(ItemModel i)
@@ -293,7 +377,7 @@ namespace Horrografia.Client.Pages.DashboardPages
             {
                 ShowNotification("Hubo un error al borrar la relación.", Severity.Error);
             }
-            await CargarDatos();
+            await RecargarDatos(ReloadFlag.Relaciones);
         }
 
         protected void PopErrorNotificationMessage()
