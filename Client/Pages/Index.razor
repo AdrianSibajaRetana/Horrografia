@@ -2,18 +2,36 @@
 
 @*Hero *@
 <MudItem xs="12" sm="12" md="12">
-    <MudPaper Height="80vh" Width="100%" Class="mud-info white-text" Square="true" Style="display: flex; justify-content: center; align-items: center;">
+    <MudPaper Height="80vh" Width="100%" Class="mud-info white-text mt-n2" Square="true" Style="display: flex; justify-content: center; align-items: center;">
         <MudItem >
             <MudGrid>
-                <MudItem xs="12" sm="12" md="12" >
-                    <MudText Typo="Typo.h3" Align="Align.Center">
-                        Una propuesta lúdica para mejorar la ortografía
-                    </MudText>
+                <MudItem xs="12" sm="12" md="12" Class="px-14">
+                    @*Para tabletas en adelante*@
+                    <MudHidden Breakpoint="Breakpoint.SmAndUp" Invert="true">
+                        <MudText Typo="Typo.h3" Align="Align.Center">
+                            Porque aprender a escribir sin faltas ortográficas no debería ser difícil
+                        </MudText>
+                    </MudHidden>
+                    @*Para celulares*@
+                    <MudHidden Breakpoint="Breakpoint.Xs" Invert="true">
+                        <MudText Typo="Typo.h4" Align="Align.Center">
+                            Porque aprender a escribir sin faltas ortográficas no debería ser difícil
+                        </MudText>
+                    </MudHidden>
                 </MudItem>
-                <MudItem xs="12" sm="12" md="12">
-                    <MudText Typo="Typo.body1" Align="Align.Center">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                    </MudText>
+                <MudItem xs="12" sm="12" md="12" Class="px-7">
+                    @*Para tabletas en adelante*@
+                    <MudHidden Breakpoint="Breakpoint.SmAndUp" Invert="true">
+                        <MudText Typo="Typo.body1" Align="Align.Center">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                        </MudText>
+                    </MudHidden>
+                    @*Para celulares*@
+                    <MudHidden Breakpoint="Breakpoint.Xs" Invert="true">
+                        <MudText Typo="Typo.body1" Align="Align.Center">
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                        </MudText>
+                    </MudHidden>                    
                 </MudItem>
                 <MudItem xs="12" sm="12" md="12">
                     <MudGrid Justify="Justify.Center">

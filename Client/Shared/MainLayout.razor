@@ -12,6 +12,31 @@
         <MudTooltip Text="Inicio">
             <MudIconButton Icon="@Icons.Material.Filled.Home" Color="Color.Inherit" Link="/" />
         </MudTooltip>
+        @*Para celulares*@
+    <MudHidden Breakpoint="Breakpoint.Xs" Invert="true">
+        <MudAppBarSpacer />
+        <MudText Typo="Typo.h5" Class="mx-auto">Horrografía</MudText>
+        <MudAppBarSpacer />
+        <MudMenu Icon="@Icons.Filled.Menu" Color="Color.Inherit" Dense="true" Direction="Direction.Right" OffsetY="true" Class="d-md-none">
+            <MudText Typo="Typo.body2" Class="px-4 py-2"><b>Administración</b></MudText>
+            <MudMenuItem Link="/dashboard">Administración de items</MudMenuItem>
+            <MudMenuItem Link="/sobre">Sobre nosotros</MudMenuItem>
+            <MudText Typo="Typo.body2" Class="px-4 py-2"><b>Administración de cuenta</b></MudText>
+            <AuthorizeView>
+                <Authorized>
+                    @*<a href="authentication/profile">Hello, @context.User.Identity.Name!</a>*@
+                    <MudMenuItem Link="/perfil">Mi perfil</MudMenuItem>
+                    <MudMenuItem OnClick="BeginSignOut">Cerrar Sesión</MudMenuItem>
+                </Authorized>
+                <NotAuthorized>
+                    <MudMenuItem Link="authentication/login" Target="_blank">Iniciar Sesión</MudMenuItem>
+                    <MudMenuItem Link="authentication/register" Target="_blank">Registrarse</MudMenuItem>
+                </NotAuthorized>
+            </AuthorizeView>
+        </MudMenu>
+    </MudHidden>
+        @*Para no celulares*@
+    <MudHidden Breakpoint="Breakpoint.SmAndUp" Invert="true">
         <MudText Typo="Typo.h5" Class="ml-3">Horrografía</MudText>
         <MudAppBarSpacer />
         <MudTooltip Text="Dashboard administrativo">
@@ -27,7 +52,7 @@
                     <MudIconButton Icon="@Icons.Material.Filled.Person" Color="Color.Inherit" Link="/perfil" />
                 </MudTooltip>
                 @*<a href="authentication/profile">Hello, @context.User.Identity.Name!</a>*@
-                <MudTooltip Text="Cerrar Sesión">                    
+                <MudTooltip Text="Cerrar Sesión">
                     <MudIconButton Icon="@Icons.Material.Filled.Logout" Color="Color.Inherit" OnClick="BeginSignOut" />
                 </MudTooltip>
             </Authorized>
@@ -35,11 +60,12 @@
                 <MudTooltip Text="Iniciar Sesión">
                     <MudIconButton Icon="@Icons.Material.Filled.Login" Color="Color.Inherit" Link="authentication/login" />
                 </MudTooltip>
-                <MudTooltip Text="Registrarse">                    
+                <MudTooltip Text="Registrarse">
                     <MudIconButton Icon="@Icons.Material.Filled.PersonAdd" Color="Color.Inherit" Link="authentication/register" />
                 </MudTooltip>
             </NotAuthorized>
         </AuthorizeView>
+    </MudHidden>
     </MudAppBar>
     <MudMainContent>
         @Body
