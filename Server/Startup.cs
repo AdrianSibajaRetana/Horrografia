@@ -32,9 +32,21 @@ namespace Horrografia.Server
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+
+            var connectionString = Configuration.GetConnectionString("DefaultConnection");
+            var serverVersion = new MariaDbServerVersion(ServerVersion.AutoDetect(connectionString));
+
+            /*
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseMySql(
                     Configuration.GetConnectionString("DefaultConnection")));
+            */
+            services.AddDbContext<ApplicationDbContext>(
+            dbContextOptions => dbContextOptions
+                .UseMySql(connectionString, serverVersion)
+                .EnableSensitiveDataLogging() // <-- These two calls are optional but help
+                .EnableDetailedErrors()       // <-- with debugging (remove for production).
+            );
 
             //Settear a true si quiero confirmar con un correo
             services.AddDefaultIdentity<ApplicationUser>(options => {
