@@ -1,24 +1,6 @@
-CREATE DATABASE horrografia
+CREATE DATABASE baseDatos
 
-USE horrografia
-
-CREATE TABLE People (
-id int NOT NULL AUTO_INCREMENT,
-Firstname VARCHAR(30) NOT NULL,
-Lastname VARCHAR(30) NOT NULL,
-PRIMARY KEY(id)
-)
-
-INSERT INTO 
-	people(FirstName, LastName)
-VALUES
-	('Adrián', 'Sibaja'),
-	('Erik', 'Kuhlmann'),
-	('Daniel', 'Salazar'),
-	('Ricardo', 'Franco'),
-	('Esteban', 'Marín');
-	
-SELECT * FROM people;
+USE baseDatos
 
 CREATE TABLE Nivel (
 id int NOT NULL AUTO_INCREMENT,
@@ -46,8 +28,8 @@ FOREIGN KEY (PistaId) REFERENCES Pista(id) ON DELETE SET NULL
 )
 
 CREATE TABLE Usuario(
-id int NOT NULL AUTO_INCREMENT,
-PRIMARY KEY(id)nivel
+id INT NOT NULL AUTO_INCREMENT,
+PRIMARY KEY(id)
 )
 
 CREATE TABLE Reporte(
@@ -66,7 +48,7 @@ idNivel INT NOT NULL,
 idItem INT NOT NULL,
 FOREIGN KEY (idNivel) REFERENCES Nivel(id) ON DELETE CASCADE,
 FOREIGN KEY (idItem) REFERENCES Item(id) ON DELETE CASCADE
-)
+)basedatos
 
 CREATE TABLE ContieneError(
 idReporte INT NOT NULL,
@@ -98,3 +80,10 @@ FROM Item
 JOIN pertenecea
 ON item.id = pertenecea.idItem
 WHERE pertenecea.idNivel = 20
+
+SELECT * FROM aspnetusers
+SELECT * FROM nivel
+
+# Para creación de usuario
+CREATE USER 'adrian'@'localhost' IDENTIFIED BY '1234'
+GRANT ALL PRIVILEGES ON * . * TO 'adrian'@'localhost';
