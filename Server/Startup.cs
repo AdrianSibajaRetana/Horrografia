@@ -77,6 +77,7 @@ namespace Horrografia.Server
             services.AddSingleton<IPerteneceARepository, PerteneceARepository>();
             services.AddSingleton<IPistaRepository, PistaRepository>();
             services.AddSingleton<IReporteRepository, ReporteRepository>();
+            services.AddScoped<IUsuariosRepository, UsuariosRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -85,7 +86,8 @@ namespace Horrografia.Server
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseDatabaseErrorPage();
+                app.UseDeveloperExceptionPage();
+                app.UseMigrationsEndPoint();
                 app.UseWebAssemblyDebugging();
             }
             else
