@@ -8,7 +8,6 @@ namespace Horrografia.Shared.Models
     {
         public int Id { get; set; }
         public string FormaCorrecta { get; set; }
-        public string FormaIncorrecta { get; set; }
         public int PistaId { get; set; }
     }
 }

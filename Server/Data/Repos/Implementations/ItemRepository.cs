@@ -38,8 +38,8 @@ namespace Horrografia.Server.Data.Repos.Implementations
         //POST
         public async Task InsertData(ItemModel i)
         {
-            string sql = "insert into item (FormaCorrecta, FormaIncorrecta, PistaId) values (@FormaCorrecta, @FormaIncorrecta, @PistaId);";
-            await _dbContext.SaveData(sql, new { FormaCorrecta = i.FormaCorrecta, FormaIncorrecta = i.FormaIncorrecta, PistaId = i.PistaId }, ConectionString);
+            string sql = "insert into item (FormaCorrecta, PistaId) values (@FormaCorrecta, @PistaId);";
+            await _dbContext.SaveData(sql, new { FormaCorrecta = i.FormaCorrecta, PistaId = i.PistaId }, ConectionString);
         }
 
         //DELETE
@@ -52,8 +52,8 @@ namespace Horrografia.Server.Data.Repos.Implementations
         //UPDATE
         public async Task UpdateData(ItemModel i)
         {
-            string sql = "update item set FormaCorrecta = @FormaCorrecta, FormaIncorrecta = @FormaIncorrecta, PistaId = @PistaId where id = @id";
-            await _dbContext.SaveData(sql, new { FormaCorrecta = i.FormaCorrecta, FormaIncorrecta = i.FormaIncorrecta, PistaId = i.PistaId, id = i.Id }, ConectionString);
+            string sql = "update item set FormaCorrecta = @FormaCorrecta, PistaId = @PistaId where id = @id";
+            await _dbContext.SaveData(sql, new { FormaCorrecta = i.FormaCorrecta, PistaId = i.PistaId, id = i.Id }, ConectionString);
         }
     }
 }
