@@ -2,6 +2,24 @@ CREATE DATABASE baseDatos
 
 USE baseDatos
 
+CREATE TABLE People (
+id int NOT NULL AUTO_INCREMENT,
+Firstname VARCHAR(30) NOT NULL,
+Lastname VARCHAR(30) NOT NULL,
+PRIMARY KEY(id)
+)
+
+INSERT INTO 
+	people(FirstName, LastName)
+VALUES
+	('Adrián', 'Sibaja'),
+	('Erik', 'Kuhlmann'),
+	('Daniel', 'Salazar'),
+	('Ricardo', 'Franco'),
+	('Esteban', 'Marín');
+	
+SELECT * FROM people;
+
 CREATE TABLE Nivel (
 id int NOT NULL AUTO_INCREMENT,
 Nombre VARCHAR(30) NOT NULL,
@@ -21,10 +39,15 @@ PRIMARY KEY(id)
 CREATE TABLE Item (
 id int NOT NULL AUTO_INCREMENT,
 FormaCorrecta VARCHAR(255) NOT NULL,
-FormaIncorrecta VARCHAR(255) NOT NULL,
 PistaId INT,
 PRIMARY KEY(id),
 FOREIGN KEY (PistaId) REFERENCES Pista(id) ON DELETE SET NULL
+)
+
+CREATE TABLE FormaIncorrecta(
+Itemid INT, 
+FormaCorrecta VARCHAR(255) NOT NULL,
+FOREIGN KEY (Itemid) REFERENCES Item(id) ON DELETE SET NULL
 )
 
 CREATE TABLE Usuario(
@@ -48,7 +71,7 @@ idNivel INT NOT NULL,
 idItem INT NOT NULL,
 FOREIGN KEY (idNivel) REFERENCES Nivel(id) ON DELETE CASCADE,
 FOREIGN KEY (idItem) REFERENCES Item(id) ON DELETE CASCADE
-)basedatos
+)
 
 CREATE TABLE ContieneError(
 idReporte INT NOT NULL,
@@ -69,7 +92,8 @@ DROP TABLE IF EXISTS Reporte;
 DROP TABLE IF EXISTS contieneerror; 
 DROP TABLE IF EXISTS pertenecea;
 
-# Para añadir propiedades a la tabla de item: 
+# Para añadir propiedades a la tabla de item:
+DROP TABLE IF EXISTS FormaIncorrecta;
 DROP TABLE IF EXISTS pertenecea;
 DROP TABLE IF EXISTS contieneerror; 
 DROP TABLE IF EXISTS item; 
