@@ -21,6 +21,9 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation
         public List<PistaModel> PistasTotales { get; set; }
 
         [Parameter]
+        public List<FormaIncorrectaModel> FormasIncorrectas { get; set; }
+
+        [Parameter]
         public EventCallback OnDialogClosed { get; set; }
 
         [Parameter]

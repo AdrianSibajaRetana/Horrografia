@@ -21,7 +21,7 @@
                             <tr>
                                 <td>@item.Id</td>
                                 <td>@item.FormaCorrecta</td>
-                                <td>@item.FormaIncorrecta</td>
+                                <td>@GetFormasIncorrectasById(item.PistaId)</td>
                                 <td>@GetPistaById(item.PistaId)</td>
                                 <td>
                                     <MudGrid Spacing="1">
@@ -81,6 +81,7 @@
     <ItemCreationDialog ShowDialogue="_showItemCreationDialog"
                         ItemsTotales="ItemsTotales"
                         PistasTotales="PistasTotales"
+                        FormasIncorrectas="FormasIncorrectas"
                         OnDialogClosed="closeItemCreationDialog"
                         OnItemCreation="ItemCreationRequest"
                         OnClueCreation="ClueCreationRequest"

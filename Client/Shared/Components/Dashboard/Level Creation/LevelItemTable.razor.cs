@@ -21,6 +21,9 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation
         public List<PistaModel> PistasTotales { get; set; }
 
         [Parameter]
+        public List<FormaIncorrectaModel> FormasIncorrectas { get; set; }
+
+        [Parameter]
         public EventCallback<ItemModel> OnItemCreationRequest { get; set; }
 
         [Parameter]
@@ -28,7 +31,6 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation
 
         [Parameter]
         public EventCallback<ItemModel> OnItemDeletionRequest { get; set; }
-
 
         [Parameter]
         public EventCallback<PistaModel> OnClueCreationRequest { get; set; }
@@ -52,6 +54,7 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation
         private bool _isLoading { get; set; }
         private List<ItemModel> _itemList { get; set; } = new();
         private List<PistaModel> _pistaList { get; set; } = new();
+        private List<FormaIncorrectaModel> _formaIncorrectaList { get; set; } = new();
         private int _maxitems { get; set; }
 
         public LevelItemTable()
@@ -77,7 +80,18 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation
             {
                 _maxitems = ItemsMaximos;
             }
+            if (_formaIncorrectaList != FormasIncorrectas)
+            {
+                _formaIncorrectaList = FormasIncorrectas;
+            }
             _isLoading = false;
+        }
+
+        private string GetFormasIncorrectasById(int id)
+        {
+            var formasList = _formaIncorrectaList.Where(f => f.Itemid == id).ToList().Select(f => f.Forma);
+            var formas = string.Join(",", formasList);
+            return formas;
         }
 
         private string GetPistaById(int id)
