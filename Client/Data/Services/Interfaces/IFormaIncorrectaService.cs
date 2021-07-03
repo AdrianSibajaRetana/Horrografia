@@ -6,9 +6,9 @@ namespace Horrografia.Client.Data.Services.Interfaces
 {
     public interface IFormaIncorrectaService
     {
-        Task<ControllerResponse<FormaIncorrecta>> GetAsync();
-        Task<ControllerResponse<FormaIncorrecta>> GetFormasIncorrectasFromLevelId(int nivelid);
-        Task<ControllerResponse<FormaIncorrecta>> PostAsync(FormaIncorrecta f);
-        Task<ControllerResponse<FormaIncorrecta>> DeleteAsync(FormaIncorrecta f);
+        Task<ControllerResponse<FormaIncorrectaModel>> GetAsync();
+        Task<ControllerResponse<FormaIncorrectaModel>> GetFormasIncorrectasFromLevelId(int nivelid);
+        Task<ControllerResponse<FormaIncorrectaModel>> PostAsync(FormaIncorrectaModel f);
+        Task<ControllerResponse<FormaIncorrectaModel>> DeleteAsync(FormaIncorrectaModel f);
     }
 }

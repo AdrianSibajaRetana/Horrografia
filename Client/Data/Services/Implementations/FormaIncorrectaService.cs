@@ -23,61 +23,61 @@ namespace Horrografia.Client.Data.Services.Implementations
             _logger = logger;
         }
 
-        public async Task<ControllerResponse<FormaIncorrecta>> GetAsync()
+        public async Task<ControllerResponse<FormaIncorrectaModel>> GetAsync()
         {
-            ControllerResponse<FormaIncorrecta> _controllerResponse = new();
+            ControllerResponse<FormaIncorrectaModel> _controllerResponse = new();
             try
             {
                 var response = await _http.GetAsync("api/Formaincorrecta");
                 if (response.IsSuccessStatusCode)
                 {
-                    var formasIncorrectas = await response.Content.ReadFromJsonAsync<List<FormaIncorrecta>>();
+                    var formasIncorrectas = await response.Content.ReadFromJsonAsync<List<FormaIncorrectaModel>>();
                     _controllerResponse.Status = Constantes.OKSTATUS;
                     _controllerResponse.Response = formasIncorrectas;
                     return _controllerResponse;
                 }
                 _controllerResponse.Status = Constantes.INTERNALERRORSTATUS;
-                _controllerResponse.Response = new List<FormaIncorrecta>();
+                _controllerResponse.Response = new List<FormaIncorrectaModel>();
                 return _controllerResponse;
             }
             catch (Exception e)
             {
                 _controllerResponse.Status = Constantes.INTERNALERRORSTATUS;
-                _controllerResponse.Response = new List<FormaIncorrecta>();
+                _controllerResponse.Response = new List<FormaIncorrectaModel>();
                 _logger.LogError(e, "An error occurred while fetching from db");
                 return _controllerResponse;
             }
         }
 
-        public async Task<ControllerResponse<FormaIncorrecta>> GetFormasIncorrectasFromLevelId(int nivelid)
+        public async Task<ControllerResponse<FormaIncorrectaModel>> GetFormasIncorrectasFromLevelId(int nivelid)
         {
-            ControllerResponse<FormaIncorrecta> _controllerResponse = new();
+            ControllerResponse<FormaIncorrectaModel> _controllerResponse = new();
             try
             {
                 var response = await _http.GetAsync($"api/Formaincorrecta/{nivelid}");
                 if (response.IsSuccessStatusCode)
                 {
-                    var formasIncorrectas = await response.Content.ReadFromJsonAsync<List<FormaIncorrecta>>();
+                    var formasIncorrectas = await response.Content.ReadFromJsonAsync<List<FormaIncorrectaModel>>();
                     _controllerResponse.Status = Constantes.OKSTATUS;
                     _controllerResponse.Response = formasIncorrectas;
                     return _controllerResponse;
                 }
                 _controllerResponse.Status = Constantes.INTERNALERRORSTATUS;
-                _controllerResponse.Response = new List<FormaIncorrecta>();
+                _controllerResponse.Response = new List<FormaIncorrectaModel>();
                 return _controllerResponse;
             }
             catch (Exception e)
             {
                 _controllerResponse.Status = Constantes.INTERNALERRORSTATUS;
-                _controllerResponse.Response = new List<FormaIncorrecta>();
+                _controllerResponse.Response = new List<FormaIncorrectaModel>();
                 _logger.LogError(e, "An error occurred while fetching from db");
                 return _controllerResponse;
             }
         }
 
-        public async Task<ControllerResponse<FormaIncorrecta>> PostAsync(FormaIncorrecta f)
+        public async Task<ControllerResponse<FormaIncorrectaModel>> PostAsync(FormaIncorrectaModel f)
         {
-            ControllerResponse<FormaIncorrecta> _controllerResponse = new();
+            ControllerResponse<FormaIncorrectaModel> _controllerResponse = new();
             try
             {
                 var response = await _http.PostAsJsonAsync("api/Formaincorrecta", f);
@@ -97,9 +97,9 @@ namespace Horrografia.Client.Data.Services.Implementations
             }
         }
 
-        public async Task<ControllerResponse<FormaIncorrecta>> DeleteAsync(FormaIncorrecta f)
+        public async Task<ControllerResponse<FormaIncorrectaModel>> DeleteAsync(FormaIncorrectaModel f)
         {
-            ControllerResponse<FormaIncorrecta> _controllerResponse = new();
+            ControllerResponse<FormaIncorrectaModel> _controllerResponse = new();
             try
             {
                 var response = await _http.DeleteAsync($"api/PerteneceA/{f.Itemid}/{f.Forma}");

@@ -6,9 +6,9 @@ namespace Horrografia.Server.Data.Repos.Interfaces
 {
     public interface IFormaIncorrectaRepository
     {
-        Task DeleteForma(FormaIncorrecta f);
-        Task<List<FormaIncorrecta>> GetAllAsync();
-        Task<List<FormaIncorrecta>> GetFormasByLevelId(int idNivel);
-        Task InsertData(FormaIncorrecta f);
+        Task DeleteForma(FormaIncorrectaModel f);
+        Task<List<FormaIncorrectaModel>> GetAllAsync();
+        Task<List<FormaIncorrectaModel>> GetFormasByLevelId(int idNivel);
+        Task InsertData(FormaIncorrectaModel f);
     }
 }

@@ -14,10 +14,11 @@ namespace Horrografia.Client.Pages.DashboardPages
     public partial class LevelAdministration : IComponent
     {
         [Inject]
-        protected INivelService _nivelService { get; set; }
+        protected ISnackbar _snackbar { get; set; }
 
         [Inject]
-        protected ISnackbar _snackbar { get; set; }
+        protected INivelService _nivelService { get; set; }
+
 
         [Inject]
         protected IPerteneceAService _perteneceAService { get; set; }
@@ -27,6 +28,9 @@ namespace Horrografia.Client.Pages.DashboardPages
 
         [Inject]
         protected IPistaService _pistaService { get; set; }
+
+        [Inject]
+        protected IFormaIncorrectaService _formaIncorrectaService {get; set;}
 
         private bool IsLoading { get; set; }
         private int InitialLoadStatus { get; set; }
@@ -55,6 +59,9 @@ namespace Horrografia.Client.Pages.DashboardPages
         // Todas las pistas
         private List<PistaModel> PistasTotales { get; set; }
 
+        // Todas las formas incorrectas
+        private List<FormaIncorrectaModel> FormasIncorrectasTotales { get; set; }
+
         // booleano que me indica que la renderización fue exitosa.
         private bool _lecturaExitosa { get; set; }
 
@@ -63,7 +70,8 @@ namespace Horrografia.Client.Pages.DashboardPages
             Niveles,
             Items,
             Relaciones,
-            Pistas
+            Pistas,
+            FormasIncorrectas
         }
 
         // En primera creación de instancia se asignan los valores.
@@ -156,6 +164,20 @@ namespace Horrografia.Client.Pages.DashboardPages
             }
         }
 
+        private async Task CargarFormasIncorrectas()
+        {
+            var formasIncorrectas = await _formaIncorrectaService.GetAsync();
+            if (formasIncorrectas.isResponseSuccesfull())
+            {
+                FormasIncorrectasTotales = formasIncorrectas.Response;
+            }
+            else
+            {
+                string reporteError = "Formas Incorrectas";
+                throw new InvalidOperationException($"Error al cargar las {reporteError}.");
+            }
+        }
+
         private async Task RecargarDatos(ReloadFlag flag)
         {
             try
@@ -173,6 +195,9 @@ namespace Horrografia.Client.Pages.DashboardPages
                         break;
                     case ReloadFlag.Pistas:
                         await CargarPistas();
+                        break;
+                    case ReloadFlag.FormasIncorrectas:
+                        await CargarFormasIncorrectas();
                         break;
                     default:
                         throw new InvalidOperationException("Parámetro no reconocido.");

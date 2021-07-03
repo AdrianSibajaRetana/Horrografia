@@ -15,8 +15,8 @@ namespace Horrografia.Server.Controllers
     public class FormaincorrectaController : ControllerBase
     {
         private readonly IFormaIncorrectaRepository _repo;
-        private readonly ILogger<FormaIncorrecta> _logger;
-        public FormaincorrectaController(IFormaIncorrectaRepository repo, ILogger<FormaIncorrecta> logger)
+        private readonly ILogger<FormaIncorrectaModel> _logger;
+        public FormaincorrectaController(IFormaIncorrectaRepository repo, ILogger<FormaIncorrectaModel> logger)
         {
             _repo = repo;
             _logger = logger;
@@ -57,7 +57,7 @@ namespace Horrografia.Server.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post(FormaIncorrecta f)
+        public async Task<IActionResult> Post(FormaIncorrectaModel f)
         {
             try
             {
@@ -76,7 +76,7 @@ namespace Horrografia.Server.Controllers
         {
             try
             {
-                FormaIncorrecta f = new();
+                FormaIncorrectaModel f = new();
                 f.Itemid = idItem;
                 f.Forma = forma;
                 await _repo.DeleteForma(f);

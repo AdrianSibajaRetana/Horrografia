@@ -20,30 +20,30 @@ namespace Horrografia.Server.Data.Repos.Implementations
         }
 
         //GET
-        public async Task<List<FormaIncorrecta>> GetAllAsync()
+        public async Task<List<FormaIncorrectaModel>> GetAllAsync()
         {
             string sql = "SELECT * FROM formaIncorrecta";
-            var formas = await _dbContext.LoadData<FormaIncorrecta, dynamic>(sql, new { }, ConectionString);
+            var formas = await _dbContext.LoadData<FormaIncorrectaModel, dynamic>(sql, new { }, ConectionString);
             return formas;
         }
 
         //GET/{idNivel}
-        public async Task<List<FormaIncorrecta>> GetFormasByLevelId(int idNivel)
+        public async Task<List<FormaIncorrectaModel>> GetFormasByLevelId(int idNivel)
         {
             string sql = "SELECT * FROM formaincorrecta JOIN item ON item.id = formaincorrecta.Itemid JOIN pertenecea ON item.id = pertenecea.idItem WHERE pertenecea.idNivel = @idNivel";
-            var formas = await _dbContext.LoadData<FormaIncorrecta, dynamic>(sql, new { idNivel = idNivel }, ConectionString);
+            var formas = await _dbContext.LoadData<FormaIncorrectaModel, dynamic>(sql, new { idNivel = idNivel }, ConectionString);
             return formas;
         }
 
         //POST
-        public async Task InsertData(FormaIncorrecta f)
+        public async Task InsertData(FormaIncorrectaModel f)
         {
             string sql = "insert into formaIncorrecta (Forma, Itemid) values (@Forma, @Itemid);";
             await _dbContext.SaveData(sql, new { Forma = f.Forma, Itemid = f.Itemid }, ConectionString);
         }
 
         //DELETE
-        public async Task DeleteForma(FormaIncorrecta f)
+        public async Task DeleteForma(FormaIncorrectaModel f)
         {
             string sql = "delete from formaIncorrecta where Forma = @Forma and Itemid = @Itemid";
             await _dbContext.SaveData(sql, new { Forma = f.Forma, Itemid = f.Itemid }, ConectionString);
