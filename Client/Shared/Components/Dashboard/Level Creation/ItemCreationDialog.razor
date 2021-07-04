@@ -22,17 +22,27 @@
                                      Immediate="true"
                                      For="@(() => _model.FormaCorrecta)"
                                      HelperText="El texto que se espera que el usuario escriba." />
-                    <MudAutocomplete Class="mt-4"
-                                     T="string"
-                                     Label="Forma Incorrecta"
-                                     @bind-Value="_model.FormaIncorrecta"
-                                     SearchFunc="@BuscarFormasIncorrectasExistentes"
-                                     ResetValueOnEmptyText="true"
-                                     CoerceValue="true"
-                                     MinCharacters="4"
-                                     Immediate="true"
-                                     For="@(() => _model.FormaIncorrecta)"
-                                     HelperText="El texto que verá el usuario." />
+
+                    @for (int i = 0; i < _model.FormasIncorrectas.Count(); i++)
+                    {
+                        var iCopy = i;
+                        <MudTextField T="string"
+                                        Label="Forma Incorrecta"
+                                        Class="mt-4"                                        
+                                        Required="true"
+                                        RequiredError="La forma incorrecta no puede estar en blanco."
+                                        ValueChanged="@(e => _model.FormasIncorrectas[iCopy] = e)" />
+                    }
+                    <MudGrid>
+                        <MudItem Class="mx-auto">
+                            <MudButton Variant="Variant.Text" Color="Color.Success" OnClick="insertarFormaIncorrecta">Añadir Forma</MudButton>
+                            @if (_model.FormasIncorrectas.Count() >= 2)
+                            { 
+                                <MudButton Variant="Variant.Text" Color="Color.Error" OnClick="borrarUltimaForma">Borrar Forma</MudButton>
+                            }
+                        </MudItem>
+                    </MudGrid>
+
                     <MudAutocomplete Class="mt-4"
                                      T="string"
                                      Label="Pista"
