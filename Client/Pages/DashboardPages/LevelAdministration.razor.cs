@@ -97,6 +97,7 @@ namespace Horrografia.Client.Pages.DashboardPages
                 await CargarRelaciones();
                 await CargarItems();
                 await CargarPistas();
+                await CargarFormasIncorrectas();
                 _lecturaExitosa = true;
             }
             catch(InvalidOperationException e)
@@ -341,6 +342,15 @@ namespace Horrografia.Client.Pages.DashboardPages
         {
             var response = await _itemService.PostAsync(i);
             await RecargarDatos(ReloadFlag.Items);
+        }
+
+        protected async Task CreateIncorrectForms(List<FormaIncorrectaModel> f)
+        {
+            foreach (var forma in f)
+            {
+                var response = await _formaIncorrectaService.PostAsync(forma);
+            }
+            await RecargarDatos(ReloadFlag.FormasIncorrectas);
         }
 
         protected async Task UpdateItem(ItemModel i)

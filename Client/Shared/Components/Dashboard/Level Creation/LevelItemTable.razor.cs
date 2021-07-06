@@ -39,7 +39,11 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation
         public EventCallback<ItemModel> OnRelationCreationRequest { get; set; }
 
         [Parameter]
+        public EventCallback<List<FormaIncorrectaModel>> OnIncorrectFormCreationRequest { get; set; }
+
+        [Parameter]
         public EventCallback<ItemModel> OnRelationDeletionRequest { get; set; }
+
 
         [Parameter]
         public EventCallback NotifyError { get; set; }
@@ -88,10 +92,10 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation
         }
 
         private string GetFormasIncorrectasById(int id)
-        {
+        {            
             var formasList = _formaIncorrectaList.Where(f => f.Itemid == id).ToList().Select(f => f.Forma);
-            var formas = string.Join(",", formasList);
-            return formas;
+            var formasString = string.Join(", ", formasList);
+            return formasString;
         }
 
         private string GetPistaById(int id)
@@ -159,6 +163,11 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation
         protected async Task ClueCreationRequest(PistaModel p)
         {
             await OnClueCreationRequest.InvokeAsync(p);
+        }
+
+        protected async Task IncorrectFormCreationRequest(List<FormaIncorrectaModel> f)
+        {
+            await OnIncorrectFormCreationRequest.InvokeAsync(f);
         }
 
         protected async Task RelationCreationRequest(ItemModel i)

@@ -33,6 +33,9 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation
         public EventCallback<PistaModel> OnClueCreation { get; set; }
 
         [Parameter]
+        public EventCallback<List<FormaIncorrectaModel>> OnFormaIncorrectaCreation { get; set; }
+
+        [Parameter]
         public EventCallback<ItemModel> OnRelationCreation { get; set; }
 
         [Parameter]
@@ -113,7 +116,9 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation
                 _loadingStatus = "Creando la pista del item.";
                 await VerificarCreacionDePista();
                 _loadingStatus = "Creando el item.";
-                await VerificarExistenciaDeItem();
+                await CrearItem();
+                _loadingStatus = "Adjuntando formas incorrectas al item";
+                await AdjuntarFormasIncorrectas();
                 _loadingStatus = "Generando la relación en la base de datos.";
                 await CrearRelacion();
                 _isCreatingItem = false;
@@ -136,7 +141,7 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation
                 PistaModel p = new();
                 p.Pista = _model.Pista;
                 await CrearPista(p);
-            }
+            }            
         }
 
         //Se invoca el método para crear una pista.
@@ -145,26 +150,38 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation
             await OnClueCreation.InvokeAsync(p);
         }
 
-        //Si existe el item se crea, si no no se hace nada.
-        private async Task VerificarExistenciaDeItem()
-        {            
+
+        //Se invoca el método para crear un item.
+        private async Task CrearItem()
+        {
+            var PistaExistente = PistasTotales.Where(p => p.Pista == _model.Pista).FirstOrDefault();
+            ItemModel i = new();
+            i.FormaCorrecta = _model.FormaCorrecta;
+            i.PistaId = PistaExistente.Id;
+            await OnItemCreation.InvokeAsync(i);
+        }
+
+        //Se adjuntan las formas incorrectas al item
+        private async Task AdjuntarFormasIncorrectas()
+        {
+            // Se consigue el itemModel recien creado
             var PistaExistente = PistasTotales.Where(p => p.Pista == _model.Pista).FirstOrDefault();
             var ItemExistente = ItemsTotales.Where(i => i.FormaCorrecta == _model.FormaCorrecta &&
                                                         i.PistaId == PistaExistente.Id)
-                                                        .FirstOrDefault();            
-            if (ItemExistente == null)
-            {
-                ItemModel i = new();
-                i.FormaCorrecta = _model.FormaCorrecta;
-                i.PistaId = PistaExistente.Id;
-                await CrearItem(i);
-            }            
-        }
+                                                        .FirstOrDefault();
+            // Se extrae su ID
+            var itemID = ItemExistente.Id;
 
-        //Se invoca el método para crear un item.
-        private async Task CrearItem(ItemModel i)
-        {
-            await OnItemCreation.InvokeAsync(i);
+            //Se crea la lista de modelos para generar en la base de datos. 
+            List<FormaIncorrectaModel> formasIncorrectasList = new();
+            foreach (string forma in _model.FormasIncorrectas)
+            {
+                FormaIncorrectaModel f = new();
+                f.Forma = forma;
+                f.Itemid = itemID;
+                formasIncorrectasList.Add(f);
+            }
+            await OnFormaIncorrectaCreation.InvokeAsync(formasIncorrectasList);
         }
 
         //Se crea la relación con el item y la pista.

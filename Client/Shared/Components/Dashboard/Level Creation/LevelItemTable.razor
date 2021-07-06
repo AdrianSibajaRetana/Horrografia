@@ -10,7 +10,7 @@
                         <tr>
                             <th>ID</th>
                             <th>Forma Correcta</th>
-                            <th>Forma Incorrecta</th>
+                            <th>Formas Incorrectas</th>
                             <th>Pista</th>
                             <th>Acciones</th>
                         </tr>
@@ -21,7 +21,7 @@
                             <tr>
                                 <td>@item.Id</td>
                                 <td>@item.FormaCorrecta</td>
-                                <td>@GetFormasIncorrectasById(item.PistaId)</td>
+                                <td>@GetFormasIncorrectasById(item.Id)</td>
                                 <td>@GetPistaById(item.PistaId)</td>
                                 <td>
                                     <MudGrid Spacing="1">
@@ -78,6 +78,7 @@
             </MudItem>
         </MudGrid>
     }
+
     <ItemCreationDialog ShowDialogue="_showItemCreationDialog"
                         ItemsTotales="ItemsTotales"
                         PistasTotales="PistasTotales"
@@ -86,6 +87,7 @@
                         OnItemCreation="ItemCreationRequest"
                         OnClueCreation="ClueCreationRequest"
                         OnRelationCreation="RelationCreationRequest"
+                        OnFormaIncorrectaCreation="IncorrectFormCreationRequest"
                         OnErrorOcurred="NotifyErrorToPage"/>
 
     <ItemEditionDialog ShowDialogue="_showItemEditionDialog"

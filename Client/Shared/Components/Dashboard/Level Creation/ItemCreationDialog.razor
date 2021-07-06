@@ -35,10 +35,18 @@
                     }
                     <MudGrid>
                         <MudItem Class="mx-auto">
-                            <MudButton Variant="Variant.Text" Color="Color.Success" OnClick="insertarFormaIncorrecta">Añadir Forma</MudButton>
+                            @if (_model.FormasIncorrectas.Count() <= 5)
+                            {
+                                <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Add" IconColor="Color.Success" Size="Size.Medium" OnClick="insertarFormaIncorrecta">Añadir Forma</MudButton>
+                            }
+                            else
+                            {
+                                <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Add" IconColor="Color.Success" Size="Size.Medium" Disabled="true">Añadir Forma</MudButton>
+                            }
+
                             @if (_model.FormasIncorrectas.Count() >= 2)
-                            { 
-                                <MudButton Variant="Variant.Text" Color="Color.Error" OnClick="borrarUltimaForma">Borrar Forma</MudButton>
+                            {
+                                <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.HorizontalRule" IconColor="Color.Error" Size="Size.Medium" OnClick="borrarUltimaForma">Borrar Forma</MudButton>
                             }
                         </MudItem>
                     </MudGrid>
