@@ -398,22 +398,6 @@ namespace Horrografia.Client.Pages.DashboardPages
             await RecargarDatos(ReloadFlag.Relaciones);
         }
 
-        protected async Task DeleteRelation(ItemModel i)
-        {
-            PerteneceAModel p = new();
-            p.IdItem = i.Id;
-            p.IdNivel = nivelActual.Id;
-            var response = await _perteneceAService.DeleteAsync(p);
-            if (response.isResponseSuccesfull())
-            {
-                ShowNotification($"¡Se borró el item del nivel!", Severity.Success);
-            }
-            else
-            {
-                ShowNotification("Hubo un error al borrar la relación.", Severity.Error);
-            }
-            await RecargarDatos(ReloadFlag.Relaciones);
-        }
 
         protected void PopErrorNotificationMessage()
         {

@@ -23,18 +23,25 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation
         [Parameter]
         public EventCallback<ItemModel> OnItemDeletion { get; set; }
 
-        [Parameter]
-        public EventCallback<ItemModel> OnRelationDeletion { get; set; }
 
         [Parameter]
         public List<PistaModel> PistasTotales { get; set; }
 
+        [Parameter]
+        public List<FormaIncorrectaModel> FormasIncorrectasTotales { get; set; } 
+
         private ClientItemModel _model { get; set; }
+
         private int _selectedOption { get; set; } = 0;
+
+        private bool _isDeletingItem { get; set; }
+
+        private string _deletingStatus { get; set; }
 
         public ItemDeletionDialog()
         {
             _model = new();
+            _isDeletingItem = false;
         }
 
         protected override void OnParametersSet()
@@ -48,12 +55,19 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation
         private void generateClientModel()
         {
             _model.SetDataFromModel(itemToChange);
+            _model.FormasIncorrectas = GetFormasIncorrectas();
             _model.Pista = GetPistaById(_model.Pistaid);
         }
 
         private string GetPistaById(int id)
         {
             return PistasTotales.FirstOrDefault(p => p.Id == id).Pista;
+        }
+
+        private List<string> GetFormasIncorrectas()
+        {
+            var formas = FormasIncorrectasTotales.Where(f => f.Itemid == _model.Id).Select(f => f.Forma).ToList();
+            return formas; 
         }
 
         private async Task CloseDialog()
@@ -63,18 +77,11 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation
 
         private async Task DeleteItem()
         {
-            //Borrar el item del nivel seleccionado.
-            if (_selectedOption == 0)
-            {
-                await OnRelationDeletion.InvokeAsync(itemToChange);
-                await CloseDialog();
-            }
-            //Borrar el item de todos los niveles.
-            else
-            {
-                await OnItemDeletion.InvokeAsync(itemToChange);
-                await CloseDialog();
-            }
+            _isDeletingItem = true;
+            _deletingStatus = "Borrando el item del nivel.";
+            await OnItemDeletion.InvokeAsync(itemToChange);
+            _isDeletingItem = false;
+            await CloseDialog();            
         }
 
     }

@@ -10,17 +10,33 @@
     <DialogContent>
         <MudTextField @bind-Value="@_model.FormaCorrecta" Label="Forma Correcta" ReadOnly="true" Class="mt-4" />
         <MudTextField @bind-Value="@_model.Pista" Label="Pista" ReadOnly="true" Class="mt-4" />
-        <MudDivider DividerType="DividerType.Middle" Class="my-6" />
-        <MudText GutterBottom="true">Seleccione el tipo de borrado</MudText>
-
-        <MudRadioGroup @bind-SelectedOption="@_selectedOption">
-                <MudRadio Option="@(0)" Color="Color.Primary">Borrar el item del nivel seleccionado.</MudRadio>
-                <MudRadio Option="@(1)" Color="Color.Primary">Borrar el item de todos los niveles.</MudRadio>
-        </MudRadioGroup>
-
+        @for (int i = 0; i < _model.FormasIncorrectas.Count(); i++)
+        { 
+            <MudTextField @bind-Value="@_model.FormasIncorrectas[i]" Label="Forma Incorrecta" ReadOnly="true" Class="mt-4" />
+        }
     </DialogContent>
     <DialogActions>
-        <MudButton Variant="Variant.Text" OnClick="CloseDialog">Cancelar</MudButton>
-        <MudButton Variant="Variant.Text" OnClick="DeleteItem" Color="Color.Error">Borrar item</MudButton>
+        @if (!_isDeletingItem)
+        {
+            <MudButton Variant="Variant.Text" OnClick="CloseDialog">Cancelar</MudButton>
+            <MudButton Variant="Variant.Text" OnClick="DeleteItem" Color="Color.Error">Borrar item</MudButton>
+        }
+        else
+        {
+            <MudItem xs="12" sm="12" md="12">
+                <MudText Typo="Typo.subtitle1" Align="Align.Center" GutterBottom="true">
+                    @_deletingStatus
+                </MudText>
+            </MudItem>
+            <MudItem xs="12" sm="12" md="12">
+                <MudGrid Justify="Justify.Center">
+                    <MudItem>
+                        <MudItem>
+                            <MudProgressCircular Color="Color.Error" Indeterminate="true" />
+                        </MudItem>
+                    </MudItem>
+                </MudGrid>
+            </MudItem>
+        }
     </DialogActions>
 </MudDialog>
