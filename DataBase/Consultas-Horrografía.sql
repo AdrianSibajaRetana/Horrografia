@@ -46,8 +46,8 @@ FOREIGN KEY (PistaId) REFERENCES Pista(id) ON DELETE SET NULL
 
 CREATE TABLE FormaIncorrecta(
 Itemid INT, 
-FormaCorrecta VARCHAR(255) NOT NULL,
-FOREIGN KEY (Itemid) REFERENCES Item(id) ON DELETE SET NULL
+Forma VARCHAR(255) NOT NULL,
+FOREIGN KEY (Itemid) REFERENCES Item(id) ON DELETE CASCADE
 )
 
 CREATE TABLE Usuario(
@@ -104,6 +104,18 @@ FROM Item
 JOIN pertenecea
 ON item.id = pertenecea.idItem
 WHERE pertenecea.idNivel = 20
+
+## Consulta para conseguir todas las formas incorrectas de los items de un nivel
+SELECT * 
+FROM formaincorrecta
+JOIN item
+ON item.id = formaincorrecta.Itemid
+JOIN pertenecea
+ON item.id = pertenecea.idItem
+WHERE pertenecea.idNivel = 20
+
+
+
 
 SELECT * FROM aspnetusers
 SELECT * FROM nivel
