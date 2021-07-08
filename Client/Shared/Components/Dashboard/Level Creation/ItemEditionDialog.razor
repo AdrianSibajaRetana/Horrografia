@@ -12,11 +12,54 @@
             <DataAnnotationsValidator />
             <MudCard Elevation=0>
                 <MudCardContent>
-                    <MudTextField Label="Forma Correcta" 
+                    <MudTextField Label="Forma Correcta"
                                   HelperText="El nombre del nivel a crear."
-                                  @bind-Value="_newModel.FormaCorrecta" 
+                                  @bind-Value="_newModel.FormaCorrecta"
                                   For="@(() => _newModel.FormaCorrecta)"
                                   Variant="Variant.Outlined" />
+
+                    @for (int i = 0; i < _newModel.FormasIncorrectas.Count(); i++)
+                    {
+                        var iCopy = i;
+                        <MudTextField T="string"
+                                      Label="Forma Incorrecta"
+                                      Class="mt-4"
+                                      Required="true"
+                                      RequiredError="La forma incorrecta no puede estar en blanco."
+                                      @bind-Value="_newModel.FormasIncorrectas[iCopy]"/>
+                    }
+
+
+                    <MudGrid>
+                        <MudItem Class="mx-auto">
+                            @if (_newModel.FormasIncorrectas.Count() <= 5)
+                            {
+                                <MudTooltip Text="Añadir Forma">
+                                    <MudIconButton Icon="@Icons.Material.Filled.Add" Color="Color.Success" OnClick="insertarFormaIncorrecta" Size="Size.Medium"></MudIconButton>
+                                </MudTooltip>
+
+                            }
+                            else
+                            {
+                                <MudTooltip Text="Se ha llegado al máximo de formas incorrectas">
+                                    <MudIconButton Icon="@Icons.Material.Filled.Add" Color="Color.Success" Disabled="true" Size="Size.Medium"></MudIconButton>
+                                </MudTooltip>
+                            }
+
+                            @if (_newModel.FormasIncorrectas.Count() >= 2)
+                            {
+                                <MudTooltip Text="Eliminar Forma Incorrecta">
+                                    <MudIconButton Icon="@Icons.Material.Filled.HorizontalRule" Color="Color.Error" Size="Size.Medium" OnClick="borrarUltimaForma"></MudIconButton>
+                                </MudTooltip>
+                            }
+                            else
+                            {
+                                <MudTooltip Text="Se debe tener al menos una forma incorrecta">
+                                    <MudIconButton Icon="@Icons.Material.Filled.HorizontalRule" Color="Color.Error" Size="Size.Medium" Disabled="true"></MudIconButton>
+                                </MudTooltip>
+                            }
+                        </MudItem>
+                    </MudGrid>
 
                     <MudAutocomplete Class="mt-4"
                                      T="string"
@@ -29,7 +72,7 @@
                                      Immediate="true"
                                      For="@(() =>_newModel.Pista)"
                                      HelperText="La pista de ayuda que se le podrá dar al usuario."
-                                     Variant="Variant.Outlined"/>
+                                     Variant="Variant.Outlined" />
                 </MudCardContent>
                 <MudCardActions>
                     <MudGrid>

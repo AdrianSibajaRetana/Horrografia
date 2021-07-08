@@ -353,6 +353,15 @@ namespace Horrografia.Client.Pages.DashboardPages
             await RecargarDatos(ReloadFlag.FormasIncorrectas);
         }
 
+        protected async Task DeleteIncorrectForms(List<FormaIncorrectaModel> f)
+        {
+            foreach (var forma in f)
+            {
+                var response = await _formaIncorrectaService.DeleteAsync(forma);
+            }
+            await RecargarDatos(ReloadFlag.FormasIncorrectas);
+        }
+
         protected async Task UpdateItem(ItemModel i)
         {
             var response = await _itemService.UpdateAsync(i);

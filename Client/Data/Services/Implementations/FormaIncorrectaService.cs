@@ -102,7 +102,7 @@ namespace Horrografia.Client.Data.Services.Implementations
             ControllerResponse<FormaIncorrectaModel> _controllerResponse = new();
             try
             {
-                var response = await _http.DeleteAsync($"api/PerteneceA/{f.Itemid}/{f.Forma}");
+                var response = await _http.DeleteAsync($"api/Formaincorrecta/{f.Itemid}/{f.Forma}");
                 if (response.IsSuccessStatusCode)
                 {
                     _controllerResponse.Status = Constantes.OKSTATUS;

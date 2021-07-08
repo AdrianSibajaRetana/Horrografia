@@ -21,6 +21,9 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation
         public List<PistaModel> PistasTotales { get; set; }
 
         [Parameter]
+        public List<FormaIncorrectaModel> FormasIncorrectasTotales { get; set; }
+
+        [Parameter]
         public EventCallback OnDialogClosed { get; set; }
 
         [Parameter]
@@ -30,17 +33,26 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation
         public EventCallback<PistaModel> OnPistaUpdate { get; set; }
 
         [Parameter]
+        public EventCallback<List<FormaIncorrectaModel>> OnFormaIncorrectaCreation { get; set; }
+
+        [Parameter]
+        public EventCallback<List<FormaIncorrectaModel>> OnFormaIncorrectaDeletion { get; set; }
+
+
+        [Parameter]
         public EventCallback OnErrorOcurred { get; set; }
 
         private ClientItemModel _newModel { get; set; }
         private ItemModel _model { get; set; }
         private bool _ActualizandoItem { get; set; }
         private string _EstadoDeActualizacion { get; set; }
+        private List<string> formasIncorrectasOriginales { get; set; }
 
         public ItemEditionDialog()
         {
             _newModel = new();
             _model = new();
+            formasIncorrectasOriginales = new();
             _ActualizandoItem = false;
 
         }
@@ -58,6 +70,26 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation
         {
             _newModel.SetDataFromModel(_model);
             _newModel.Pista = GetPistaById(_newModel.Pistaid);
+            _newModel.FormasIncorrectas = getFormasIncorrectas(_newModel.Id);
+            formasIncorrectasOriginales = getFormasIncorrectas(_newModel.Id);
+        }
+
+        private void insertarFormaIncorrecta()
+        {
+            _newModel.FormasIncorrectas.Add("");
+            StateHasChanged();
+        }
+
+        private void borrarUltimaForma()
+        {
+            var count = _newModel.FormasIncorrectas.Count() - 1;
+            _newModel.FormasIncorrectas.RemoveAt(count);
+        }
+
+        private List<string> getFormasIncorrectas(int id)
+        {
+            var formas = FormasIncorrectasTotales.Where(f => f.Itemid == id).Select(f => f.Forma).ToList();
+            return formas; 
         }
 
         private string GetPistaById(int id)
@@ -71,6 +103,8 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation
             { 
                 //Se empieza a actualizar el item
                 _ActualizandoItem = true;
+                _EstadoDeActualizacion = "Actualizando las formas incorrectas.";
+                await administrarFormasIncorrectas();
                 _EstadoDeActualizacion = "Actualizando la pista al item.";
                 //Se revisa si se tiene que crear una pista nueva
                 await VerificarCreacionDePista();
@@ -93,6 +127,55 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation
                 await CloseDialog();
             }
         }
+
+        private async Task administrarFormasIncorrectas()
+        {
+            //Para borrar: 
+            //  Se consiguen las formas que están en la lista original pero no en la nueva.
+            var formasABorrar = formasIncorrectasOriginales.Where(f => !_newModel.FormasIncorrectas.Any(f2 => f == f2)).ToList();
+            if (formasABorrar.Any())
+            { 
+                await BorrarFormasIncorrectas(formasABorrar);
+            }
+
+            //Para crear: 
+            // Se consiguen las formas que están en la lista nueva pero no en la original. 
+            var formasACrear = _newModel.FormasIncorrectas.Where(f => !formasIncorrectasOriginales.Any(f2 => f == f2)).ToList();
+            if (formasACrear.Any())
+            {                
+                await CrearFormasIncorrectas(formasACrear);
+            }
+        }
+
+        // Borra las formas incorrectas no deseadas
+        private async Task BorrarFormasIncorrectas(List<string> formasABorrar)
+        {
+            var formas = generarFormasIncorrectas(formasABorrar);
+            await OnFormaIncorrectaDeletion.InvokeAsync(formas);
+        }
+
+        // Crea las formas incorrectas deseadas
+        private async Task CrearFormasIncorrectas(List<string> formasACrear)
+        {
+            var formas = generarFormasIncorrectas(formasACrear);
+            await OnFormaIncorrectaCreation.InvokeAsync(formas);
+        }
+
+        // Devuelve una lista de formas incorrectas a partir de la lista de formas en strings. 
+        private List<FormaIncorrectaModel> generarFormasIncorrectas(List<string> formasEnString)
+        {
+            int id = _newModel.Id;
+            List<FormaIncorrectaModel> formasIncorrectas = new();
+            foreach (var forma in formasEnString)
+            {
+                FormaIncorrectaModel f = new();
+                f.Forma = forma;
+                f.Itemid = id;
+                formasIncorrectas.Add(f);
+            }
+            return formasIncorrectas;
+        }
+
 
         /*Función de búsqueda en el autocompletar de Pistas*/
         private async Task<IEnumerable<string>> BuscarPistasExistentes(string value)

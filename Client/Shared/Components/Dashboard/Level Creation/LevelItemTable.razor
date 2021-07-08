@@ -93,10 +93,13 @@
     <ItemEditionDialog ShowDialogue="_showItemEditionDialog"
                        ItemToChange="_itemSelectedForCrudAction"
                        PistasTotales="PistasTotales"
+                       FormasIncorrectasTotales="FormasIncorrectas"
                        OnDialogClosed="closeItemEditionDialog"
                        OnItemUpdate="ItemEditionRequest"
                        OnPistaUpdate="ClueCreationRequest"
-                       OnErrorOcurred="NotifyErrorToPage"/>
+                       OnErrorOcurred="NotifyErrorToPage"
+                       OnFormaIncorrectaCreation="IncorrectFormCreationRequest"
+                       OnFormaIncorrectaDeletion="IncorrectFormDeletionRequest"/>
 
     <ItemDeletionDialog ShowDialogue="_showItemDeletionDialog"
                         itemToChange="_itemSelectedForCrudAction"

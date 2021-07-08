@@ -42,6 +42,9 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation
         public EventCallback<List<FormaIncorrectaModel>> OnIncorrectFormCreationRequest { get; set; }
 
         [Parameter]
+        public EventCallback<List<FormaIncorrectaModel>> OnIncorrectFormDeletionnRequest { get; set; }
+
+        [Parameter]
         public EventCallback NotifyError { get; set; }
 
         [Parameter]
@@ -164,6 +167,11 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation
         protected async Task IncorrectFormCreationRequest(List<FormaIncorrectaModel> f)
         {
             await OnIncorrectFormCreationRequest.InvokeAsync(f);
+        }
+
+        protected async Task IncorrectFormDeletionRequest(List<FormaIncorrectaModel> f)
+        {
+            await OnIncorrectFormDeletionnRequest.InvokeAsync(f);
         }
 
 
