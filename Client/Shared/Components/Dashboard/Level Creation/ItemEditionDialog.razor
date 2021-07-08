@@ -26,10 +26,9 @@
                                       Class="mt-4"
                                       Required="true"
                                       RequiredError="La forma incorrecta no puede estar en blanco."
-                                      @bind-Value="_newModel.FormasIncorrectas[iCopy]"/>
+                                      @bind-Value="_newModel.FormasIncorrectas[iCopy]"
+                                      Variant="Variant.Outlined"/>
                     }
-
-
                     <MudGrid>
                         <MudItem Class="mx-auto">
                             @if (_newModel.FormasIncorrectas.Count() <= 5)
@@ -64,11 +63,13 @@
                     <MudAutocomplete Class="mt-4"
                                      T="string"
                                      Label="Pista"
-                                     @bind-Value="_newModel.Pista"
+                                     Value="@_newModel.Pista"
+                                     TextChanged="@(e => _newModel.Pista = e)"
                                      SearchFunc="@BuscarPistasExistentes"
                                      ResetValueOnEmptyText="true"
                                      CoerceValue="true"
                                      MinCharacters="2"
+                                     MaxItems="5"
                                      Immediate="true"
                                      For="@(() =>_newModel.Pista)"
                                      HelperText="La pista de ayuda que se le podrá dar al usuario."
@@ -80,7 +81,7 @@
                         {
                             <MudItem Class="ml-auto">
                                 <MudButton Variant="Variant.Text" OnClick="CloseDialog">Cancelar</MudButton>
-                                <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Text" Color="Color.Info">Editar Item</MudButton>
+                                <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Text" Color="Color.Info">Aplicar cambios</MudButton>
                             </MudItem>
                         }
                         else

@@ -92,34 +92,42 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation
             return formas; 
         }
 
-        private string GetPistaById(int id)
+        private string GetPistaById(int? id)
         {
-            return PistasTotales.FirstOrDefault(p => p.Id == id).Pista;
+            string pista = "";
+            if (id.HasValue)
+            {
+                pista = PistasTotales.FirstOrDefault(p => p.Id == id).Pista;
+            }
+            return pista;
         }
 
         private async Task UpdateItem()
         {
             try 
-            { 
-                //Se empieza a actualizar el item
-                _ActualizandoItem = true;
-                _EstadoDeActualizacion = "Actualizando las formas incorrectas.";
-                await administrarFormasIncorrectas();
-                _EstadoDeActualizacion = "Actualizando la pista al item.";
-                //Se revisa si se tiene que crear una pista nueva
-                await VerificarCreacionDePista();
-                //Se asigna la pista escrita
-                AsignarPista();
-                _EstadoDeActualizacion = "Actualizando las formas del item.";
-                //Se crea el modelo a partir del modelo en el dominio
-                ItemModel updatedItemModel = _newModel.GetItemModel();
-                //Se crea el item
-                _EstadoDeActualizacion = "Escribiendo el item a la base de datos.";
-                await OnItemUpdate.InvokeAsync(updatedItemModel);
-                //Se cierra el diálogo
-                await CloseDialog();
-                //Se termina de actualizar el item
-                _ActualizandoItem = false;
+            {
+                if (!VerificarFormasVacias())
+                { 
+                    //Se empieza a actualizar el item
+                    _ActualizandoItem = true;
+                    _EstadoDeActualizacion = "Actualizando las formas incorrectas.";
+                    await AdministrarFormasIncorrectas();
+                    _EstadoDeActualizacion = "Actualizando la pista al item.";
+                    //Se revisa si se tiene que crear una pista nueva
+                    await VerificarCreacionDePista();
+                    //Se asigna la pista escrita
+                    AsignarPista();
+                    _EstadoDeActualizacion = "Actualizando las formas del item.";
+                    //Se crea el modelo a partir del modelo en el dominio
+                    ItemModel updatedItemModel = _newModel.GetItemModel();
+                    //Se crea el item
+                    _EstadoDeActualizacion = "Escribiendo el item a la base de datos.";
+                    await OnItemUpdate.InvokeAsync(updatedItemModel);
+                    //Se cierra el diálogo
+                    await CloseDialog();
+                    //Se termina de actualizar el item
+                    _ActualizandoItem = false;                
+                }
             } 
             catch 
             {
@@ -128,7 +136,14 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation
             }
         }
 
-        private async Task administrarFormasIncorrectas()
+        // Como el editform no verifica las formas vacías, se tiene que hacer a mano. 
+        private bool VerificarFormasVacias()
+        {
+            var tieneFormasVacias = _newModel.FormasIncorrectas.Any(f => f == "");
+            return tieneFormasVacias;
+        }
+
+        private async Task AdministrarFormasIncorrectas()
         {
             //Para borrar: 
             //  Se consiguen las formas que están en la lista original pero no en la nueva.
@@ -176,7 +191,6 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation
             return formasIncorrectas;
         }
 
-
         /*Función de búsqueda en el autocompletar de Pistas*/
         private async Task<IEnumerable<string>> BuscarPistasExistentes(string value)
         {
@@ -197,12 +211,16 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation
         //Si existe la pista se crea, si no no se hace nada.
         private async Task VerificarCreacionDePista()
         {
-            var PistaExistente = PistasTotales.Where(p => p.Pista == _newModel.Pista).FirstOrDefault();
-            if (PistaExistente == null)
-            {
-                PistaModel p = new();
-                p.Pista = _newModel.Pista;
-                await CrearPista(p);                
+            // Si la pista no es vacía
+            if (!string.IsNullOrEmpty(_newModel.Pista))
+            { 
+                var PistaExistente = PistasTotales.Where(p => p.Pista == _newModel.Pista).FirstOrDefault();
+                if (PistaExistente == null)
+                {
+                    PistaModel p = new();
+                    p.Pista = _newModel.Pista;
+                    await CrearPista(p);                
+                }            
             }
         }
 
@@ -211,10 +229,19 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation
             await OnPistaUpdate.InvokeAsync(p);
         }
 
+        // Se asigna la pista al item
         private void AsignarPista()
         {
-            var PistaExistenteId = PistasTotales.Where(p => p.Pista == _newModel.Pista).FirstOrDefault().Id;
-            _newModel.Pistaid = PistaExistenteId;
+            //Si la pista en el EditForm no es vacía
+            if (!string.IsNullOrEmpty(_newModel.Pista))
+            {
+                var PistaExistenteId = PistasTotales.Where(p => p.Pista == _newModel.Pista).FirstOrDefault().Id;
+                _newModel.Pistaid = PistaExistenteId;
+            }
+            else
+            {
+                _newModel.Pistaid = null;
+            }
         }
 
         private async Task CloseDialog()

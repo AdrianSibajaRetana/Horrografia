@@ -16,13 +16,12 @@ namespace Horrografia.Client.Shared.Objects.ClientModels
 
         public List<string> FormasIncorrectas { get; set; } = new();
 
-        [Required(ErrorMessage = "La pista es obligatoria.")]
         [StringLength(100, ErrorMessage = "La pista no puede ser mayor a 100 caracteres")]
         public string Pista { get; set; }
        
         public int Id { get; set; }
 
-        public int Pistaid { get; set; }
+        public int? Pistaid { get; set; }
 
         // Construyo un clientModel a partir de un modelo existente. 
         public void SetDataFromModel(ItemModel model)

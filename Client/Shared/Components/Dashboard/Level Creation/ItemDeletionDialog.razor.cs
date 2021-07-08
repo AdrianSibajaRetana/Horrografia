@@ -59,9 +59,14 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation
             _model.Pista = GetPistaById(_model.Pistaid);
         }
 
-        private string GetPistaById(int id)
+        private string GetPistaById(int? id)
         {
-            return PistasTotales.FirstOrDefault(p => p.Id == id).Pista;
+            string pista = "Item sin pista";
+            if (id.HasValue)
+            {
+                pista = PistasTotales.FirstOrDefault(p => p.Id == id).Pista;
+            }
+            return pista;
         }
 
         private List<string> GetFormasIncorrectas()

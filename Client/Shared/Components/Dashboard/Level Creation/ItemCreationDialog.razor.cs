@@ -56,6 +56,7 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation
         public async Task CloseDialog()
         {
             _model = new();
+            _model.FormasIncorrectas.Add("");
             await OnDialogClosed.InvokeAsync();
         }
 
@@ -112,17 +113,20 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation
         {
             try
             {
-                _isCreatingItem = true;
-                _loadingStatus = "Creando la pista del item.";
-                await VerificarCreacionDePista();
-                _loadingStatus = "Creando el item.";
-                await CrearItem();
-                _loadingStatus = "Adjuntando formas incorrectas al item";
-                await AdjuntarFormasIncorrectas();
-                _loadingStatus = "Generando la relación en la base de datos.";
-                await CrearRelacion();
-                _isCreatingItem = false;
-                await CloseDialog();
+                if (!VerificarFormasVacias())
+                { 
+                    _isCreatingItem = true;
+                    _loadingStatus = "Creando la pista del item.";
+                    await VerificarCreacionDePista();
+                    _loadingStatus = "Creando el item.";
+                    await CrearItem();
+                    _loadingStatus = "Adjuntando formas incorrectas al item";
+                    await AdjuntarFormasIncorrectas();
+                    _loadingStatus = "Generando la relación en la base de datos.";
+                    await CrearRelacion();
+                    _isCreatingItem = false;
+                    await CloseDialog();                
+                }
             }
             catch
             {
@@ -131,17 +135,26 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation
             }
         }
 
-        
+        // Como el editform no verifica las formas vacías, se tiene que hacer a mano. 
+        private bool VerificarFormasVacias()
+        {
+            var tieneFormasVacias = _model.FormasIncorrectas.Any(f => f == "");
+            return tieneFormasVacias;
+        }
+
         //Si existe la pista se crea, si no no se hace nada.
         private async Task VerificarCreacionDePista()
         {
-            var PistaExistente = PistasTotales.Where(p => p.Pista == _model.Pista).FirstOrDefault();
-            if (PistaExistente == null)
-            {
-                PistaModel p = new();
-                p.Pista = _model.Pista;
-                await CrearPista(p);
-            }            
+            if (!string.IsNullOrEmpty(_model.Pista))
+            { 
+                var PistaExistente = PistasTotales.Where(p => p.Pista == _model.Pista).FirstOrDefault();
+                if (PistaExistente == null)
+                {
+                    PistaModel p = new();
+                    p.Pista = _model.Pista;
+                    await CrearPista(p);
+                }                        
+            }
         }
 
         //Se invoca el método para crear una pista.
@@ -157,7 +170,10 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation
             var PistaExistente = PistasTotales.Where(p => p.Pista == _model.Pista).FirstOrDefault();
             ItemModel i = new();
             i.FormaCorrecta = _model.FormaCorrecta;
-            i.PistaId = PistaExistente.Id;
+            if (PistaExistente != null)
+            { 
+                i.PistaId = PistaExistente.Id;
+            }
             await OnItemCreation.InvokeAsync(i);
         }
 
@@ -166,9 +182,21 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation
         {
             // Se consigue el itemModel recien creado
             var PistaExistente = PistasTotales.Where(p => p.Pista == _model.Pista).FirstOrDefault();
-            var ItemExistente = ItemsTotales.Where(i => i.FormaCorrecta == _model.FormaCorrecta &&
+
+            ItemModel ItemExistente = new();
+            if (PistaExistente != null)
+            {
+                ItemExistente = ItemsTotales.Where(i => i.FormaCorrecta == _model.FormaCorrecta &&
                                                         i.PistaId == PistaExistente.Id)
                                                         .FirstOrDefault();
+            }
+            else
+            {
+                ItemExistente = ItemsTotales.Where(i => i.FormaCorrecta == _model.FormaCorrecta
+                                                        && !i.PistaId.HasValue)
+                                                        .FirstOrDefault();
+            }
+
             // Se extrae su ID
             var itemID = ItemExistente.Id;
 
@@ -188,9 +216,19 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation
         private async Task CrearRelacion()
         {
             var PistaExistente = PistasTotales.Where(p => p.Pista == _model.Pista).FirstOrDefault();
-            var ItemExistente = ItemsTotales.Where(i => i.FormaCorrecta == _model.FormaCorrecta &&
+            ItemModel ItemExistente = new();
+            if (PistaExistente != null)
+            {
+                ItemExistente = ItemsTotales.Where(i => i.FormaCorrecta == _model.FormaCorrecta &&
                                                         i.PistaId == PistaExistente.Id)
                                                         .FirstOrDefault();
+            }
+            else
+            {
+                ItemExistente = ItemsTotales.Where(i => i.FormaCorrecta == _model.FormaCorrecta
+                                                        && !i.PistaId.HasValue)
+                                                        .FirstOrDefault();
+            }
             await GenerarRelacion(ItemExistente);
         }
 

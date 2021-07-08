@@ -97,9 +97,14 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation
             return formasString;
         }
 
-        private string GetPistaById(int id)
+        private string GetPistaById(int? id)
         {
-            return _pistaList.FirstOrDefault(p => p.Id == id).Pista;
+            var pistaString = "";
+            if (id.HasValue)
+            { 
+                pistaString = _pistaList.FirstOrDefault(p => p.Id == id).Pista;
+            }
+            return pistaString;
         }
 
         private bool GetCreationButtonState()
