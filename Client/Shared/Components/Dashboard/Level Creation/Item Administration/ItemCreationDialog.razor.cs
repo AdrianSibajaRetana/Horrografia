@@ -7,7 +7,7 @@ using Horrografia.Client.Shared.Objects.ClientModels;
 using Horrografia.Shared.Models;
 using Microsoft.AspNetCore.Components.Forms;
 
-namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation
+namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation.Item_Administration
 {
     public partial class ItemCreationDialog
     {

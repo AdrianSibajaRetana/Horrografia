@@ -2,8 +2,10 @@
 @using Horrografia.Client.Shared.Components.General
 @using Horrografia.Client.Shared.Constants
 @using Microsoft.AspNetCore.Authorization
-@using Horrografia.Client.Shared.Components.Dashboard.Level_Creation
+@using Horrografia.Client.Shared.Components.Dashboard.Level_Creation.Level_Administration
+@using Horrografia.Client.Shared.Components.Dashboard.Level_Creation.Level_General
 @using Horrografia.Shared.Models
+
  
 @attribute [Authorize]
 @inject IDialogService DialogService
@@ -60,18 +62,18 @@
                                                 {
                                                     <MudItem Class="ml-auto" xs="4" sm="4" md="4">
                                                         <MudTooltip Text="Editar Nivel">
-                                                            <MudFab Color="Color.Info" Icon="@Icons.Material.Filled.Edit" Size="Size.Medium" IconSize="Size.Medium" DisableElevation="true" OnClick="ShowUpdateNivel"/>
+                                                            <MudFab Color="Color.Info" Icon="@Icons.Material.Filled.Edit" Size="Size.Medium" IconSize="Size.Medium" DisableElevation="true" OnClick="ShowUpdateNivel" />
                                                         </MudTooltip>
                                                     </MudItem>
                                                     <MudItem Class="ml-auto" xs="4" sm="4" md="4">
                                                         <MudTooltip Text="Borrar Nivel">
                                                             <MudFab Color="Color.Error" Icon="@Icons.Material.Filled.Delete" Size="Size.Medium" IconSize="Size.Medium" DisableElevation="true" OnClick="ShowDeleteNivel" />
-                                                        </MudTooltip>   
+                                                        </MudTooltip>
                                                     </MudItem>
                                                 }
                                             </MudGrid>
                                         </MudItem>
-                                    </MudGrid>                                    
+                                    </MudGrid>
                                 </CardHeaderContent>
                             </MudCardHeader>
                             <MudCardContent>
@@ -88,7 +90,7 @@
                         <MudTabs Elevation="2" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pt-1">
                             <MudTabPanel Text="Descripción">
                                 <MudItem Style="height: auto;">
-                                    <LevelData nivelADesplegar="@nivelActual"/>
+                                    <LevelData nivelADesplegar="@nivelActual" />
                                 </MudItem>
                             </MudTabPanel>
                             <MudTabPanel Text="Items">
@@ -99,20 +101,20 @@
                                     }
                                     else
                                     {
-                                    
-                                            <LevelItemTable ItemsDeNivel="GetItems(nivelActual)" 
-                                                            ItemsTotales="ItemsTotales"
-                                                            PistasTotales="PistasTotales"
-                                                            FormasIncorrectas="FormasIncorrectasTotales"
-                                                            OnItemCreationRequest="CreateItem"
-                                                            OnItemUpdateRequest="UpdateItem"
-                                                            OnItemDeletionRequest="DeleteItem"
-                                                            OnClueCreationRequest="CreateClue"
-                                                            OnRelationCreationRequest="CreateRelation"
-                                                            OnIncorrectFormCreationRequest="CreateIncorrectForms"
-                                                            OnIncorrectFormDeletionnRequest="DeleteIncorrectForms"
-                                                            ItemsMaximos="GetMaxItems(nivelActual)"
-                                                            NotifyError="PopErrorNotificationMessage"/>
+
+                                        <LevelItemTable ItemsDeNivel="GetItems(nivelActual)"
+                                                        ItemsTotales="ItemsTotales"
+                                                        PistasTotales="PistasTotales"
+                                                        FormasIncorrectas="FormasIncorrectasTotales"
+                                                        OnItemCreationRequest="CreateItem"
+                                                        OnItemUpdateRequest="UpdateItem"
+                                                        OnItemDeletionRequest="DeleteItem"
+                                                        OnClueCreationRequest="CreateClue"
+                                                        OnRelationCreationRequest="CreateRelation"
+                                                        OnIncorrectFormCreationRequest="CreateIncorrectForms"
+                                                        OnIncorrectFormDeletionnRequest="DeleteIncorrectForms"
+                                                        ItemsMaximos="GetMaxItems(nivelActual)"
+                                                        NotifyError="PopErrorNotificationMessage" />
                                     }
                                 </MudItem>
                             </MudTabPanel>
@@ -123,22 +125,22 @@
 
             @*Dialogo de creación*@
             <LevelCreationDialog ShowDialogue="ShowCreateLevelDialog"
-                                    ExistenNiveles="true"
-                                    OnDialogClosed="CloseDialogWindow"
-                                    OnLevelCreation="CreateLevel" />
+                                 ExistenNiveles="true"
+                                 OnDialogClosed="CloseDialogWindow"
+                                 OnLevelCreation="CreateLevel" />
             @*Dialodo de borrado*@
             <LevelDeletionDialog ShowDialogue="ShowDeleteLevelDialog"
                                  OnDialogClosed="CloseDeletionDialog"
                                  model="nivelActual"
-                                 OnLevelDeletion="DeleteLevel"/>
+                                 OnLevelDeletion="DeleteLevel" />
 
             @*Dialogo de actualización*@
             <LevelUpdateDialog ShowDialogue="ShowUpdateLevelDialog"
                                OnDialogClosed="CloseUpdateDialog"
                                model="nivelActual"
-                               OnLevelUpdate="UpdateLevel"/>
+                               OnLevelUpdate="UpdateLevel" />
         }
-     }
+    }
     else
     {
         <ErrorMessage />
