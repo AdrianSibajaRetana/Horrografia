@@ -70,7 +70,6 @@ namespace Horrografia.Server
             services.AddSwaggerGen();
 
             services.AddSingleton<IDataAccess, DataAccess>();
-            services.AddSingleton<IPersonRepository, PersonRepository>();
             services.AddSingleton<IContieneErrorRepository, ContieneErrorRepository>();
             services.AddSingleton<IItemRepository, ItemRepository>();
             services.AddSingleton<INivelRepository, NivelRepository>();
