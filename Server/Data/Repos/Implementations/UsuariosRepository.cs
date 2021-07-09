@@ -68,10 +68,12 @@ namespace Horrografia.Server.Data.Repos.Implementations
             // Si se quiere implementar checkeo de email, este metodo es el encargado de revisar.
             // Como el constructor en el método de CrearUsuario siempre lo pone como true, nunca va a retornar esto. 
             // Si se desea habilitar, cambiar el constructor e implementar la funcionalidad de confirmar.
+            /*
             if (!userCheck.EmailConfirmed)
             {
                 return SharedConstants.LoginState.EmailNotConfirmed;
             }
+            */
 
             //Salta si la contraseña enviada no es la misma
             if (await _UserManager.CheckPasswordAsync(userCheck, modeloEnviado.Password) == false)
