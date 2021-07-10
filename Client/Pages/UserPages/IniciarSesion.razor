@@ -1,0 +1,13 @@
+﻿@page "/ingresar"
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@using Horrografia.Client.Shared.Components.UserPages 
+
+<AuthorizeView>
+    <Authorized>
+        <AlreadySignedInComponent/>
+    </Authorized>
+    <NotAuthorized>
+        <LoginUser/>
+    </NotAuthorized>
+</AuthorizeView>
