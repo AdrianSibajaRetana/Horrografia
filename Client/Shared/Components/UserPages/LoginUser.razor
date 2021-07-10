@@ -1,5 +1,43 @@
-﻿<h3>LoginUser</h3>
-
-@code {
-
-}
+﻿<MudContainer Style="position: absolute; top: 30vh; width: 100%;">
+    <MudItem Class="mx-auto my-auto" Style="max-width: 60vh;">
+        <EditForm Model="@_loginModel" OnValidSubmit="ProceedToLogin">
+            <DataAnnotationsValidator />
+            <MudCard Elevation=1 Square="true">
+                <MudCardHeader Class="px-8">
+                    <CardHeaderContent>
+                        <MudText Typo="Typo.h6">Iniciar sesión</MudText>
+                    </CardHeaderContent>
+                    <CardHeaderActions>
+                        <MudIconButton Icon="@Icons.Material.Filled.Login" Color="Color.Default" />
+                    </CardHeaderActions>
+                </MudCardHeader>
+                <MudCardContent Class="px-16">
+                    <MudTextField Label="Correo" HelperText="Ingrese el correo de su cuenta"
+                                  @bind-Value="_loginModel.Email" For="@(() => _loginModel.Email)" InputType="InputType.Email" />
+                    <MudTextField Label="Contraseña"
+                                  @bind-Value="_loginModel.Password" For="@(() => _loginModel.Email)" InputType="InputType.Password" />
+                    <MudGrid Class="mt-5">
+                        <MudItem xs="6" sm="6" md="6">
+                            @if (_loginModel.RememberMe)
+                            {
+                                <MudCheckBox @bind-Checked="@_loginModel.RememberMe" Color="Color.Primary" Size="Size.Medium" Label="Recuerdame" Style="@($"color:{Colors.Shades.Black};")" />
+                            }
+                            else
+                            {
+                                <MudCheckBox @bind-Checked="@_loginModel.RememberMe" Size="Size.Medium" Label="Recuerdame" Style="@($"color:{Colors.BlueGrey.Lighten3};")" />
+                            }
+                        </MudItem>
+                        <MudItem xs="12" sm="12" md="6" Class="my-auto">
+                            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="rounded-0 mud-elevation-0">Iniciar sesión</MudButton>
+                        </MudItem>
+                    </MudGrid>
+                </MudCardContent>
+            </MudCard>
+        </EditForm>
+        <MudPaper Class="pa-4" Style="@($"color:{Colors.BlueGrey.Darken2}; background:{Colors.LightBlue.Lighten5}; width:inherit;")" Square="true">
+            <MudItem Class="mx-auto">
+                <MudText Typo="Typo.body1" Align="Align.Center">Crear cuenta</MudText>
+            </MudItem>
+        </MudPaper>
+    </MudItem>
+</MudContainer>

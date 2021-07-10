@@ -9,15 +9,14 @@ namespace Horrografia.Client.Shared.Objects.ClientModels
 {
     public class ClientUserLoginDTO
     {
-        [Required(ErrorMessage = "Email is required")]
-        [EmailAddress(ErrorMessage = "Invalid email address")]
+        [Required(ErrorMessage = "Se requiere el correo para inciar sesión")]
+        [EmailAddress(ErrorMessage = "El correo ingresado no es válido")]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "Password is required")]
+        [Required(ErrorMessage = "Se requiere la constraseña para iniciar sesión")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
-
-        [Display(Name = "Remember me")]
+        
         public bool RememberMe { get; set; }
     }
 }
