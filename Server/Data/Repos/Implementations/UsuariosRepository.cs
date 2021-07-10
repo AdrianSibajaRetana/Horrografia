@@ -41,9 +41,9 @@ namespace Horrografia.Server.Data.Repos.Implementations
             var usuario = new ApplicationUser
             {
                 UserName = usuarioACrear.Email,
+                NombreDeUsuario = usuarioACrear.Name,
                 NormalizedUserName = usuarioACrear.Email,
                 Email = usuarioACrear.Email,
-                PhoneNumber = usuarioACrear.PhoneNumber,
                 EmailConfirmed = true,
                 PhoneNumberConfirmed = true,
             };
