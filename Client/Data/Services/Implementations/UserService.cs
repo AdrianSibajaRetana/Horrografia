@@ -17,11 +17,13 @@ namespace Horrografia.Client.Data.Services.Implementations
     public class UserService : IUserService
     {
         private readonly HttpClient _http;
+        private readonly HttpClient _anonymousHttpClient;
         private readonly ILogger<UserService> _logger;
 
-        public UserService(HttpClient client, ILogger<UserService> logger)
+        public UserService(IHttpClientFactory httpClientFactory, ILogger<UserService> logger)
         {
-            _http = client;
+            _http = httpClientFactory.CreateClient("Horrografia.ServerAPI");
+            _anonymousHttpClient = httpClientFactory.CreateClient("Horrografia.ServerAPI.Anonymous");
             _logger = logger;
         }
 
@@ -36,7 +38,7 @@ namespace Horrografia.Client.Data.Services.Implementations
             ControllerResponse<bool> _controllerResponse = new();
             try
             {
-                var response = await _http.PostAsJsonAsync("api/Usuario/verificar", correo);
+                var response = await _anonymousHttpClient.PostAsJsonAsync("api/Usuario/verificar", correo);
                 if (response.IsSuccessStatusCode)
                 {
                     var respuesta = await response.Content.ReadFromJsonAsync<List<bool>>();
@@ -62,7 +64,7 @@ namespace Horrografia.Client.Data.Services.Implementations
             ControllerResponse<SharedConstants.LoginState> _controllerResponse = new();
             try
             {
-                var response = await _http.PostAsJsonAsync("api/Usuario/iniciar-sesion", modelo);
+                var response = await _anonymousHttpClient.PostAsJsonAsync("api/Usuario/iniciar-sesion", modelo);
                 if (response.IsSuccessStatusCode)
                 {
                     var respuesta = await response.Content.ReadFromJsonAsync<SharedConstants.LoginState>();
@@ -112,7 +114,7 @@ namespace Horrografia.Client.Data.Services.Implementations
             ControllerResponse<bool> _controllerResponse = new();
             try
             {
-                var response = await _http.PostAsJsonAsync("api/Usuario", modelo);
+                var response = await _anonymousHttpClient.PostAsJsonAsync("api/Usuario", modelo);
                 if (response.IsSuccessStatusCode)
                 {
                     var respuesta = await response.Content.ReadFromJsonAsync<List<bool>>();
