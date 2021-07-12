@@ -81,7 +81,7 @@ namespace Horrografia.Server.Data.Repos.Implementations
                 return SharedConstants.LoginState.NoPasswordMatch;
             }
 
-            var result = await _SignInManager.PasswordSignInAsync(modeloEnviado.Email, modeloEnviado.Password, modeloEnviado.RememberMe, true);
+            var result = await _SignInManager.PasswordSignInAsync(modeloEnviado.Email, modeloEnviado.Password, modeloEnviado.RememberMe, false);
             if (result.Succeeded)
             {
                 return SharedConstants.LoginState.LoginSucess;
@@ -96,7 +96,5 @@ namespace Horrografia.Server.Data.Repos.Implementations
         {
             await _SignInManager.SignOutAsync();
         }
-
-
     }
 }
