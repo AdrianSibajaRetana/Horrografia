@@ -19,7 +19,6 @@ namespace Horrografia.Client.Pages.DashboardPages
         [Inject]
         protected INivelService _nivelService { get; set; }
 
-
         [Inject]
         protected IPerteneceAService _perteneceAService { get; set; }
 

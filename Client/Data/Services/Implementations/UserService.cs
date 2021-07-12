@@ -65,9 +65,11 @@ namespace Horrografia.Client.Data.Services.Implementations
                 var response = await _http.PostAsJsonAsync("api/Usuario/iniciar-sesion", modelo);
                 if (response.IsSuccessStatusCode)
                 {
-                    var respuesta = await response.Content.ReadFromJsonAsync<List<SharedConstants.LoginState>>();
+                    var respuesta = await response.Content.ReadFromJsonAsync<SharedConstants.LoginState>();
+                    List <SharedConstants.LoginState> lista = new();
+                    lista.Add(respuesta);
                     _controllerResponse.Status = Constantes.OKSTATUS;
-                    _controllerResponse.Response = respuesta;
+                    _controllerResponse.Response = lista;
                     return _controllerResponse;
                 }
                 _controllerResponse.Status = Constantes.INTERNALERRORSTATUS;

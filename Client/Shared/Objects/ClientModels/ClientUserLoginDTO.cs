@@ -14,7 +14,6 @@ namespace Horrografia.Client.Shared.Objects.ClientModels
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Se requiere la constraseña para iniciar sesión")]
-        [DataType(DataType.Password)]
         public string Password { get; set; }
         
         public bool RememberMe { get; set; }

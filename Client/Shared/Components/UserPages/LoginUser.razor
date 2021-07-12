@@ -15,22 +15,55 @@
                     <MudTextField Label="Correo" HelperText="Ingrese el correo de su cuenta"
                                   @bind-Value="_loginModel.Email" For="@(() => _loginModel.Email)" InputType="InputType.Email" />
                     <MudTextField Label="Contraseña"
-                                  @bind-Value="_loginModel.Password" For="@(() => _loginModel.Email)" InputType="InputType.Password" />
-                    <MudGrid Class="mt-5">
-                        <MudItem xs="6" sm="6" md="6">
-                            @if (_loginModel.RememberMe)
-                            {
-                                <MudCheckBox @bind-Checked="@_loginModel.RememberMe" Color="Color.Primary" Size="Size.Medium" Label="Recuerdame" Style="@($"color:{Colors.Shades.Black};")" />
-                            }
-                            else
-                            {
-                                <MudCheckBox @bind-Checked="@_loginModel.RememberMe" Size="Size.Medium" Label="Recuerdame" Style="@($"color:{Colors.BlueGrey.Lighten3};")" />
-                            }
+                                  @bind-Value="_loginModel.Password" For="@(() => _loginModel.Password)"/>
+                    @if (!_isLoginIn)
+                    {
+                        <MudGrid Class="mt-5">
+                            <MudItem xs="6" sm="6" md="6">
+                                @if (_loginModel.RememberMe)
+                                {
+                                    <MudCheckBox @bind-Checked="@_loginModel.RememberMe" Color="Color.Primary" Size="Size.Medium" Label="Recuerdame" Style="@($"color:{Colors.Shades.Black};")" />
+                                }
+                                else
+                                {
+                                    <MudCheckBox @bind-Checked="@_loginModel.RememberMe" Size="Size.Medium" Label="Recuerdame" Style="@($"color:{Colors.BlueGrey.Lighten3};")" />
+                                }
+                            </MudItem>
+                            <MudItem xs="12" sm="12" md="6" Class="my-auto">
+                                <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="rounded-0 mud-elevation-0">Iniciar sesión</MudButton>
+                            </MudItem>
+                        </MudGrid>
+                    }
+                    else
+                    {
+                        <MudItem xs="12" sm="12" md="12">
+                            <MudText Typo="Typo.subtitle1" Align="Align.Center" GutterBottom="true">
+                                Iniciando Sesión
+                            </MudText>
                         </MudItem>
-                        <MudItem xs="12" sm="12" md="6" Class="my-auto">
-                            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="rounded-0 mud-elevation-0">Iniciar sesión</MudButton>
+                        <MudItem xs="12" sm="12" md="12">
+                            <MudGrid Justify="Justify.Center">
+                                <MudItem>
+                                    <MudItem>
+                                        <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+                                    </MudItem>
+                                </MudItem>
+                            </MudGrid>
                         </MudItem>
-                    </MudGrid>
+                    }
+                    @if (_failedLogin)
+                    {
+                        <MudItem xs="12" sm="12" md="12">
+                            <MudText Typo="Typo.subtitle1" Align="Align.Center" GutterBottom="true">
+                                Contraseña o correo inválidos.
+                            </MudText>
+                        </MudItem>
+                        <MudItem xs="12" sm="12" md="12">
+                            <MudText Typo="Typo.subtitle1" Align="Align.Center" GutterBottom="true">
+                                Por favor intente iniciar sesión de nuevo. 
+                            </MudText>
+                        </MudItem>
+                    }
                 </MudCardContent>
             </MudCard>
         </EditForm>
