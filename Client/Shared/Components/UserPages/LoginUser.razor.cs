@@ -25,8 +25,10 @@ namespace Horrografia.Client.Shared.Components.UserPages
         protected ISnackbar _snackbar { get; set; }
 
         private ClientUserLoginDTO _loginModel { get; set; }
+
         private bool _failedLogin { get; set; }
         private bool _isLoginIn { get; set; }
+
         private bool _isPasswordShown { get; set; }
         private string PasswordInputIcon { get; set; }
         private InputType PasswordInput { get; set; }

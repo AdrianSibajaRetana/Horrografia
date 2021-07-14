@@ -9,19 +9,19 @@ namespace Horrografia.Client.Shared.Objects.ClientModels
 {
     public class ClientUserRegisterDTO
     {
-        [Required(ErrorMessage = "Name is required")]
+        [Required(ErrorMessage = "El nombre es obligatorio.")]
         [StringLength(100)]
         public string Name { get; set; }
 
-        [EmailAddress(ErrorMessage = "Invalid email address")]
-        [Required(ErrorMessage = "Email is required")]
+        [EmailAddress(ErrorMessage = "El correo ingresado no es válido.")]
+        [Required(ErrorMessage = "El correo es requerido.")]
         public string Email { get; set; }
 
-        [Required(ErrorMessage = "Password is required")]
+        [Required(ErrorMessage = "La contraseña es requerida")]
         public string Password { get; set; }
 
-        [Required(ErrorMessage = "Confirm password is required")]
-        [Compare("Password", ErrorMessage = "The Password and Confirm Password do not match.")]
+        [Required(ErrorMessage = "La confirmación de la contraseña es requerida.")]
+        [Compare("Password", ErrorMessage = "La contraseña y la confirmación no son iguales.")]
         public string ConfirmPassword { get; set; }
     }
 }

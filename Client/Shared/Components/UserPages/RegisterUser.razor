@@ -1,5 +1,99 @@
-﻿<h3>RegisterUser</h3>
+﻿<MudContainer Style="height: 100%; display: flex; align-items: center; justify-content: center;">
+    <MudItem Style="max-width: 60vh; margin-top: 10vh;">
+        <EditForm Model="@_registerModel" OnValidSubmit="proceedToRegistration">
+            <DataAnnotationsValidator />
+            <MudCard Elevation=1 Square="true">
+                <MudCardHeader Class="px-8">
+                    <CardHeaderContent>
+                        <MudText Typo="Typo.h6">
+                            Regístrate en horrografía
+                        </MudText>
+                        <MudText Typo="Typo.subtitle2" Style="@($"color:{Colors.BlueGrey.Lighten2};")">
+                            Llene la siguiente información para crear su cuenta
+                        </MudText>
+                    </CardHeaderContent>
+                    <CardHeaderActions>
+                        <MudIconButton Icon="@Icons.Material.Filled.PersonAdd" Color="Color.Default" />
+                    </CardHeaderActions>
+                </MudCardHeader>
+                <MudCardContent Class="px-16">
 
-@code {
+                    <MudTextField Label="Nombre completo" 
+                                  HelperText="El nombre que se mostrará en su usuario"
+                                  @bind-Value="_registerModel.Name" 
+                                  For="@(() => _registerModel.Name)" 
+                                  Variant="Variant.Text"
+                                  />
 
-}
+                    <MudTextField Label="Correo" 
+                                  HelperText="Ingrese el correo de su cuenta"
+                                  @bind-Value="_registerModel.Email" 
+                                  For="@(() => _registerModel.Email)" 
+                                  InputType="InputType.Email" 
+                                  Variant="Variant.Text"
+                                  Class="mt-4"/>
+
+                    <MudTextField @bind-Value="_registerModel.Password"
+                                  Label="Contraseña"
+                                  Variant="Variant.Text"
+                                  InputType="@PasswordInput"
+                                  Adornment="Adornment.End"
+                                  AdornmentIcon="@PasswordInputIcon"
+                                  OnAdornmentClick="ButtonTestclick"
+                                  For="@(() => _registerModel.Password)"
+                                  Class="mt-4"/>
+
+                    <MudTextField @bind-Value="_registerModel.ConfirmPassword"
+                                  Label="Confirmar contraseña"
+                                  HelperText="Debe ser igual a la contraseña"
+                                  Variant="Variant.Text"
+                                  InputType="@ConfirmedPasswordInput"
+                                  Adornment="Adornment.End"
+                                  AdornmentIcon="@ConfirmedPasswordInputIcon"
+                                  OnAdornmentClick="ButtonTestclickConfirmedPassword"
+                                  For="@(() => _registerModel.ConfirmPassword)"
+                                  Class="mt-4"/>
+
+                    @if (!_isCreatingUser)
+                    {
+                        <MudGrid Class="mt-5">
+                            <MudItem xs="12" sm="12" md="12" Class="my-auto">
+                                <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Class="rounded-0 mud-elevation-0" FullWidth="true">Registrarse</MudButton>
+                            </MudItem>
+                        </MudGrid>
+                    }
+                    else
+                    {
+                        <MudItem xs="12" sm="12" md="12">
+                            <MudText Typo="Typo.subtitle1" Align="Align.Center" GutterBottom="true">
+                                Registrando usuario
+                            </MudText>
+                        </MudItem>
+                        <MudItem xs="12" sm="12" md="12">
+                            <MudGrid Justify="Justify.Center">
+                                <MudItem>
+                                    <MudItem>
+                                        <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+                                    </MudItem>
+                                </MudItem>
+                            </MudGrid>
+                        </MudItem>
+                    }
+                </MudCardContent>
+            </MudCard>
+        </EditForm>
+        <MudPaper Class="pa-4" Style="@($"color:{Colors.BlueGrey.Darken2}; background:{Colors.LightBlue.Lighten5}; width:inherit;")" Square="true">
+            <MudItem Class="mx-auto">
+                <MudGrid Justify="Justify.Center">
+                    <MudItem>
+                        <MudItem>
+                            <MudTooltip Text="Si ya ha creado una cuenta, debe iniciar sesión.">
+                                <MudLink Href="/ingresar" Typo="Typo.body1" Color="Color.Inherit" Style="@($"color:{Colors.BlueGrey.Darken2};")">Ya tengo cuenta</MudLink>
+                            </MudTooltip>
+                        </MudItem>
+                    </MudItem>
+                </MudGrid>
+            </MudItem>
+        </MudPaper>
+    </MudItem>
+</MudContainer>
