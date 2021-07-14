@@ -14,8 +14,7 @@
                 <MudCardContent Class="px-16">
                     <MudTextField Label="Correo" HelperText="Ingrese el correo de su cuenta"
                                   @bind-Value="_loginModel.Email" For="@(() => _loginModel.Email)" InputType="InputType.Email" />
-                    <MudTextField Label="Contraseña"
-                                  @bind-Value="_loginModel.Password" For="@(() => _loginModel.Password)"/>
+                    <MudTextField @bind-Value="_loginModel.Password" Label="Contraseña" Variant="Variant.Text" InputType="@PasswordInput" Adornment="Adornment.End" AdornmentIcon="@PasswordInputIcon" OnAdornmentClick="ButtonTestclick" For="@(() => _loginModel.Password)"/>
                     @if (!_isLoginIn)
                     {
                         <MudGrid Class="mt-5">
@@ -53,14 +52,14 @@
                     }
                     @if (_failedLogin)
                     {
-                        <MudItem xs="12" sm="12" md="12">
+                        <MudItem xs="12" sm="12" md="12" Style="@($"color:{Colors.Red.Darken2};")">
                             <MudText Typo="Typo.subtitle1" Align="Align.Center" GutterBottom="true">
                                 Contraseña o correo inválidos.
                             </MudText>
                         </MudItem>
                         <MudItem xs="12" sm="12" md="12">
-                            <MudText Typo="Typo.subtitle1" Align="Align.Center" GutterBottom="true">
-                                Por favor intente iniciar sesión de nuevo. 
+                            <MudText Typo="Typo.subtitle1" Align="Align.Center" GutterBottom="true" Style="@($"color:{Colors.Red.Darken2};")">
+                                Por favor intente iniciar sesión de nuevo.
                             </MudText>
                         </MudItem>
                     }
@@ -69,7 +68,15 @@
         </EditForm>
         <MudPaper Class="pa-4" Style="@($"color:{Colors.BlueGrey.Darken2}; background:{Colors.LightBlue.Lighten5}; width:inherit;")" Square="true">
             <MudItem Class="mx-auto">
-                <MudText Typo="Typo.body1" Align="Align.Center">Crear cuenta</MudText>
+                <MudGrid Justify="Justify.Center">
+                    <MudItem>
+                        <MudItem>
+                            <MudTooltip Text="Si no tiene una cuenta debe registrarse.">                                
+                                <MudLink Href="/registrarse" Typo="Typo.body1" Color="Color.Inherit" Style="@($"color:{Colors.BlueGrey.Darken2};")">Crear cuenta</MudLink>
+                            </MudTooltip>
+                        </MudItem>
+                    </MudItem>
+                </MudGrid>                
             </MudItem>
         </MudPaper>
     </MudItem>

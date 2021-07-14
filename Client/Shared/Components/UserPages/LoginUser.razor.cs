@@ -27,12 +27,20 @@ namespace Horrografia.Client.Shared.Components.UserPages
         private ClientUserLoginDTO _loginModel { get; set; }
         private bool _failedLogin { get; set; }
         private bool _isLoginIn { get; set; }
+        private bool _isPasswordShown { get; set; }
+        private string PasswordInputIcon { get; set; }
+        private InputType PasswordInput { get; set; }
+
+
         public LoginUser()
         {
             _loginModel = new();
             _loginModel.RememberMe = false;
             _failedLogin = false;
             _isLoginIn = false;
+            _isPasswordShown = false;
+            PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
+            PasswordInput = InputType.Password;
         }
 
         protected override void OnParametersSet()
@@ -49,11 +57,12 @@ namespace Horrografia.Client.Shared.Components.UserPages
             {
                 if (response.Response.FirstOrDefault() == SharedConstants.LoginState.LoginSucess)
                 {
-                    _snackbar.Add("Se ha iniciado sesión exitosamente", Severity.Success);                    
                     _navManager.NavigateTo("/", true);
+                    _snackbar.Add("Se ha iniciado sesión exitosamente", Severity.Success);                    
                 }
                 else
                 {
+                    _loginModel.Password = ""; 
                     _failedLogin = true;
                 }
             }
@@ -62,6 +71,22 @@ namespace Horrografia.Client.Shared.Components.UserPages
                 _snackbar.Add("Error al comunicarse con al base de datos", Severity.Error);
             }
             _isLoginIn = false;
+        }
+
+        private void ButtonTestclick()
+        {
+            if(_isPasswordShown)
+            {
+                _isPasswordShown = false;
+                PasswordInputIcon = Icons.Material.Filled.VisibilityOff;
+                PasswordInput = InputType.Password;
+            }
+            else
+            {
+                _isPasswordShown = true;
+                PasswordInputIcon = Icons.Material.Filled.Visibility;
+                PasswordInput = InputType.Text;
+            }
         }
     }
 }
