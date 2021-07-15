@@ -11,6 +11,6 @@ namespace Horrografia.Client.Data.Services.Interfaces
         Task<ControllerResponse<bool>> CerrarSesion();
         Task<ControllerResponse<SharedConstants.LoginState>> Login(ClientUserLoginDTO modelo);
         Task<ControllerResponse<bool>> Register(ClientUserRegisterDTO modelo);
-        Task<ControllerResponse<bool>> VerifyEmail(string correo);
+        Task<ControllerResponse<bool>> VerifyEmail(ClientUserRegisterDTO modelo);
     }
 }

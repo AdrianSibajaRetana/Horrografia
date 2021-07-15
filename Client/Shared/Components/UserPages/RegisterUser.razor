@@ -65,11 +65,6 @@
                     else
                     {
                         <MudItem xs="12" sm="12" md="12">
-                            <MudText Typo="Typo.subtitle1" Align="Align.Center" GutterBottom="true">
-                                Registrando usuario
-                            </MudText>
-                        </MudItem>
-                        <MudItem xs="12" sm="12" md="12">
                             <MudGrid Justify="Justify.Center">
                                 <MudItem>
                                     <MudItem>
@@ -77,6 +72,19 @@
                                     </MudItem>
                                 </MudItem>
                             </MudGrid>
+                        </MudItem>
+                        <MudItem xs="12" sm="12" md="12" Class="mt-4">
+                            <MudText Typo="Typo.subtitle1" Align="Align.Center" GutterBottom="true">
+                                Creando usuario
+                            </MudText>
+                        </MudItem>
+                    }
+                    @if (!_isRegistrationSuccesfull)
+                    { 
+                        <MudItem xs="12" sm="12" md="12" Style="@($"color:{Colors.Red.Darken2};")" Class="mt-4">
+                            <MudText Typo="Typo.subtitle1" Align="Align.Center" GutterBottom="true">
+                                @_errorMessage
+                            </MudText>
                         </MudItem>
                     }
                 </MudCardContent>

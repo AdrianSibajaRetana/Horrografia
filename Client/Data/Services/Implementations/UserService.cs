@@ -33,17 +33,19 @@ namespace Horrografia.Client.Data.Services.Implementations
          * Iniciar Sesión /api/Usuario/iniciar-sesion
          * Cerrar Sesión /api/Usuario/cerrar-sesion
          */
-        public async Task<ControllerResponse<bool>> VerifyEmail(string correo)
+        public async Task<ControllerResponse<bool>> VerifyEmail(ClientUserRegisterDTO modelo)
         {
             ControllerResponse<bool> _controllerResponse = new();
             try
             {
-                var response = await _anonymousHttpClient.PostAsJsonAsync("api/Usuario/verificar", correo);
+                var response = await _anonymousHttpClient.PostAsJsonAsync("api/Usuario/verificar", modelo);
                 if (response.IsSuccessStatusCode)
                 {
-                    var respuesta = await response.Content.ReadFromJsonAsync<List<bool>>();
+                    var respuesta = await response.Content.ReadFromJsonAsync<bool>();
+                    List<bool> lista = new();
+                    lista.Add(respuesta);
                     _controllerResponse.Status = Constantes.OKSTATUS;
-                    _controllerResponse.Response = respuesta;
+                    _controllerResponse.Response = lista;
                     return _controllerResponse;
                 }
                 _controllerResponse.Status = Constantes.INTERNALERRORSTATUS;
@@ -117,9 +119,11 @@ namespace Horrografia.Client.Data.Services.Implementations
                 var response = await _anonymousHttpClient.PostAsJsonAsync("api/Usuario", modelo);
                 if (response.IsSuccessStatusCode)
                 {
-                    var respuesta = await response.Content.ReadFromJsonAsync<List<bool>>();
+                    var respuesta = await response.Content.ReadFromJsonAsync<bool>();
+                    List<bool> lista = new();
+                    lista.Add(respuesta);
                     _controllerResponse.Status = Constantes.OKSTATUS;
-                    _controllerResponse.Response = respuesta;
+                    _controllerResponse.Response = lista;
                     return _controllerResponse;
                 }
                 _controllerResponse.Status = Constantes.INTERNALERRORSTATUS;

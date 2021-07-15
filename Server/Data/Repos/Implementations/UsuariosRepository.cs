@@ -51,7 +51,7 @@ namespace Horrografia.Server.Data.Repos.Implementations
             if (result.Succeeded)
             {
                 exito = true; 
-                await _SignInManager.SignInAsync(usuario, false);
+                await _SignInManager.SignInAsync(usuario, true);
             }
             return exito;
         }

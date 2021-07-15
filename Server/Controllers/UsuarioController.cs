@@ -29,11 +29,11 @@ namespace Horrografia.Server.Controllers
         [HttpPost]
         [AllowAnonymous]
         [Route("verificar")]
-        public async Task<IActionResult> VerifyEmail(string correo)
+        public async Task<IActionResult> VerifyEmail(ClientUserRegisterDTO modelo)
         {
             try
-            {
-                var niveles = await _repo.CorreoDisponible(correo);
+            {                
+                var niveles = await _repo.CorreoDisponible(modelo.Email);
                 return Ok(niveles);
             }
             catch (Exception e)
