@@ -26,6 +26,22 @@ namespace Horrografia.Server.Controllers
             _logger = logger;
         }
 
+
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        {
+            try
+            {
+                var usuarios = await _repo.GetAllAsync();
+                return Ok(usuarios);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "An error occurred while fetching from db");
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }
+        }
+
         [HttpPost]
         [AllowAnonymous]
         [Route("verificar")]

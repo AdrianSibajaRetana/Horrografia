@@ -5,8 +5,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Horrografia.Client.Shared.Objects.ClientModels;
 using Horrografia.Shared;
+using Horrografia.Shared.Models;
 using Horrografia.Server.Data.Repos.Interfaces;
 using Horrografia.Server.Models;
+using DataLibrary;
+using Microsoft.Extensions.Configuration;
+using Horrografia.Server.Extensions;
 
 namespace Horrografia.Server.Data.Repos.Implementations
 {
@@ -14,13 +18,27 @@ namespace Horrografia.Server.Data.Repos.Implementations
     {
         private readonly UserManager<ApplicationUser> _UserManager;
         private readonly SignInManager<ApplicationUser> _SignInManager;
+        private readonly IDataAccess _dbContext;
+        private readonly string ConectionString;
 
         public UsuariosRepository(UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager)
+            SignInManager<ApplicationUser> signInManager,
+            IDataAccess dbContext,
+            IConfiguration configuration)
         {
 
             _UserManager = userManager;
             _SignInManager = signInManager;
+            _dbContext = dbContext;
+            ConectionString = configuration.GetConnectionString("DefaultConnection");
+        }
+
+        public async Task<List<UsuarioDTO>> GetAllAsync()
+        {
+            string sql = "SELECT * FROM aspnetusers";
+            var aspUsers = await _dbContext.LoadData<ApplicationUser, dynamic>(sql, new { }, ConectionString);
+            List<UsuarioDTO> listaDeUsuarios = aspUsers.Select(u => u.getDTOFromApplicationUser()).ToList();
+            return listaDeUsuarios;
         }
 
         //Revisa si el correo está disponible en la base de datos. 
@@ -96,5 +114,7 @@ namespace Horrografia.Server.Data.Repos.Implementations
         {
             await _SignInManager.SignOutAsync();
         }
+
+
     }
 }
