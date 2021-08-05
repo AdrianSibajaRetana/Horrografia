@@ -8,6 +8,7 @@ namespace Horrografia.Client.Data.Services.Interfaces
 {
     public interface IUserService
     {
+        Task<ControllerResponse<UsuarioDTO>> GetAsync();
         Task<ControllerResponse<bool>> CerrarSesion();
         Task<ControllerResponse<SharedConstants.LoginState>> Login(ClientUserLoginDTO modelo);
         Task<ControllerResponse<bool>> Register(ClientUserRegisterDTO modelo);

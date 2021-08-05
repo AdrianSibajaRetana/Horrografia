@@ -27,12 +27,33 @@ namespace Horrografia.Client.Data.Services.Implementations
             _logger = logger;
         }
 
-        /*
-         * Verificar Correo
-         * CrearUsuario /api/Usuario
-         * Iniciar Sesión /api/Usuario/iniciar-sesion
-         * Cerrar Sesión /api/Usuario/cerrar-sesion
-         */
+
+        public async Task<ControllerResponse<UsuarioDTO>> GetAsync()
+        {
+            ControllerResponse<UsuarioDTO> _controllerResponse = new();
+            try
+            {
+                var response = await _http.GetAsync("api/Usuario");
+                if (response.IsSuccessStatusCode)
+                {
+                    var usuarios = await response.Content.ReadFromJsonAsync<List<UsuarioDTO>>();
+                    _controllerResponse.Status = Constantes.OKSTATUS;
+                    _controllerResponse.Response = usuarios;
+                    return _controllerResponse;
+                }
+                _controllerResponse.Status = Constantes.INTERNALERRORSTATUS;
+                _controllerResponse.Response = new List<UsuarioDTO>();
+                return _controllerResponse;
+            }
+            catch (Exception e)
+            {
+                _controllerResponse.Status = Constantes.INTERNALERRORSTATUS;
+                _controllerResponse.Response = new List<UsuarioDTO>();
+                _logger.LogError(e, "An error occurred while fetching from db");
+                return _controllerResponse;
+            }
+        }
+
         public async Task<ControllerResponse<bool>> VerifyEmail(ClientUserRegisterDTO modelo)
         {
             ControllerResponse<bool> _controllerResponse = new();
