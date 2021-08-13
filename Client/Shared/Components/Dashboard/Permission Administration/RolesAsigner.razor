@@ -1,3 +1,51 @@
 ﻿<MudItem xs="12" sm="12" md="12" Style="height: 70vh;">
-
+    <MudCard Elevation="2" Class="py-4 pl-4" Outlined="true" Style="max-height: 40%; ">
+        <MudCardHeader>
+            <CardHeaderContent>
+                <MudGrid>
+                    <MudItem xs="12" sm="12" md="12">
+                        <MudText Typo="Typo.h5">Administración de permisos</MudText>
+                    </MudItem>
+                </MudGrid>
+            </CardHeaderContent>
+        </MudCardHeader>
+        <MudCardContent>
+            <MudGrid>
+                <MudItem xs="12" sm="12" md="9">
+                    <MudTextField @bind-Value="Busqueda" Label="Dirección de correo" Variant="Variant.Outlined"></MudTextField>
+                </MudItem>
+                <MudItem xs="12" sm="12" md="3" Class="my-auto">
+                    <MudGrid Justify="Justify.Center">
+                        <MudItem>
+                            <MudTooltip Text="Buscar Usuario">
+                                <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Search" Color="Color.Primary">Buscar</MudButton>
+                            </MudTooltip>
+                        </MudItem>
+                    </MudGrid>
+                </MudItem>
+            </MudGrid>
+        </MudCardContent>
+    </MudCard>
+    @if (true)
+    {
+        <MudItem xs="12" sm="12" md="12" Style=" position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+            <MudText Typo="Typo.h5" GutterBottom="true" Align="Align.Center">
+                No se ha seleccionado un usuario.
+            </MudText>
+        </MudItem>
+    }
+    else
+    { 
+        <MudCard Elevation="2" Class="py-4 mt-4" Outlined="true">
+            <MudCardHeader>
+                <CardHeaderContent>
+                    <MudGrid>
+                        <MudItem xs="12" sm="12" md="12">
+                            <MudText Typo="Typo.h5">Administración de permisos</MudText>
+                        </MudItem>
+                    </MudGrid>
+                </CardHeaderContent>
+            </MudCardHeader>       
+        </MudCard>    
+    }
 </MudItem>
