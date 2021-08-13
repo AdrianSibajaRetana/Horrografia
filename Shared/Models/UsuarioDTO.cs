@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 
@@ -9,15 +10,18 @@ namespace Horrografia.Shared.Models
 {
     public class UsuarioDTO
     {
-        public string NombreDeUsuario { get; set; }
+        public string nombreDeUsuario { get; set; }
         public string correo { get; set; }
-        public string Id { get; set; }
+        public string id { get; set; }
 
         public UsuarioDTO(string username, string email, string userID)
         {
-            NombreDeUsuario = username;
+            nombreDeUsuario = username;
             correo = email;
-            Id = userID;
+            id = userID;
         }
+
+        [JsonConstructor]
+        public UsuarioDTO() { }
     }
 }

@@ -1,17 +1,31 @@
 ﻿@page "/dashboard/permisos"
 @using Horrografia.Client.Shared.Components.Dashboard.Permission_Administration
+@using Horrografia.Client.Shared.Constants
+@using Horrografia.Client.Shared.Components.General
 
-<MudItem Class="mx-8">
-    <MudItem xs="12" sm="12" md="12" Class="mt-8">
-        <MudText Typo="Typo.h5">Administración de permisos</MudText>
-    </MudItem>
-    <MudTabs Outlined="true" Position="@Position.Left" Rounded="true" Border="true"
-             ApplyEffectsToContainer="true" PanelClass="pa-6" Class="mt-2">
-        <MudTabPanel Text="General" Icon="@Icons.Material.Filled.Settings">
-            <RolesOverview/>
-        </MudTabPanel>
-        <MudTabPanel Text="Permisos" Icon="@Icons.Material.Filled.Group">
-            <RolesAsigner/>
-        </MudTabPanel>
-    </MudTabs>
-</MudItem>
+<PageLoading Titulo="Administración general" IsLoading="@IsLoading">
+    @if (InitialLoadStatus == Constantes.OKSTATUS)
+    {
+        <MudItem Class="mx-8">
+            <MudItem xs="12" sm="12" md="12" Class="mt-8">
+                <MudText Typo="Typo.h5">Administración general</MudText>
+            </MudItem>
+            <MudTabs Outlined="true" Position="@Position.Left" Rounded="true" Border="true"
+                     ApplyEffectsToContainer="true" PanelClass="pa-6" Class="mt-2">
+                <MudTabPanel Text="General" Icon="@Icons.Material.Filled.Settings">
+                    <RolesOverview />
+                </MudTabPanel>
+                <MudTabPanel Text="Permisos" Icon="@Icons.Material.Filled.Group">
+                    <RolesAsigner />
+                </MudTabPanel>
+                <MudTabPanel Text="Escuelas" Icon="@Icons.Material.Filled.School">
+                    <SchoolsOverview />
+                </MudTabPanel>
+            </MudTabs>
+        </MudItem>
+    }
+    else
+    {
+        <ErrorMessage />
+    }
+</PageLoading>
