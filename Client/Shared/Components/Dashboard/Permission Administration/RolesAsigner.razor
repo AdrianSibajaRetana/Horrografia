@@ -19,7 +19,8 @@
                                      @bind-Value="_usuarioActual"
                                      SearchFunc="@SearchAsync"
                                      ToStringFunc="@(c=> c==null?null : $"{c.correo}")"
-                                     AdornmentIcon="@Icons.Material.Filled.Search" />
+                                     AdornmentIcon="@Icons.Material.Filled.Search"
+                                     MaxHeight="300" />
                 </MudItem>
                 <MudItem xs="12" sm="12" md="3" Class="my-auto">
                     <MudGrid Justify="Justify.Center">
@@ -43,10 +44,29 @@
     }
     else
     {
-        <MudItem xs="12" sm="12" md="12" Style=" position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
-            <MudText Typo="Typo.h5" GutterBottom="true" Align="Align.Center">
-                Se ha seleccionado un usuario :) 
-            </MudText>
-        </MudItem>
+        <MudCard Elevation="2" Class="py-4 pl-4 mt-4" Outlined="true" Style="max-height: 100%; ">
+            <MudCardHeader>
+                <CardHeaderContent>
+                    <MudText Typo="Typo.h5">Usuario de horrografía</MudText>
+                </CardHeaderContent>
+            </MudCardHeader>
+            <MudCardContent>
+                <MudExpansionPanels DisableBorders="true" Elevation="0">
+                    <MudExpansionPanel Text="Nombre de usuario">
+                        <MudText Typo="Typo.h6" Class="pl-2">@_usuarioActual.nombreDeUsuario</MudText>        
+                    </MudExpansionPanel>
+                    <MudExpansionPanel Text="Correo">
+                        <MudText Typo="Typo.h6" Class="pl-2">@_usuarioActual.correo</MudText>                        
+                    </MudExpansionPanel>
+                    <MudExpansionPanel Text="Permisos">
+                        <MudItem Class="pl-2">
+                            <MudTooltip Text="Administrar permisos de usuario">
+                                <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.AdminPanelSettings" Color="Color.Primary">Administrar</MudButton>
+                            </MudTooltip>
+                        </MudItem>
+                    </MudExpansionPanel>
+                </MudExpansionPanels>
+            </MudCardContent>
+        </MudCard>
     }
 </MudItem>
