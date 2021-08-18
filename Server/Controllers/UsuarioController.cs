@@ -94,7 +94,6 @@ namespace Horrografia.Server.Controllers
         }
 
         [HttpPost]
-        [AllowAnonymous]
         [Route("cerrar-sesion")]
         public async Task<IActionResult> CerrarSesion()
         {
@@ -110,5 +109,36 @@ namespace Horrografia.Server.Controllers
             }
         }
 
+        [HttpPost]
+        [Route("permiso-admin")]
+        public async Task<IActionResult> OtorgarPermisoAdministrador(UsuarioDTO usuario)
+        {
+            try
+            {
+                await _repo.OtorgarPermisoAdministrador(usuario);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "An error occurred while writing to db");
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }
+        }
+
+        [HttpPost]
+        [Route("permiso-profe")]
+        public async Task<IActionResult> OtorgarPermisoProfesor(UsuarioDTO usuario)
+        {
+            try
+            {
+                await _repo.OtorgarPermisoProfesor(usuario);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "An error occurred while writing to db");
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }
+        }
     }
 }

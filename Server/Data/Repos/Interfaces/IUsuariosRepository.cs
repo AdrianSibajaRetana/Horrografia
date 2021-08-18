@@ -16,5 +16,7 @@ namespace Horrografia.Server.Data.Repos.Interfaces
         Task<SharedConstants.LoginState> IniciarSesion(ClientUserLoginDTO modeloEnviado);
         Task<bool> CorreoDisponible(string correo);
         Task CerrarSesion();
+        Task OtorgarPermisoAdministrador(UsuarioDTO usuario);
+        Task OtorgarPermisoProfesor(UsuarioDTO usuario);
     }
 }

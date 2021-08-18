@@ -119,6 +119,16 @@ namespace Horrografia.Server.Data.Repos.Implementations
             await _SignInManager.SignOutAsync();
         }
 
+        public async Task OtorgarPermisoAdministrador(UsuarioDTO usuario)
+        {
+            var userData = await _UserManager.FindByEmailAsync(usuario.correo);
+            await _UserManager.AddToRoleAsync(userData, "Admin");
+        }
 
+        public async Task OtorgarPermisoProfesor(UsuarioDTO usuario)
+        {
+            var userData = await _UserManager.FindByEmailAsync(usuario.correo);
+            await _UserManager.AddToRoleAsync(userData, "Profesor");
+        }
     }
 }
