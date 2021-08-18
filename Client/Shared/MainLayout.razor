@@ -39,9 +39,20 @@
     <MudHidden Breakpoint="Breakpoint.SmAndUp" Invert="true">
         <MudText Typo="Typo.h5" Class="ml-3">Horrografía</MudText>
         <MudAppBarSpacer />
-        <MudTooltip Text="Dashboard administrativo">
-            <MudIconButton Icon="@Icons.Material.Filled.Dashboard" Color="Color.Inherit" Link="/dashboard" />
-        </MudTooltip>
+        <AuthorizeView Roles="Profesor,Admin">
+            <Authorized>
+                <MudTooltip Text="Administrar estudiantes">
+                    <MudIconButton Icon="@Icons.Material.Filled.School" Color="Color.Inherit" Link="/estudiantes" />
+                </MudTooltip>
+            </Authorized>
+        </AuthorizeView>
+        <AuthorizeView Roles="Admin">
+            <Authorized>
+                <MudTooltip Text="Dashboard administrativo">
+                    <MudIconButton Icon="@Icons.Material.Filled.Dashboard" Color="Color.Inherit" Link="/dashboard" />
+                </MudTooltip>
+            </Authorized>
+        </AuthorizeView>
         <MudTooltip Text="Sobre nosotros">
             <MudIconButton Icon="@Icons.Material.Filled.Groups" Color="Color.Inherit" Link="/sobre" />
         </MudTooltip>

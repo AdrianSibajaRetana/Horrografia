@@ -3,6 +3,9 @@
 @using Horrografia.Client.Shared.Constants
 @using Horrografia.Client.Shared.Components.General
 
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize(Roles = "Admin")]
+
 <PageLoading Titulo="Administración general" IsLoading="@IsLoading">
     @if (InitialLoadStatus == Constantes.OKSTATUS)
     {
@@ -16,7 +19,7 @@
                     <RolesOverview />
                 </MudTabPanel>
                 <MudTabPanel Text="Permisos" Icon="@Icons.Material.Filled.Group">
-                    <RolesAsigner Usuarios="Usuarios"/>
+                    <RolesAsigner Usuarios="Usuarios" />
                 </MudTabPanel>
                 <MudTabPanel Text="Escuelas" Icon="@Icons.Material.Filled.School">
                     <SchoolsOverview />

@@ -1,14 +1,16 @@
 ﻿@page "/dashboard"
+@using Microsoft.AspNetCore.Authorization
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @using Horrografia.Client.Shared.Components.Dashboard
+@attribute [Authorize(Roles = "Admin")]
 
 <MudContainer Class="mt-16 px-8" MaxWidth="MaxWidth.False">
-    <MudGrid>        
+    <MudGrid>
         <MudItem xs="12" sm="6" md="4">
-            <StatDisplay 
-                         Numero="28" 
+            <StatDisplay Numero="28"
                          Titulo="Usuarios registrados"
                          Clase="red darken-1 ma-2"
-                         Icono="@Icons.Material.Filled.AccessibilityNew"/>
+                         Icono="@Icons.Material.Filled.AccessibilityNew" />
         </MudItem>
         <MudItem xs="12" sm="6" md="4">
             <StatDisplay Numero="49"
@@ -24,14 +26,13 @@
         </MudItem>
         <MudItem xs="12" sm="6">
             <MudGrid>
-                <MudItem xs="12">   
+                <MudItem xs="12">
                     <DataAdministration Titulo="Administrar niveles"
                                         Subtitulo="Editar, añadir o eliminar niveles"
                                         IconoBoton="@Icons.Material.Filled.Edit"
                                         ClaseBoton="teal"
                                         TextoBoton="Administrar"
-                                        LinkBoton="/dashboard/niveles"
-                                        />
+                                        LinkBoton="/dashboard/niveles" />
                 </MudItem>
                 <MudItem xs="12">
                     <DataAdministration Titulo="Administrar usuarios"

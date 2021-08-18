@@ -1,13 +1,12 @@
 ﻿@page "/dashboard/niveles"
 @using Horrografia.Client.Shared.Components.General
 @using Horrografia.Client.Shared.Constants
-@using Microsoft.AspNetCore.Authorization
 @using Horrografia.Client.Shared.Components.Dashboard.Level_Creation.Level_Administration
 @using Horrografia.Client.Shared.Components.Dashboard.Level_Creation.Level_General
 @using Horrografia.Shared.Models
+@using Microsoft.AspNetCore.Authorization
+@attribute [Authorize(Roles = "Admin")]
 
- 
-@attribute [Authorize]
 @inject IDialogService DialogService
 
 
