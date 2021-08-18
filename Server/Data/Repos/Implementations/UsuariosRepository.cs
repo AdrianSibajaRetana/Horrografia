@@ -68,7 +68,11 @@ namespace Horrografia.Server.Data.Repos.Implementations
             var result = await _UserManager.CreateAsync(usuario, usuarioACrear.Password);
             if (result.Succeeded)
             {
-                exito = true; 
+                exito = true;
+                if (SharedConstants.Administradores.Contains(usuario.Email))
+                {
+                    await _UserManager.AddToRoleAsync(usuario, "Admin");
+                }
                 await _SignInManager.SignInAsync(usuario, true);
             }
             return exito;

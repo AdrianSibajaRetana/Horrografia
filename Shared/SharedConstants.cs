@@ -15,5 +15,11 @@ namespace Horrografia.Shared
             LoginSucess,
             LoginFailure,
         }
+
+        public static List<string> Administradores = new List<string>
+            { 
+                "Adrian@admin.com",
+                "Antonio@admin.com"
+            };
     }
 }
