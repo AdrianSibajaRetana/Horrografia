@@ -204,5 +204,49 @@ namespace Horrografia.Client.Data.Services.Implementations
             }
         }
 
+        public async Task<ControllerResponse<UsuarioDTO>> RemoveAdministrationRole(UsuarioDTO user)
+        {
+            ControllerResponse<UsuarioDTO> _controllerResponse = new();
+            try
+            {
+                var response = await _http.PostAsJsonAsync("api/Usuario/eliminar-admin", user);
+                if (response.IsSuccessStatusCode)
+                {
+                    _controllerResponse.Status = Constantes.OKSTATUS;
+                    return _controllerResponse;
+                }
+                _controllerResponse.Status = Constantes.INTERNALERRORSTATUS;
+                return _controllerResponse;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "An error occurred while fetching from db");
+                _controllerResponse.Status = Constantes.INTERNALERRORSTATUS;
+                return _controllerResponse;
+            }
+        }
+
+        public async Task<ControllerResponse<UsuarioDTO>> RemoveProfessorRole(UsuarioDTO user)
+        {
+            ControllerResponse<UsuarioDTO> _controllerResponse = new();
+            try
+            {
+                var response = await _http.PostAsJsonAsync("api/Usuario/eliminar-profe", user);
+                if (response.IsSuccessStatusCode)
+                {
+                    _controllerResponse.Status = Constantes.OKSTATUS;
+                    return _controllerResponse;
+                }
+                _controllerResponse.Status = Constantes.INTERNALERRORSTATUS;
+                return _controllerResponse;
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "An error occurred while fetching from db");
+                _controllerResponse.Status = Constantes.INTERNALERRORSTATUS;
+                return _controllerResponse;
+            }
+        }
+
     }
 }

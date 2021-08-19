@@ -94,6 +94,7 @@ namespace Horrografia.Server.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         [Route("cerrar-sesion")]
         public async Task<IActionResult> CerrarSesion()
         {
@@ -110,6 +111,7 @@ namespace Horrografia.Server.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         [Route("permiso-admin")]
         public async Task<IActionResult> OtorgarPermisoAdministrador(UsuarioDTO usuario)
         {
@@ -126,12 +128,47 @@ namespace Horrografia.Server.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         [Route("permiso-profe")]
         public async Task<IActionResult> OtorgarPermisoProfesor(UsuarioDTO usuario)
         {
             try
             {
                 await _repo.OtorgarPermisoProfesor(usuario);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "An error occurred while writing to db");
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        [Route("eliminar-admin")]
+        public async Task<IActionResult> RemoverPermisoAdministrador(UsuarioDTO usuario)
+        {
+            try
+            {
+                await _repo.RemoverPermisoAdministrador(usuario);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "An error occurred while writing to db");
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "Admin")]
+        [Route("eliminar-profe")]
+        public async Task<IActionResult> RemoverPermisoProfesor(UsuarioDTO usuario)
+        {
+            try
+            {
+                await _repo.RemoverPermisoProfesor(usuario);
                 return Ok();
             }
             catch (Exception e)

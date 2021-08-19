@@ -15,5 +15,7 @@ namespace Horrografia.Client.Data.Services.Interfaces
         Task<ControllerResponse<bool>> VerifyEmail(ClientUserRegisterDTO modelo);
         Task<ControllerResponse<UsuarioDTO>> GiveAdministrationRole(UsuarioDTO user);
         Task<ControllerResponse<UsuarioDTO>> GiveProfessorRole(UsuarioDTO user);
+        Task<ControllerResponse<UsuarioDTO>> RemoveAdministrationRole(UsuarioDTO user);
+        Task<ControllerResponse<UsuarioDTO>> RemoveProfessorRole(UsuarioDTO user);
     }
 }
