@@ -17,6 +17,6 @@ namespace Horrografia.Server.Data.Repos.Interfaces
         Task<bool> CorreoDisponible(string correo);
         Task CerrarSesion();
         Task OtorgarPermisoAdministrador(UsuarioDTO usuario);
-        Task OtorgarPermisoProfesor(UsuarioDTO usuario);
+        Task OtorgarPermisoProfesor(UsuarioDTO usuario);        
     }
 }
