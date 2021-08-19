@@ -23,7 +23,11 @@
                                   Usuarios="Usuarios" 
                                   Roles="Roles" 
                                   UsuariosYRoles="UsuariosYRoles"
-                                  OnErrorDetection="ShowError"/>
+                                  OnErrorDetection="ShowError"
+                                  OnAdministratorPermissionGiven="AddAdminRol"
+                                  OnProfessorPermissionGiven="AddProfessorRol"
+                                  OnAdministratorPermissionRemoved="RemoveAdminRol"
+                                  OnProfessorPermissionRemoved="RemoveProfessorRol"/>
                 </MudTabPanel>
                 <MudTabPanel Text="Escuelas" Icon="@Icons.Material.Filled.School">
                     <SchoolsOverview />

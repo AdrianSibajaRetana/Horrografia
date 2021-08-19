@@ -134,5 +134,61 @@ namespace Horrografia.Client.Pages.DashboardPages
         {
             ShowNotification(message, Severity.Error);
         }
+
+        protected async Task AddAdminRol(UsuarioDTO user)
+        {
+            var response = await _userService.GiveAdministrationRole(user);
+            if (response.isResponseSuccesfull())
+            {
+                ShowNotification("¡Se añadieron permisos de administrador exitosamente!", Severity.Success);
+            }
+            else
+            {
+                ShowNotification("Hubo un error al añadir permisos de administrador.", Severity.Error);
+            }
+            await CargarRolesYUsuarios();
+        }
+
+        protected async Task AddProfessorRol(UsuarioDTO user)
+        {
+            var response = await _userService.GiveProfessorRole(user);
+            if (response.isResponseSuccesfull())
+            {
+                ShowNotification("¡Se añadieron permisos de profesor exitosamente!", Severity.Success);
+            }
+            else
+            {
+                ShowNotification("Hubo un error al añadir permisos de profesor.", Severity.Error);
+            }
+            await CargarRolesYUsuarios();
+        }
+
+        protected async Task RemoveAdminRol(UsuarioDTO user)
+        {
+            var response = await _userService.RemoveAdministrationRole(user);
+            if (response.isResponseSuccesfull())
+            {
+                ShowNotification("¡Se removieron los permisos de administrador exitosamente!", Severity.Success);
+            }
+            else
+            {
+                ShowNotification("Hubo un error al remover los permisos de administrador", Severity.Error);
+            }
+            await CargarRolesYUsuarios();
+        }
+
+        protected async Task RemoveProfessorRol(UsuarioDTO user)
+        {
+            var response = await _userService.RemoveProfessorRole(user);
+            if (response.isResponseSuccesfull())
+            {
+                ShowNotification("¡Se removieron los permisos de profesor exitosamente!", Severity.Success);
+            }
+            else
+            {
+                ShowNotification("Hubo un error al remover los permisos de profesor", Severity.Error);
+            }
+            await CargarRolesYUsuarios();
+        }
     }
 }

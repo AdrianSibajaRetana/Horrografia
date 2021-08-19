@@ -22,6 +22,18 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Permission_Administrati
         [Parameter]
         public EventCallback<string> OnErrorDetection { get; set; }
 
+        [Parameter]
+        public EventCallback<UsuarioDTO> OnAdministratorPermissionGiven { get; set; }
+
+        [Parameter]
+        public EventCallback<UsuarioDTO> OnProfessorPermissionGiven { get; set; }
+
+        [Parameter]
+        public EventCallback<UsuarioDTO> OnAdministratorPermissionRemoved { get; set; }
+
+        [Parameter]
+        public EventCallback<UsuarioDTO> OnProfessorPermissionRemoved { get; set; }
+
         private enum DataShown
         {
             UserData,
@@ -42,6 +54,7 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Permission_Administrati
 
         // Demuestra si el componente está cargando
         private bool _isLoading { get; set; }
+        private string _loadingStatus { get; set; }
 
         public RolesAsigner()
         {
@@ -122,19 +135,23 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Permission_Administrati
             { 
                 if (!_esAdministrador && _cambiarAAdministrador)
                 {
-                    //cambioAdmin = "Hacer el usuario un administrador";
+                    _loadingStatus = "Añadiendo rol de administrador.";
+                    await OnAdministratorPermissionGiven.InvokeAsync(_usuarioActual);
                 }
                 if (_esAdministrador && !_cambiarAAdministrador)
                 {
-                    //cambioAdmin = "Quitar permisos de administrador";
+                    _loadingStatus = "Removiendo rol de administrador.";
+                    await OnAdministratorPermissionRemoved.InvokeAsync(_usuarioActual);
                 }
                 if (!_esProfesor && _cambiarAProfesor)
                 {
-                    //cambioProfe = "Hacer el usuario un profesor";
+                    _loadingStatus = "Añadiendo rol de profesor.";                    
+                    await OnProfessorPermissionGiven.InvokeAsync(_usuarioActual);                    
                 }
                 if (_esProfesor && !_cambiarAProfesor)
                 {
-                    //cambioProfe = "Quitar permisos de profesor";
+                    _loadingStatus = "Removiendo rol de profesor.";
+                    await OnProfessorPermissionRemoved.InvokeAsync(_usuarioActual);
                 }            
             }
             _isLoading = false;
