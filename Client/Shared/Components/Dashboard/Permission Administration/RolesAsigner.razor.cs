@@ -13,8 +13,15 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Permission_Administrati
         [Parameter]
         public List<UsuarioDTO> Usuarios { get; set; }
 
+        private enum DataShown
+        {
+            UserData,
+            UserPermissions
+        }
+
         private UsuarioDTO _usuarioActual { get; set; }        
         private bool _showData { get; set; }
+        private DataShown _dataShown;
 
         public RolesAsigner()
         {
@@ -42,6 +49,19 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Permission_Administrati
             if (!(_usuarioActual == null))
             {
                 _showData = true;
+                _dataShown = DataShown.UserData;
+            }
+        }
+
+        private void SwitchDataShown()
+        {
+            if (_dataShown == DataShown.UserData)
+            {
+                _dataShown = DataShown.UserPermissions;
+            }
+            else if (_dataShown == DataShown.UserPermissions)
+            {
+                _dataShown = DataShown.UserData;
             }
         }
     }

@@ -44,29 +44,57 @@
     }
     else
     {
-        <MudCard Elevation="2" Class="py-4 pl-4 mt-4" Outlined="true" Style="max-height: 100%; ">
-            <MudCardHeader>
-                <CardHeaderContent>
-                    <MudText Typo="Typo.h5">Usuario de horrografía</MudText>
-                </CardHeaderContent>
-            </MudCardHeader>
-            <MudCardContent>
-                <MudExpansionPanels DisableBorders="true" Elevation="0">
-                    <MudExpansionPanel Text="Nombre de usuario">
-                        <MudText Typo="Typo.h6" Class="pl-2">@_usuarioActual.nombreDeUsuario</MudText>        
-                    </MudExpansionPanel>
-                    <MudExpansionPanel Text="Correo">
-                        <MudText Typo="Typo.h6" Class="pl-2">@_usuarioActual.correo</MudText>                        
-                    </MudExpansionPanel>
-                    <MudExpansionPanel Text="Permisos">
-                        <MudItem Class="pl-2">
-                            <MudTooltip Text="Administrar permisos de usuario">
-                                <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.AdminPanelSettings" Color="Color.Primary">Administrar</MudButton>
-                            </MudTooltip>
-                        </MudItem>
-                    </MudExpansionPanel>
-                </MudExpansionPanels>
-            </MudCardContent>
-        </MudCard>
+        @if (_dataShown == DataShown.UserData)
+        {
+            <MudCard Elevation="2" Class="py-4 pl-4 mt-4" Outlined="true" Style="max-height: 100%; ">
+                <MudCardHeader>
+                    <CardHeaderContent>
+                        <MudText Typo="Typo.h5">Usuario de horrografía</MudText>
+                    </CardHeaderContent>
+                </MudCardHeader>
+                <MudCardContent>
+                    <MudExpansionPanels DisableBorders="true" Elevation="0">
+                        <MudExpansionPanel Text="Nombre de usuario">
+                            <MudText Typo="Typo.h6" Class="pl-2">@_usuarioActual.nombreDeUsuario</MudText>
+                        </MudExpansionPanel>
+                        <MudExpansionPanel Text="Correo">
+                            <MudText Typo="Typo.h6" Class="pl-2">@_usuarioActual.correo</MudText>
+                        </MudExpansionPanel>
+                        <MudExpansionPanel Text="Permisos">
+                            <MudItem Class="pl-2">
+                                <MudTooltip Text="Administrar permisos de usuario">
+                                    <MudButton Variant="Variant.Filled"
+                                               StartIcon="@Icons.Material.Filled.AdminPanelSettings"
+                                               Color="Color.Primary" OnClick="SwitchDataShown">Administrar</MudButton>
+                                </MudTooltip>
+                            </MudItem>
+                        </MudExpansionPanel>
+                    </MudExpansionPanels>
+                </MudCardContent>
+            </MudCard>
+        }
+        else if (_dataShown == DataShown.UserPermissions)
+        {
+            <MudCard Elevation="2" Class="py-4 pl-4 mt-4" Outlined="true" Style="max-height: 100%; ">
+                <MudCardHeader>
+                    <CardHeaderContent>
+                        <MudGrid>
+                            <MudItem xs="12" sm="12" md="8">
+                                <MudText Typo="Typo.h5">Permisos de usuario</MudText>
+                            </MudItem>
+                            <MudItem xs="12" sm="12" md="2" Class="ml-auto">
+                                <MudTooltip Text="Volver a los datos de usuario">
+                                    <MudButton Variant="Variant.Filled"
+                                               StartIcon="@Icons.Material.Filled.KeyboardReturn"
+                                               Color="Color.Primary" OnClick="SwitchDataShown">Datos</MudButton>
+                                </MudTooltip>
+                            </MudItem>
+                        </MudGrid>
+                    </CardHeaderContent>
+                </MudCardHeader>
+                <MudCardContent>
+                </MudCardContent>
+            </MudCard>
+        }
     }
 </MudItem>
