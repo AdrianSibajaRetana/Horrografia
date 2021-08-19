@@ -13,19 +13,40 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Permission_Administrati
         [Parameter]
         public List<UsuarioDTO> Usuarios { get; set; }
 
+        [Parameter]
+        public List<RolModel> Roles { get; set; }
+
+        [Parameter]
+        public List<UserRolesModel> UsuariosYRoles { get; set; }
+
+        [Parameter]
+        public EventCallback<string> OnErrorDetection { get; set; }
+
         private enum DataShown
         {
             UserData,
             UserPermissions
         }
 
-        private UsuarioDTO _usuarioActual { get; set; }        
+        private UsuarioDTO _usuarioActual { get; set; }
         private bool _showData { get; set; }
         private DataShown _dataShown;
+
+        // Permisos actuales en la base de datos
+        private bool _esAdministrador {get; set;}
+        private bool _esProfesor { get; set; }
+
+        // Permisos después de los cambios
+        private bool _cambiarAAdministrador { get; set; }
+        private bool _cambiarAProfesor { get; set; }
+
+        // Demuestra si el componente está cargando
+        private bool _isLoading { get; set; }
 
         public RolesAsigner()
         {
             _showData = false;
+            _isLoading = false;
         }
 
         private async Task<IEnumerable<UsuarioDTO>> SearchAsync(string value)
@@ -40,7 +61,6 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Permission_Administrati
             {
                 return Usuarios;
             }
-
             return Usuarios.Where(c => c.correo.Contains(value, StringComparison.InvariantCultureIgnoreCase));
         }
 
@@ -50,6 +70,7 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Permission_Administrati
             {
                 _showData = true;
                 _dataShown = DataShown.UserData;
+                SearchUserRoles();
             }
         }
 
@@ -63,6 +84,60 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Permission_Administrati
             {
                 _dataShown = DataShown.UserData;
             }
+        }
+
+        private void SearchUserRoles()
+        {
+            _esAdministrador = false;
+            _esProfesor = false;
+            foreach (var rol in Roles)
+            {
+                bool exists = UsuariosYRoles.Where(r => r.UserId == _usuarioActual.id)
+                                            .Where(r => r.RoleId == rol.Id)
+                                            .Any();
+                if (exists)
+                { 
+                    if (rol.Name == "Admin")
+                    {
+                        _esAdministrador = true;
+                    }
+                    else if (rol.Name == "Profesor")
+                    {
+                        _esProfesor = true;
+                    }
+                }
+            }
+            _cambiarAAdministrador = _esAdministrador;
+            _cambiarAProfesor = _esProfesor;
+        }
+
+        private async Task SaveChanges()
+        {
+            _isLoading = true;
+            if (_cambiarAAdministrador && _cambiarAProfesor)
+            {
+                await OnErrorDetection.InvokeAsync("El usuario no puede tener dos roles");
+            }
+            else
+            { 
+                if (!_esAdministrador && _cambiarAAdministrador)
+                {
+                    //cambioAdmin = "Hacer el usuario un administrador";
+                }
+                if (_esAdministrador && !_cambiarAAdministrador)
+                {
+                    //cambioAdmin = "Quitar permisos de administrador";
+                }
+                if (!_esProfesor && _cambiarAProfesor)
+                {
+                    //cambioProfe = "Hacer el usuario un profesor";
+                }
+                if (_esProfesor && !_cambiarAProfesor)
+                {
+                    //cambioProfe = "Quitar permisos de profesor";
+                }            
+            }
+            _isLoading = false;
         }
     }
 }

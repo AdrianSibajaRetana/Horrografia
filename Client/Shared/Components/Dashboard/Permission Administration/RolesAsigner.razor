@@ -93,7 +93,45 @@
                     </CardHeaderContent>
                 </MudCardHeader>
                 <MudCardContent>
+                    <MudExpansionPanels DisableBorders="true" Elevation="0">
+                        <MudExpansionPanel Text="Es administrador">
+                            <MudItem Class="pl-2">
+                                <MudTooltip Text="Dar o quitar permisos de administrador">
+                                    <MudSwitch @bind-Checked="@_cambiarAAdministrador" Color="Color.Primary" />
+                                </MudTooltip>
+                            </MudItem>
+                        </MudExpansionPanel>
+                        <MudExpansionPanel Text="Es Profesor">
+                            <MudItem Class="pl-2">
+                                <MudTooltip Text="Dar o quitar permisos de profesor">
+                                    <MudSwitch @bind-Checked="@_cambiarAProfesor" Color="Color.Primary" />
+                                </MudTooltip>
+                            </MudItem>
+                        </MudExpansionPanel>                        
+                    </MudExpansionPanels>
                 </MudCardContent>
+                <MudCardActions>
+                    <MudItem xs="12" sm="12" md="12" Class="my-2">
+                        <MudGrid Justify="Justify.Center">
+                            @if (!_isLoading)
+                            {
+                                <MudItem>
+                                    <MudTooltip Text="Guardar cambios a la base de datos">
+                                        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="SaveChanges">
+                                            Guardar cambios
+                                        </MudButton>
+                                    </MudTooltip>
+                                </MudItem>                            
+                            }
+                            else
+                            { 
+                                <MudItem>
+                                    <MudProgressCircular Color="Color.Success" Indeterminate="true" />
+                                </MudItem>
+                            }
+                        </MudGrid>
+                    </MudItem>
+                </MudCardActions>
             </MudCard>
         }
     }

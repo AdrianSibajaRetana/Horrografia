@@ -129,5 +129,10 @@ namespace Horrografia.Client.Pages.DashboardPages
             //Muestra la notifiación
             _snackbar.Add(mensaje, s);
         }
+
+        protected void ShowError(string message)
+        {
+            ShowNotification(message, Severity.Error);
+        }
     }
 }

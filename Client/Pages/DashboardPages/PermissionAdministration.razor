@@ -19,7 +19,11 @@
                     <RolesOverview />
                 </MudTabPanel>
                 <MudTabPanel Text="Permisos" Icon="@Icons.Material.Filled.Group">
-                    <RolesAsigner Usuarios="Usuarios" />
+                    <RolesAsigner 
+                                  Usuarios="Usuarios" 
+                                  Roles="Roles" 
+                                  UsuariosYRoles="UsuariosYRoles"
+                                  OnErrorDetection="ShowError"/>
                 </MudTabPanel>
                 <MudTabPanel Text="Escuelas" Icon="@Icons.Material.Filled.School">
                     <SchoolsOverview />
