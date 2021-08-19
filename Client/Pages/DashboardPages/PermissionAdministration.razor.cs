@@ -18,10 +18,19 @@ namespace Horrografia.Client.Pages.DashboardPages
         protected IUserService _userService { get; set; }
 
         [Inject]
+        protected IRolService _rolService { get; set; }
+
+        [Inject]
         protected ISnackbar _snackbar { get; set; }
 
         // Todos los usuarios de la aplicación
         private List<UsuarioDTO> Usuarios { get; set; }
+
+        //Todos los roles en la aplicación 
+        private List<RolModel> Roles { get; set; }
+
+        //Todos los usuarios y sus roles respectivos en la aplicación
+        private List<UserRolesModel> UsuariosYRoles { get; set; }
 
         // booleano que me indica que la renderización fue exitosa.
         private bool _lecturaExitosa { get; set; }
@@ -46,6 +55,8 @@ namespace Horrografia.Client.Pages.DashboardPages
             try
             {
                 await CargarUsuarios();
+                await CargarRoles();
+                await CargarRolesYUsuarios();
                 _lecturaExitosa = true;
             }
             catch (InvalidOperationException e)
@@ -66,6 +77,34 @@ namespace Horrografia.Client.Pages.DashboardPages
             {
                 string reporteError = "Usuarios";
                 throw new InvalidOperationException($"Error al cargar los {reporteError}.");
+            }
+        }
+
+        private async Task CargarRoles()
+        {
+            var usersResponse = await _rolService.GetRoles();
+            if (usersResponse.isResponseSuccesfull())
+            {
+                Roles = usersResponse.Response;
+            }
+            else
+            {
+                string reporteError = "Roles";
+                throw new InvalidOperationException($"Error al cargar los {reporteError}.");
+            }
+        }
+
+        private async Task CargarRolesYUsuarios()
+        {
+            var usersResponse = await _rolService.GetUsersandRolesRelation();
+            if (usersResponse.isResponseSuccesfull())
+            {
+                UsuariosYRoles = usersResponse.Response;
+            }
+            else
+            {
+                string reporteError = "Relaciones de roles";
+                throw new InvalidOperationException($"Error al cargar las {reporteError}.");
             }
         }
 
