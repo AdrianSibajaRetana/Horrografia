@@ -54,6 +54,8 @@ namespace Horrografia.Client
             builder.Services.AddTransient<IPistaService, PistaService>();
             builder.Services.AddTransient<IFormaIncorrectaService, FormaIncorrectaService>();
             builder.Services.AddTransient<IUserService, UserService>();
+            builder.Services.AddTransient<IRolService, RolService>();
+
             await builder.Build().RunAsync();
         }
     }
