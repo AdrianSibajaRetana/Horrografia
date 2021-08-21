@@ -1,0 +1,9 @@
+﻿@page "/perfil"
+@using Microsoft.AspNetCore.Authorization
+@using Horrografia.Client.Shared.Constants
+@using Horrografia.Client.Shared.Components.General
+@attribute [Authorize]
+
+<PageLoading Titulo="Mi Perfil" IsLoading="@_isLoading">
+    <MudText>@id</MudText>
+</PageLoading>
