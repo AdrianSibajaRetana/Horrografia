@@ -21,7 +21,7 @@ namespace Horrografia.Client.Pages
 
         private bool _isLoading { get; set; }
         private bool _lecturaExitosa { get; set; }
-        private UsuarioDTO _user { get; set; }
+        private UsuarioDTO User { get; set; }
 
         public Perfil()
         {
@@ -45,7 +45,7 @@ namespace Horrografia.Client.Pages
             var response = await _userService.GetUserById(userId);
             if (response.isResponseSuccesfull())
             {
-                _user = response.Response.FirstOrDefault();
+                User = response.Response.FirstOrDefault();
                 _lecturaExitosa = true;
             }
         }
