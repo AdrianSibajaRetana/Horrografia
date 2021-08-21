@@ -1,3 +1,60 @@
 ﻿<MudItem xs="12" sm="12" md="12" Style="height: 70vh;">
-
+    <MudPaper Class="py-4 pl-4" Elevation="1">
+        <MudGrid>
+            <MudItem xs="12" sm="12" md="12">
+                <MudText Typo="Typo.h5">Visión general</MudText>
+            </MudItem>
+            <MudItem xs="12" sm="12" md="12">
+                <MudSimpleTable Hover="true" Striped="@true" Style="overflow-x: auto;" Elevation="0">
+                    <tbody>
+                        <tr>
+                            <td>
+                                <MudIcon Icon="@Icons.Material.Filled.AdminPanelSettings"></MudIcon>
+                                Administradores
+                            </td>
+                            <td>
+                                @_cantidadAdministradores
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <MudIcon Icon="@Icons.Material.Filled.School"></MudIcon>
+                                Profesores
+                            </td>
+                            <td>
+                                @_cantidadProfesores
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <MudIcon Icon="@Icons.Material.Filled.Group"></MudIcon>
+                                Usuarios totales
+                            </td>
+                            <td>
+                                @_cantidadUsuarios
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <MudIcon Icon="@Icons.Material.Filled.Festival"></MudIcon>
+                                Escuelas
+                            </td>
+                            <td>
+                                0
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <MudIcon Icon="@Icons.Material.Filled.Face"></MudIcon>
+                                Estudiantes
+                            </td>
+                            <td>
+                                0
+                            </td>
+                        </tr>
+                    </tbody>
+                </MudSimpleTable>
+            </MudItem>
+        </MudGrid>
+    </MudPaper>
 </MudItem>
