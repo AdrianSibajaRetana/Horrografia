@@ -28,12 +28,30 @@ namespace Horrografia.Server.Controllers
 
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Get()
         {
             try
             {
                 var usuarios = await _repo.GetAllAsync();
                 return Ok(usuarios);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "An error occurred while fetching from db");
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }
+        }
+
+        [HttpGet]
+        [Authorize]
+        [Route("getData/{id}")]
+        public async Task<IActionResult> GetbyId(string id)
+        {
+            try
+            {
+                var usuario = await _repo.GetUserById(id);
+                return Ok(usuario);
             }
             catch (Exception e)
             {

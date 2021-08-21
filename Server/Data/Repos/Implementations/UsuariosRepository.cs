@@ -41,6 +41,16 @@ namespace Horrografia.Server.Data.Repos.Implementations
             return listaDeUsuarios;
         }
 
+        public async Task<UsuarioDTO> GetUserById(string id)
+        {
+            string sql = "SELECT * FROM aspnetusers WHERE Id = @userid";
+            var aspUsers = await _dbContext.LoadData<ApplicationUser, dynamic>(sql, new { userid = id }, ConectionString);
+            List<UsuarioDTO> listaDeUsuarios = aspUsers.Select(u => u.getDTOFromApplicationUser()).ToList();
+            var user = listaDeUsuarios.FirstOrDefault();
+            return user;
+        }
+
+
         //Revisa si el correo está disponible en la base de datos. 
         public async Task<bool> CorreoDisponible(string correo)
         {

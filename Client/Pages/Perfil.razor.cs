@@ -4,7 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
+using Horrografia.Shared.Models;
+using Horrografia.Client.Data.Services.Interfaces;
 
 namespace Horrografia.Client.Pages
 {
@@ -15,9 +16,13 @@ namespace Horrografia.Client.Pages
         [Inject]
         protected AuthenticationStateProvider authProvider { get; set; }
 
+        [Inject]
+        protected IUserService _userService { get; set; }
+
         private bool _isLoading { get; set; }
         private bool _lecturaExitosa { get; set; }
-        private string id { get; set; }
+        private UsuarioDTO _user { get; set; }
+
         public Perfil()
         {
             _isLoading = true;
@@ -32,9 +37,17 @@ namespace Horrografia.Client.Pages
 
         private async Task CargarData()
         {
+            //Consigo el id del usuario.
             AuthenticationState authState = await authProvider.GetAuthenticationStateAsync();
             var userId = authState.User.Claims.FirstOrDefault(c => c.Type == "sub").Value;
-            id = userId;
+
+            //Con el id consigo el resto de datos del usuario
+            var response = await _userService.GetUserById(userId);
+            if (response.isResponseSuccesfull())
+            {
+                _user = response.Response.FirstOrDefault();
+                _lecturaExitosa = true;
+            }
         }
     }
 }

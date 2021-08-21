@@ -5,5 +5,14 @@
 @attribute [Authorize]
 
 <PageLoading Titulo="Mi Perfil" IsLoading="@_isLoading">
-    <MudText>@id</MudText>
+    @if (_lecturaExitosa)
+    {
+        <MudText>@_user.nombreDeUsuario</MudText>
+        <MudText>@_user.correo</MudText>
+        <MudText>@_user.id</MudText>
+    }
+    else
+    {
+        <ErrorMessage />
+    }
 </PageLoading>

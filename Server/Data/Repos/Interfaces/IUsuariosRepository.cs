@@ -12,6 +12,7 @@ namespace Horrografia.Server.Data.Repos.Interfaces
     public interface IUsuariosRepository
     {
         Task<List<UsuarioDTO>> GetAllAsync();
+        Task<UsuarioDTO> GetUserById(string id);
         Task<bool> CrearUsuario(ClientUserRegisterDTO usuarioACrear);
         Task<SharedConstants.LoginState> IniciarSesion(ClientUserLoginDTO modeloEnviado);
         Task<bool> CorreoDisponible(string correo);
