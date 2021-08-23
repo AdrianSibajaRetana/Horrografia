@@ -88,6 +88,7 @@ namespace Horrografia.Server
             services.AddSingleton<IFormaIncorrectaRepository, FormaIncorrectaRepository>();
             services.AddScoped<IUsuariosRepository, UsuariosRepository>();
             services.AddScoped<IRolRepository, RolRepository>();
+            services.AddScoped<IEscuelaRepository, EscuelaRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
