@@ -23,7 +23,7 @@ namespace Horrografia.Client.Data.Services.Implementations
             _logger = logger;
         }
 
-        public async Task<ControllerResponse<EscuelaModel>> GetAllAsync()
+        public async Task<ControllerResponse<EscuelaModel>> GetAsync()
         {
             ControllerResponse<EscuelaModel> _controllerResponse = new();
             try

@@ -21,6 +21,9 @@ namespace Horrografia.Client.Pages.DashboardPages
         protected IRolService _rolService { get; set; }
 
         [Inject]
+        protected IEscuelaService _escuelaService { get; set; }
+
+        [Inject]
         protected ISnackbar _snackbar { get; set; }
 
         // Todos los usuarios de la aplicación
@@ -31,6 +34,9 @@ namespace Horrografia.Client.Pages.DashboardPages
 
         //Todos los usuarios y sus roles respectivos en la aplicación
         private List<UserRolesModel> UsuariosYRoles { get; set; }
+
+        //Todas las escuelas en la base de datos
+        private List<EscuelaModel> Escuelas { get; set; }
 
         // booleano que me indica que la renderización fue exitosa.
         private bool _lecturaExitosa { get; set; }
@@ -57,6 +63,7 @@ namespace Horrografia.Client.Pages.DashboardPages
                 await CargarUsuarios();
                 await CargarRoles();
                 await CargarRolesYUsuarios();
+                await CargarEscuelas();
                 _lecturaExitosa = true;
             }
             catch (InvalidOperationException e)
@@ -104,6 +111,20 @@ namespace Horrografia.Client.Pages.DashboardPages
             else
             {
                 string reporteError = "Relaciones de roles";
+                throw new InvalidOperationException($"Error al cargar las {reporteError}.");
+            }
+        }
+
+        private async Task CargarEscuelas()
+        {
+            var usersResponse = await _escuelaService.GetAsync();
+            if (usersResponse.isResponseSuccesfull())
+            {
+                Escuelas = usersResponse.Response;
+            }
+            else
+            {
+                string reporteError = "Escuelas";
                 throw new InvalidOperationException($"Error al cargar las {reporteError}.");
             }
         }
@@ -189,6 +210,20 @@ namespace Horrografia.Client.Pages.DashboardPages
                 ShowNotification("Hubo un error al remover los permisos de profesor", Severity.Error);
             }
             await CargarRolesYUsuarios();
+        }
+
+        protected async Task CreateSchool(EscuelaModel s)
+        {
+            var response = await _escuelaService.PostAsync(s);
+            if (response.isResponseSuccesfull())
+            {
+                ShowNotification("¡Se creó la escuela exitosamente!", Severity.Success);
+            }
+            else
+            {
+                ShowNotification("Hubo un error al crear la escuela", Severity.Error);
+            }
+            await CargarEscuelas();
         }
     }
 }

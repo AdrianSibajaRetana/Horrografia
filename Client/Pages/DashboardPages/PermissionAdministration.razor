@@ -33,7 +33,9 @@
                                   OnProfessorPermissionRemoved="RemoveProfessorRol"/>
                 </MudTabPanel>
                 <MudTabPanel Text="Escuelas" Icon="@Icons.Material.Filled.Festival">
-                    <SchoolsOverview />
+                    <SchoolsOverview 
+                                     Escuelas="Escuelas"
+                                     OnSchoolCreation="CreateSchool"/>
                 </MudTabPanel>
             </MudTabs>
         </MudItem>
