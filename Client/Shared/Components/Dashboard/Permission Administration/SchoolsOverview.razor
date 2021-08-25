@@ -1,7 +1,7 @@
 ﻿<MudItem xs="12" sm="12" md="12" Style="height: 70vh;">
     @if (Escuelas.Any())
     {
-        <MudCard Elevation="2" Class="py-4 pl-4" Outlined="true" Style="max-height: 40%; ">
+        <MudCard Elevation="2" Class="py-4 pl-4" Outlined="true" Style="height: 20%; ">
             <MudCardHeader>
                 <CardHeaderContent>
                     <MudGrid>
@@ -26,10 +26,10 @@
             </MudCardHeader>
         </MudCard>
 
-        <MudPaper Class="py-4 pl-4 mt-4" Elevation="1" Style=" max-height: 55%;">
+        <MudPaper Class="py-4 pl-4 mt-4" Elevation="2" Style=" height: 80%;">
             <MudGrid>
                 <MudItem xs="12" sm="12" md="12">
-                    <MudSimpleTable Hover="true" Striped="@true" Style="overflow-x: auto; max-height: 90%;" Elevation="0">
+                    <MudSimpleTable Hover="true" Striped="@true" Style="overflow-x: auto; max-height: inherit;" Elevation="0">
                         <thead>
                             <tr>
                                 <th>Nombre</th>

@@ -6,6 +6,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Horrografia.Shared.Models;
 using Horrografia.Client.Data.Services.Interfaces;
+using Horrografia.Client.Shared.Objects.ClientModels;
+using MudBlazor;
 
 namespace Horrografia.Client.Pages
 {
@@ -18,6 +20,12 @@ namespace Horrografia.Client.Pages
 
         [Inject]
         protected IUserService _userService { get; set; }
+
+        [Inject]
+        protected IEscuelaService _escuelaService { get; set; }
+
+        [Inject]
+        protected ISnackbar _snackbar { get; set; }
 
         private bool _isLoading { get; set; }
         private bool _lecturaExitosa { get; set; }
@@ -47,6 +55,26 @@ namespace Horrografia.Client.Pages
             {
                 User = response.Response.FirstOrDefault();
                 _lecturaExitosa = true;
+                _snackbar.Configuration.PositionClass = Defaults.Classes.Position.TopCenter;
+            }
+        }
+
+        public void ShowNotification(string mensaje, Severity s)
+        {
+            //Muestra la notifiación
+            _snackbar.Add(mensaje, s);
+        }
+
+        protected async Task SearchSchoolExistence(ClientEscuelaVerificationModel escuela)
+        {
+            var response = await _escuelaService.VerificarExistenciaDeEscuela(escuela.Schoolcode);
+            if (response.isResponseSuccesfull())
+            {
+                escuela.Exists = response.Response.FirstOrDefault();
+            }
+            else
+            {
+                ShowNotification("Error al verificar existencia de escuela", Severity.Error);
             }
         }
     }
