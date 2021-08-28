@@ -112,7 +112,7 @@ namespace Horrografia.Server.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Admin")]
+        [Authorize]
         [Route("cerrar-sesion")]
         public async Task<IActionResult> CerrarSesion()
         {
@@ -197,6 +197,7 @@ namespace Horrografia.Server.Controllers
         }
 
         [HttpPut]
+        [Authorize]
         public async Task<IActionResult> Put(UsuarioDTO usuario)
         {
             try
@@ -210,6 +211,5 @@ namespace Horrografia.Server.Controllers
                 return new StatusCodeResult(StatusCodes.Status500InternalServerError);
             }
         }
-
     }
 }

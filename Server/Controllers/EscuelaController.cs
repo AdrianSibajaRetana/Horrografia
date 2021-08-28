@@ -7,7 +7,7 @@ using Horrografia.Server.Data.Repos.Interfaces;
 using Horrografia.Shared.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-
+using Microsoft.AspNetCore.Authorization;
 
 namespace Horrografia.Server.Controllers
 {
@@ -24,6 +24,7 @@ namespace Horrografia.Server.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Get()
         {
             try
@@ -39,6 +40,7 @@ namespace Horrografia.Server.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Post(EscuelaModel s)
         {
             try
@@ -54,6 +56,7 @@ namespace Horrografia.Server.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         [Route("check/{id}")]
         public async Task<IActionResult> CheckExistence(string id)
         {
@@ -70,6 +73,7 @@ namespace Horrografia.Server.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<IActionResult> GetBySchoolCode(string id)
         {
             try

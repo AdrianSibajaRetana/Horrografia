@@ -27,6 +27,7 @@ namespace Horrografia.Server.Controllers
 
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Get()
         {
             try
@@ -42,6 +43,7 @@ namespace Horrografia.Server.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         [Route("roles")]
         public async Task<IActionResult> GetUserRoles()
         {
