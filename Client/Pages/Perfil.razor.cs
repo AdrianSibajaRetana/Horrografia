@@ -29,17 +29,25 @@ namespace Horrografia.Client.Pages
 
         private bool _isLoading { get; set; }
         private bool _lecturaExitosa { get; set; }
+        private bool _isUserInSchool { get; set; }
         private UsuarioDTO User { get; set; }
+        private EscuelaModel UserSchool { get; set; }
 
         public Perfil()
         {
             _isLoading = true;
             _lecturaExitosa = false;
+            _isUserInSchool = false;
+            UserSchool = new();
         }
 
         protected override async Task OnInitializedAsync()
         {
             await CargarData();
+            if (_isUserInSchool)
+            {
+                await CargarDataDeEscuela();
+            }
             _isLoading = false;
         }
 
@@ -54,8 +62,22 @@ namespace Horrografia.Client.Pages
             if (response.isResponseSuccesfull())
             {
                 User = response.Response.FirstOrDefault();
+                _isUserInSchool = User.IsUserinSchool();
                 _lecturaExitosa = true;
                 _snackbar.Configuration.PositionClass = Defaults.Classes.Position.TopCenter;
+            }
+        }
+
+        private async Task CargarDataDeEscuela()
+        {
+            var response = await _escuelaService.GetByCode(User.codigoEscuela);
+            if (response.isResponseSuccesfull())
+            {
+                UserSchool = response.Response.FirstOrDefault();
+            }
+            else
+            {
+                ShowNotification("Error al cargar datos de escuela.", Severity.Error);
             }
         }
 
@@ -76,6 +98,22 @@ namespace Horrografia.Client.Pages
             {
                 ShowNotification("Error al verificar existencia de escuela", Severity.Error);
             }
+        }
+
+        protected async Task RegisterUserToSchool(string escuelaId)
+        {
+            User.codigoEscuela = escuelaId;
+            var response = await _userService.UpdateUser(User);
+            if (response.isResponseSuccesfull())
+            {
+                ShowNotification($"¡Se registró exitosamente a la escuela!", Severity.Success);
+                _isUserInSchool = true; 
+            }
+            else
+            {
+                ShowNotification("Hubo un error al registrarse a la escuela", Severity.Error);
+            }
+            await CargarDataDeEscuela();
         }
     }
 }

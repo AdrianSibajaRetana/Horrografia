@@ -36,7 +36,7 @@ namespace Horrografia.Server.Data.Repos.Implementations
         {
             bool exists = false; 
             string sql = "SELECT * FROM Escuela WHERE Codigo = @Code";
-            var schools = await _dbContext.LoadData<ItemModel, dynamic>(sql, new { Code = schoolId }, ConectionString);
+            var schools = await _dbContext.LoadData<EscuelaModel, dynamic>(sql, new { Code = schoolId }, ConectionString);
             if (schools.Any())
             {
                 exists = true;
@@ -44,6 +44,11 @@ namespace Horrografia.Server.Data.Repos.Implementations
             return exists;
         }
 
-        //public async Task InsertUserToSchool(string userId, string schoolid) { }
+        public async Task<List<EscuelaModel>> GetSchoolByCode(string schoolCode)
+        {
+            string sql = "SELECT * FROM Escuela WHERE Codigo = @Code";
+            var schools = await _dbContext.LoadData<EscuelaModel, dynamic>(sql, new { Code = schoolCode }, ConectionString);
+            return schools;
+        }
     }
 }

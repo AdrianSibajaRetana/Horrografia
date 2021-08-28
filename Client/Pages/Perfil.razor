@@ -22,8 +22,17 @@
                     <UserHistory/>
                 </MudTabPanel>
                 <MudTabPanel Text="Escuela" Icon="@Icons.Material.Filled.Festival">
-                    <UserSchool
-                                OnSchoolVerification="SearchSchoolExistence"/>
+                    @if (!_isUserInSchool)
+                    {
+                        <UserSchool
+                                    OnSchoolVerification="SearchSchoolExistence"
+                                    OnUserSchoolRegistration="RegisterUserToSchool"/>                    
+                    }
+                    else
+                    { 
+                        <SchoolData
+                                    Escuela="UserSchool"/>                        
+                    }
                 </MudTabPanel>
             </MudTabs>
         </MudItem>

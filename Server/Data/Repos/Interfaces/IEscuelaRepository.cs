@@ -9,6 +9,6 @@ namespace Horrografia.Server.Data.Repos.Interfaces
         Task<List<EscuelaModel>> GetAllAsync();
         Task InsertData(EscuelaModel school);
         Task<bool> CheckSchoolExistance(string schoolId);
-        //Task InsertUserToSchool(string userId, string schoolid);
+        Task<List<EscuelaModel>> GetSchoolByCode(string schoolCode);
     }
 }

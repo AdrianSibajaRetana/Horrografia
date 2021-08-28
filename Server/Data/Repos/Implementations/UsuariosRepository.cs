@@ -146,10 +146,18 @@ namespace Horrografia.Server.Data.Repos.Implementations
             var userData = await _UserManager.FindByEmailAsync(usuario.correo);
             await _UserManager.RemoveFromRoleAsync(userData, "Admin");
         }
+
         public async Task RemoverPermisoProfesor(UsuarioDTO usuario)
         {
             var userData = await _UserManager.FindByEmailAsync(usuario.correo);
             await _UserManager.RemoveFromRoleAsync(userData, "Profesor");
+        }
+
+        public async Task UpdateData(UsuarioDTO usuario)
+        { 
+            var userData = await _UserManager.FindByEmailAsync(usuario.correo);
+            userData.CodigoEscuela = usuario.codigoEscuela;
+            await _UserManager.UpdateAsync(userData);
         }
     }
 }

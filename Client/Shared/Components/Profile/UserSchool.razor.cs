@@ -15,6 +15,9 @@ namespace Horrografia.Client.Shared.Components.Profile
         [Parameter]
         public EventCallback<ClientEscuelaVerificationModel> OnSchoolVerification { get; set; }
 
+        [Parameter]
+        public EventCallback<string> OnUserSchoolRegistration{ get; set; }
+
         private bool _isLoading { get; set; }
 
         private bool _showSchoolNotFound { get; set; }
@@ -34,7 +37,7 @@ namespace Horrografia.Client.Shared.Components.Profile
             await OnSchoolVerification.InvokeAsync(verificacion);
             if (verificacion.Exists)
             {
-                
+                await OnUserSchoolRegistration.InvokeAsync(_codigoEscuelaIntroducido);
             }
             else
             {

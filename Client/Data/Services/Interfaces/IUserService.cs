@@ -18,5 +18,6 @@ namespace Horrografia.Client.Data.Services.Interfaces
         Task<ControllerResponse<UsuarioDTO>> GiveProfessorRole(UsuarioDTO user);
         Task<ControllerResponse<UsuarioDTO>> RemoveAdministrationRole(UsuarioDTO user);
         Task<ControllerResponse<UsuarioDTO>> RemoveProfessorRole(UsuarioDTO user);
+        Task<ControllerResponse<UsuarioDTO>> UpdateUser(UsuarioDTO user);
     }
 }

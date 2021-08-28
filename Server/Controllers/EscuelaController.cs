@@ -68,5 +68,21 @@ namespace Horrografia.Server.Controllers
                 return new StatusCodeResult(StatusCodes.Status500InternalServerError);
             }
         }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetBySchoolCode(string id)
+        {
+            try
+            {
+                var items = await _repo.GetSchoolByCode(id);
+                return Ok(items);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "An error occurred while fetching from db");
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }
+        }
+
     }
 }

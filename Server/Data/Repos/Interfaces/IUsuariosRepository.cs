@@ -21,5 +21,6 @@ namespace Horrografia.Server.Data.Repos.Interfaces
         Task OtorgarPermisoProfesor(UsuarioDTO usuario);
         Task RemoverPermisoAdministrador(UsuarioDTO usuario);
         Task RemoverPermisoProfesor(UsuarioDTO usuario);
+        Task UpdateData(UsuarioDTO usuario);
     }
 }

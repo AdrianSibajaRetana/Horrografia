@@ -49,6 +49,32 @@ namespace Horrografia.Client.Data.Services.Implementations
             }
         }
 
+        public async Task<ControllerResponse<EscuelaModel>> GetByCode(string schoolCode)
+        {
+            ControllerResponse<EscuelaModel> _controllerResponse = new();
+            try
+            {
+                var response = await _http.GetAsync($"api/Escuela/{schoolCode}");
+                if (response.IsSuccessStatusCode)
+                {
+                    var escuelas = await response.Content.ReadFromJsonAsync<List<EscuelaModel>>();
+                    _controllerResponse.Status = Constantes.OKSTATUS;
+                    _controllerResponse.Response = escuelas;
+                    return _controllerResponse;
+                }
+                _controllerResponse.Status = Constantes.INTERNALERRORSTATUS;
+                _controllerResponse.Response = new List<EscuelaModel>();
+                return _controllerResponse;
+            }
+            catch (Exception e)
+            {
+                _controllerResponse.Status = Constantes.INTERNALERRORSTATUS;
+                _controllerResponse.Response = new List<EscuelaModel>();
+                _logger.LogError(e, "An error occurred while fetching from db");
+                return _controllerResponse;
+            }
+        }
+
         public async Task<ControllerResponse<EscuelaModel>> PostAsync(EscuelaModel s)
         {
             ControllerResponse<EscuelaModel> _controllerResponse = new();

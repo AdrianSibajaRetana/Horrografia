@@ -195,5 +195,21 @@ namespace Horrografia.Server.Controllers
                 return new StatusCodeResult(StatusCodes.Status500InternalServerError);
             }
         }
+
+        [HttpPut]
+        public async Task<IActionResult> Put(UsuarioDTO usuario)
+        {
+            try
+            {
+                await _repo.UpdateData(usuario);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "An error occurred while updating to db");
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }
+        }
+
     }
 }

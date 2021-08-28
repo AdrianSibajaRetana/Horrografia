@@ -9,5 +9,6 @@ namespace Horrografia.Server.Models
     public class ApplicationUser : IdentityUser
     {
         public string NombreDeUsuario { get; set; }
+        public string CodigoEscuela { get; set; }
     }
 }

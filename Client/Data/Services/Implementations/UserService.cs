@@ -276,5 +276,29 @@ namespace Horrografia.Client.Data.Services.Implementations
             }
         }
 
+        public async Task<ControllerResponse<UsuarioDTO>> UpdateUser(UsuarioDTO user)
+        {
+            {
+                ControllerResponse<UsuarioDTO> _controllerResponse = new();
+                try
+                {
+                    var response = await _http.PutAsJsonAsync("api/Usuario", user);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        _controllerResponse.Status = Constantes.OKSTATUS;
+                        return _controllerResponse;
+                    }
+                    _controllerResponse.Status = Constantes.INTERNALERRORSTATUS;
+                    return _controllerResponse;
+                }
+                catch (Exception e)
+                {
+                    _logger.LogError(e, "An error occurred while fetching from db");
+                    _controllerResponse.Status = Constantes.INTERNALERRORSTATUS;
+                    return _controllerResponse;
+                }
+            }
+        }
+
     }
 }

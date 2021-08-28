@@ -11,7 +11,7 @@ namespace Horrografia.Server.Extensions
     {
         public static UsuarioDTO getDTOFromApplicationUser(this ApplicationUser user)
         {
-            UsuarioDTO newDTO = new UsuarioDTO(user.NombreDeUsuario, user.NormalizedEmail, user.Id);
+            UsuarioDTO newDTO = new UsuarioDTO(user.NombreDeUsuario, user.NormalizedEmail, user.Id, user.CodigoEscuela);
             return newDTO;
         }
     }
