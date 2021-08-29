@@ -159,5 +159,21 @@ namespace Horrografia.Server.Data.Repos.Implementations
             userData.CodigoEscuela = usuario.codigoEscuela;
             await _UserManager.UpdateAsync(userData);
         }
+
+        public async Task<List<string>> GetStudentsBySchoolCode(string codigo)
+        {            
+            string sql = "SELECT NombreDeUsuario FROM aspnetusers WHERE not exists(select UserId from aspnetuserroles where aspnetusers.Id = aspnetuserroles.UserId) AND aspnetusers.CodigoEscuela = @code";
+            var nombres = await _dbContext.LoadData<string, dynamic>(sql, new { code = codigo }, ConectionString);
+            return nombres;
+        }
+
+        
+        public async Task<List<string>> GetProfessorsBySchoolCode(string codigo)
+        {
+            string sql = "SELECT NombreDeUsuario FROM aspnetusers INNER JOIN aspnetuserroles ON aspnetusers.Id = aspnetuserroles.UserId INNER JOIN aspnetroles ON aspnetuserroles.RoleId = aspnetroles.Id WHERE aspnetroles.Name = 'Profesor' AND aspnetusers.CodigoEscuela = @code";            
+            var nombres = await _dbContext.LoadData<string, dynamic>(sql, new { code = codigo }, ConectionString);
+            return nombres;
+        }
+        
     }
 }

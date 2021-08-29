@@ -211,5 +211,37 @@ namespace Horrografia.Server.Controllers
                 return new StatusCodeResult(StatusCodes.Status500InternalServerError);
             }
         }
+
+        [HttpGet]
+        [Route("getEstudiantes/{codigo}")]
+        public async Task<IActionResult> GetEstudiantesDeEscuela(string codigo)
+        {
+            try
+            {
+                var resultado = await _repo.GetStudentsBySchoolCode(codigo);
+                return Ok(resultado);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "An error occurred while updating to db");
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }
+        }
+
+        [HttpGet]
+        [Route("getProfesores/{codigo}")]
+        public async Task<IActionResult> GetProfesoresDeEscuela(string codigo)
+        {
+            try
+            {
+                var resultado = await _repo.GetProfessorsBySchoolCode(codigo);
+                return Ok(resultado);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "An error occurred while updating to db");
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }
+        }
     }
 }

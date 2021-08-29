@@ -1,5 +1,26 @@
 ﻿<MudItem xs="12" sm="12" md="12" Style="height: 70vh;">
-    <MudText>Se encuentra registrado a una escuela</MudText>
-    <MudText>@Escuela.Nombre</MudText>
-    <MudText>@Escuela.Codigo</MudText>
+    <MudPaper Class="py-4 pl-4" Elevation="1">
+        <MudGrid>
+            <MudItem xs="12" sm="12" md="12">
+                <MudText Typo="Typo.h5">@Escuela.Nombre</MudText>
+            </MudItem>
+            <MudItem xs="12" sm="12" md="12">
+                <MudSimpleTable Hover="true" Striped="@true" Style="overflow-x: auto;" Elevation="0">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var nombre in Estudiantes)
+                        {
+                            <tr>
+                                <td>@nombre</td>
+                            </tr>
+                        }
+                    </tbody>
+                </MudSimpleTable>
+            </MudItem>
+        </MudGrid>
+    </MudPaper>
 </MudItem>

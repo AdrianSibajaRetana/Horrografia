@@ -32,6 +32,7 @@ namespace Horrografia.Client.Pages
         private bool _isUserInSchool { get; set; }
         private UsuarioDTO User { get; set; }
         private EscuelaModel UserSchool { get; set; }
+        private List<string> Estudiantes { get; set; }
 
         public Perfil()
         {
@@ -39,6 +40,7 @@ namespace Horrografia.Client.Pages
             _lecturaExitosa = false;
             _isUserInSchool = false;
             UserSchool = new();
+            Estudiantes = new();
         }
 
         protected override async Task OnInitializedAsync()

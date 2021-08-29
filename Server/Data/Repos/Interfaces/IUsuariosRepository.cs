@@ -22,5 +22,7 @@ namespace Horrografia.Server.Data.Repos.Interfaces
         Task RemoverPermisoAdministrador(UsuarioDTO usuario);
         Task RemoverPermisoProfesor(UsuarioDTO usuario);
         Task UpdateData(UsuarioDTO usuario);
+        Task<List<string>> GetStudentsBySchoolCode(string codigo);
+        Task<List<string>> GetProfessorsBySchoolCode(string codigo);
     }
 }

@@ -13,5 +13,7 @@ namespace Horrografia.Client.Shared.Components.Profile
         [Parameter]
         public EscuelaModel Escuela { get; set; }
 
+        [Parameter]
+        public List<string> Estudiantes { get; set; }
     }
 }
