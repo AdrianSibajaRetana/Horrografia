@@ -5,7 +5,39 @@
                 <MudText Typo="Typo.h5">@Escuela.Nombre</MudText>
             </MudItem>
             <MudItem xs="12" sm="12" md="12">
+                <MudText Typo="Typo.h6">Profesores</MudText>
+            </MudItem>
+            <MudItem xs="12" sm="12" md="12">
                 <MudSimpleTable Hover="true" Striped="@true" Style="overflow-x: auto;" Elevation="0">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Profesores.Any())
+                        {
+                            @foreach (var nombre in Profesores)
+                            {
+                                <tr>
+                                    <td>@nombre</td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td>La escuela aún no tiene profesor</td>
+                            </tr>
+                        }
+                    </tbody>
+                </MudSimpleTable>
+            </MudItem>
+            <MudItem xs="12" sm="12" md="12">
+                <MudText Typo="Typo.h6">Estudiantes</MudText>
+            </MudItem>
+            <MudItem xs="12" sm="12" md="12">
+                <MudSimpleTable Hover="true" Striped="@true" Style="overflow-x: auto; max-height: inherit;" Elevation="0">
                     <thead>
                         <tr>
                             <th>Nombre</th>

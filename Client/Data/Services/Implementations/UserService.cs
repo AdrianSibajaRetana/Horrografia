@@ -300,5 +300,57 @@ namespace Horrografia.Client.Data.Services.Implementations
             }
         }
 
+        public async Task<ControllerResponse<string>> GetSchoolStudents(string codigo)
+        {
+            ControllerResponse<string> _controllerResponse = new();
+            try
+            {
+                var response = await _http.GetAsync($"api/Usuario/getEstudiantes/{codigo}");
+                if (response.IsSuccessStatusCode)
+                {
+                    var estudiantes = await response.Content.ReadFromJsonAsync<List<string>>();
+                    _controllerResponse.Status = Constantes.OKSTATUS;
+                    _controllerResponse.Response = estudiantes;
+                    return _controllerResponse;
+                }
+                _controllerResponse.Status = Constantes.INTERNALERRORSTATUS;
+                _controllerResponse.Response = new List<string>();
+                return _controllerResponse;
+            }
+            catch (Exception e)
+            {
+                _controllerResponse.Status = Constantes.INTERNALERRORSTATUS;
+                _controllerResponse.Response = new List<string>();
+                _logger.LogError(e, "An error occurred while fetching from db");
+                return _controllerResponse;
+            }
+        }
+
+        public async Task<ControllerResponse<string>> GetSchoolProfessors(string codigo)
+        {
+            ControllerResponse<string> _controllerResponse = new();
+            try
+            {
+                var response = await _http.GetAsync($"api/Usuario/getProfesores/{codigo}");
+                if (response.IsSuccessStatusCode)
+                {
+                    var estudiantes = await response.Content.ReadFromJsonAsync<List<string>>();
+                    _controllerResponse.Status = Constantes.OKSTATUS;
+                    _controllerResponse.Response = estudiantes;
+                    return _controllerResponse;
+                }
+                _controllerResponse.Status = Constantes.INTERNALERRORSTATUS;
+                _controllerResponse.Response = new List<string>();
+                return _controllerResponse;
+            }
+            catch (Exception e)
+            {
+                _controllerResponse.Status = Constantes.INTERNALERRORSTATUS;
+                _controllerResponse.Response = new List<string>();
+                _logger.LogError(e, "An error occurred while fetching from db");
+                return _controllerResponse;
+            }
+        }
+
     }
 }

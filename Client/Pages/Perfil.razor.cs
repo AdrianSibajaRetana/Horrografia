@@ -33,6 +33,7 @@ namespace Horrografia.Client.Pages
         private UsuarioDTO User { get; set; }
         private EscuelaModel UserSchool { get; set; }
         private List<string> Estudiantes { get; set; }
+        private List<string> Profesores { get; set; }
 
         public Perfil()
         {
@@ -40,7 +41,6 @@ namespace Horrografia.Client.Pages
             _lecturaExitosa = false;
             _isUserInSchool = false;
             UserSchool = new();
-            Estudiantes = new();
         }
 
         protected override async Task OnInitializedAsync()
@@ -76,6 +76,26 @@ namespace Horrografia.Client.Pages
             if (response.isResponseSuccesfull())
             {
                 UserSchool = response.Response.FirstOrDefault();
+            }
+            else
+            {
+                ShowNotification("Error al cargar datos de escuela.", Severity.Error);
+            }
+
+            var response2 = await _userService.GetSchoolStudents(User.codigoEscuela);
+            if (response2.isResponseSuccesfull())
+            {
+                Estudiantes = response2.Response;
+            }
+            else
+            {
+                ShowNotification("Error al cargar datos de escuela.", Severity.Error);
+            }
+
+            var response3 = await _userService.GetSchoolProfessors(User.codigoEscuela);
+            if (response3.isResponseSuccesfull())
+            {
+                Profesores = response3.Response;
             }
             else
             {

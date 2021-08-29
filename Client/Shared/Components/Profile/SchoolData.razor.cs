@@ -15,5 +15,8 @@ namespace Horrografia.Client.Shared.Components.Profile
 
         [Parameter]
         public List<string> Estudiantes { get; set; }
+
+        [Parameter]
+        public List<string> Profesores { get; set; }
     }
 }

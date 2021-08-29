@@ -213,6 +213,7 @@ namespace Horrografia.Server.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         [Route("getEstudiantes/{codigo}")]
         public async Task<IActionResult> GetEstudiantesDeEscuela(string codigo)
         {
@@ -229,6 +230,7 @@ namespace Horrografia.Server.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         [Route("getProfesores/{codigo}")]
         public async Task<IActionResult> GetProfesoresDeEscuela(string codigo)
         {
