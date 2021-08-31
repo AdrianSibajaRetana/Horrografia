@@ -44,10 +44,19 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var nombre in Estudiantes)
+                        @if (Estudiantes.Any())
+                        {
+                            @foreach (var nombre in Estudiantes)
+                            {
+                                <tr>
+                                    <td>@nombre</td>
+                                </tr>
+                            }
+                        }
+                        else
                         {
                             <tr>
-                                <td>@nombre</td>
+                                <td>La escuela aún no tiene estudiantes</td>
                             </tr>
                         }
                     </tbody>

@@ -4,29 +4,11 @@
 @using Horrografia.Client.Shared.Components.Dashboard
 @attribute [Authorize(Roles = "Admin")]
 
-<MudContainer Class="mt-16 px-8" MaxWidth="MaxWidth.False">
+<MudContainer  MaxWidth="MaxWidth.False" >
     <MudGrid>
-        <MudItem xs="12" sm="6" md="4">
-            <StatDisplay Numero="28"
-                         Titulo="Usuarios registrados"
-                         Clase="red darken-1 ma-2"
-                         Icono="@Icons.Material.Filled.AccessibilityNew" />
-        </MudItem>
-        <MudItem xs="12" sm="6" md="4">
-            <StatDisplay Numero="49"
-                         Titulo="Partidas jugadas"
-                         Clase="teal darken-1 ma-2"
-                         Icono="@Icons.Material.Filled.AssignmentTurnedIn" />
-        </MudItem>
-        <MudItem xs="12" sm="12" md="4">
-            <StatDisplay Numero="240"
-                         Titulo="Errores totales"
-                         Clase="indigo darken-1 ma-2"
-                         Icono="@Icons.Material.Filled.ThumbDown" />
-        </MudItem>
-        <MudItem xs="12" sm="6">
-            <MudGrid>
-                <MudItem xs="12">
+        <MudItem xs="12" sm="12" md="12" Class="mt-8 px-8">
+            <MudGrid Justify="Justify.Center">
+                <MudItem xs="12" sm="12" md="6">
                     <DataAdministration Titulo="Administrar niveles"
                                         Subtitulo="Editar, añadir o eliminar niveles"
                                         IconoBoton="@Icons.Material.Filled.Edit"
@@ -34,27 +16,45 @@
                                         TextoBoton="Administrar"
                                         LinkBoton="/dashboard/niveles" />
                 </MudItem>
-                <MudItem xs="12">
-                    <DataAdministration Titulo="Administrar usuarios"
-                                        Subtitulo="Administrar permisos de usuarios"
+
+                <MudItem xs="12" sm="12" md="6">
+                    <DataAdministration Titulo="Administrar items"
+                                        Subtitulo="Administrar etiquetas"
+                                        IconoBoton="@Icons.Material.Outlined.Edit"
+                                        ClaseBoton="teal"
+                                        TextoBoton="Administrar"
+                                        LinkBoton="/dashboard/items" />
+                </MudItem>
+
+                <MudItem xs="12" sm="12" md="6">
+                    <DataAdministration Titulo="Administrarción general"
+                                        Subtitulo="Administrar permisos y escuelas"
                                         IconoBoton="@Icons.Material.Outlined.AdminPanelSettings"
                                         ClaseBoton="indigo"
                                         TextoBoton="Administrar"
                                         LinkBoton="/dashboard/permisos" />
                 </MudItem>
+
+                <MudItem xs="12" sm="12" md="12">
+                    <MudPaper Elevation="2" Class="pa-4" Style="height: auto;">
+
+                    </MudPaper>
+                </MudItem>
+
             </MudGrid>
         </MudItem>
-        <MudItem xs="12" sm="6">
-            <MudPaper Elevation="2" Class="pa-4" Style="height: 100%"></MudPaper>
+
+        <MudItem xs="12" sm="12" md="12">
+            <MudItem xs="12" sm="6" md="4">
+                <MudPaper Elevation="2" Class="pa-4" ></MudPaper>
+            </MudItem>
+            <MudItem xs="12" sm="6" md="4">
+                <MudPaper Elevation="2" Class="pa-4" ></MudPaper>
+            </MudItem>
+            <MudItem xs="12" sm="12" md="4">
+                <MudPaper Elevation="2" Class="pa-4" ></MudPaper>
+            </MudItem>
         </MudItem>
-        <MudItem xs="12" sm="6" md="4">
-            <MudPaper Elevation="2" Class="pa-4" Style="height: 200px;"></MudPaper>
-        </MudItem>
-        <MudItem xs="12" sm="6" md="4">
-            <MudPaper Elevation="2" Class="pa-4" Style="height: 200px;"></MudPaper>
-        </MudItem>
-        <MudItem xs="12" sm="12" md="4">
-            <MudPaper Elevation="2" Class="pa-4" Style="height: 200px;"></MudPaper>
-        </MudItem>
+
     </MudGrid>
 </MudContainer>
