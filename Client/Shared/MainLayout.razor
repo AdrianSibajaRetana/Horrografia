@@ -8,79 +8,85 @@
 <MudThemeProvider />
 
 <MudLayout>
-    <MudAppBar Elevation="1" Class="blue grey darken-3">
-        <MudTooltip Text="Inicio">
-            <MudIconButton Icon="@Icons.Material.Filled.Home" Color="Color.Inherit" Link="/" />
-        </MudTooltip>
-        @*Para celulares*@
-    <MudHidden Breakpoint="Breakpoint.Xs" Invert="true">
-        <MudAppBarSpacer />
-        <MudText Typo="Typo.h5" Class="mx-auto">Horrografía</MudText>
-        <MudAppBarSpacer />
-        <MudMenu Icon="@Icons.Filled.Menu" Color="Color.Inherit" Dense="true" Direction="Direction.Right" OffsetY="true" Class="d-md-none">
-            <MudText Typo="Typo.body2" Class="px-4 py-2"><b>Administración</b></MudText>
-            <MudMenuItem Link="/dashboard">Administración de items</MudMenuItem>
-            <MudMenuItem Link="/sobre">Sobre nosotros</MudMenuItem>
-            <MudText Typo="Typo.body2" Class="px-4 py-2"><b>Administración de cuenta</b></MudText>
-            <AuthorizeView>
-                <Authorized>
-                    @*<a href="authentication/profile">Hello, @context.User.Identity.Name!</a>*@
-                    <MudMenuItem Link="/perfil">Mi perfil</MudMenuItem>
-                    <MudMenuItem OnClick="BeginSignOut">Cerrar Sesión</MudMenuItem>
-                </Authorized>
-                <NotAuthorized>
-                    <MudMenuItem Link="authentication/login" Target="_blank">Iniciar Sesión</MudMenuItem>
-                    <MudMenuItem Link="authentication/register" Target="_blank">Registrarse</MudMenuItem>
-                </NotAuthorized>
-            </AuthorizeView>
-        </MudMenu>
-    </MudHidden>
-        @*Para no celulares*@
-    <MudHidden Breakpoint="Breakpoint.SmAndUp" Invert="true">
-        <MudText Typo="Typo.h5" Class="ml-3">Horrografía</MudText>
-        <MudAppBarSpacer />
-        <AuthorizeView Roles="Profesor,Admin">
-            <Authorized>
-                <MudTooltip Text="Administrar estudiantes">
-                    <MudIconButton Icon="@Icons.Material.Filled.School" Color="Color.Inherit" Link="/estudiantes" />
-                </MudTooltip>
-            </Authorized>
-        </AuthorizeView>
-        <AuthorizeView Roles="Admin">
-            <Authorized>
-                <MudTooltip Text="Dashboard administrativo">
-                    <MudIconButton Icon="@Icons.Material.Filled.Dashboard" Color="Color.Inherit" Link="/dashboard" />
-                </MudTooltip>
-            </Authorized>
-        </AuthorizeView>
-        <MudTooltip Text="Sobre nosotros">
-            <MudIconButton Icon="@Icons.Material.Filled.Groups" Color="Color.Inherit" Link="/sobre" />
-        </MudTooltip>
-        <MudDivider Vertical="true" FlexItem="true" DividerType="DividerType.Middle" Class="mx-4 my-3" />
-        <AuthorizeView>
-            <Authorized>
-                <MudTooltip Text="Mi Perfil">
-                    <MudIconButton Icon="@Icons.Material.Filled.Person" Color="Color.Inherit" Link="/perfil" />
-                </MudTooltip>
-                @*<a href="authentication/profile">Hello, @context.User.Identity.Name!</a>*@
-                <MudTooltip Text="Cerrar Sesión">
-                    <MudIconButton Icon="@Icons.Material.Filled.Logout" Color="Color.Inherit" OnClick="BeginSignOut" />
-                </MudTooltip>
-            </Authorized>
-            <NotAuthorized>
-                <MudTooltip Text="Iniciar Sesión">
-                    <MudIconButton Icon="@Icons.Material.Filled.Login" Color="Color.Inherit" Link="/ingresar" />
-                </MudTooltip>
-                <MudTooltip Text="Registrarse">
-                    <MudIconButton Icon="@Icons.Material.Filled.PersonAdd" Color="Color.Inherit" Link="/registrarse" />
-                </MudTooltip>
-            </NotAuthorized>
-        </AuthorizeView>
-    </MudHidden>
-    </MudAppBar>
-    <MudMainContent>
+    <nav class="navbar is-spaced is-link" role="navigation" aria-label="main navigation">
+
+        <div class="navbar-brand">
+            <a href="/">
+                <img src="/Images/Logo2.png" alt="Logo de horrografía" width="260"/>
+            </a>
+        
+            <button class="navbar-burger @NavMenuCssClass" aria-label="menu" aria-expanded="false" data-target="navbarMenu"
+                    @onclick="ToggleNavMenu">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </button>
+        </div>
+
+        <div class="navbar-menu @NavMenuCssClass">
+            <div class="navbar-end">
+                <NavLink href="/sobre" class="navbar-item" ActiveClass="is-active">
+                    Sobre el proyecto
+                </NavLink>
+
+                <AuthorizeView Roles="Profesor,Admin">
+                    <Authorized>
+                        <div class="navbar-item has-dropdown is-hoverable">
+                            <a class="navbar-link">
+                                Administración
+                            </a>
+                            <div class="navbar-dropdown">
+                                <AuthorizeView Roles="Admin" Context="_AutorizacionAdmin">
+                                    <Authorized>
+                                        <a class="navbar-item" href="/dashboard">
+                                            Dashboard
+                                        </a>
+                                    </Authorized>
+                                </AuthorizeView>
+                                <AuthorizeView Roles="Profesor,Admin" Context="_AutorizacionDual">
+                                    <Authorized>
+                                        <a class="navbar-item" href="/estudiantes">
+                                            Colegio
+                                        </a>
+                                    </Authorized>
+                                </AuthorizeView>
+                            </div>
+                        </div>
+                    </Authorized>
+                </AuthorizeView>
+
+                <div class="navbar-item">
+                    <AuthorizeView>
+                        <Authorized>
+                            <div class="buttons">
+                                <a class="button is-primary" href="/perfil">
+                                    <strong>Mi Perfil</strong>
+                                </a>
+                                <a class="button is-light" @onclick="BeginSignOut">
+                                    Salir
+                                </a>
+                            </div>
+                        </Authorized>
+                        <NotAuthorized>
+                            <div class="buttons">
+                                <a class="button is-primary" href="/registrarse">
+                                    <strong>Registrarse</strong>
+                                </a>
+                                <a class="button is-light" href="/ingresar">
+                                    Ingresar
+                                </a>
+                            </div>
+                        </NotAuthorized>
+                    </AuthorizeView>
+                </div>
+
+            </div>
+        </div>
+
+    </nav>
+    <MudItem>
         @Body
-    </MudMainContent>
+    </MudItem>
 </MudLayout>
 
 <MudThemeProvider />
@@ -90,9 +96,18 @@
 <MudSnackbarProvider />
 
 @code{
+    private bool _collapseNavMenu = true;
+
+    private string NavMenuCssClass => _collapseNavMenu ? null : "is-active";
+
+    private void ToggleNavMenu()
+    {
+        _collapseNavMenu = !_collapseNavMenu;
+    }
+
     private async Task BeginSignOut(MouseEventArgs args)
     {
         await SignOutManager.SetSignOutState();
-        Navigation.NavigateTo("authentication/logout");
+        Navigation.NavigateTo("/");
     }
 }
