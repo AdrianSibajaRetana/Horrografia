@@ -26,3 +26,17 @@
     background-repeat: no-repeat;
     height: 500px;
 }
+
+.article-bottom {
+    display: flex;
+    justify-content: center;
+}
+
+.intro {
+  padding: 5rem 0;
+  text-align: center;
+}
+
+.section-intro {
+    background-color: white;
+}

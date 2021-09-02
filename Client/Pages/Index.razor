@@ -3,7 +3,7 @@
 <section class="hero is-info is-medium is-bold" style="height: 500px;">
     <div class="hero-body">
         <div class="container has-text-centered">
-            <h1 class="title">                
+            <h1 class="title">
                 Porque aprender a escribir sin faltas ortográficas no debería ser difícil
             </h1>
         </div>
@@ -11,7 +11,7 @@
 </section>
 
 <div class="container">
-        <!-- START ARTICLE FEED -->
+    <!-- START ARTICLE FEED -->
     <section class="articles">
         <div class="column is-8 is-offset-2">
             <!-- START ARTICLE -->
@@ -20,53 +20,76 @@
                     <div class="media">
                         <div class="media-content has-text-centered">
                             <p class="title article-title">
-                                Una propuesta lúdica para aprender ortografía
+                                Introduciendo una propuesta lúdica para aprender ortografía
                             </p>
                         </div>
                     </div>
-                    <div class="content article-body">
+                    <div class="content article-body has-text-justified">
                         <p>
-                            La aplicación Horrografia nace de la necesidad de tener herramientas tecnológicas atractivas 
-                            y didácticas complementarias a la enseñanza de la ortografía, dado que actualmente existen 
-                            pocas opciones de este tipo disponibles para estudiantes de secundaria o estudiantes de español 
-                            como lengua extranjera. Esta propuesta didáctica está fundamentada en investigación lingüística 
+                            La aplicación Horrografia nace de la necesidad de tener herramientas tecnológicas atractivas
+                            y didácticas complementarias a la enseñanza de la ortografía, dado que actualmente existen
+                            pocas opciones de este tipo disponibles para estudiantes de secundaria o estudiantes de español
+                            como lengua extranjera. Esta propuesta didáctica está fundamentada en investigación lingüística
                             realizada en el Instituto de Investigaciones Lingüísticas (INIL) de la Universidad de Costa Rica.
-                        </p>                        
-                        <h3 class="has-text-centered">How to properly center tags in bulma?</h3>
-                        <p>
-                            Proper centering of tags in bulma is done with class: <pre>level-item</pre>
-                            Voluptat ut farmacium tellus in metus vulputate. Feugiat in fermentum posuere urna nec. Pharetra convallis posuere morbi leo urna molestie.
-                            Accumsan lacus vel facilisis volutpat est velit egestas. Fermentum leo vel orci porta. Faucibus interdum posuere lorem ipsum.
                         </p>
+                        @if (!_showAditionalData)
+                        {
+                            <div class="article-bottom">
+                                <button class="button" @onclick="ToggleAditionalData">
+                                    <span class="icon is-small">
+                                        <i class="fas fa-arrow-down"></i>
+                                    </span>
+                                </button>
+                            </div>
+                        }
+                        else
+                        {
+                            <p>
+                                Horrografía propone una forma diferente y más atractiva de practicar la ortografía y reforzar el
+                                aprendizaje del léxico común, desde un acercamiento lúdico. Consiste en una aplicación web diseñada
+                                para cualquier plataforma que permite al usuario mejorar su ortografía a partir de una dinámica de juego.
+                            </p>
+
+                            <p>
+                                Los investigadores, la Dra. Carla Jara Murillo y el Dr. Jorge Antonio Leoni de León, ambos del Instituto
+                                de Investigaciones Lingüísticas (INIL) de la Universidad de Costa Rica, se propusieron elaborar herramientas
+                                computacionales interactivas especializadas en el mejoramiento de la expresión escrita. El proyecto 745-B2A13
+                                Desarrollo de herramientas interactivas para el mejoramiento y certificación del español, inscrito en el INIL,
+                                fue el que permitió el desarrollo de la aplicación Horrografía.
+                            </p>
+
+                            <div class="article-bottom">
+                                <button class="button" @onclick="ToggleAditionalData">
+                                    <span class="icon is-small">
+                                        <i class="fas fa-arrow-up"></i>
+                                    </span>
+                                </button>
+                            </div>
+                        }
                     </div>
                 </div>
             </div>
         </div>
     </section>
-
 </div>
 
-<MudItem Class="mt-8 mb-4">
-    <MudText Align="Align.Center" Typo="Typo.h4">Niveles destacados</MudText>
-</MudItem>
+<section class="section-intro">
+    <div class="intro column is-8 is-offset-2">
+        <h2 class="title">Perfecto para aquienes que deseen deseen aprender a escribir bien!</h2>
+        <br>
+        <p class="subtitle">Horrografía tiene múltiples niveles gratuitos disponibles</p>
+        <br />
 
-<MudGrid Class="px-14 mb-4">
-    <MudItem xs="12" sm="12" md="4">
-        <MudPaper Class="pa-16 ma-2" Elevation="3" Style="height: 400px;"></MudPaper>
-    </MudItem>
-    <MudItem xs="12" sm="12" md="4">
-        <MudPaper Class="pa-16 ma-2" Elevation="3" Style="height: 400px;"></MudPaper>
-    </MudItem>
-    <MudItem xs="12" sm="12" md="4">
-        <MudPaper Class="pa-16 ma-2" Elevation="3" Style="height: 400px;"></MudPaper>
-    </MudItem>
-    <MudItem xs="12" sm="12" md="12">
-        <MudGrid Justify="Justify.Center">
-            <MudItem>
-                <MudButton Variant="Variant.Filled" Color="Color.Warning">
-                    Ver todos los niveles
-                </MudButton>
-            </MudItem>
-        </MudGrid>
-    </MudItem>
-</MudGrid>
+    </div>
+</section>
+
+
+@code{
+    private bool _showAditionalData = false;
+
+    private void ToggleAditionalData()
+    {
+        _showAditionalData = !_showAditionalData;
+    }
+
+}
