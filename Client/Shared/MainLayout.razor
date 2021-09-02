@@ -25,11 +25,22 @@
 
         <div class="navbar-menu @NavMenuCssClass">
             <div class="navbar-end">
-                <NavLink href="/sobre" class="navbar-item" ActiveClass="is-active">
-                    Sobre el proyecto
-                </NavLink>
 
-                <NavLink href="/contacto"class="navbar-item" ActiveClass="is-active">
+                <div class="navbar-item has-dropdown is-hoverable">
+                    <a class="navbar-link">
+                        Sobre el horrografía
+                    </a>
+                    <div class="navbar-dropdown">
+                        <a class="navbar-item" href="/sobre">
+                            Sobre el proyecto
+                        </a>
+                        <a class="navbar-item" href="/equipo">
+                            Sobre el equipo
+                        </a>
+                    </div>
+                </div>
+
+                <NavLink href="/contacto" class="navbar-item" ActiveClass="is-active">
                     Contacto
                 </NavLink>
 

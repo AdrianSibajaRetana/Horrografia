@@ -19,8 +19,16 @@
     line-height: 2;
 }
 
-.hero-body {
+.index-display {
     background-image: url("../../Images/Fondo.jpeg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 500px;
+}
+
+.about-display{
+    background-image: url("../../Images/FondoSobre.jpg");
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
