@@ -19,6 +19,11 @@
     line-height: 2;
 }
 
+div.column.is-8:first-child {
+    padding-top: 0;
+    margin-top: 0;
+}
+
 .index-display {
     background-image: url("../../Images/Fondo.jpeg");
     background-position: center;
@@ -47,4 +52,8 @@
 
 .section-intro {
     background-color: white;
+}
+
+.other-article {
+    margin-top: 75px;
 }
