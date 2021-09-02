@@ -1,0 +1,28 @@
+﻿.articles {
+    margin: 5rem 0;
+    margin-top: -200px;
+}
+
+.articles .content p {
+    line-height: 1.9;
+    margin: 15px 0;
+}
+
+.article-body {
+    line-height: 1.4;
+    margin: 0 6rem;
+}
+
+.article-title {
+    font-size: 2rem;
+    font-weight: lighter;
+    line-height: 2;
+}
+
+.hero-body {
+    background-image: url("../../Images/Fondo.jpeg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 500px;
+}

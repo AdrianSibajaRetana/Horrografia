@@ -1,51 +1,50 @@
 ﻿@page "/"
-
 @*Hero *@
-<MudItem xs="12" sm="12" md="12">
-    <MudPaper Height="80vh" Width="100%" Class="mud-info white-text" Square="true" Style="display: flex; justify-content: center; align-items: center;">
-        <MudItem >
-            <MudGrid>
-                <MudItem xs="12" sm="12" md="12" Class="px-14">
-                    @*Para tabletas en adelante*@
-                    <MudHidden Breakpoint="Breakpoint.SmAndUp" Invert="true">
-                        <MudText Typo="Typo.h3" Align="Align.Center">
-                            Porque aprender a escribir sin faltas ortográficas no debería ser difícil
-                        </MudText>
-                    </MudHidden>
-                    @*Para celulares*@
-                    <MudHidden Breakpoint="Breakpoint.Xs" Invert="true">
-                        <MudText Typo="Typo.h4" Align="Align.Center">
-                            Porque aprender a escribir sin faltas ortográficas no debería ser difícil
-                        </MudText>
-                    </MudHidden>
-                </MudItem>
-                <MudItem xs="12" sm="12" md="12" Class="px-7">
-                    @*Para tabletas en adelante*@
-                    <MudHidden Breakpoint="Breakpoint.SmAndUp" Invert="true">
-                        <MudText Typo="Typo.body1" Align="Align.Center">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                        </MudText>
-                    </MudHidden>
-                    @*Para celulares*@
-                    <MudHidden Breakpoint="Breakpoint.Xs" Invert="true">
-                        <MudText Typo="Typo.body1" Align="Align.Center">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
-                        </MudText>
-                    </MudHidden>                    
-                </MudItem>
-                <MudItem xs="12" sm="12" md="12">
-                    <MudGrid Justify="Justify.Center">
-                        <MudItem>
-                            <MudButton Variant="Variant.Filled" Color="Color.Warning">
-                                Sobre Nosotros
-                            </MudButton>
-                        </MudItem>
-                    </MudGrid>
-                </MudItem>
-            </MudGrid>
-        </MudItem>
-    </MudPaper>
-</MudItem>
+<section class="hero is-info is-medium is-bold" style="height: 500px;">
+    <div class="hero-body">
+        <div class="container has-text-centered">
+            <h1 class="title">                
+                Porque aprender a escribir sin faltas ortográficas no debería ser difícil
+            </h1>
+        </div>
+    </div>
+</section>
+
+<div class="container">
+        <!-- START ARTICLE FEED -->
+    <section class="articles">
+        <div class="column is-8 is-offset-2">
+            <!-- START ARTICLE -->
+            <div class="card article">
+                <div class="card-content">
+                    <div class="media">
+                        <div class="media-content has-text-centered">
+                            <p class="title article-title">
+                                Una propuesta lúdica para aprender ortografía
+                            </p>
+                        </div>
+                    </div>
+                    <div class="content article-body">
+                        <p>
+                            La aplicación Horrografia nace de la necesidad de tener herramientas tecnológicas atractivas 
+                            y didácticas complementarias a la enseñanza de la ortografía, dado que actualmente existen 
+                            pocas opciones de este tipo disponibles para estudiantes de secundaria o estudiantes de español 
+                            como lengua extranjera. Esta propuesta didáctica está fundamentada en investigación lingüística 
+                            realizada en el Instituto de Investigaciones Lingüísticas (INIL) de la Universidad de Costa Rica.
+                        </p>                        
+                        <h3 class="has-text-centered">How to properly center tags in bulma?</h3>
+                        <p>
+                            Proper centering of tags in bulma is done with class: <pre>level-item</pre>
+                            Voluptat ut farmacium tellus in metus vulputate. Feugiat in fermentum posuere urna nec. Pharetra convallis posuere morbi leo urna molestie.
+                            Accumsan lacus vel facilisis volutpat est velit egestas. Fermentum leo vel orci porta. Faucibus interdum posuere lorem ipsum.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
 
 <MudItem Class="mt-8 mb-4">
     <MudText Align="Align.Center" Typo="Typo.h4">Niveles destacados</MudText>
