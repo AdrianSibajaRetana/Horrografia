@@ -19,6 +19,11 @@
     line-height: 2;
 }
 
+.article-subtitle {
+    color: #909AA0;
+    margin-bottom: 3rem;
+}
+
 div.column.is-8:first-child {
     padding-top: 0;
     margin-top: 0;
@@ -56,4 +61,29 @@ div.column.is-8:first-child {
 
 .other-article {
     margin-top: 75px;
+}
+
+.author-image {
+    max-height: 400px;
+    max-width: 400px;
+    border: 3px solid #ccc;
+    border-radius: 50%;
+}
+
+.author-image-container {
+    max-height: 400px;
+    padding-top: 60px;
+}
+
+.media-center {
+    display: block;
+    margin-bottom: 1rem;
+}
+
+.media-content {
+    margin-top: 3rem;
+}
+
+.article, .promo-block {
+    margin-top: 6rem;
 }
