@@ -4,57 +4,118 @@
 @using Horrografia.Client.Shared.Components.Dashboard
 @attribute [Authorize(Roles = "Admin")]
 
-<MudContainer  MaxWidth="MaxWidth.False" >
-    <MudGrid>
-        <MudItem xs="12" sm="12" md="12" Class="mt-8 px-8">
-            <MudGrid Justify="Justify.Center">
-                <MudItem xs="12" sm="12" md="6">
-                    <DataAdministration Titulo="Administrar niveles"
-                                        Subtitulo="Editar, añadir o eliminar niveles"
-                                        IconoBoton="@Icons.Material.Filled.Edit"
-                                        ClaseBoton="teal"
-                                        TextoBoton="Administrar"
-                                        LinkBoton="/dashboard/niveles" />
-                </MudItem>
 
-                <MudItem xs="12" sm="12" md="6">
-                    <DataAdministration Titulo="Administrar items"
-                                        Subtitulo="Administrar etiquetas"
-                                        IconoBoton="@Icons.Material.Outlined.Edit"
-                                        ClaseBoton="teal"
-                                        TextoBoton="Administrar"
-                                        LinkBoton="/dashboard/items" />
-                </MudItem>
+<div class="columns is-vcentered">
+    <div class="column is-one-third">
+        <div class="dashboard-administration-container">
+            <div class="card article  m-auto dashboard-administration-card">
+                    <div class="media-content has-text-centered">
+                        <p class="title article-title">
+                            Administrar Niveles
+                        </p>
+                    </div>
+                    <div class="content article-body has-text-centered">
+                        <p>
+                            Editar, añadir o eliminar niveles
+                        </p>
+                        <div class="article-bottom">
+                            <a class="button is-success is-light" href="/dashboard/niveles">Administrar</a>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+    <div class="column is-one-third">
+        <div class="dashboard-administration-container">
+            <div class="card article  m-auto dashboard-administration-card">
+                    <div class="media-content has-text-centered">
+                        <p class="title article-title">
+                            Administrar items
+                        </p>
+                    </div>
+                    <div class="content article-body has-text-centered">
+                        <p>
+                            Administrar etiquetas
+                        </p>
+                        <div class="article-bottom">
+                            <a class="button is-success is-light" href="/dashboard/items">Administrar</a>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+    <div class="column is-one-third">
+        <div class="dashboard-administration-container">
+            <div class="card article m-auto dashboard-administration-card">
+                    <div class="media-content has-text-centered">
+                        <p class="title article-title">
+                            Administrarción general
+                        </p>
+                    </div>
+                    <div class="content article-body has-text-centered">
+                        <p>
+                            Administrar permisos y escuelas
+                        </p>
+                        <div class="article-bottom">
+                            <a class="button is-success is-light" href="/dashboard/permisos">Administrar</a>
+                        </div>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-                <MudItem xs="12" sm="12" md="6">
-                    <DataAdministration Titulo="Administrarción general"
-                                        Subtitulo="Administrar permisos y escuelas"
-                                        IconoBoton="@Icons.Material.Outlined.AdminPanelSettings"
-                                        ClaseBoton="indigo"
-                                        TextoBoton="Administrar"
-                                        LinkBoton="/dashboard/permisos" />
-                </MudItem>
+    @*
+        <MudGrid>
+            <MudItem xs="12" sm="12" md="12" Class="mt-8 px-8">
+                <MudGrid Justify="Justify.Center">
+                    <MudItem xs="12" sm="12" md="6">
+                        <DataAdministration Titulo="Administrar niveles"
+                                            Subtitulo="Editar, añadir o eliminar niveles"
+                                            IconoBoton="@Icons.Material.Filled.Edit"
+                                            ClaseBoton="teal"
+                                            TextoBoton="Administrar"
+                                            LinkBoton="/dashboard/niveles" />
+                    </MudItem>
 
-                <MudItem xs="12" sm="12" md="12">
-                    <MudPaper Elevation="2" Class="pa-4" Style="height: auto;">
+                    <MudItem xs="12" sm="12" md="6">
+                        <DataAdministration Titulo="Administrar items"
+                                            Subtitulo="Administrar etiquetas"
+                                            IconoBoton="@Icons.Material.Outlined.Edit"
+                                            ClaseBoton="teal"
+                                            TextoBoton="Administrar"
+                                            LinkBoton="/dashboard/items" />
+                    </MudItem>
 
-                    </MudPaper>
-                </MudItem>
+                    <MudItem xs="12" sm="12" md="6">
+                        <DataAdministration Titulo="Administrarción general"
+                                            Subtitulo="Administrar permisos y escuelas"
+                                            IconoBoton="@Icons.Material.Outlined.AdminPanelSettings"
+                                            ClaseBoton="indigo"
+                                            TextoBoton="Administrar"
+                                            LinkBoton="/dashboard/permisos" />
+                    </MudItem>
 
-            </MudGrid>
-        </MudItem>
+                    <MudItem xs="12" sm="12" md="12">
+                        <MudPaper Elevation="2" Class="pa-4" Style="height: auto;">
 
-        <MudItem xs="12" sm="12" md="12">
-            <MudItem xs="12" sm="6" md="4">
-                <MudPaper Elevation="2" Class="pa-4" ></MudPaper>
+                        </MudPaper>
+                    </MudItem>
+
+                </MudGrid>
             </MudItem>
-            <MudItem xs="12" sm="6" md="4">
-                <MudPaper Elevation="2" Class="pa-4" ></MudPaper>
-            </MudItem>
-            <MudItem xs="12" sm="12" md="4">
-                <MudPaper Elevation="2" Class="pa-4" ></MudPaper>
-            </MudItem>
-        </MudItem>
 
-    </MudGrid>
-</MudContainer>
+            <MudItem xs="12" sm="12" md="12">
+                <MudItem xs="12" sm="6" md="4">
+                    <MudPaper Elevation="2" Class="pa-4" ></MudPaper>
+                </MudItem>
+                <MudItem xs="12" sm="6" md="4">
+                    <MudPaper Elevation="2" Class="pa-4" ></MudPaper>
+                </MudItem>
+                <MudItem xs="12" sm="12" md="4">
+                    <MudPaper Elevation="2" Class="pa-4" ></MudPaper>
+                </MudItem>
+            </MudItem>
+
+        </MudGrid>
+    *@
