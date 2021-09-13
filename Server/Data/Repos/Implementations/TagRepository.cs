@@ -44,5 +44,17 @@ namespace Horrografia.Server.Data.Repos.Implementations
             await _dbContext.SaveData(sql, new { TagId = tagId, ItemId = itemId }, ConectionString);
         }
 
+        public async Task DeleteRelation(int itemId, int tagId)
+        {
+            string sql = "delete from ItemTag where idTag = @TagId AND idItem = @ItemId";
+            await _dbContext.SaveData(sql, new { TagId = tagId, ItemId = itemId }, ConectionString);
+        }
+
+        public async Task<List<ItemTagModel>> GetAllRelationsAsync()
+        {
+            string sql = "SELECT * FROM ItemTag";
+            var tags = await _dbContext.LoadData<ItemTagModel, dynamic>(sql, new { }, ConectionString);
+            return tags;
+        }
     }
 }

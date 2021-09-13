@@ -10,5 +10,7 @@ namespace Horrografia.Server.Data.Repos.Interfaces
         Task InsertData(TagModel t);
         Task DeleteById(int TagId);
         Task AddTagToitem(int itemId, int tagId);
+        Task DeleteRelation(int itemId, int tagId);
+        Task<List<ItemTagModel>> GetAllRelationsAsync();
     }
 }

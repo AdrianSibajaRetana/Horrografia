@@ -68,13 +68,44 @@ namespace Horrografia.Server.Controllers
             }
         }
 
+        [HttpDelete("{itemId}/{tagId}")]
+        public async Task<IActionResult> DeleteRelation(int itemId, int tagId)
+        {
+            try
+            {
+                await _repo.DeleteRelation(itemId, tagId);
+                return Ok();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "An error occurred while deleting from db");
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }
+        }
+
         [HttpPost("{itemId}/{tagId}")]
-        public async Task<IActionResult> Get(int itemId, int tagId)
+        public async Task<IActionResult> PostRelation(int itemId, int tagId)
         {
             try
             {
                 await _repo.AddTagToitem(itemId, tagId);
                 return Ok();
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "An error occurred while fetching from db");
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }
+        }
+
+        [HttpGet]
+        [Route("relations")]
+        public async Task<IActionResult> GetRelations()
+        {
+            try
+            {
+                var tags = await _repo.GetAllRelationsAsync();
+                return Ok(tags);
             }
             catch (Exception e)
             {
