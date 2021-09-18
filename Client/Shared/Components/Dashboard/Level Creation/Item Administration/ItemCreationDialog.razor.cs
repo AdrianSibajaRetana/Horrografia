@@ -36,9 +36,6 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation.Item_Adm
         public EventCallback<List<FormaIncorrectaModel>> OnFormaIncorrectaCreation { get; set; }
 
         [Parameter]
-        public EventCallback<ItemModel> OnRelationCreation { get; set; }
-
-        [Parameter]
         public EventCallback OnErrorOcurred { get; set; }
 
         private ClientItemModel _model { get; set; }
@@ -122,8 +119,6 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation.Item_Adm
                     await CrearItem();
                     _loadingStatus = "Adjuntando formas incorrectas al item";
                     await AdjuntarFormasIncorrectas();
-                    _loadingStatus = "Generando la relación en la base de datos.";
-                    await CrearRelacion();
                     _isCreatingItem = false;
                     await CloseDialog();                
                 }
@@ -212,30 +207,5 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation.Item_Adm
             await OnFormaIncorrectaCreation.InvokeAsync(formasIncorrectasList);
         }
 
-        //Se crea la relación con el item y la pista.
-        private async Task CrearRelacion()
-        {
-            var PistaExistente = PistasTotales.Where(p => p.Pista == _model.Pista).FirstOrDefault();
-            ItemModel ItemExistente = new();
-            if (PistaExistente != null)
-            {
-                ItemExistente = ItemsTotales.Where(i => i.FormaCorrecta == _model.FormaCorrecta &&
-                                                        i.PistaId == PistaExistente.Id)
-                                                        .FirstOrDefault();
-            }
-            else
-            {
-                ItemExistente = ItemsTotales.Where(i => i.FormaCorrecta == _model.FormaCorrecta
-                                                        && !i.PistaId.HasValue)
-                                                        .FirstOrDefault();
-            }
-            await GenerarRelacion(ItemExistente);
-        }
-
-        //Se crea la relación
-        private async Task GenerarRelacion(ItemModel i)
-        {
-            await OnRelationCreation.InvokeAsync(i);
-        }
     }
 }

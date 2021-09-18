@@ -36,9 +36,6 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation.Level_Ge
         public EventCallback<PistaModel> OnClueCreationRequest { get; set; }
 
         [Parameter]
-        public EventCallback<ItemModel> OnRelationCreationRequest { get; set; }
-
-        [Parameter]
         public EventCallback<List<FormaIncorrectaModel>> OnIncorrectFormCreationRequest { get; set; }
 
         [Parameter]
@@ -177,12 +174,6 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Level_Creation.Level_Ge
         protected async Task IncorrectFormDeletionRequest(List<FormaIncorrectaModel> f)
         {
             await OnIncorrectFormDeletionnRequest.InvokeAsync(f);
-        }
-
-
-        protected async Task RelationCreationRequest(ItemModel i)
-        {
-            await OnRelationCreationRequest.InvokeAsync(i);
         }
 
         protected async Task NotifyErrorToPage()

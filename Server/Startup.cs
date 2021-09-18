@@ -82,7 +82,6 @@ namespace Horrografia.Server
             services.AddSingleton<IContieneErrorRepository, ContieneErrorRepository>();
             services.AddSingleton<IItemRepository, ItemRepository>();
             services.AddSingleton<INivelRepository, NivelRepository>();
-            services.AddSingleton<IPerteneceARepository, PerteneceARepository>();
             services.AddSingleton<IPistaRepository, PistaRepository>();
             services.AddSingleton<IReporteRepository, ReporteRepository>();
             services.AddSingleton<IFormaIncorrectaRepository, FormaIncorrectaRepository>();

@@ -30,7 +30,7 @@ namespace Horrografia.Server.Data.Repos.Implementations
         //GET/{idNivel}
         public async Task<List<ItemModel>> GetItemsByLevelId(int idNivel)
         {
-            string sql = "SELECT * FROM Item JOIN pertenecea ON item.id = pertenecea.idItem WHERE pertenecea.idNivel = @idNivel";            
+            string sql = "SELECT * FROM Item where NivelId = @idNivel";            
             var items = await _dbContext.LoadData<ItemModel, dynamic>(sql, new { idNivel = idNivel }, ConectionString);
             return items;
         }
@@ -38,8 +38,8 @@ namespace Horrografia.Server.Data.Repos.Implementations
         //POST
         public async Task InsertData(ItemModel i)
         {
-            string sql = "insert into item (FormaCorrecta, PistaId) values (@FormaCorrecta, @PistaId);";
-            await _dbContext.SaveData(sql, new { FormaCorrecta = i.FormaCorrecta, PistaId = i.PistaId }, ConectionString);
+            string sql = "insert into item (FormaCorrecta, PistaId, NivelId) values (@FormaCorrecta, @PistaId, @IdNivel);";
+            await _dbContext.SaveData(sql, new { FormaCorrecta = i.FormaCorrecta, PistaId = i.PistaId, IdNivel = i.NivelId }, ConectionString);
         }
 
         //DELETE

@@ -2,24 +2,6 @@ CREATE DATABASE baseDatos
 
 USE baseDatos
 
-CREATE TABLE People (
-id int NOT NULL AUTO_INCREMENT,
-Firstname VARCHAR(30) NOT NULL,
-Lastname VARCHAR(30) NOT NULL,
-PRIMARY KEY(id)
-)
-
-INSERT INTO 
-	people(FirstName, LastName)
-VALUES
-	('Adrián', 'Sibaja'),
-	('Erik', 'Kuhlmann'),
-	('Daniel', 'Salazar'),
-	('Ricardo', 'Franco'),
-	('Esteban', 'Marín');
-	
-SELECT * FROM people;
-
 CREATE TABLE Nivel (
 id int NOT NULL AUTO_INCREMENT,
 Nombre VARCHAR(30) NOT NULL,
@@ -45,8 +27,10 @@ CREATE TABLE Item (
 id int NOT NULL AUTO_INCREMENT,
 FormaCorrecta VARCHAR(255) NOT NULL,
 PistaId INT,
+NivelId INT,
 PRIMARY KEY(id),
-FOREIGN KEY (PistaId) REFERENCES Pista(id) ON DELETE SET NULL
+FOREIGN KEY (PistaId) REFERENCES Pista(id) ON DELETE SET NULL,
+FOREIGN KEY (NivelId) REFERENCES Nivel(id) ON DELETE SET NULL
 )
 
 CREATE TABLE Tag (
@@ -84,13 +68,6 @@ FOREIGN KEY (idNivel) REFERENCES Nivel(id),
 FOREIGN KEY (idUsuario) REFERENCES Usuario(id)
 )
 
-CREATE TABLE PerteneceA(
-idNivel INT NOT NULL,
-idItem INT NOT NULL,
-FOREIGN KEY (idNivel) REFERENCES Nivel(id) ON DELETE CASCADE,
-FOREIGN KEY (idItem) REFERENCES Item(id) ON DELETE CASCADE
-)
-
 CREATE TABLE ContieneError(
 idReporte INT NOT NULL,
 idItem INT NOT NULL,
@@ -105,15 +82,13 @@ FOREIGN KEY (idItem) REFERENCES Item(id)
 # Se hace el cambio en nivel. 
 # Se crean las tablas de nuevo en orden descendente.  nivel
 DROP TABLE IF EXISTS nivel;
-DROP TABLE IF EXISTS pertenecea;
 DROP TABLE IF EXISTS Reporte;
 DROP TABLE IF EXISTS contieneerror; 
-DROP TABLE IF EXISTS pertenecea;
 
 # Para añadir propiedades a la tabla de item:
 DROP TABLE IF EXISTS FormaIncorrecta;
-DROP TABLE IF EXISTS pertenecea;
-DROP TABLE IF EXISTS contieneerror; 
+DROP TABLE IF EXISTS contieneerror;
+DROP TABLE IF EXISTS ItemTag;
 DROP TABLE IF EXISTS item; 
 
 ## Consulta para conseguir items de un nivel. 
@@ -132,11 +107,19 @@ JOIN pertenecea
 ON item.id = pertenecea.idItem
 WHERE pertenecea.idNivel = 20
 
+## Comando para crear un administrador arbitrario 
+INSERT INTO aspnetuserroles(UserId, RoleId) VALUES('1315072f-24da-4749-ac89-9f2a95377a8c', '896b75c1-ab2c-4401-bdbe-1e5b42dde3ef');
 
 
-
-SELECT * FROM aspnetusers
-SELECT * FROM nivel
+##Selecciona el nombre de usuario de los profesores de una escuela. 
+SELECT NombreDeUsuario
+FROM aspnetusers
+INNER JOIN aspnetuserroles
+ON aspnetusers.Id = aspnetuserroles.UserId
+INNER JOIN aspnetroles
+ON aspnetuserroles.RoleId = aspnetroles.Id
+WHERE aspnetroles.Name = 'Profesor'
+AND aspnetusers.CodigoEscuela = '12345678';
 
 # Para creación de usuario
 CREATE USER 'adrian'@'localhost' IDENTIFIED BY '1234'

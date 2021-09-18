@@ -9,5 +9,6 @@ namespace Horrografia.Shared.Models
         public int Id { get; set; }
         public string FormaCorrecta { get; set; }
         public int? PistaId { get; set; }
+        public int NivelId { get; set; }
     }
 }

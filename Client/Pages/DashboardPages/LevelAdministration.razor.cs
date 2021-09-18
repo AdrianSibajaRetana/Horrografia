@@ -20,9 +20,6 @@ namespace Horrografia.Client.Pages.DashboardPages
         protected INivelService _nivelService { get; set; }
 
         [Inject]
-        protected IPerteneceAService _perteneceAService { get; set; }
-
-        [Inject]
         protected IItemService _itemService { get; set; }
 
         [Inject]
@@ -49,9 +46,6 @@ namespace Horrografia.Client.Pages.DashboardPages
         // Todos los niveles
         private List<NivelModel> Niveles { get; set; }
 
-        // Todas las relaciones entre items y niveles.
-        private List<PerteneceAModel> RelacionesNivelItem { get; set; }
-
         // Todos los items
         private List<ItemModel> ItemsTotales { get; set; }
 
@@ -68,7 +62,6 @@ namespace Horrografia.Client.Pages.DashboardPages
         { 
             Niveles,
             Items,
-            Relaciones,
             Pistas,
             FormasIncorrectas
         }
@@ -93,7 +86,6 @@ namespace Horrografia.Client.Pages.DashboardPages
         {   try
             {
                 await CargarNiveles();
-                await CargarRelaciones();
                 await CargarItems();
                 await CargarPistas();
                 await CargarFormasIncorrectas();
@@ -119,20 +111,6 @@ namespace Horrografia.Client.Pages.DashboardPages
             {
                 string reporteError = "niveles";
                 throw new InvalidOperationException($"Error al cargar los {reporteError}.");
-            }
-        }
-
-        private async Task CargarRelaciones()
-        {
-            var relacionesResponse = await _perteneceAService.GetAsync();
-            if (relacionesResponse.isResponseSuccesfull())
-            {
-                RelacionesNivelItem = relacionesResponse.Response;
-            }
-            else
-            {
-                string reporteError = "relaciones";
-                throw new InvalidOperationException($"Error al cargar las {reporteError}.");
             }
         }
 
@@ -190,9 +168,6 @@ namespace Horrografia.Client.Pages.DashboardPages
                     case ReloadFlag.Items:
                         await CargarItems();
                         break;
-                    case ReloadFlag.Relaciones:
-                        await CargarRelaciones();
-                        break;
                     case ReloadFlag.Pistas:
                         await CargarPistas();
                         break;
@@ -228,12 +203,7 @@ namespace Horrografia.Client.Pages.DashboardPages
         // Devuelve los items por nivel
         private List<ItemModel> GetItems(NivelModel n)
         {
-            List<ItemModel> NivelItems = new();
-            if (n != null)
-            { 
-                var ItemIds = RelacionesNivelItem.Where(r => r.IdNivel == n.Id).Select(r => r.IdItem);
-                NivelItems = ItemsTotales.Where(i => ItemIds.Contains(i.Id)).ToList();            
-            }
+            List<ItemModel> NivelItems = ItemsTotales.Where(i => i.NivelId == n.Id).ToList();
             return NivelItems;
         }
 
@@ -339,6 +309,7 @@ namespace Horrografia.Client.Pages.DashboardPages
 
         protected async Task CreateItem(ItemModel i)
         {
+            i.NivelId = nivelActual.Id;
             var response = await _itemService.PostAsync(i);
             await RecargarDatos(ReloadFlag.Items);
         }
@@ -388,24 +359,6 @@ namespace Horrografia.Client.Pages.DashboardPages
             }
             await RecargarDatos(ReloadFlag.Items);
         }
-
-        protected async Task CreateRelation(ItemModel i)
-        {
-            PerteneceAModel p = new();
-            p.IdItem = i.Id;
-            p.IdNivel = nivelActual.Id;
-            var response = await _perteneceAService.PostAsync(p);
-            if (response.isResponseSuccesfull())
-            {
-                ShowNotification($"¡Se añadió el item en el nivel!", Severity.Success);
-            }
-            else
-            {
-                ShowNotification("Hubo un error al crear la relación.", Severity.Error);
-            }
-            await RecargarDatos(ReloadFlag.Relaciones);
-        }
-
 
         protected void PopErrorNotificationMessage()
         {
