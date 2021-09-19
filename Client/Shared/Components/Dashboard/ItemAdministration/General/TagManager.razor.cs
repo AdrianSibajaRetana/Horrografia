@@ -14,6 +14,9 @@ namespace Horrografia.Client.Shared.Components.Dashboard.ItemAdministration.Gene
         public List<TagModel> Tags { get; set; }
 
         [Parameter]
+        public List<ItemTagModel> Relations { get; set; }
+
+        [Parameter]
         public EventCallback<TagModel> OnTagCreation { get; set; }
 
         [Parameter]
@@ -24,6 +27,11 @@ namespace Horrografia.Client.Shared.Components.Dashboard.ItemAdministration.Gene
         public TagManager()
         {
             _showTagCreationDialog = false; 
+        }
+
+        private int getRelationNumber(int tagId)
+        {
+            return Relations.Where(r => r.idTag == tagId).Count();
         }
 
         private void OpenTagCreationDialog()
