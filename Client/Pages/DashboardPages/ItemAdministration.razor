@@ -1,9 +1,9 @@
 ﻿@page "/dashboard/items"
-@using Horrografia.Client.Shared.Components.Dashboard.ItemAdministration
+@using Horrografia.Client.Shared.Components.Dashboard.ItemAdministration.General
 @using Horrografia.Client.Shared.Constants
 @using Horrografia.Client.Shared.Components.General
 
-<PageLoading Titulo="Administración de niveles" IsLoading="@_isLoading">
+<PageLoading Titulo="Administración de items y tags" IsLoading="@_isLoading">
     @if (InitialLoadStatus == Constantes.OKSTATUS)
     {
         <div class="tabs is-centered is-medium is-boxed" style="margin-bottom: 0;">
@@ -19,7 +19,10 @@
         @switch (_activeTab)
         {
             case ActiveTabState.ShowTagsTab:
-                <TagManager />
+                <TagManager 
+                            Tags="Tags"
+                            OnTagCreation="CreateTag"
+                            OnTagDeletion="DeleteTag"/>
                 break;
             case ActiveTabState.ShowItemTab:
                 <ItemManager />

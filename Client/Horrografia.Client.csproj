@@ -6,10 +6,12 @@
 
   <ItemGroup>
     <Content Remove="compilerconfig.json" />
+    <Content Remove="Shared\Components\Dashboard\ItemAdministration\TagAdministration\TagCreationDialog.razor" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="compilerconfig.json" />
+    <None Include="Shared\Components\Dashboard\ItemAdministration\TagAdministration\TagCreationDialog.razor" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,6 +26,14 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Shared\Horrografia.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Shared\Components\Dashboard\ItemAdministration\TagAdministration\TagCreationDialog.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Shared\Components\Dashboard\ItemAdministration\TagAdministration\TagCreationDialog.razor" />
   </ItemGroup>
 
 </Project>

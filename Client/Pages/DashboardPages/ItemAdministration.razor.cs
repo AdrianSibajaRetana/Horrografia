@@ -29,7 +29,15 @@ namespace Horrografia.Client.Pages.DashboardPages
         { 
             ShowTagsTab,
             ShowItemTab
-        }        
+        }
+
+        //Para recargar entidades
+        private enum ReloadFlag
+        { 
+            Tags,
+            Relaciones
+        }
+
         private string _tagsActiveString { get; set; }
         private string _itemsActiveString { get; set; } 
         private ActiveTabState _activeTab { get; set; }
@@ -184,6 +192,56 @@ namespace Horrografia.Client.Pages.DashboardPages
                         break;
                 }                
             }
+        }
+
+        private async Task RecargarDatos(ReloadFlag flag)
+        {
+            try
+            {
+                switch (flag)
+                {
+                    case ReloadFlag.Tags:
+                        await CargarTags();
+                        break;
+                    case ReloadFlag.Relaciones:
+                        await CargarRelaciones();
+                        break;
+                    default:
+                        throw new InvalidOperationException("Parámetro no reconocido.");
+                }
+            }
+            catch (Exception e)
+            {
+                ShowNotification($"{e.Message}", Severity.Error);
+            }
+        }
+
+        protected async Task CreateTag(TagModel t)
+        {
+            var response = await _tagService.PostAsync(t);
+            if (response.isResponseSuccesfull())
+            {
+                ShowNotification($"¡Se creó el tag!", Severity.Success);
+            }
+            else
+            {
+                ShowNotification("Hubo un error al crear el tag", Severity.Error);
+            }
+            await RecargarDatos(ReloadFlag.Tags);
+        }
+
+        protected async Task DeleteTag(TagModel t)
+        {
+            var response = await _tagService.DeleteAsync(t);
+            if (response.isResponseSuccesfull())
+            {
+                ShowNotification($"¡Se borró el tag!", Severity.Success);
+            }
+            else
+            {
+                ShowNotification("Hubo un error al borrar el tag", Severity.Error);
+            }
+            await RecargarDatos(ReloadFlag.Tags);
         }
 
     }

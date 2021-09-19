@@ -1,0 +1,23 @@
+﻿@using Horrografia.Client.Shared.Components.Dashboard.ItemAdministration.TagAdministration
+
+@if (!Tags.Any())
+{
+    <section class="section is-large has-text-centered">
+        <h1 class="title">No se encontraron Tags</h1>
+        <h2 class="subtitle">
+            No encontramos ningun tag en la base de datos.
+        </h2>
+        <div class="article-bottom">
+            <button class="button is-success is-light is-medium" @onclick="p => OpenTagCreationDialog()">Añadir Tag</button>
+        </div>
+    </section>
+}
+else
+{ 
+    <p>Si se encontraron lol </p>
+}
+<TagCreationDialog
+                   ShowDialogue="_showTagCreationDialog"
+                   OnDialogClosed="CloseTagCreationDialog"
+                   OnTagCreation="CreateTag"
+                   />

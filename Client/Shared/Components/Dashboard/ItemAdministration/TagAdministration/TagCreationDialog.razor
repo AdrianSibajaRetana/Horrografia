@@ -1,0 +1,32 @@
+﻿@inject IDialogService DialogService
+@using System.ComponentModel.DataAnnotations
+
+<MudDialog @bind-IsVisible="ShowDialogue">
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Edit" Class="mr-3" /> Crear Tag
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <EditForm Model="@_model" OnValidSubmit="CreateTag">
+            <DataAnnotationsValidator />
+            <MudCard Elevation=0>
+                <MudCardContent>
+                    <MudTextField T="string"
+                        Label="Tag"
+                        For="@(() => _model.Tag)"
+                        @bind-Value="_model.Tag"
+                    />
+                </MudCardContent>
+                <MudCardActions>
+                    <MudGrid>
+                        <MudItem Class="ml-auto">
+                            <MudButton Variant="Variant.Text" OnClick="CloseDialog">Cancelar</MudButton>
+                            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Text" Color="Color.Success">Crear Tag</MudButton>
+                        </MudItem>
+                    </MudGrid>
+                </MudCardActions>
+            </MudCard>
+        </EditForm>
+    </DialogContent>
+</MudDialog>
