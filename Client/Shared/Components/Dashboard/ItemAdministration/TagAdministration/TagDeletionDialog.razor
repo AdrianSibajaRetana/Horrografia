@@ -1,0 +1,21 @@
+﻿<MudDialog @bind-IsVisible="ShowDialogue">
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.DeleteForever" Class="mr-3" /> Eliminar Tag
+        </MudText>
+        <MudText Typo="Typo.subtitle1">
+            ¿Está seguro que desea eliminar el siguiente tag? La acción no es reversible.
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudTextField @bind-Value="@tagToDelete.Tag" Label="Contenido del tag" ReadOnly="true" Class="mt-4" />        
+    </DialogContent>
+    <DialogActions>
+        <MudGrid>
+            <MudItem Class="ml-auto">
+                <MudButton Variant="Variant.Text" OnClick="CloseDialog">Cancelar</MudButton>
+                <MudButton Variant="Variant.Text" Color="Color.Error" OnClick="DeleteTag">Borrar Tag</MudButton>
+            </MudItem>
+        </MudGrid>
+    </DialogActions>
+</MudDialog>

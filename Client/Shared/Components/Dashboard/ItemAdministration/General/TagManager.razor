@@ -46,7 +46,12 @@ else
                     @foreach (var tag in Tags)
                     {
                         <tr>
-                            <td>@tag.Tag</td>
+                            <td>                                
+                                <span class="tag is-medium">
+                                    @tag.Tag
+                                    <button class="delete is-small" @onclick="() => OpenDeletionDialog(tag)"></button>
+                                </span>
+                            </td>
                             <td>@getRelationNumber(tag.id)</td>
                         </tr>
                     }
@@ -63,3 +68,9 @@ else
                    OnDialogClosed="CloseTagCreationDialog"
                    OnTagCreation="CreateTag"
                    />
+
+<TagDeletionDialog
+                   ShowDialogue="_showTagDeletionDialog"
+                   OnDialogClosed="CloseDeletionDialog"
+                   OnTagDeletion="DeleteTag"
+                   tagToDelete="TagModelToDelete"/>
