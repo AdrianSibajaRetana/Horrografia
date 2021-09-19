@@ -1,6 +1,33 @@
 ﻿@page "/dashboard/items"
-<h3>ItemAdministration</h3>
+@using Horrografia.Client.Shared.Components.Dashboard.ItemAdministration
+@using Horrografia.Client.Shared.Constants
+@using Horrografia.Client.Shared.Components.General
 
-@code {
-
-}
+<PageLoading Titulo="Administración de niveles" IsLoading="@_isLoading">
+    @if (InitialLoadStatus == Constantes.OKSTATUS)
+    {
+        <div class="tabs is-centered is-medium is-boxed" style="margin-bottom: 0;">
+            <ul>
+                <li class=@_tagsActiveString>
+                    <a @onclick="c => ChangeTabContent(ActiveTabState.ShowTagsTab)">Tags</a>
+                </li>
+                <li class=@_itemsActiveString>
+                    <a @onclick="c => ChangeTabContent(ActiveTabState.ShowItemTab)">Items</a>
+                </li>
+            </ul>
+        </div>
+        @switch (_activeTab)
+        {
+            case ActiveTabState.ShowTagsTab:
+                <TagManager />
+                break;
+            case ActiveTabState.ShowItemTab:
+                <ItemManager />
+                break;
+        }
+    }
+    else
+    { 
+        <ErrorMessage />
+    }
+</PageLoading>

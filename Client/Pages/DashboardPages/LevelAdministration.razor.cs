@@ -83,7 +83,8 @@ namespace Horrografia.Client.Pages.DashboardPages
         }
 
         public async Task CargarDatos()
-        {   try
+        {   
+            try
             {
                 await CargarNiveles();
                 await CargarItems();
