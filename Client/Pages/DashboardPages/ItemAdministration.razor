@@ -26,7 +26,11 @@
                             OnTagDeletion="DeleteTag"/>
                 break;
             case ActiveTabState.ShowItemTab:
-                <ItemManager />
+                <ItemManager 
+                             Niveles="Niveles"
+                             Items="Items"
+                             Tags="Tags"
+                             Relaciones="RelacionesItemTag"/>
                 break;
         }
     }

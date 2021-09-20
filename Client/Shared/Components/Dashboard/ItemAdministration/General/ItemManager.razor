@@ -1,9 +1,77 @@
-﻿<section class="section is-large has-text-centered">
-    <h1 class="title">ITEMSSSSSS</h1>
-    <h2 class="subtitle">
-        No encontramos ningun tag en la base de datos.
-    </h2>
-    <div class="article-bottom">
-        <button class="button is-success is-light is-medium">Añadir Tag</button>
+﻿@using Horrografia.Client.Shared.Components.Dashboard.ItemAdministration.TagAdministration
+<section class="tab-container">
+    <div class="columns">
+        <div class="column">
+            <div class="card">
+                <section class="px-3 is-align-items-center">
+                    <div class="columns">
+                        <div class="column">
+                            <p class="card-header-title is-size-4">
+                                Administración de items
+                            </p>
+                        </div>
+                    </div>
+                    <div class="columns">
+                        <div class="column">
+                            <div class="select is-medium is-fullwidth">
+                                <select class="form-control" @bind="_IdEnSeleccionDePagina">
+                                    <option selected value=-10000>Seleccione un nivel</option>
+                                    @foreach (var nivel in Niveles)
+                                    { 
+                                        <option value="@nivel.Id">@nivel.Nombre</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
     </div>
+    @if (_IdNivelEscogido != -10000)
+    { 
+        <div class="columns">
+            <div class="column">
+                <table class="table is-bordered is-striped is-hoverable is-fullwidth">
+                    <thead>
+                        <tr>
+                            <th>Item</th>
+                            <th>Tags</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in _itemsDeNivel)
+                        {
+                            <tr>
+                                <td>
+                                    <div class="block ">
+                                        <p class="is-size-5">
+                                            @item.FormaCorrecta
+                                        </p>
+                                    </div>                                  
+                                </td>
+                                <td>
+                                    <div class="block">
+                                        <button class="button is-success is-small" @onclick="ShowRelationCreationDialog">Añadir Tag</button>
+                                    </div>
+                                    <div class="block tags">
+                                        @foreach (var tag in getItemTags(item))
+                                        {
+                                            <span class="tag is-medium">
+                                                @tag
+                                                <button class="delete is-small"></button>
+                                            </span>
+                                        }
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
 </section>
+
+<RelationCreationDialog
+                        ShowDialog="_ShowRelationCreationDialog"/>
