@@ -31,6 +31,10 @@ namespace Horrografia.Client.Shared.Components.Dashboard.ItemAdministration.Gene
 
         private int _IdNivelEscogido { get; set; }
 
+        public ItemModel ItemAModificar { get; set; }
+
+        private const int INVALID_OPTION = -10000; 
+
         private int _IdEnSeleccionDePagina
         { 
             get => _IdNivelEscogido;
@@ -45,7 +49,8 @@ namespace Horrografia.Client.Shared.Components.Dashboard.ItemAdministration.Gene
 
         public ItemManager()
         {
-            _IdNivelEscogido = -10000;
+            ItemAModificar = new();
+            _IdNivelEscogido = INVALID_OPTION;
             _itemsDeNivel = new();
             _ShowRelationCreationDialog = false; 
         }
@@ -61,10 +66,29 @@ namespace Horrografia.Client.Shared.Components.Dashboard.ItemAdministration.Gene
             return query.ToList();
         }
 
-        private void ShowRelationCreationDialog()
+        private void ShowRelationCreationDialog(ItemModel i)
         {
+            ItemAModificar = i; 
             _ShowRelationCreationDialog = true; 
         }
 
+        private void CloseRelationCreationDialog()
+        {
+            _ShowRelationCreationDialog = false;
+        }
+
+        protected async Task CreateRelation(ItemTagModel i)
+        {
+            await OnRelationCreation.InvokeAsync(i);
+        }
+
+        protected async Task DeleteRelation(string tag, ItemModel item)
+        {
+            var tagChosen = Tags.Where(t => t.Tag == tag).FirstOrDefault();
+            ItemTagModel i = new();
+            i.idTag = tagChosen.id;
+            i.idItem = item.Id;
+            await OnRelationDeletion.InvokeAsync(i);
+        }
     }
 }

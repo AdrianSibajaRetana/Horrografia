@@ -1,7 +1,31 @@
 ﻿<MudDialog @bind-IsVisible="ShowDialog">
     <TitleContent>
         <MudText Typo="Typo.h6">
-            <MudIcon Icon="@Icons.Material.Filled.Edit" Class="mr-3" /> Añadir Tag
+            <MudIcon Icon="@Icons.Material.Filled.Add" Class="mr-3" /> Añadir Tag
         </MudText>
     </TitleContent>
+    <DialogContent>
+        <EditForm Model="@_model" OnValidSubmit="CreateRelation">
+            <DataAnnotationsValidator />
+            <MudCard Elevation=0>
+                <MudCardContent>
+                    <MudAutocomplete T="string"
+                                     ResetValueOnEmptyText="true"
+                                     Required="true"
+                                     Label="Tag"
+                                     @bind-Value="_model.Tag"
+                                     SearchFunc="@BuscarTagsExistentes"                                     
+                                     For="@(() => _model.Tag)"/>
+                </MudCardContent>
+                <MudCardActions>
+                    <MudGrid>
+                        <MudItem Class="ml-auto">
+                            <MudButton Variant="Variant.Text" OnClick="CloseDialog">Cancelar</MudButton>
+                            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Text" Color="Color.Success">Añadir Tag</MudButton>
+                        </MudItem>
+                    </MudGrid>
+                </MudCardActions>
+            </MudCard>
+        </EditForm>
+    </DialogContent>
 </MudDialog>

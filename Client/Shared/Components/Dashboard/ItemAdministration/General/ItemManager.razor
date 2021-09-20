@@ -28,7 +28,7 @@
             </div>
         </div>
     </div>
-    @if (_IdNivelEscogido != -10000)
+    @if (_IdNivelEscogido != INVALID_OPTION)
     { 
         <div class="columns">
             <div class="column">
@@ -52,14 +52,14 @@
                                 </td>
                                 <td>
                                     <div class="block">
-                                        <button class="button is-success is-small" @onclick="ShowRelationCreationDialog">Añadir Tag</button>
+                                        <button class="button is-success is-small" @onclick="() => ShowRelationCreationDialog(item)">Añadir Tag</button>
                                     </div>
                                     <div class="block tags">
                                         @foreach (var tag in getItemTags(item))
                                         {
                                             <span class="tag is-medium">
                                                 @tag
-                                                <button class="delete is-small"></button>
+                                                <button class="delete is-small" @onclick="() => DeleteRelation(tag, item)"></button>
                                             </span>
                                         }
                                     </div>
@@ -74,4 +74,9 @@
 </section>
 
 <RelationCreationDialog
-                        ShowDialog="_ShowRelationCreationDialog"/>
+                        ItemReceived="ItemAModificar"
+                        Tags="Tags"
+                        ShowDialog="_ShowRelationCreationDialog"
+                        OnDialogClose="CloseRelationCreationDialog"
+                        OnRelationCreation="CreateRelation"
+                        />

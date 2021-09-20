@@ -244,5 +244,40 @@ namespace Horrografia.Client.Pages.DashboardPages
             await RecargarDatos(ReloadFlag.Tags);
         }
 
+        protected async Task CreateRelation(ItemTagModel i)
+        {
+            if (RelacionesItemTag.Exists(r => r.idItem == i.idItem && r.idTag == i.idTag))
+            {
+                ShowNotification("El item ya se encuentra relacionado al tag.", Severity.Warning);
+            }
+            else
+            { 
+                var response = await _tagService.PostRelationAync(i);
+                if (response.isResponseSuccesfull())
+                {
+                    ShowNotification($"¡Se agregó el tag al item!", Severity.Success);
+                }
+                else
+                {
+                    ShowNotification("Hubo un error al agregar el tag al item", Severity.Error);
+                }
+                await RecargarDatos(ReloadFlag.Relaciones);            
+            }
+        }
+
+        protected async Task DeleteRelation(ItemTagModel i)
+        {
+            var response = await _tagService.DeleteRelationAync(i);
+            if (response.isResponseSuccesfull())
+            {
+                ShowNotification($"¡Se borró el tag del item!", Severity.Success);
+            }
+            else
+            {
+                ShowNotification("Hubo un error al borrar el tag al item", Severity.Error);
+            }
+            await RecargarDatos(ReloadFlag.Relaciones);
+        }
+
     }
 }

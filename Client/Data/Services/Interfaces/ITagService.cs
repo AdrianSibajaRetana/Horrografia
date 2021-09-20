@@ -9,8 +9,8 @@ namespace Horrografia.Client.Data.Services.Interfaces
         Task<ControllerResponse<TagModel>> GetAsync();
         Task<ControllerResponse<TagModel>> PostAsync(TagModel t);
         Task<ControllerResponse<TagModel>> DeleteAsync(TagModel t);
-        Task<ControllerResponse<TagModel>> PostRelationAync(int itemId, int tagId);
-        Task<ControllerResponse<TagModel>> DeleteRelationAync(int itemId, int tagId);
+        Task<ControllerResponse<TagModel>> PostRelationAync(ItemTagModel i);
+        Task<ControllerResponse<TagModel>> DeleteRelationAync(ItemTagModel i);
         Task<ControllerResponse<ItemTagModel>> GetRelationsAync();
     }
 }

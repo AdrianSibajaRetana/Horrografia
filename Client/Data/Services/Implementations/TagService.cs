@@ -92,13 +92,13 @@ namespace Horrografia.Client.Data.Services.Implementations
             }
         }
 
-        public async Task<ControllerResponse<TagModel>> PostRelationAync(int itemId, int tagId)
+        public async Task<ControllerResponse<TagModel>> PostRelationAync(ItemTagModel i)
         {
             ControllerResponse<TagModel> _controllerResponse = new();
             try
             {
 
-                var response = await _http.PostAsync($"api/Tag/{itemId}/{tagId}", null);
+                var response = await _http.PostAsync($"api/Tag/{i.idItem}/{i.idTag}", null);
                 if (response.IsSuccessStatusCode)
                 {
                     _controllerResponse.Status = Constantes.OKSTATUS;
@@ -115,12 +115,12 @@ namespace Horrografia.Client.Data.Services.Implementations
             }
         }
 
-        public async Task<ControllerResponse<TagModel>> DeleteRelationAync(int itemId, int tagId)
+        public async Task<ControllerResponse<TagModel>> DeleteRelationAync(ItemTagModel i)
         {
             ControllerResponse<TagModel> _controllerResponse = new();
             try
             {
-                var response = await _http.DeleteAsync($"api/Tag/{itemId}/{tagId}");
+                var response = await _http.DeleteAsync($"api/Tag/{i.idItem}/{i.idTag}");
                 if (response.IsSuccessStatusCode)
                 {
                     _controllerResponse.Status = Constantes.OKSTATUS;
