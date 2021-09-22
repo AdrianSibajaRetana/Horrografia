@@ -1,141 +1,133 @@
 ﻿@using Horrografia.Shared.Models;
- 
-<MudItem xs="12" sm="12" md="12">
-    <MudCard Elevation="2" Class="py-4 pl-4" Outlined="true" Style="max-height: 40%; ">
-        <MudCardHeader>
-            <CardHeaderContent>
-                <MudGrid>
-                    <MudItem xs="12" sm="12" md="12">
-                        <MudText Typo="Typo.h5">Administración de permisos</MudText>
-                    </MudItem>
-                </MudGrid>
-            </CardHeaderContent>
-        </MudCardHeader>
-        <MudCardContent>
-            <MudGrid>
-                <MudItem xs="12" sm="12" md="9">
-                    <MudAutocomplete T="UsuarioDTO"
-                                     Label="Dirección de correo"
-                                     @bind-Value="_usuarioActual"
-                                     SearchFunc="@SearchAsync"
-                                     ToStringFunc="@(c=> c==null?null : $"{c.correo}")"
-                                     AdornmentIcon="@Icons.Material.Filled.Search"
-                                     MaxHeight="300" />
-                </MudItem>
-                <MudItem xs="12" sm="12" md="3" Class="my-auto">
-                    <MudGrid Justify="Justify.Center">
-                        <MudItem>
-                            <MudTooltip Text="Buscar Usuario">
-                                <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Search" Color="Color.Primary" OnClick="ShowUserData">Buscar</MudButton>
-                            </MudTooltip>
-                        </MudItem>
-                    </MudGrid>
-                </MudItem>
-            </MudGrid>
-        </MudCardContent>
-    </MudCard>
-    @if (!_showData)
-    {
-        <MudItem xs="12" sm="12" md="12" Style=" position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
-            <MudText Typo="Typo.h5" GutterBottom="true" Align="Align.Center">
-                No se ha seleccionado un usuario.
-            </MudText>
-        </MudItem>
-    }
-    else
-    {
-        @if (_dataShown == DataShown.UserData)
-        {
-            <MudCard Elevation="2" Class="py-4 pl-4 mt-4" Outlined="true" Style="max-height: 100%; ">
-                <MudCardHeader>
-                    <CardHeaderContent>
-                        <MudText Typo="Typo.h5">Usuario de horrografía</MudText>
-                    </CardHeaderContent>
-                </MudCardHeader>
-                <MudCardContent>
-                    <MudExpansionPanels DisableBorders="true" Elevation="0">
-                        <MudExpansionPanel Text="Nombre de usuario">
-                            <MudText Typo="Typo.h6" Class="pl-2">@_usuarioActual.nombreDeUsuario</MudText>
-                        </MudExpansionPanel>
-                        <MudExpansionPanel Text="Correo">
-                            <MudText Typo="Typo.h6" Class="pl-2">@_usuarioActual.correo</MudText>
-                        </MudExpansionPanel>
-                        <MudExpansionPanel Text="Permisos">
-                            <MudItem Class="pl-2">
-                                <MudTooltip Text="Administrar permisos de usuario">
-                                    <MudButton Variant="Variant.Filled"
-                                               StartIcon="@Icons.Material.Filled.AdminPanelSettings"
-                                               Color="Color.Primary" OnClick="SwitchDataShown">Administrar</MudButton>
-                                </MudTooltip>
-                            </MudItem>
-                        </MudExpansionPanel>
-                    </MudExpansionPanels>
-                </MudCardContent>
-            </MudCard>
-        }
-        else if (_dataShown == DataShown.UserPermissions)
-        {
-            <MudCard Elevation="2" Class="py-4 pl-4 mt-4" Outlined="true" Style="max-height: 100%; ">
-                <MudCardHeader>
-                    <CardHeaderContent>
-                        <MudGrid>
-                            <MudItem xs="12" sm="12" md="8">
-                                <MudText Typo="Typo.h5">Permisos de usuario</MudText>
-                            </MudItem>
-                            <MudItem xs="12" sm="12" md="2" Class="ml-auto">
-                                <MudTooltip Text="Volver a los datos de usuario">
-                                    <MudButton Variant="Variant.Filled"
-                                               StartIcon="@Icons.Material.Filled.KeyboardReturn"
-                                               Color="Color.Primary" OnClick="SwitchDataShown">Datos</MudButton>
-                                </MudTooltip>
-                            </MudItem>
-                        </MudGrid>
-                    </CardHeaderContent>
-                </MudCardHeader>
-                <MudCardContent>
-                    <MudExpansionPanels DisableBorders="true" Elevation="0">
-                        <MudExpansionPanel Text="Es administrador">
-                            <MudItem Class="pl-2">
-                                <MudTooltip Text="Dar o quitar permisos de administrador">
-                                    <MudSwitch @bind-Checked="@_cambiarAAdministrador" Color="Color.Primary" />
-                                </MudTooltip>
-                            </MudItem>
-                        </MudExpansionPanel>
-                        <MudExpansionPanel Text="Es Profesor">
-                            <MudItem Class="pl-2">
-                                <MudTooltip Text="Dar o quitar permisos de profesor">
-                                    <MudSwitch @bind-Checked="@_cambiarAProfesor" Color="Color.Primary" />
-                                </MudTooltip>
-                            </MudItem>
-                        </MudExpansionPanel>                        
-                    </MudExpansionPanels>
-                </MudCardContent>
-                <MudCardActions>
-                    <MudItem xs="12" sm="12" md="12" Class="my-2">
-                        <MudGrid Justify="Justify.Center">
-                            @if (!_isLoading)
-                            {
-                                <MudItem>
-                                    <MudTooltip Text="Guardar cambios a la base de datos">
-                                        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="SaveChanges">
-                                            Guardar cambios
-                                        </MudButton>
-                                    </MudTooltip>
-                                </MudItem>
-                            }
-                            else
-                            {
-                                <MudItem xs="12" sm="12" md="12" Class="my-2">
-                                    <MudProgressCircular Color="Color.Success" Indeterminate="true" />
-                                </MudItem>
-                                <MudItem xs="12" sm="12" md="12" >
-                                    <MudText Typo="Typo.body1" Align="Align.Center">Permisos de usuario</MudText>
-                                </MudItem>
-                            }
-                        </MudGrid>
-                    </MudItem>
-                </MudCardActions>
-            </MudCard>
-        }
-    }
-</MudItem>
+
+<div class='block container'>
+    <div class='columns is-mobile is-centered'>
+        <div class='column is-8'>
+            <div class="block has-text-centered">
+                <h1 class='title'> Administración de permisos</h1>
+                <hr>
+            </div>
+            <div class="block">
+                <div class="columns is-mobile is-centered">
+                    <div class="column is-four-fifths">
+                        <MudAutocomplete T="UsuarioDTO"
+                                         Label="Dirección de correo"
+                                         @bind-Value="_usuarioActual"
+                                         SearchFunc="@SearchAsync"
+                                         ToStringFunc="@(c=> c==null?null : $"{c.correo}")"
+                                         AdornmentIcon="@Icons.Material.Filled.Search"
+                                         MaxHeight="300" />
+                    </div>
+                    <div class="column">
+                        <button class="button is-success is-light is-medium" @onclick="() => ShowUserData()">Buscar</button>
+                    </div>
+                </div>
+            </div>
+            @if (!_showData)
+            {
+                <div class="block">
+                    <section class="section is-medium has-text-centered">
+                        <h1 class="title">No se ha seleccionado un usuario.</h1>
+                    </section>
+                </div>
+            }
+            else
+            {
+                @if (_dataShown == DataShown.UserData)
+                {
+                    <div class="block">
+                        <div class='container'>
+                            <div class="card p-4">
+                                <div class="content">
+                                    <div class="block">
+                                        <h2 class='title'> Usuario de horrografía</h2>
+                                        <hr>
+                                    </div>
+                                    <div class="block">
+                                        <strong>Nombre de usuario: </strong> @_usuarioActual.nombreDeUsuario
+                                    </div>
+                                    <div class="block">
+                                        <strong>Correo: </strong> @_usuarioActual.correo
+                                    </div>
+                                    <div class="block">
+                                        <div class="article-bottom">
+                                            <button class="button is-primary is-medium" @onclick="() => SwitchDataShown()">Administrar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else if (_dataShown == DataShown.UserPermissions)
+                {
+                    <div class="block">
+                        <div class='container'>
+                            <MudCard Elevation="2" Class="py-4 pl-4 mt-4" Outlined="true" Style="max-height: 100%; ">
+                                <MudCardHeader>
+                                    <CardHeaderContent>
+                                        <MudGrid>
+                                            <MudItem xs="12" sm="12" md="8">
+                                                <MudText Typo="Typo.h5">Permisos de usuario</MudText>
+                                            </MudItem>
+                                            <MudItem xs="12" sm="12" md="2" Class="ml-auto">
+                                                <MudTooltip Text="Volver a los datos de usuario">
+                                                    <MudButton Variant="Variant.Filled"
+                                                               StartIcon="@Icons.Material.Filled.KeyboardReturn"
+                                                               Color="Color.Primary" OnClick="SwitchDataShown">Datos</MudButton>
+                                                </MudTooltip>
+                                            </MudItem>
+                                        </MudGrid>
+                                    </CardHeaderContent>
+                                </MudCardHeader>
+                                <MudCardContent>
+                                    <MudExpansionPanels DisableBorders="true" Elevation="0">
+                                        <MudExpansionPanel Text="Es administrador">
+                                            <MudItem Class="pl-2">
+                                                <MudTooltip Text="Dar o quitar permisos de administrador">
+                                                    <MudSwitch @bind-Checked="@_cambiarAAdministrador" Color="Color.Primary" />
+                                                </MudTooltip>
+                                            </MudItem>
+                                        </MudExpansionPanel>
+                                        <MudExpansionPanel Text="Es Profesor">
+                                            <MudItem Class="pl-2">
+                                                <MudTooltip Text="Dar o quitar permisos de profesor">
+                                                    <MudSwitch @bind-Checked="@_cambiarAProfesor" Color="Color.Primary" />
+                                                </MudTooltip>
+                                            </MudItem>
+                                        </MudExpansionPanel>
+                                    </MudExpansionPanels>
+                                </MudCardContent>
+                                <MudCardActions>
+                                    <MudItem xs="12" sm="12" md="12" Class="my-2">
+                                        <MudGrid Justify="Justify.Center">
+                                            @if (!_isLoading)
+                                            {
+                                                <MudItem>
+                                                    <MudTooltip Text="Guardar cambios a la base de datos">
+                                                        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="SaveChanges">
+                                                            Guardar cambios
+                                                        </MudButton>
+                                                    </MudTooltip>
+                                                </MudItem>
+                                            }
+                                            else
+                                            {
+                                                <MudItem xs="12" sm="12" md="12" Class="my-2">
+                                                    <MudProgressCircular Color="Color.Success" Indeterminate="true" />
+                                                </MudItem>
+                                                <MudItem xs="12" sm="12" md="12">
+                                                    <MudText Typo="Typo.body1" Align="Align.Center">Permisos de usuario</MudText>
+                                                </MudItem>
+                                            }
+                                        </MudGrid>
+                                    </MudItem>
+                                </MudCardActions>
+                            </MudCard>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
