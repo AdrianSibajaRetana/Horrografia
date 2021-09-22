@@ -51,7 +51,7 @@
                                     </div>
                                     <div class="block">
                                         <div class="article-bottom">
-                                            <button class="button is-primary is-medium" @onclick="() => SwitchDataShown()">Administrar</button>
+                                            <button class="button is-primary" @onclick="() => SwitchDataShown()">Administrar</button>
                                         </div>
                                     </div>
                                 </div>
@@ -63,69 +63,49 @@
                 {
                     <div class="block">
                         <div class='container'>
-                            <MudCard Elevation="2" Class="py-4 pl-4 mt-4" Outlined="true" Style="max-height: 100%; ">
-                                <MudCardHeader>
-                                    <CardHeaderContent>
-                                        <MudGrid>
-                                            <MudItem xs="12" sm="12" md="8">
-                                                <MudText Typo="Typo.h5">Permisos de usuario</MudText>
-                                            </MudItem>
-                                            <MudItem xs="12" sm="12" md="2" Class="ml-auto">
-                                                <MudTooltip Text="Volver a los datos de usuario">
-                                                    <MudButton Variant="Variant.Filled"
-                                                               StartIcon="@Icons.Material.Filled.KeyboardReturn"
-                                                               Color="Color.Primary" OnClick="SwitchDataShown">Datos</MudButton>
-                                                </MudTooltip>
-                                            </MudItem>
-                                        </MudGrid>
-                                    </CardHeaderContent>
-                                </MudCardHeader>
-                                <MudCardContent>
-                                    <MudExpansionPanels DisableBorders="true" Elevation="0">
-                                        <MudExpansionPanel Text="Es administrador">
-                                            <MudItem Class="pl-2">
-                                                <MudTooltip Text="Dar o quitar permisos de administrador">
-                                                    <MudSwitch @bind-Checked="@_cambiarAAdministrador" Color="Color.Primary" />
-                                                </MudTooltip>
-                                            </MudItem>
-                                        </MudExpansionPanel>
-                                        <MudExpansionPanel Text="Es Profesor">
-                                            <MudItem Class="pl-2">
-                                                <MudTooltip Text="Dar o quitar permisos de profesor">
-                                                    <MudSwitch @bind-Checked="@_cambiarAProfesor" Color="Color.Primary" />
-                                                </MudTooltip>
-                                            </MudItem>
-                                        </MudExpansionPanel>
-                                    </MudExpansionPanels>
-                                </MudCardContent>
-                                <MudCardActions>
-                                    <MudItem xs="12" sm="12" md="12" Class="my-2">
-                                        <MudGrid Justify="Justify.Center">
-                                            @if (!_isLoading)
-                                            {
-                                                <MudItem>
-                                                    <MudTooltip Text="Guardar cambios a la base de datos">
-                                                        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="SaveChanges">
-                                                            Guardar cambios
-                                                        </MudButton>
-                                                    </MudTooltip>
-                                                </MudItem>
-                                            }
-                                            else
-                                            {
-                                                <MudItem xs="12" sm="12" md="12" Class="my-2">
-                                                    <MudProgressCircular Color="Color.Success" Indeterminate="true" />
-                                                </MudItem>
-                                                <MudItem xs="12" sm="12" md="12">
-                                                    <MudText Typo="Typo.body1" Align="Align.Center">Permisos de usuario</MudText>
-                                                </MudItem>
-                                            }
-                                        </MudGrid>
-                                    </MudItem>
-                                </MudCardActions>
-                            </MudCard>
+                            <div class="card p-4">
+                                <div class="content">
+                                    <div class="block">
+                                        <div class="columns is-mobile is-centered">
+                                            <div class="column is-four-fifths">
+                                                <h2 class='title'> Permisos de usuario</h2>
+                                            </div>
+                                            <div class="column">
+                                                <button class="button is-info" @onclick="() => SwitchDataShown()">
+                                                    <span class="icon">
+                                                        <i class="fas fa-arrow-left"></i>
+                                                    </span>
+                                                    <span>Datos</span>
+                                                </button>                                                
+                                            </div>
+                                        </div>
+                                        <hr>
+                                    </div>
+                                    <div class="block">
+                                        <h3 >Rol de administrador</h3>
+                                    </div>
+                                    <div class="block">
+                                        <MudTooltip Text="Dar o quitar permisos de administrador">
+                                            <MudSwitch @bind-Checked="@_cambiarAAdministrador" Color="Color.Primary" />
+                                        </MudTooltip>
+                                    </div>
+                                    <div class="block">
+                                        <h3>Rol de profesor</h3>
+                                    </div>
+                                    <div class="block">
+                                        <MudTooltip Text="Dar o quitar permisos de profesor">
+                                            <MudSwitch @bind-Checked="@_cambiarAProfesor" Color="Color.Primary" />
+                                        </MudTooltip>
+                                    </div>
+                                    <div class="block">
+                                        <div class="article-bottom">
+                                            <button class="button is-primary" @onclick="() => SaveChanges()">Guardar cambios</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                    </div>       
                 }
             }
         </div>
