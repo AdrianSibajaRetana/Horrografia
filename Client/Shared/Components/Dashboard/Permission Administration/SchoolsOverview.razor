@@ -1,110 +1,164 @@
-﻿<MudItem xs="12" sm="12" md="12">
-    @if (Escuelas.Any())
-    {
-        <MudCard Elevation="2" Class="py-4 pl-4" Outlined="true" Style="height: 20%; ">
-            <MudCardHeader>
-                <CardHeaderContent>
+﻿@if (!Escuelas.Any())
+{
+    <section class="section is-large has-text-centered">
+        <h1 class="title">No se encontraron Escuelas</h1>
+        <h2 class="subtitle">
+            No encontramos ninguna escuela en la base de datos.
+        </h2>
+        <div class="article-bottom">
+            <button class="button is-success is-light is-medium" @onclick="() => OpenSchoolCreationDialog()">Añadir Escuela</button>
+        </div>
+    </section>
+}
+else
+{
+    <div class='block container'>
+        <div class='columns is-mobile is-centered'>
+            <div class='column is-8'>
+                <div class="block has-text-centered">
+                    <h1 class='title'> Administración de escuelas</h1>
+                    <hr>
+                </div>
+                <div class="block">
+                    <button class="button is-success card-header-icon" @onclick="() => OpenSchoolCreationDialog()" style="margin-left: auto;">
+                        <span class="icon is-small">
+                            <i class="fas fa-plus"></i>
+                        </span>
+                        <span>Añadir escuela</span>
+                    </button>
+                </div>
+                <table class="block table is-bordered is-striped is-hoverable is-fullwidth">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Código</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var escuela in Escuelas)
+                        {
+                            <tr>
+                                <td>@escuela.Nombre</td>
+                                <td>@escuela.Codigo</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+}
+
+<MudDialog @bind-IsVisible="_showSchoolCreationDialog">
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Edit" Class="mr-3" /> Crear Escuela
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <EditForm Model="@_model" OnValidSubmit="CreateSchool">
+            <DataAnnotationsValidator />
+            <MudCard Elevation=0>
+                <MudCardContent>
+                    <MudTextField Label="Nombre"
+                                  HelperText="El nombre de la escuela a crear."
+                                  @bind-Value="_model.Nombre"
+                                  For="@(() => _model.Nombre)"
+                                  Variant="Variant.Outlined" />
+
+                </MudCardContent>
+                <MudCardActions>
                     <MudGrid>
-                        <MudItem xs="12" sm="12" md="9">
-                            <MudText Typo="Typo.h5">Administración de escuelas</MudText>
-                        </MudItem>
-                        <MudItem xs="12" sm="12" md="3" Class="my-auto">
-                            <MudGrid Justify="Justify.Center">
-                                <MudItem>
-                                    <MudTooltip Text="Añadir escuela">
-                                        <MudFab Color="Color.Success"
-                                                Icon="@Icons.Material.Filled.Add"
-                                                Size="Size.Medium"
-                                                IconSize="Size.Medium"
-                                                DisableElevation="true" OnClick="OpenSchoolCreationDialog" />
-                                    </MudTooltip>
-                                </MudItem>
-                            </MudGrid>
+                        <MudItem Class="ml-auto">
+                            <MudButton Variant="Variant.Text" OnClick="CloseSchoolCreationDialog">Cancelar</MudButton>
+                            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Text" Color="Color.Success">Crear Escuela</MudButton>
                         </MudItem>
                     </MudGrid>
-                </CardHeaderContent>
-            </MudCardHeader>
-        </MudCard>
+                </MudCardActions>
+            </MudCard>
+        </EditForm>
+    </DialogContent>
+</MudDialog>
 
-        <MudPaper Class="py-4 pl-4 mt-4" Elevation="2" Style=" height: 80%;">
-            <MudGrid>
-                <MudItem xs="12" sm="12" md="12">
-                    <MudSimpleTable Hover="true" Striped="@true" Style="overflow-x: auto; max-height: inherit;" Elevation="0">
-                        <thead>
-                            <tr>
-                                <th>Nombre</th>
-                                <th>Código</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var escuela in Escuelas)
-                            {
-                                <tr>
-                                    <td>@escuela.Nombre</td>
-                                    <td>@escuela.Codigo</td>
-                                </tr>
-                            }
-                        </tbody>
-                    </MudSimpleTable>
-                </MudItem>
-            </MudGrid>
-        </MudPaper>
-    }
-    else
-    {
-        <MudGrid Justify="Justify.Center" Class="pa-3">
-            <MudItem xs="12" sm="12" md="12">
-                <MudText Typo="Typo.h5" GutterBottom="true" Align="Align.Center">
-                    No se han registrado escuelas.
-                </MudText>
-            </MudItem>
-            <MudItem xs="12" sm="12" md="12">
-                <MudText Typo="Typo.subtitle1" Align="Align.Center" GutterBottom="true">
-                    No existen escuelas registrados en la base de datos.
-                </MudText>
-            </MudItem>
-            <MudItem xs="12" sm="12" md="12">
-                <MudGrid Justify="Justify.Center">
-                    <MudItem>
-                        <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="OpenSchoolCreationDialog">
-                            Crear item
-                        </MudButton>
-                    </MudItem>
-                </MudGrid>
-            </MudItem>
-        </MudGrid>
-    }
 
-    <MudDialog @bind-IsVisible="_showSchoolCreationDialog">
-        <TitleContent>
-            <MudText Typo="Typo.h6">
-                <MudIcon Icon="@Icons.Material.Filled.Edit" Class="mr-3" /> Crear Escuela
-            </MudText>
-        </TitleContent>
-        <DialogContent>
-            <EditForm Model="@_model" OnValidSubmit="CreateSchool">
-                <DataAnnotationsValidator />
-                <MudCard Elevation=0>
-                    <MudCardContent>
-                        <MudTextField 
-                                      Label="Nombre" 
-                                      HelperText="El nombre de la escuela a crear."
-                                      @bind-Value="_model.Nombre" 
-                                      For="@(() => _model.Nombre)" 
-                                      Variant="Variant.Outlined" />
 
-                    </MudCardContent>
-                    <MudCardActions>
+
+@*
+    <MudItem xs="12" sm="12" md="12">
+        @if (Escuelas.Any())
+        {
+            <MudCard Elevation="2" Class="py-4 pl-4" Outlined="true" Style="height: 20%; ">
+                <MudCardHeader>
+                    <CardHeaderContent>
                         <MudGrid>
-                            <MudItem Class="ml-auto">
-                                <MudButton Variant="Variant.Text" OnClick="CloseSchoolCreationDialog">Cancelar</MudButton>
-                                <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Text" Color="Color.Success">Crear Escuela</MudButton>
+                            <MudItem xs="12" sm="12" md="9">
+                                <MudText Typo="Typo.h5">Administración de escuelas</MudText>
+                            </MudItem>
+                            <MudItem xs="12" sm="12" md="3" Class="my-auto">
+                                <MudGrid Justify="Justify.Center">
+                                    <MudItem>
+                                        <MudTooltip Text="Añadir escuela">
+                                            <MudFab Color="Color.Success"
+                                                    Icon="@Icons.Material.Filled.Add"
+                                                    Size="Size.Medium"
+                                                    IconSize="Size.Medium"
+                                                    DisableElevation="true" OnClick="OpenSchoolCreationDialog" />
+                                        </MudTooltip>
+                                    </MudItem>
+                                </MudGrid>
                             </MudItem>
                         </MudGrid>
-                    </MudCardActions>
-                </MudCard>
-            </EditForm>
-        </DialogContent>
-    </MudDialog>
+                    </CardHeaderContent>
+                </MudCardHeader>
+            </MudCard>
 
-</MudItem>
+            <MudPaper Class="py-4 pl-4 mt-4" Elevation="2" Style=" height: 80%;">
+                <MudGrid>
+                    <MudItem xs="12" sm="12" md="12">
+                        <MudSimpleTable Hover="true" Striped="@true" Style="overflow-x: auto; max-height: inherit;" Elevation="0">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Código</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var escuela in Escuelas)
+                                {
+                                    <tr>
+                                        <td>@escuela.Nombre</td>
+                                        <td>@escuela.Codigo</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </MudSimpleTable>
+                    </MudItem>
+                </MudGrid>
+            </MudPaper>
+        }
+        else
+        {
+            <MudGrid Justify="Justify.Center" Class="pa-3">
+                <MudItem xs="12" sm="12" md="12">
+                    <MudText Typo="Typo.h5" GutterBottom="true" Align="Align.Center">
+                        No se han registrado escuelas.
+                    </MudText>
+                </MudItem>
+                <MudItem xs="12" sm="12" md="12">
+                    <MudText Typo="Typo.subtitle1" Align="Align.Center" GutterBottom="true">
+                        No existen escuelas registrados en la base de datos.
+                    </MudText>
+                </MudItem>
+                <MudItem xs="12" sm="12" md="12">
+                    <MudGrid Justify="Justify.Center">
+                        <MudItem>
+                            <MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="OpenSchoolCreationDialog">
+                                Crear item
+                            </MudButton>
+                        </MudItem>
+                    </MudGrid>
+                </MudItem>
+            </MudGrid>
+        }
+    </MudItem>
+*@
