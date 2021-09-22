@@ -1,38 +1,26 @@
 ﻿@using Horrografia.Client.Shared.Components.Dashboard.ItemAdministration.TagAdministration
-<section class="tab-container">
-    <div class="columns">
-        <div class="column">
-            <div class="card">
-                <section class="px-3 is-align-items-center">
-                    <div class="columns">
-                        <div class="column">
-                            <p class="card-header-title is-size-4">
-                                Administración de items
-                            </p>
-                        </div>
-                    </div>
-                    <div class="columns">
-                        <div class="column">
-                            <div class="select is-medium is-fullwidth">
-                                <select class="form-control" @bind="_IdEnSeleccionDePagina">
-                                    <option selected value=-10000>Seleccione un nivel</option>
-                                    @foreach (var nivel in Niveles)
-                                    { 
-                                        <option value="@nivel.Id">@nivel.Nombre</option>
-                                    }
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </section>
+
+<div class='block container'>
+    <div class='columns is-mobile is-centered'>
+        <div class='column is-8'>
+            <div class="block has-text-centered">
+                <h1 class='title'> Administración de Items</h1>
+                <hr>
             </div>
-        </div>
-    </div>
-    @if (_IdNivelEscogido != INVALID_OPTION)
-    { 
-        <div class="columns">
-            <div class="column">
-                <table class="table is-bordered is-striped is-hoverable is-fullwidth">
+            <div class="block">
+                <div class="select is-medium is-fullwidth">
+                    <select class="form-control" @bind="_IdEnSeleccionDePagina">
+                        <option selected value="@INVALID_OPTION">Seleccione un nivel</option>
+                        @foreach (var nivel in Niveles)
+                        {
+                            <option value="@nivel.Id">@nivel.Nombre</option>
+                        }
+                    </select>
+                </div>
+            </div>
+            @if (_IdNivelEscogido != INVALID_OPTION)
+            {
+                <table class="block table is-bordered is-striped is-hoverable is-fullwidth">
                     <thead>
                         <tr>
                             <th>Item</th>
@@ -48,11 +36,11 @@
                                         <p class="is-size-5">
                                             @item.FormaCorrecta
                                         </p>
-                                    </div>                                  
+                                    </div>
                                 </td>
                                 <td>
                                     <div class="block">
-                                        <button class="button is-success is-small" @onclick="() => ShowRelationCreationDialog(item)">Añadir Tag</button>
+                                        <button class="button is-success is-small is-pulled-right" @onclick="() => ShowRelationCreationDialog(item)" >Añadir Tag</button>
                                     </div>
                                     <div class="block tags">
                                         @foreach (var tag in getItemTags(item))
@@ -68,15 +56,13 @@
                         }
                     </tbody>
                 </table>
-            </div>
+            }
         </div>
-    }
-</section>
+    </div>
+</div>
 
-<RelationCreationDialog
-                        ItemReceived="ItemAModificar"
+<RelationCreationDialog ItemReceived="ItemAModificar"
                         Tags="Tags"
                         ShowDialog="_ShowRelationCreationDialog"
                         OnDialogClose="CloseRelationCreationDialog"
-                        OnRelationCreation="CreateRelation"
-                        />
+                        OnRelationCreation="CreateRelation" />

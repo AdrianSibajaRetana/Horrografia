@@ -6,7 +6,7 @@
 <PageLoading Titulo="Administración de items y tags" IsLoading="@_isLoading">
     @if (InitialLoadStatus == Constantes.OKSTATUS)
     {
-        <div class="tabs is-centered is-medium is-boxed" style="margin-bottom: 0;">
+        <div class="block tabs is-centered is-medium is-boxed">
             <ul>
                 <li class=@_tagsActiveString>
                     <a @onclick="c => ChangeTabContent(ActiveTabState.ShowTagsTab)">Tags</a>

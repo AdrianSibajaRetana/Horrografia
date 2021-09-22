@@ -14,63 +14,103 @@
 }
 else
 {
-<section class="tab-container">
-    <div class="columns">
-        <div class="column">
-            <div class="card">
-                <header class="card-header px-3 is-align-items-center">
-                    <p class="card-header-title is-size-4">
-                        Administración de Tags
-                    </p>
-                    <button class="button is-success card-header-icon" @onclick="p => OpenTagCreationDialog()">
+    <div class='block container'>
+        <div class='columns is-mobile is-centered'>
+            <div class='column is-8'>
+                <div class="block has-text-centered">
+                    <h1 class='title'> Administración de Tags</h1>
+                    <hr>
+                </div>
+                <div class="block">
+                    <button class="button is-success card-header-icon" @onclick="p => OpenTagCreationDialog()" style="margin-left: auto;">
                         <span class="icon is-small">
                             <i class="fas fa-plus"></i>
                         </span>
                         <span>Añadir Tag</span>
                     </button>
-                </header>
+                </div>
+                <table class="block table is-bordered is-striped is-hoverable is-fullwidth">
+                    <thead>
+                        <tr>
+                            <th>Tag</th>
+                            <th>Numero de items</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var tag in Tags)
+                        {
+                            <tr>
+                                <td>
+                                    <span class="tag is-medium">
+                                        @tag.Tag
+                                        <button class="delete is-small" @onclick="() => OpenDeletionDialog(tag)"></button>
+                                    </span>
+                                </td>
+                                <td>@getRelationNumber(tag.id)</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
-
-    <div class="columns">
-        <div class="column">
-            <table class="table is-bordered is-striped is-hoverable is-fullwidth">
-                <thead>
-                    <tr>
-                        <th>Tag</th>
-                        <th>Numero de items</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var tag in Tags)
-                    {
-                        <tr>
-                            <td>                                
-                                <span class="tag is-medium">
-                                    @tag.Tag
-                                    <button class="delete is-small" @onclick="() => OpenDeletionDialog(tag)"></button>
-                                </span>
-                            </td>
-                            <td>@getRelationNumber(tag.id)</td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-</section>
 }
+    @*
+        <section class="tab-container">
+            <div class="columns">
+                <div class="column">
+                    <div class="card">
+                        <header class="card-header px-3 is-align-items-center">
+                            <p class="card-header-title is-size-4">
 
-<TagCreationDialog
-                   ShowDialogue="_showTagCreationDialog"
+                            </p>
+                            <button class="button is-success card-header-icon" @onclick="p => OpenTagCreationDialog()">
+                                <span class="icon is-small">
+                                    <i class="fas fa-plus"></i>
+                                </span>
+                                <span>Añadir Tag</span>
+                            </button>
+                        </header>
+                    </div>
+                </div>
+            </div>
+
+            <div class="columns">
+                <div class="column">
+                    <table class="table is-bordered is-striped is-hoverable is-fullwidth">
+                        <thead>
+                            <tr>
+                                <th>Tag</th>
+                                <th>Numero de items</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var tag in Tags)
+                            {
+                                <tr>
+                                    <td>
+                                        <span class="tag is-medium">
+                                            @tag.Tag
+                                            <button class="delete is-small" @onclick="() => OpenDeletionDialog(tag)"></button>
+                                        </span>
+                                    </td>
+                                    <td>@getRelationNumber(tag.id)</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </section>
+    *@
+
+
+<TagCreationDialog ShowDialogue="_showTagCreationDialog"
                    OnDialogClosed="CloseTagCreationDialog"
-                   OnTagCreation="CreateTag"
-                   />
+                   OnTagCreation="CreateTag" />
 
-<TagDeletionDialog
-                   ShowDialogue="_showTagDeletionDialog"
+<TagDeletionDialog ShowDialogue="_showTagDeletionDialog"
                    OnDialogClosed="CloseDeletionDialog"
                    OnTagDeletion="DeleteTag"
-                   tagToDelete="TagModelToDelete"/>
+                   tagToDelete="TagModelToDelete" />
