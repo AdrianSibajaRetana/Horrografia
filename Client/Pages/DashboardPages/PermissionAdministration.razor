@@ -9,36 +9,42 @@
 <PageLoading Titulo="Administración general" IsLoading="@IsLoading">
     @if (InitialLoadStatus == Constantes.OKSTATUS)
     {
-        <MudItem Class="mx-8" Style="height: 80vh;">
-            <MudItem xs="12" sm="12" md="12" Class="mt-8">
-                <MudText Typo="Typo.h5">Administración general</MudText>
-            </MudItem>
-            <MudTabs Outlined="true" Position="@Position.Left" Rounded="true" Border="true"
-                     ApplyEffectsToContainer="true" PanelClass="pa-6" Class="mt-2" Style="height: inherit; max-height: 65vh;">
-                <MudTabPanel Text="General" Icon="@Icons.Material.Filled.Settings">
-                    <RolesOverview 
-                                   Usuarios="Usuarios"
-                                   Roles="Roles"
-                                   UsuariosYRoles="UsuariosYRoles"/>
-                </MudTabPanel>
-                <MudTabPanel Text="Permisos" Icon="@Icons.Material.Filled.Group">
-                    <RolesAsigner 
-                                  Usuarios="Usuarios" 
-                                  Roles="Roles" 
-                                  UsuariosYRoles="UsuariosYRoles"
-                                  OnErrorDetection="ShowError"
-                                  OnAdministratorPermissionGiven="AddAdminRol"
-                                  OnProfessorPermissionGiven="AddProfessorRol"
-                                  OnAdministratorPermissionRemoved="RemoveAdminRol"
-                                  OnProfessorPermissionRemoved="RemoveProfessorRol"/>
-                </MudTabPanel>
-                <MudTabPanel Text="Escuelas" Icon="@Icons.Material.Filled.Festival">
-                    <SchoolsOverview 
-                                     Escuelas="Escuelas"
-                                     OnSchoolCreation="CreateSchool"/>
-                </MudTabPanel>
-            </MudTabs>
-        </MudItem>
+        <div class="block tabs is-centered is-medium is-boxed">
+            <ul>
+                <li class=@_generalActiveString>
+                    <a @onclick="c => ChangeTabContent(ActiveTabState.ShowGeneralTab)">Vista general</a>
+                </li>
+                <li class=@_permissionActiveString>
+                    <a @onclick="c => ChangeTabContent(ActiveTabState.ShowPermissionsTab)">Permisos</a>
+                </li>
+                <li class=@_schoolsActiveString>
+                    <a @onclick="c => ChangeTabContent(ActiveTabState.ShowSchoolsTab)">Escuelas</a>
+                </li>
+            </ul>
+        </div>
+        @switch (_activeTab)
+        {
+            case ActiveTabState.ShowGeneralTab:
+                <RolesOverview Usuarios="Usuarios"
+                               Roles="Roles"
+                               UsuariosYRoles="UsuariosYRoles" 
+                               CantidadEscuelas="Escuelas.Count()"/>
+                break;
+            case ActiveTabState.ShowPermissionsTab:
+                <RolesAsigner Usuarios="Usuarios"
+                              Roles="Roles"
+                              UsuariosYRoles="UsuariosYRoles"
+                              OnErrorDetection="ShowError"
+                              OnAdministratorPermissionGiven="AddAdminRol"
+                              OnProfessorPermissionGiven="AddProfessorRol"
+                              OnAdministratorPermissionRemoved="RemoveAdminRol"
+                              OnProfessorPermissionRemoved="RemoveProfessorRol" />
+                break;
+            case ActiveTabState.ShowSchoolsTab:
+                <SchoolsOverview Escuelas="Escuelas"
+                                 OnSchoolCreation="CreateSchool" />
+                break;
+        }
     }
     else
     {

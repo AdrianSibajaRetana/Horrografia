@@ -45,10 +45,55 @@ namespace Horrografia.Client.Pages.DashboardPages
 
         private bool IsLoading { get; set; }
 
+        //Para el manejo de tabs
+        private enum ActiveTabState
+        {
+            ShowGeneralTab,
+            ShowPermissionsTab,
+            ShowSchoolsTab,
+        }
+
+        private string _generalActiveString { get; set; }
+        private string _permissionActiveString { get; set; }
+        private string _schoolsActiveString { get; set; }
+        private ActiveTabState _activeTab { get; set; }
+        private const string ShowActiveState = "is-active";
+
         public PermissionAdministration()
         {
             IsLoading = true;
             _lecturaExitosa = false;
+            _activeTab = ActiveTabState.ShowGeneralTab;
+            _generalActiveString = ShowActiveState;
+            _permissionActiveString = null;
+            _schoolsActiveString = null;
+        }
+
+        private void ChangeTabContent(ActiveTabState StateToChange)
+        {
+
+            if (StateToChange != _activeTab)
+            {
+                _activeTab = StateToChange;
+                switch (StateToChange)
+                {
+                    case ActiveTabState.ShowGeneralTab:
+                        _generalActiveString = ShowActiveState;
+                        _permissionActiveString = null;
+                        _schoolsActiveString = null;
+                        break;
+                    case ActiveTabState.ShowPermissionsTab:
+                        _generalActiveString = null;
+                        _permissionActiveString = ShowActiveState;
+                        _schoolsActiveString = null;
+                        break;
+                    case ActiveTabState.ShowSchoolsTab:
+                        _generalActiveString = null;
+                        _permissionActiveString = null;
+                        _schoolsActiveString = ShowActiveState;
+                        break;
+                }
+            }
         }
 
         protected override async Task OnInitializedAsync()

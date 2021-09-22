@@ -1,60 +1,79 @@
-﻿<MudItem xs="12" sm="12" md="12">
-    <MudPaper Class="py-4 pl-4" Elevation="1">
-        <MudGrid>
-            <MudItem xs="12" sm="12" md="12">
-                <MudText Typo="Typo.h5">Visión general</MudText>
-            </MudItem>
-            <MudItem xs="12" sm="12" md="12">
-                <MudSimpleTable Hover="true" Striped="@true" Style="overflow-x: auto;" Elevation="0">
-                    <tbody>
-                        <tr>
-                            <td>
-                                <MudIcon Icon="@Icons.Material.Filled.AdminPanelSettings"></MudIcon>
-                                Administradores
-                            </td>
-                            <td>
-                                @_cantidadAdministradores
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <MudIcon Icon="@Icons.Material.Filled.School"></MudIcon>
-                                Profesores
-                            </td>
-                            <td>
-                                @_cantidadProfesores
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <MudIcon Icon="@Icons.Material.Filled.Group"></MudIcon>
-                                Usuarios totales
-                            </td>
-                            <td>
-                                @_cantidadUsuarios
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <MudIcon Icon="@Icons.Material.Filled.Festival"></MudIcon>
-                                Escuelas
-                            </td>
-                            <td>
-                                0
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <MudIcon Icon="@Icons.Material.Filled.Face"></MudIcon>
-                                Estudiantes
-                            </td>
-                            <td>
-                                0
-                            </td>
-                        </tr>
-                    </tbody>
-                </MudSimpleTable>
-            </MudItem>
-        </MudGrid>
-    </MudPaper>
-</MudItem>
+﻿<div class='block container'>
+    <div class='columns is-mobile is-centered'>
+        <div class='column is-8'>
+            <div class="block has-text-centered">
+                <h1 class='title'> Visión general de Horrografía</h1>
+                <hr>
+            </div>
+            <table class="block table is-bordered is-striped is-hoverable is-fullwidth">
+                <tbody>
+                    <tr>
+                        <td>
+                            <span class="icon-text">
+                                <span class="icon">
+                                    <i class="fas fa-user-shield"></i>
+                                </span>
+                                <span>Administradores</span>
+                            </span>
+                        </td>
+                        <td>
+                            @_cantidadAdministradores
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="icon-text">
+                                <span class="icon">
+                                    <i class="fas fa-graduation-cap"></i>
+                                </span>
+                                <span>Profesores</span>
+                            </span>
+                        </td>
+                        <td>
+                            @_cantidadProfesores
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="icon-text">
+                                <span class="icon">
+                                    <i class="fas fa-users"></i>
+                                </span>
+                                <span>Usuarios totales</span>
+                            </span>
+                        </td>
+                        <td>
+                            @_cantidadUsuarios
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="icon-text">
+                                <span class="icon">
+                                    <i class="fas fa-school"></i>
+                                </span>
+                                <span>Escuelas</span>
+                            </span>
+                        </td>
+                        <td>
+                            @CantidadEscuelas
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="icon-text">
+                                <span class="icon">
+                                    <i class="fas fa-user-graduate"></i>
+                                </span>
+                                <span>Estudiantes</span>
+                            </span>
+                        </td>
+                        <td>
+                            @_cantidadEstudiantes
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

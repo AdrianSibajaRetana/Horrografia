@@ -19,22 +19,34 @@ namespace Horrografia.Client.Shared.Components.Dashboard.Permission_Administrati
         [Parameter]
         public List<UserRolesModel> UsuariosYRoles { get; set; }
 
+        [Parameter]
+        public int CantidadEscuelas {get; set;}
+
         private int _cantidadUsuarios { get; set; }
 
         private int _cantidadAdministradores { get; set; }
 
         private int _cantidadProfesores { get; set; }
 
+        private int _cantidadEstudiantes { get; set; }
+
 
         protected override void OnParametersSet()
         {
             CalcularCantidadUsuarios();
             CalcularRoles();
+            CalcularCantidadEstudiantes();
         }
 
         private void CalcularCantidadUsuarios()
         {
             _cantidadUsuarios = Usuarios.Count();
+        }
+
+        private void CalcularCantidadEstudiantes()
+        {
+            var estudiantes = Usuarios.Where(u => !string.IsNullOrEmpty(u.codigoEscuela));
+            _cantidadEstudiantes = estudiantes.Count(); 
         }
 
         private void CalcularRoles()
