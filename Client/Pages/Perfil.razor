@@ -8,6 +8,44 @@
 <PageLoading Titulo="Mi Perfil" IsLoading="@_isLoading">
     @if (_lecturaExitosa)
     {
+        <div class="block tabs is-centered is-medium is-boxed">
+            <ul>
+                <li class=@_generalActiveString>
+                    <a @onclick="c => ChangeTabContent(ActiveTabState.ShowGeneralTab)">General</a>
+                </li>
+                <li class=@_historyActiveString>
+                    <a @onclick="c => ChangeTabContent(ActiveTabState.ShowHistoryTab)">Historial</a>
+                </li>
+                <li class=@_schoolActiveString>
+                    <a @onclick="c => ChangeTabContent(ActiveTabState.ShowSchoolTab)">Escuela</a>
+                </li>
+            </ul>
+        </div>
+        @switch (_activeTab)
+        {
+            case ActiveTabState.ShowGeneralTab:
+                <UserData User="User" />
+                break;
+            case ActiveTabState.ShowHistoryTab:
+                <UserHistory />
+                break;
+
+            case ActiveTabState.ShowSchoolTab:
+                @if (!_isUserInSchool)
+                {
+                    <UserSchool OnSchoolVerification="SearchSchoolExistence"
+                                OnUserSchoolRegistration="RegisterUserToSchool" />
+                }
+                else
+                {
+                    <SchoolData Escuela="UserSchool"
+                                Estudiantes="Estudiantes"
+                                Profesores="Profesores" />
+                }
+                break;
+        }
+
+        @*
         <MudItem Class="mx-8" Style="height: 80vh;">
             <MudItem xs="12" sm="12" md="12" Class="mt-8">
                 <MudText Typo="Typo.h5">Mi perfil</MudText>
@@ -15,29 +53,27 @@
             <MudTabs Outlined="true" Position="@Position.Left" Rounded="true" Border="true"
                      ApplyEffectsToContainer="true" PanelClass="pa-6" Class="mt-2" Style="height: inherit; max-height: 65vh;">
                 <MudTabPanel Text="General" Icon="@Icons.Material.Filled.Settings">
-                    <UserData 
-                              User="User"/>
+                    <UserData User="User" />
                 </MudTabPanel>
                 <MudTabPanel Text="Historial" Icon="@Icons.Material.Filled.HistoryEdu">
-                    <UserHistory/>
+                    <UserHistory />
                 </MudTabPanel>
                 <MudTabPanel Text="Escuela" Icon="@Icons.Material.Filled.Festival">
                     @if (!_isUserInSchool)
                     {
-                        <UserSchool
-                                    OnSchoolVerification="SearchSchoolExistence"
-                                    OnUserSchoolRegistration="RegisterUserToSchool"/>                    
+                        <UserSchool OnSchoolVerification="SearchSchoolExistence"
+                                    OnUserSchoolRegistration="RegisterUserToSchool" />
                     }
                     else
-                    { 
-                        <SchoolData
-                                    Escuela="UserSchool"
+                    {
+                        <SchoolData Escuela="UserSchool"
                                     Estudiantes="Estudiantes"
-                                    Profesores="Profesores"/>                        
+                                    Profesores="Profesores" />
                     }
                 </MudTabPanel>
             </MudTabs>
         </MudItem>
+        *@
     }
     else
     {

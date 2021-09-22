@@ -18,20 +18,20 @@ namespace Horrografia.Client.Shared.Components.Profile
         [Parameter]
         public EventCallback<string> OnUserSchoolRegistration{ get; set; }
 
-        private bool _isLoading { get; set; }
 
         private bool _showSchoolNotFound { get; set; }
 
+        private string _buttonLoading { get; set; }
 
         public UserSchool()
         {
             _showSchoolNotFound = false;
-            _isLoading = false; 
+            _buttonLoading = null; 
         }
 
         private async Task RegisterUserToSchool()
         {
-            _isLoading = true;
+            _buttonLoading = "is-loading";
             _showSchoolNotFound = false;
             var verificacion = new ClientEscuelaVerificationModel(_codigoEscuelaIntroducido);
             await OnSchoolVerification.InvokeAsync(verificacion);
@@ -43,7 +43,7 @@ namespace Horrografia.Client.Shared.Components.Profile
             {
                 _showSchoolNotFound = true; 
             }
-            _isLoading = false;
+            _buttonLoading = null;
         }
     }
 }

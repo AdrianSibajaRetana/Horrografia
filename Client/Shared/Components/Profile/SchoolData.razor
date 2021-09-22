@@ -1,67 +1,64 @@
-﻿<MudItem xs="12" sm="12" md="12">
-    <MudPaper Class="py-4 pl-4" Elevation="1">
-        <MudGrid>
-            <MudItem xs="12" sm="12" md="12">
-                <MudText Typo="Typo.h5">@Escuela.Nombre</MudText>
-            </MudItem>
-            <MudItem xs="12" sm="12" md="12">
-                <MudText Typo="Typo.h6">Profesores</MudText>
-            </MudItem>
-            <MudItem xs="12" sm="12" md="12">
-                <MudSimpleTable Hover="true" Striped="@true" Style="overflow-x: auto;" Elevation="0">
-                    <thead>
-                        <tr>
-                            <th>Nombre</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @if (Profesores.Any())
-                        {
-                            @foreach (var nombre in Profesores)
-                            {
-                                <tr>
-                                    <td>@nombre</td>
-                                </tr>
-                            }
-                        }
-                        else
+﻿<div class='block container'>
+    <div class='columns is-mobile is-centered'>
+        <div class='column is-8'>
+            <div class="block has-text-centered">
+                <h1 class='title'>@Escuela.Nombre</h1>
+                <hr>
+            </div>
+            <div class="block">
+                <h2 class="subtitle"> Profesores</h2>
+            </div>
+            <table class='block table is-bordered is-striped is-hoverable is-fullwidth'>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Profesores.Any())
+                    {
+                        @foreach (var nombre in Profesores)
                         {
                             <tr>
-                                <td>La escuela aún no tiene profesor</td>
+                                <td>@nombre</td>
                             </tr>
                         }
-                    </tbody>
-                </MudSimpleTable>
-            </MudItem>
-            <MudItem xs="12" sm="12" md="12">
-                <MudText Typo="Typo.h6">Estudiantes</MudText>
-            </MudItem>
-            <MudItem xs="12" sm="12" md="12">
-                <MudSimpleTable Hover="true" Striped="@true" Style="overflow-x: auto; max-height: inherit;" Elevation="0">
-                    <thead>
+                    }
+                    else
+                    {
                         <tr>
-                            <th>Nombre</th>
+                            <td>La escuela aún no tiene profesor</td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        @if (Estudiantes.Any())
-                        {
-                            @foreach (var nombre in Estudiantes)
-                            {
-                                <tr>
-                                    <td>@nombre</td>
-                                </tr>
-                            }
-                        }
-                        else
+                    }
+                </tbody>
+            </table>
+            <div class="block">
+                <h2 class="subtitle"> Estudiantes</h2>
+            </div>
+            <table class='block table is-bordered is-striped is-hoverable is-fullwidth'>
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Estudiantes.Any())
+                    {
+                        @foreach (var nombre in Estudiantes)
                         {
                             <tr>
-                                <td>La escuela aún no tiene estudiantes</td>
+                                <td>@nombre</td>
                             </tr>
                         }
-                    </tbody>
-                </MudSimpleTable>
-            </MudItem>
-        </MudGrid>
-    </MudPaper>
-</MudItem>
+                    }
+                    else
+                    {
+                        <tr>
+                            <td>La escuela aún no tiene estudiantes</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

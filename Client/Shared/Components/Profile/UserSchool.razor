@@ -1,48 +1,86 @@
-﻿<MudItem xs="12" sm="12" md="12" Style="display: flex; align-items: center; justify-content: center;">
-    <MudGrid>
-        <MudItem xs="12" sm="12" md="12">
-            <MudText Align="Align.Center" Typo="Typo.h3">
-                Regístrate en tu escuela
-            </MudText>
-        </MudItem>
-        <MudItem xs="12" sm="12" md="12">
-            <MudText Align="Align.Center" Typo="Typo.body1">
-                Insertá el código suministrado por tu profesor
-            </MudText>
-        </MudItem>
-        <MudItem xs="12" sm="12" md="12" Class="mt-1">
-            <MudGrid Justify="Justify.Center">
-                <MudItem xs="12" sm="12" md="5">
-                    <MudTextField @bind-Value="_codigoEscuelaIntroducido" Label="Código de escuela" Variant="Variant.Outlined"></MudTextField>
-                </MudItem>
-            </MudGrid>
-        </MudItem>
-        <MudItem xs="12" sm="12" md="12">
-            <MudGrid Justify="Justify.Center">
-                @if (!_isLoading)
+﻿<section class="section is-medium">
+    <div class='block container'>
+        <div class='columns is-mobile is-centered'>
+            <div class='column is-8'>
+                <div class="block has-text-centered">
+                    <h1 class='title'>Regístrate en tu escuela</h1>
+                    <hr>
+                </div>
+                <div class="block has-text-centered">
+                    <h2 class="subtitle">  Insertá el código suministrado por tu profesor</h2>
+                </div>
+                <div class="block control">
+                    <input class="input is-medium" type="text" placeholder="Código" @bind="_codigoEscuelaIntroducido">
+                </div>
+                <div class="block article-bottom">
+                    <button class="button is-primary @_buttonLoading" @onclick="RegisterUserToSchool">Registrarme</button>
+                </div>
+                @if (_showSchoolNotFound)
                 {
-                    <MudItem>
-                        <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.School" Color="Color.Primary" OnClick="RegisterUserToSchool">Registrarme</MudButton>
-                    </MudItem>
-                    @if (_showSchoolNotFound)
-                    { 
+                    <div class="block">
                         <MudItem xs="12" sm="12" md="12">
                             <MudText Align="Align.Center" Typo="Typo.body1" Style="@($"color:{Colors.Red.Default};")">
                                 No se ha encontrado ninguna escuela con ese código.
                             </MudText>
                             <MudText Align="Align.Center" Typo="Typo.body1" Style="@($"color:{Colors.Red.Default};")">
-                                Por favor inténtelo de nuevo. 
+                                Por favor inténtelo de nuevo.
                             </MudText>
-                        </MudItem>                    
-                    }
+                        </MudItem>
+                    </div>
                 }
-                else
-                {
-                    <MudItem>
-                        <MudProgressCircular Color="Color.Success" Indeterminate="true" />
+            </div>
+        </div>
+    </div>    
+</section>
+
+
+@*
+    <MudItem xs="12" sm="12" md="12" Style="display: flex; align-items: center; justify-content: center;">
+        <MudGrid>
+            <MudItem xs="12" sm="12" md="12">
+                <MudText Align="Align.Center" Typo="Typo.h3">
+                    Regístrate en tu escuela
+                </MudText>
+            </MudItem>
+            <MudItem xs="12" sm="12" md="12">
+                <MudText Align="Align.Center" Typo="Typo.body1">
+                    Insertá el código suministrado por tu profesor
+                </MudText>
+            </MudItem>
+            <MudItem xs="12" sm="12" md="12" Class="mt-1">
+                <MudGrid Justify="Justify.Center">
+                    <MudItem xs="12" sm="12" md="5">
+                        <MudTextField @bind-Value="_codigoEscuelaIntroducido" Label="Código de escuela" Variant="Variant.Outlined"></MudTextField>
                     </MudItem>
-                }
-            </MudGrid>
-        </MudItem>
-    </MudGrid>
-</MudItem>
+                </MudGrid>
+            </MudItem>
+            <MudItem xs="12" sm="12" md="12">
+                <MudGrid Justify="Justify.Center">
+                    @if (!_isLoading)
+                    {
+                        <MudItem>
+                            <MudButton Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.School" Color="Color.Primary" OnClick="RegisterUserToSchool">Registrarme</MudButton>
+                        </MudItem>
+                        @if (_showSchoolNotFound)
+                        {
+                            <MudItem xs="12" sm="12" md="12">
+                                <MudText Align="Align.Center" Typo="Typo.body1" Style="@($"color:{Colors.Red.Default};")">
+                                    No se ha encontrado ninguna escuela con ese código.
+                                </MudText>
+                                <MudText Align="Align.Center" Typo="Typo.body1" Style="@($"color:{Colors.Red.Default};")">
+                                    Por favor inténtelo de nuevo.
+                                </MudText>
+                            </MudItem>
+                        }
+                    }
+                    else
+                    {
+                        <MudItem>
+                            <MudProgressCircular Color="Color.Success" Indeterminate="true" />
+                        </MudItem>
+                    }
+                </MudGrid>
+            </MudItem>
+        </MudGrid>
+    </MudItem>
+*@

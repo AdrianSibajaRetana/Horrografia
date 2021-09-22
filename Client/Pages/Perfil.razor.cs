@@ -35,12 +35,55 @@ namespace Horrografia.Client.Pages
         private List<string> Estudiantes { get; set; }
         private List<string> Profesores { get; set; }
 
+        //Para el manejo de tabs
+        private enum ActiveTabState
+        {
+            ShowGeneralTab,
+            ShowHistoryTab,
+            ShowSchoolTab
+        }
+
+        private string _generalActiveString { get; set; }
+        private string _historyActiveString { get; set; }
+        private string _schoolActiveString { get; set; }
+        private ActiveTabState _activeTab { get; set; }
+        private const string ShowActiveState = "is-active";
+
         public Perfil()
         {
             _isLoading = true;
             _lecturaExitosa = false;
             _isUserInSchool = false;
             UserSchool = new();
+            _activeTab = ActiveTabState.ShowGeneralTab;
+            _generalActiveString = ShowActiveState;
+        }
+
+        private void ChangeTabContent(ActiveTabState StateToChange)
+        {
+
+            if (StateToChange != _activeTab)
+            {
+                _activeTab = StateToChange;
+                switch (StateToChange)
+                {
+                    case ActiveTabState.ShowGeneralTab:
+                        _generalActiveString = ShowActiveState;
+                        _historyActiveString = null;
+                        _schoolActiveString = null;
+                        break;
+                    case ActiveTabState.ShowHistoryTab:
+                        _generalActiveString = null;
+                        _historyActiveString = ShowActiveState;
+                        _schoolActiveString = null;
+                        break;
+                    case ActiveTabState.ShowSchoolTab:
+                        _generalActiveString = null;
+                        _historyActiveString = null;
+                        _schoolActiveString = ShowActiveState;
+                        break;
+                }
+            }
         }
 
         protected override async Task OnInitializedAsync()
