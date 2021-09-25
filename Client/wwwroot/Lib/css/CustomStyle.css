@@ -1,16 +1,27 @@
-﻿.articles {
+﻿.loading-logo {
+    max-height: 20rem;
+}
+.main-navigation-bar {
+    height: 5rem;
+}
+
+.navigation-logo {
+    max-height: 3rem;
+}
+
+.articles {
     margin: 5rem 0;
     margin-top: -200px;
 }
 
 .articles .content p {
     line-height: 1.9;
-    margin: 15px 0;
+    margin: 1rem 0;
 }
 
 .article-body {
     line-height: 1.4;
-    margin: 0 6rem;
+    margin: 0 5rem;
 }
 
 .article-title {
@@ -64,15 +75,19 @@ div.column.is-8:first-child {
 }
 
 .author-image {
-    max-height: 400px;
-    max-width: 400px;
-    border: 3px solid #ccc;
+    max-height: 20rem;
+    max-width: 20rem;
+    border: 0.2rem solid #ccc;
     border-radius: 50%;
 }
 
 .author-image-container {
-    max-height: 400px;
-    padding-top: 60px;
+    max-height: 24rem;
+    padding-top: 2rem;
+}
+
+.author-data-container {
+    margin-top: 1rem;
 }
 
 .media-center {
