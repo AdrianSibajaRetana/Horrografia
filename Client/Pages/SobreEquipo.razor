@@ -1,74 +1,83 @@
 ﻿@page "/equipo"
+@using Horrografia.Client.Shared.Components.TeamPage
+ 
+<section class="hero is-info is-medium is-bold" style="height: 500px;">
+    <div class="hero-body about-display">
+        <div class="container has-text-centered">
+            <h1 class="title">
+                Conozca al equipo detrás de Horrografía
+            </h1>
+        </div>
+    </div>
+</section>
 
-    <section class="hero is-info is-medium is-bold" style="height: 500px;">
-        <div class="hero-body about-display">
-            <div class="container has-text-centered">
-                <h1 class="title">
-                    Conozca al equipo detrás de Horrografía
-                </h1>
+<div class="container">
+    <section class="articles">
+        <div class="column is-8 is-offset-2">
+            <!-- START ARTICLE -->
+            <div class="card article">
+                <div class="card-content">
+                    <div class="media">
+                        <div class="media-content has-text-centered">
+                            <p class="title article-title">
+                                Sobre el equipo de horrografía
+                            </p>
+                        </div>
+                    </div>
+                    <div class="content article-body has-text-justified">
+                        <p>
+                            El proyecto de investigación 745-B2A13 Desarrollo de herramientas interactivas para el mejoramiento
+                            y certificación del español escrito, del Dr. Antonio Leoni de León y la Dra. Carla Victoria
+                            Jara Murillo, es un proyecto del Instituto de Investigaciones Lingüísticas de la Universidad
+                            de Costa Rica cuyo objetivo fue elaborar un conjunto de herramientas computacionales interactivas
+                            especializadas en el mejoramiento de la expresión escrita.
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
+</div>
 
-    <div class="container">
-        <!-- START ARTICLE FEED -->
-        <section class="articles">
-            <div class="column is-8 is-offset-2">
-                <!-- START ARTICLE -->
-                <div class="card article">
-                    <div class="card-content">
-                        <div class="media">
-                            <div class="media-content has-text-centered">
-                                <p class="title article-title">
-                                    Sobre el equipo de horrografía
-                                </p>
-                            </div>
-                        </div>
-                        <div class="content article-body has-text-justified">
-                            <p>
-                                El proyecto de investigación 745-B2A13 Desarrollo de herramientas interactivas para el mejoramiento
-                                y certificación del español escrito, del Dr. Antonio Leoni de León y la Dra. Carla Victoria
-                                Jara Murillo, es un proyecto del Instituto de Investigaciones Lingüísticas de la Universidad
-                                de Costa Rica cuyo objetivo fue elaborar un conjunto de herramientas computacionales interactivas
-                                especializadas en el mejoramiento de la expresión escrita.
-                            </p>
-                        </div>
-                    </div>
+
+<div class="columns is-centered">
+    <div class="article-bottom">    
+        <div class="column is-8 is-10-mobile">        
+            <div class="columns is-multiline is-centered">
+                <div class="column is-half-desktop">
+                    <BioCard BackroundImageSource="/Images/Team Images/FondoAdrian.jpg"
+                                PersonImageSource="/Images/Team Images/Adrian.jpg"
+                                Name="Adrián Sibaja Retana"
+                                PersonRole="Programador y diseñador"
+                                Bio="Lorem ipsum dolor sit amet, consectetur
+                                adipiscing elit. Maecenas mollis ullamcorper scelerisque.
+                                Pellentesque sodales enim at bibendum laoreet. Donec porta
+                                leo vel dui finibus, in euismod metus molestie. Vestibulum v
+                                estibulum maximus ornare." />
                 </div>
-
-                <div class="card article">
-
-                    <div class="container author-image-container">
-                        <MudGrid Justify="Justify.Center">
-                            <img src="/Images/Equipo-Adrian.jpg" alt="Imagen del programador" class="author-image">
-                        </MudGrid>
-                    </div>
-
-                    <div class="card-content">
-                        <div class="container author-data-container has-text-centered">
-                            <p class="title article-title">Adrián Sibaja Retana</p>
-                            <p class="subtitle is-6 article-subtitle">
-                                Programador y diseñador de la página web de Horrografía.
-                            </p>
-                        </div>
-
-                        <div class="content article-body">
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Accumsan lacus vel facilisis volutpat est velit egestas. Sapien eget mi proin sed. Sit amet mattis vulputate enim.
-                            </p>
-                            <p>
-                                Commodo ullamcorper a lacus vestibulum sed arcu. Fermentum leo vel orci porta non. Proin fermentum leo vel orci porta non pulvinar. Imperdiet proin fermentum leo vel. Tortor posuere ac ut consequat semper viverra. Vestibulum lectus mauris ultrices eros.
-                            </p>
-                            <h3 class="has-text-centered">Lectus vestibulum mattis ullamcorper velit sed ullamcorper morbi. Cras tincidunt lobortis feugiat vivamus.</h3>
-                            <p>
-                                In eu mi bibendum neque egestas congue quisque egestas diam. Enim nec dui nunc mattis enim ut tellus. Ut morbi tincidunt augue interdum velit euismod in. At in tellus integer feugiat scelerisque varius morbi enim nunc. Vitae suscipit tellus mauris a diam.
-                                Arcu non sodales neque sodales ut etiam sit amet.
-                            </p>
-                        </div>
-                    </div>
-
+                <div class="column is-half-desktop">
+                    <BioCard BackroundImageSource="/Images/Team Images/FondoAdrian.jpg"
+                                PersonImageSource="/Images/Team Images/Adrian.jpg"
+                                Name="Adrián Sibaja Retana"
+                                PersonRole="Programador y diseñador"
+                                Bio="Lorem ipsum dolor sit amet, consectetur
+                                adipiscing elit. Maecenas mollis ullamcorper scelerisque.
+                                Pellentesque sodales enim at bibendum laoreet. Donec porta
+                                leo vel dui finibus, in euismod metus molestie. Vestibulum v
+                                estibulum maximus ornare." />
                 </div>
-
+                <div class="column is-half-desktop">
+                    <BioCard BackroundImageSource="/Images/Team Images/FondoAdrian.jpg"
+                                PersonImageSource="/Images/Team Images/Adrian.jpg"
+                                Name="Adrián Sibaja Retana"
+                                PersonRole="Programador y diseñador"
+                                Bio="Lorem ipsum dolor sit amet, consectetur
+                                adipiscing elit. Maecenas mollis ullamcorper scelerisque.
+                                Pellentesque sodales enim at bibendum laoreet. Donec porta
+                                leo vel dui finibus, in euismod metus molestie. Vestibulum v
+                                estibulum maximus ornare." />
+                </div>
             </div>
-        </section>
+        </div>
     </div>
+</div>
