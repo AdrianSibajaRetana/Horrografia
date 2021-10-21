@@ -135,3 +135,25 @@ div.column.is-8:first-child {
     width: 100%;
     max-width: 400px;
 }
+
+/*Game page*/
+
+.game-display
+{
+    background-image: url("../../Images/Game/GameBackround.png");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.pixel-art
+{
+    image-rendering: pixelated;
+}
+
+.main-character
+{
+    width: 160px;
+    height: 167px;
+}
+
