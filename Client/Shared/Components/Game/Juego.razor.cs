@@ -9,7 +9,7 @@ using Horrografia.Shared.Models;
 using Microsoft.AspNetCore.Components;
 using MudBlazor;
 
-namespace Horrografia.Client.Pages
+namespace Horrografia.Client.Shared.Components.Game
 {
     public partial class Juego : IDisposable
     {
