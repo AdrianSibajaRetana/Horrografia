@@ -1,5 +1,6 @@
 ﻿@page "/juego"
 @using Horrografia.Client.Shared.Components.General
+@using Horrografia.Client.Shared.Components.Game
 
 
 <PageLoading Titulo="Horrografía" IsLoading="@IsLoading">
@@ -23,31 +24,46 @@
     }
     else
     {
-        <section class="section is-large">
-            <div class="container has-text-centered is-justify-content-center">
-                <div class='columns is-mobile is-centered'>
-                    <div class='column is-8'>
-                        <div class="block has-text-centered">
-                            <h1 class='title'> Seleccione un nivel</h1>
-                            <hr>
-                        </div>
-                        <div class="block">
-                            <div class="select is-medium is-fullwidth">
-                                <select class="form-control" @bind="_IdEnSeleccionDePagina">
-                                    <option selected value="@INVALID_OPTION">Seleccione un nivel</option>
-                                    @foreach (var Nivel in Niveles)
-                                    {
-                                        <option value="@Nivel.Id">@Nivel.Nombre</option>
-                                    }
-                                </select>
+        @if (IsChoosingLevel)
+        {
+            <section class="section is-large">
+                <div class="container has-text-centered is-justify-content-center">
+                    <div class='columns is-mobile is-centered'>
+                        <div class='column is-8'>
+                            <div class="block has-text-centered">
+                                <h1 class='title'> Seleccione un nivel</h1>
+                                <hr>
                             </div>
-                        </div>
-                        <div class="block article-bottom">
-                            <button class="button is-primary">Jugar Nivel</button>
+                            <div class="block">
+                                <div class="select is-medium is-fullwidth">
+                                    <select class="form-control" @bind="_IdEnSeleccionDePagina">
+                                        @foreach (var Nivel in Niveles)
+                                        {
+                                            <option value="@Nivel.Id">@Nivel.Nombre</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="block article-bottom">
+                                <button class="button is-primary" @onclick="BuscarDatosDeNivel">Jugar Nivel</button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        }
+        else
+        {
+            <LoadingScreen SubTitulo="@LoadingStatus" IsLoading="@IsLoadingGame">
+                @if (SuccesfulGameLoad)
+                {
+                    <Juego/>
+                }
+                else
+                {
+                    <ErrorMessage/>
+                }
+            </LoadingScreen>
+        }
     }
 </PageLoading>

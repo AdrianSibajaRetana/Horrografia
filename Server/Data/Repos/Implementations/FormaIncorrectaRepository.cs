@@ -30,7 +30,7 @@ namespace Horrografia.Server.Data.Repos.Implementations
         //GET/{idNivel}
         public async Task<List<FormaIncorrectaModel>> GetFormasByLevelId(int idNivel)
         {
-            string sql = "SELECT * FROM formaincorrecta JOIN item ON item.id = formaincorrecta.Itemid JOIN pertenecea ON item.id = pertenecea.idItem WHERE pertenecea.idNivel = @idNivel";
+            string sql = "SELECT * FROM formaincorrecta JOIN item ON item.id = formaincorrecta.Itemid JOIN nivel ON nivel.id = item.NivelId WHERE nivel.id = @idNivel";
             var formas = await _dbContext.LoadData<FormaIncorrectaModel, dynamic>(sql, new { idNivel = idNivel }, ConectionString);
             return formas;
         }
