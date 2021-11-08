@@ -144,6 +144,8 @@ div.column.is-8:first-child {
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
+    width: 100vw;
+    height: 100vh;
 }
 
 .pixel-art
@@ -153,7 +155,28 @@ div.column.is-8:first-child {
 
 .main-character
 {
-    width: 160px;
-    height: 167px;
+    width: 12vw;
+    height: 10vh;
+    position: absolute;
+    top: 50vh;
+    left: 10vw;
 }
+
+.game-input-container
+{
+    width: 100vw;
+    height: 12vh;
+    top: 94vh;
+    position: absolute;
+}
+
+.game-input
+{
+    width: 60vw;
+    height: 5vh;
+}
+
+
+
+
 

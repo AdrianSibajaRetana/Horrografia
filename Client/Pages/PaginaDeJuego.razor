@@ -57,7 +57,7 @@
             <LoadingScreen SubTitulo="@LoadingStatus" IsLoading="@IsLoadingGame">
                 @if (SuccesfulGameLoad)
                 {
-                    <Juego/>
+                    <Juego Items="ItemsTotales" Pistas="PistasTotales" FormasIncorrectas="FormasIncorrectasTotales"/>
                 }
                 else
                 {

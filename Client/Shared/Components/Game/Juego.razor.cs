@@ -13,11 +13,20 @@ namespace Horrografia.Client.Shared.Components.Game
 {
     public partial class Juego : IDisposable
     {
+        [Parameter]
+        public List<ItemModel> Items { get; set; }
+        
+        [Parameter]
+        public List<PistaModel> Pistas { get; set; }
+        
+        [Parameter]
+        public List<FormaIncorrectaModel> FormasIncorrectas { get; set; }
+        
         private Timer gameTimer;
         private int currentFrame { get; set; }
 
         private string mainCharacterImagePath { get; set; }
-
+        
         protected override void OnInitialized()
         {
             currentFrame = 1;
