@@ -176,7 +176,32 @@ div.column.is-8:first-child {
     height: 5vh;
 }
 
+.game-item-container
+{
+    width: 10vw;
+    height: 10vw;
+    top: 50vh;
+    left: 80vw;
+    position: absolute;
+    border: solid black;
+    
+}
 
+.game-item-1
+{
+    width: 10vw;
+    height: 12vh;
+    top: 3vh;
+    right: 0.3vw;
+    position: absolute;
+}
 
+.game-item-2
+{
+    width: 9vw;
+    height: 12vh;
+    top: 2vh;
+    position: absolute;
+}
 
 

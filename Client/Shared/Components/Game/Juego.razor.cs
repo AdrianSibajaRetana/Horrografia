@@ -25,12 +25,21 @@ namespace Horrografia.Client.Shared.Components.Game
         private Timer gameTimer;
         private int currentFrame { get; set; }
 
+        private int currentItem { get; set; }
+
         private string mainCharacterImagePath { get; set; }
         
+        private string currentItemImagePath { get; set; }
+
+        private string currentItemCSS { get; set; }
+
         protected override void OnInitialized()
         {
             currentFrame = 1;
+            currentItem = 2;
+            currentItemCSS = "game-item-2";
             mainCharacterImagePath = $"/Images/Game/Main_Character/Character{currentFrame}.png";
+            currentItemImagePath = $"/Images/Game/Items/Item{currentItem}.png";
             gameTimer = new ();
             gameTimer.Interval = 62;
             gameTimer.Elapsed += TimerOnElapsed;
