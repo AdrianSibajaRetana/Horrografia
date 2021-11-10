@@ -159,7 +159,9 @@ div.column.is-8:first-child {
     height: 10vh;
     position: absolute;
     top: 50vh;
-    left: 10vw;
+    margin-left: 10%;
+    min-width: 90px;
+    min-height: 95px;
 }
 
 .game-input-container
@@ -178,30 +180,53 @@ div.column.is-8:first-child {
 
 .game-item-container
 {
-    width: 10vw;
-    height: 10vw;
+    width: 10vh;
+    height: 10vh;
+    margin-left: 75%;
     top: 50vh;
-    left: 80vw;
     position: absolute;
     border: solid black;
-    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-width: 50px;
+    min-height: 50px;
 }
 
 .game-item-1
 {
-    width: 10vw;
-    height: 12vh;
-    top: 3vh;
-    right: 0.3vw;
+    width: 90%;
+    height: 90%;
     position: absolute;
 }
 
 .game-item-2
 {
-    width: 9vw;
-    height: 12vh;
-    top: 2vh;
+    width: 12vw;
+    height: 10vh;
     position: absolute;
 }
 
+.game-wrongform-container
+{
+    width: 100vw;
+    height: 12vh;
+    position: absolute;
+    margin-top: 2vh;
+}
+
+.game-wrongform
+{
+    max-width: 40vw;
+    position: absolute;
+}
+
+.game-lives-container
+{
+    width: 15vw;
+    height: 4vh;
+    top: 45vh;
+    margin-left: 8%;
+    position: absolute;
+}
 

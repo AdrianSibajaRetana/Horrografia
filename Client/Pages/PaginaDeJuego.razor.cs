@@ -51,7 +51,6 @@ namespace Horrografia.Client.Pages
                 NivelSeleccionado = Niveles.FirstOrDefault(n => n.Id == _IdNivelEscogido);
             }
         }
-        private const int INVALID_OPTION = -10000; 
         
         private bool IsLoading { get; set; }
 

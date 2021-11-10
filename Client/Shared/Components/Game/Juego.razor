@@ -7,18 +7,34 @@
     <div class="game-input-container">
         <div class="block">
             <div class="article-bottom">
-                <input class="input is-primary is-medium game-input" type="text" placeholder="Forma correcta">    
+                <input class="input is-primary is-medium game-input" type="text" placeholder="Forma correcta" @bind="CurrentInput">    
             </div>
         </div>
         <div class="block">
             <div class="article-bottom">
-                <button class="button is-primary">Intentar</button>
+                <button class="button is-primary" @onclick="CheckAnswer">Intentar</button>
             </div>            
         </div>
     </div>
     
     <div class="game-item-container">
         <img class="pixel-art @currentItemCSS" src=@currentItemImagePath alt="item"/>
+    </div>
+    
+    <div class="game-wrongform-container">
+        <div class="block">
+            <div class="article-bottom">
+                <div class="container game-wrongform">
+                    <div class="notification is-primary">
+                        @CurrentIncorrectForm
+                    </div>
+                </div>    
+            </div>
+        </div>
+    </div>
+    
+    <div class="game-lives-container">
+        <progress class="progress is-danger" value="@CurrentLifeString" max="100">@CurrentLifePercentage</progress>
     </div>
     
 </div>
