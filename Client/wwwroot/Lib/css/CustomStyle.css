@@ -153,15 +153,31 @@ div.column.is-8:first-child {
     image-rendering: pixelated;
 }
 
+.game-character-container
+{
+    position: absolute;
+    top: 50vh;
+    left: 10%;
+}
+
 .main-character
 {
     width: 12vw;
     height: 10vh;
-    position: absolute;
-    top: 50vh;
-    margin-left: 10%;
     min-width: 90px;
     min-height: 95px;
+    position: absolute;
+    left: 10%;
+}
+
+.game-lives-container
+{
+    width: 20vw;
+    height: 4vh;
+    position: absolute;
+    top: 50vh;
+    left: 6%;
+    min-width: 100px;
 }
 
 .game-input-container
@@ -221,12 +237,5 @@ div.column.is-8:first-child {
     position: absolute;
 }
 
-.game-lives-container
-{
-    width: 15vw;
-    height: 4vh;
-    top: 45vh;
-    margin-left: 8%;
-    position: absolute;
-}
+
 
