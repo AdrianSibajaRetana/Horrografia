@@ -26,6 +26,8 @@
     <div class="game-item-container">
         <img class="pixel-art @currentItemCSS" src=@currentItemImagePath alt="item"/>
     </div>
+    
+    
 
     <div class="game-wrongform-container">
         <div class="block">
@@ -38,4 +40,17 @@
             </div>
         </div>
     </div>
+    
+    <div class="game-score-container is-hidden-mobile">
+        <div class="block">
+            <div class="game-score-wrapper">
+                <div class="container game-score">
+                    <div class="notification is-primary">
+                        @($"Puntaje: {CurrentGameScore}")
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
 </div>

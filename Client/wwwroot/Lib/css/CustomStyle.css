@@ -237,5 +237,26 @@ div.column.is-8:first-child {
     position: absolute;
 }
 
+.game-score-container
+{
+    width: 100vw;
+    height: 12vh;
+    position: absolute;
+    margin-top: 2vh;
+}
+
+.game-score-wrapper
+{
+    display: flex;
+    justify-content: end;
+    padding-right: 5vw;
+}
+
+.game-score
+{
+    max-width: 40vw;
+    position: absolute;
+    text-align: center
+}
 
 

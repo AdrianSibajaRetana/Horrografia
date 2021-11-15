@@ -42,6 +42,8 @@ namespace Horrografia.Client.Shared.Components.Game
         private string CurrentLifePercentage { get; set; }
         private string CurrentIncorrectForm { get; set; }
         private int currentFrame { get; set; }
+        
+        private int CurrentGameScore {get; set;}
 
         private int currentItem { get; set; }
 
@@ -56,6 +58,7 @@ namespace Horrografia.Client.Shared.Components.Game
             ItemQueue = new();
             TransformItemListToQueue();
             GetNextItem();
+            CurrentGameScore = 0;
             currentFrame = 1;
             currentItem = 1;
             currentItemCSS = "game-item-1";
