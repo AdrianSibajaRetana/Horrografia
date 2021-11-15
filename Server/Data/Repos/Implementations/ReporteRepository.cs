@@ -27,7 +27,7 @@ namespace Horrografia.Server.Data.Repos.Implementations
         }
 
         //GET/{IdUsuario}
-        public async Task<List<ReporteModel>> GetUserReports(int IdUsuario)
+        public async Task<List<ReporteModel>> GetUserReports(string IdUsuario)
         {
             string sql = "SELECT * FROM reporte WHERE IdUsuario = @id";
             var reportes = await _dbContext.LoadData<ReporteModel, dynamic>(sql, new { id = IdUsuario }, ConectionString);

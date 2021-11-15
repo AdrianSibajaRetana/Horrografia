@@ -41,7 +41,7 @@ namespace Horrografia.Server.Controllers
 
         // GET api/<ReporteController>/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> Get(int id)
+        public async Task<IActionResult> Get(string id)
         {
             try
             {

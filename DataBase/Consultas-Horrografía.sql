@@ -60,8 +60,7 @@ CREATE TABLE Reporte(
                         CantidadErrores int NOT NULL,
                         Puntuacion INT NOT NULL,
                         PRIMARY KEY(id),
-                        FOREIGN KEY (idNivel) REFERENCES Nivel(id),
-                        FOREIGN KEY (idUsuario) REFERENCES aspnetusers(Id)
+                        FOREIGN KEY (idNivel) REFERENCES Nivel(id)
 )
 
 CREATE TABLE ContieneError(

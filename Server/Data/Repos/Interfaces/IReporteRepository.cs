@@ -8,7 +8,7 @@ namespace Horrografia.Server.Data.Repos.Interfaces
     {
         Task DeleteReporteById(int ReporteId);
         Task<List<ReporteModel>> GetAllAsync();
-        Task<List<ReporteModel>> GetUserReports(int IdUsuario);
+        Task<List<ReporteModel>> GetUserReports(string IdUsuario);
         Task InsertData(ReporteModel r);
     }
 }
