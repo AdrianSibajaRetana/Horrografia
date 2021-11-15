@@ -1,0 +1,52 @@
+﻿@inject IDialogService DialogService
+@using System.ComponentModel.DataAnnotations
+
+<MudDialog @bind-IsVisible="ShowDialogue">
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            Instrucciones
+        </MudText>
+    </TitleContent>
+    
+    <DialogContent>
+        <MudCard Elevation=0>
+            <MudCardContent>
+                <MudText Typo="Typo.subtitle1">
+                    ¿Desea visualizar las instrucciones? 
+                </MudText>
+            </MudCardContent>
+            <MudCardActions>
+                <MudGrid>
+                    <MudItem Class="ml-auto">
+                        <MudButton Variant="Variant.Text" OnClick="OnNoPressed">No</MudButton>
+                        <MudButton Variant="Variant.Text" Color="Color.Success" OnClick="OnYesPressed">Si</MudButton>
+                    </MudItem>
+                </MudGrid>
+            </MudCardActions>
+        </MudCard>
+    </DialogContent>
+</MudDialog>
+
+
+@code
+{
+    [Parameter]
+    public bool ShowDialogue { get; set; }
+    
+    [Parameter]
+    public EventCallback OnNoPressed { get; set; }
+    
+    [Parameter]
+    public EventCallback OnYesPressed { get; set; }
+    
+    private async Task NoButtonPressed()
+    {
+        await OnNoPressed.InvokeAsync();
+    }
+    
+    private async Task YesButtonPressed()
+    {
+        await OnYesPressed.InvokeAsync();
+    }
+    
+}

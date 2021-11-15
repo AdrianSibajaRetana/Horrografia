@@ -1,0 +1,74 @@
+﻿@inject IDialogService DialogService
+@using System.ComponentModel.DataAnnotations
+
+<MudDialog @bind-IsVisible="ShowDialogue">
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            Instrucciones
+        </MudText>
+    </TitleContent>
+    
+    <DialogContent>
+        <MudCard Elevation=0>
+            <MudCardContent>
+                <MudContainer Style="max-height: 300px; overflow-y: scroll">
+                    <MudItem Typo="Typo.subtitle1" Class="block">
+                        <p>
+                            <b>1.</b> Se le desplegará, en la parte superior de la pantalla, una forma erronea
+                            de una palabra o frase. En la parte inferior de la pantalla, usted deberá ingresar
+                            la forma que usted piensa que es correcta y luego presionar el botón de "Intentar".
+                        </p>
+                    </MudItem>
+                    <MudItem Typo="Typo.subtitle1" Class="block">
+                        <p>
+                            <b>2.</b> En el caso de ser una frase, usted solo deberá escribir la palabra que crea
+                            que está mal escrita. En caso de ser una única palabra, debe escribir su forma correcta.
+                        </p>
+                    </MudItem>
+                    <MudItem Typo="Typo.subtitle1" Class="block">
+                        <p>
+                            <b>3.</b> La meta del juego es dar pociones jugosas al cuervo. Para ello, debe escribir
+                            la forma correcta de la palabra mostrada, de no ser así, se le dará una poción de dudosa
+                            procedencia y perderá una vida.
+                        </p>
+                    </MudItem>
+                    <MudItem Typo="Typo.subtitle1" Class="block">
+                        <p>
+                            <b>4.</b> ¡Los turnos erroneos son limitados! Cada vez que responda erroneamente, se le restará
+                            vida. Si su vida llega a 0, perderá la partida. La vida es señalada por la barra roja encima del jugador,
+                            el págaro.
+                        </p>
+                    </MudItem>
+                    <MudItem Typo="Typo.subtitle1" Class="block">
+                        <p>
+                            <b>5.</b> ¡Felicidades, adivinó correctamente! Cada vez que responda correctamente, ganará puntaje y
+                            no se le restará vida al pájaro.
+                        </p>
+                    </MudItem>
+                </MudContainer>
+            </MudCardContent>
+            <MudCardActions>
+                <MudGrid>
+                    <MudItem Class="ml-auto">
+                        <MudButton Variant="Variant.Text" Color="Color.Success" OnClick="ButtonPressed">Jugar</MudButton>
+                    </MudItem>
+                </MudGrid>
+            </MudCardActions>
+        </MudCard>
+    </DialogContent>
+</MudDialog>
+
+
+@code 
+{
+    [Parameter]
+    public bool ShowDialogue { get; set; }
+    
+    [Parameter]
+    public EventCallback OnButtonPressed { get; set; }
+    
+    private async Task ButtonPressed()
+    {
+        await OnButtonPressed.InvokeAsync();
+    }
+}

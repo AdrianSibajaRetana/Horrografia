@@ -52,12 +52,17 @@ namespace Horrografia.Client.Shared.Components.Game
         private string currentItemImagePath { get; set; }
 
         private string currentItemCSS { get; set; }
+        
+        private bool ShowInstructions {get; set;}
+        
+        private bool UserWantsToSeeInstructions {get; set;}
 
         protected override void OnInitialized()
         {
             ItemQueue = new();
-            TransformItemListToQueue();
-            GetNextItem();
+            ShowInstructions = false;
+            UserWantsToSeeInstructions = false;
+            CurrentIncorrectForm = ""; 
             CurrentGameScore = 0;
             currentFrame = 1;
             currentItem = 1;
@@ -67,7 +72,36 @@ namespace Horrografia.Client.Shared.Components.Game
             CurrentLifePercentage = CurrentLifeString + '%';
             CurrentMistakes = 0;
             mainCharacterImagePath = $"/Images/Game/Main_Character/Character{currentFrame}.png";
-            currentItemImagePath = $"/Images/Game/Items/Item{currentItem}.png";
+            currentItemImagePath = $"/Images/Game/Items/Item{currentItem}.png";                       
+        }
+
+        protected override async Task OnAfterRenderAsync(bool firstRender)
+        {
+            if (firstRender)
+            {
+                await Task.Delay(100);
+                ShowInstructions = true;
+                StateHasChanged();
+            }
+        }
+
+        protected void CloseInstructionDialog()
+        {
+            ShowInstructions = false;
+            UserWantsToSeeInstructions = false;
+            StartGame();
+        }
+
+        protected void ShowInstructionDialog()
+        {
+            ShowInstructions = false;
+            UserWantsToSeeInstructions = true;
+        }
+        
+        private void StartGame()
+        {
+            TransformItemListToQueue();
+            GetNextItem();
             gameTimer = new ();
             gameTimer.Interval = 62;
             gameTimer.Elapsed += TimerOnElapsed;
@@ -85,7 +119,7 @@ namespace Horrografia.Client.Shared.Components.Game
 
         private void GetNextItem()
         {
-            if (ItemQueue.Count() > 0)
+            if (ItemQueue.Any())
             {
                 var random = new Random();
                 CurrentItem = ItemQueue.Dequeue();

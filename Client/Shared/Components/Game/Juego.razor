@@ -1,4 +1,6 @@
-﻿<div class="game-display">
+﻿@using Horrografia.Client.Shared.Components.Game
+
+<div class="game-display">
     
     <div class="game-character-container">
         <div class="main-character block">
@@ -52,5 +54,9 @@
             </div>
         </div>
     </div>
-    
+   
 </div>
+
+<FirstInstructionDialog ShowDialogue="ShowInstructions"OnNoPressed="CloseInstructionDialog" OnYesPressed="ShowInstructionDialog"/>
+    
+<SecondInstructionDialog ShowDialogue="UserWantsToSeeInstructions" OnButtonPressed="CloseInstructionDialog"/>
