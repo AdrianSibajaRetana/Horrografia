@@ -1,0 +1,68 @@
+﻿@inject IDialogService DialogService
+@using System.ComponentModel.DataAnnotations
+
+<MudDialog @bind-IsVisible="ShowDialogue">
+    <TitleContent>
+        @if (IsCorrect)
+            {
+                <MudText Typo="Typo.h6" Class="has-text-success">
+                @("¡Respuesta Correcta!")
+                </MudText>
+            }
+            else
+            {
+                <MudText Typo="Typo.h6" Class="has-text-danger">
+                    @("Respuesta Incorrecta :(")
+                </MudText>
+            }
+    </TitleContent>
+    
+    <DialogContent>
+        <MudCard Elevation=0>
+            <MudCardContent>
+                <MudText Typo="Typo.subtitle1" Class="block">
+                    @if (IsCorrect)
+                    {
+
+                        @($"¡Felicidades, acertaste la palabra!")
+                    }
+                    else
+                    {
+                        @("Lastimosamente, no acertaste la palabra.")
+                    }
+                </MudText>
+                <MudText Typo="Typo.subtitle1" Class="block">
+                    <p>
+                        La <b>forma correcta</b> era: @CorrectForm
+                    </p>
+                </MudText> 
+            </MudCardContent>
+            <MudCardActions>
+                <MudGrid>
+                    <MudItem Class="ml-auto">
+                        <MudButton Variant="Variant.Text" Color="Color.Success" OnClick="ButtonPressed">Continuar</MudButton>
+                    </MudItem>
+                </MudGrid>
+            </MudCardActions>
+        </MudCard>
+    </DialogContent>
+</MudDialog>
+
+@code {
+    [Parameter]
+    public bool ShowDialogue { get; set; }
+    
+    [Parameter]
+    public string CorrectForm { get; set; }
+    
+    [Parameter]
+    public bool IsCorrect { get; set; }
+    
+    [Parameter]
+    public EventCallback OnButtonPressed { get; set; }
+    
+    private async Task ButtonPressed()
+    {
+        await OnButtonPressed.InvokeAsync();
+    }
+}

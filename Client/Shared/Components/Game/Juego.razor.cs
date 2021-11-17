@@ -30,7 +30,7 @@ namespace Horrografia.Client.Shared.Components.Game
 
         private Queue<ItemModel> ItemQueue { get; set; }
 
-        private ItemModel CurrentItem { get; set; }
+        private ItemModel CurrentItemModel { get; set; }
 
         private string CurrentInput { get; set; }
 
@@ -61,12 +61,20 @@ namespace Horrografia.Client.Shared.Components.Game
 
         private bool ShowClueDialog { get; set; }
 
+        private bool ShowItemGuessedDialog { get; set; }
+
+        private bool IsCurrentGuessGood { get; set; }
+        
+        private string CurrentFormaCorrecta { get; set; }
+
         protected override void OnInitialized()
         {
             ItemQueue = new();
             ShowInstructions = false;
             UserWantsToSeeInstructions = false;
             ShowClueDialog = false;
+            ShowItemGuessedDialog = false;
+            IsCurrentGuessGood = false;
             CurrentIncorrectForm = ""; 
             CurrentGameScore = 0;
             currentFrame = 1;
@@ -127,8 +135,9 @@ namespace Horrografia.Client.Shared.Components.Game
             if (ItemQueue.Any())
             {
                 var random = new Random();
-                CurrentItem = ItemQueue.Dequeue();
-                var IncorrectForms = FormasIncorrectas.Where(x => x.Itemid == CurrentItem.Id).ToList();
+                CurrentItemModel = ItemQueue.Dequeue();
+                CurrentFormaCorrecta = CurrentItemModel.FormaCorrecta;
+                var IncorrectForms = FormasIncorrectas.Where(x => x.Itemid == CurrentItemModel.Id).ToList();
                 int index = random.Next(IncorrectForms.Count());
                 CurrentIncorrectForm = IncorrectForms[index].Forma;
             }
@@ -141,9 +150,9 @@ namespace Horrografia.Client.Shared.Components.Game
 
         private void CheckAnswer()
         {
-            if (CurrentItem.FormaCorrecta == CurrentInput)
+            if (CurrentFormaCorrecta == CurrentInput)
             {
-                Console.Write("Intentó bien");
+                ShowGuessDialog(true);
             }
             else
             {
@@ -158,14 +167,29 @@ namespace Horrografia.Client.Shared.Components.Game
                     CurrentLifePercentage = CurrentLifeString + '%';
                     Console.Write("Perdió la partida");
                 }
+                else
+                {
+                    ShowGuessDialog(false);
+                }
             }
+        }
+
+        private void ShowGuessDialog(bool isCorrect)
+        {
+            IsCurrentGuessGood = isCorrect;
+            ShowItemGuessedDialog = true;
+        }
+        
+        protected void CloseGuessDialog()
+        {
             CurrentInput = "";
             GetNextItem();
+            ShowItemGuessedDialog = false;
         }
 
         private void ShowClue()
         {
-            var pistaObject = Pistas.FirstOrDefault(p => p.Id == CurrentItem.PistaId);
+            var pistaObject = Pistas.FirstOrDefault(p => p.Id == CurrentItemModel.PistaId);
             PistaActual = pistaObject == null ? string.Empty : pistaObject.Pista;
             ShowClueDialog = true;
         }
