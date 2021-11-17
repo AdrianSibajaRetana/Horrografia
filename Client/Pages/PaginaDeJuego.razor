@@ -47,6 +47,12 @@
                             <div class="block article-bottom">
                                 <button class="button is-primary" @onclick="BuscarDatosDeNivel">Jugar Nivel</button>
                             </div>
+                            @if (NivelSeleccionado != null)
+                            {
+                                <div class="notification is-primary is-light block">
+                                    @NivelSeleccionado.Descripcion
+                                </div>    
+                            }
                         </div>
                     </div>
                 </div>
