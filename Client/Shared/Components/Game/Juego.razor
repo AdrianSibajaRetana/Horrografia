@@ -20,7 +20,14 @@
         </div>
         <div class="block">
             <div class="article-bottom">
-                <button class="button is-primary" @onclick="CheckAnswer">Intentar</button>
+                <div class="columns">
+                    <div class="column">
+                        <button class="button is-info" @onclick="ShowClue">Pista</button>
+                    </div>
+                    <div class="column">
+                        <button class="button is-primary" @onclick="CheckAnswer">Intentar</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -60,3 +67,5 @@
 <FirstInstructionDialog ShowDialogue="ShowInstructions"OnNoPressed="CloseInstructionDialog" OnYesPressed="ShowInstructionDialog"/>
     
 <SecondInstructionDialog ShowDialogue="UserWantsToSeeInstructions" OnButtonPressed="CloseInstructionDialog"/>
+
+<ClueDialog ShowDialogue="ShowClueDialog" Pista="@PistaActual" OnButtonPressed="CloseClueDialog"/>

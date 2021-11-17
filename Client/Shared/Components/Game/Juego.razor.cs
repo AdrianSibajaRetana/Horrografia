@@ -56,12 +56,17 @@ namespace Horrografia.Client.Shared.Components.Game
         private bool ShowInstructions {get; set;}
         
         private bool UserWantsToSeeInstructions {get; set;}
+        
+        private string PistaActual { get; set; }
+
+        private bool ShowClueDialog { get; set; }
 
         protected override void OnInitialized()
         {
             ItemQueue = new();
             ShowInstructions = false;
             UserWantsToSeeInstructions = false;
+            ShowClueDialog = false;
             CurrentIncorrectForm = ""; 
             CurrentGameScore = 0;
             currentFrame = 1;
@@ -157,6 +162,19 @@ namespace Horrografia.Client.Shared.Components.Game
             CurrentInput = "";
             GetNextItem();
         }
+
+        private void ShowClue()
+        {
+            var pistaObject = Pistas.FirstOrDefault(p => p.Id == CurrentItem.PistaId);
+            PistaActual = pistaObject == null ? string.Empty : pistaObject.Pista;
+            ShowClueDialog = true;
+        }
+        
+        protected void CloseClueDialog()
+        {
+            ShowClueDialog = false;
+        }
+        
 
         private void TimerOnElapsed(object sender, ElapsedEventArgs e)
         {
