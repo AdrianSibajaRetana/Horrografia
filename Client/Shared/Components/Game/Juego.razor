@@ -71,3 +71,5 @@
 <ClueDialog ShowDialogue="ShowClueDialog" Pista="@PistaActual" OnButtonPressed="CloseClueDialog"/>
 
 <ItemGuessedDialog ShowDialogue="ShowItemGuessedDialog" CorrectForm="@CurrentFormaCorrecta" IsCorrect="IsCurrentGuessGood" OnButtonPressed="CloseGuessDialog"/>
+
+<GameOverDialog ShowDialogue="ShowGameoverDialog" DidUserWon="DidUserWinGame" Score="CurrentGameScore" OnButtonPressed="SubmitGame"/>

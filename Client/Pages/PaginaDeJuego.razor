@@ -50,8 +50,16 @@
                             @if (NivelSeleccionado != null)
                             {
                                 <div class="notification is-primary is-light block">
-                                    @NivelSeleccionado.Descripcion
-                                </div>    
+                                    <div class="block">
+                                        @NivelSeleccionado.Descripcion    
+                                    </div>
+                                    <div class="block">
+                                        <p>
+                                            <b>Errores permitidos: </b>@NivelSeleccionado.ErroresPermitidos
+                                        </p>      
+                                    </div>
+                                    
+                                </div>
                             }
                         </div>
                     </div>

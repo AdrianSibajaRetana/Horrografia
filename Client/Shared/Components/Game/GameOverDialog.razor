@@ -1,0 +1,57 @@
+﻿@inject IDialogService DialogService
+@using System.ComponentModel.DataAnnotations
+
+<MudDialog @bind-IsVisible="ShowDialogue">
+    <TitleContent>
+        @if (DidUserWon)
+        {
+            <MudText Typo="Typo.h6" Class="has-text-success">
+            @("¡Felicidades, ha ganado el nivel!")
+            </MudText>
+        }
+        else
+        {
+            <MudText Typo="Typo.h6" Class="has-text-danger">
+                @("Lo sentimos, ha perdido :(")
+            </MudText>
+        }
+    </TitleContent>
+    
+    <DialogContent>
+        <MudCard Elevation=0>
+            <MudCardContent>
+                <MudText Typo="Typo.subtitle1" Class="block">
+                        @($"Su puntaje fue de: {Score}")
+                </MudText>
+            </MudCardContent>
+            <MudCardActions>
+                <MudGrid>
+                    <MudItem Class="ml-auto">
+                        <MudButton Variant="Variant.Text" Color="Color.Success" OnClick="ButtonPressed">Finalizar</MudButton>
+                    </MudItem>
+                </MudGrid>
+            </MudCardActions>
+        </MudCard>
+    </DialogContent>
+</MudDialog>
+
+
+@code {
+    
+    [Parameter]
+    public bool ShowDialogue { get; set; }
+    
+    [Parameter]
+    public bool DidUserWon { get; set; }
+    
+    [Parameter]
+    public int Score { get; set; }
+    
+    [Parameter]
+    public EventCallback OnButtonPressed { get; set; }
+    
+    private async Task ButtonPressed()
+    {
+        await OnButtonPressed.InvokeAsync();
+    }
+}

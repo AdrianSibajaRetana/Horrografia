@@ -67,6 +67,10 @@ namespace Horrografia.Client.Shared.Components.Game
         
         private string CurrentFormaCorrecta { get; set; }
 
+        private bool ShowGameoverDialog { get; set; }
+        
+        private bool DidUserWinGame { get; set; }
+
         protected override void OnInitialized()
         {
             ItemQueue = new();
@@ -75,7 +79,9 @@ namespace Horrografia.Client.Shared.Components.Game
             ShowClueDialog = false;
             ShowItemGuessedDialog = false;
             IsCurrentGuessGood = false;
-            CurrentIncorrectForm = ""; 
+            ShowGameoverDialog = false;
+            DidUserWinGame = false;
+            CurrentIncorrectForm = "";
             CurrentGameScore = 0;
             currentFrame = 1;
             currentItem = 1;
@@ -144,7 +150,7 @@ namespace Horrografia.Client.Shared.Components.Game
             else
             {
                 CurrentIncorrectForm = "";
-                Console.Write("Ganó la partida");
+                ShowGameOverScreen(true);
             }
         }
 
@@ -153,6 +159,7 @@ namespace Horrografia.Client.Shared.Components.Game
             if (CurrentFormaCorrecta == CurrentInput)
             {
                 ShowGuessDialog(true);
+                //Give user score here. 
             }
             else
             {
@@ -165,13 +172,24 @@ namespace Horrografia.Client.Shared.Components.Game
                     CurrentLife = 0;
                     CurrentLifeString = CurrentLife.ToString();
                     CurrentLifePercentage = CurrentLifeString + '%';
-                    Console.Write("Perdió la partida");
+                    ShowGameOverScreen(false);
                 }
                 else
                 {
                     ShowGuessDialog(false);
                 }
             }
+        }
+
+        private void ShowGameOverScreen(bool didUserWin)
+        {
+            DidUserWinGame = didUserWin;
+            ShowGameoverDialog = true;
+        }
+
+        protected void SubmitGame()
+        {
+            //Do this method.
         }
 
         private void ShowGuessDialog(bool isCorrect)
