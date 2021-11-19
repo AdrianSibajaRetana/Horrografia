@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Horrografia.Shared.Models;
 using Horrografia.Client.Data.Services.Interfaces;
 using MudBlazor;
+using System.Security.Cryptography;
 
 namespace Horrografia.Client.Pages
 {
@@ -67,7 +68,11 @@ namespace Horrografia.Client.Pages
         private string LoadingStatus { get; set; }
 
         private bool SuccesfulGameLoad { get; set; }
+
+        private bool DoesGameHaveID { get; set; }
         
+        private int GameID { get; set; }
+
         private String UserID { get; set; }
 
         public PaginaDeJuego()
@@ -75,12 +80,14 @@ namespace Horrografia.Client.Pages
             IsLoading = true;
             IsChoosingLevel = true;
             IsLoadingGame = true;
+            DoesGameHaveID = false;
             SuccesfulGameLoad = false;
         }
 
         protected override async Task OnInitializedAsync()
         {
             _snackbar.Configuration.PositionClass = Defaults.Classes.Position.TopCenter;
+            await GetGameID();
             await GetUserInformation();
             await CargarNiveles();
         }
@@ -190,6 +197,52 @@ namespace Horrografia.Client.Pages
                 UserID = "None";
             }
         }
+
+        private async Task GetGameID()
+        {
+            while (!DoesGameHaveID)
+            {
+                var possibleID = GenerarCodigo();
+                var controllerResponse = await _reporteService.VerifyReportID(possibleID);
+                if (controllerResponse.isResponseSuccesfull())
+                {
+                    var isTaken = controllerResponse.Response.FirstOrDefault();
+                    if (!isTaken)
+                    {
+                        GameID = possibleID;
+                        DoesGameHaveID = true;
+                    }
+                }
+                else
+                {
+                    throw new InvalidOperationException($"Error al generar el código.");
+                }
+            }
+        }
+
+        private int GenerarCodigo()
+        {
+            return RandomNumberGenerator.GetInt32(0, 99999999);
+        }
+        
+        protected async Task PostGameReport(ReporteModel r)
+        {
+            var response = await _reporteService.PostAsync(r);
+            if (response.isResponseSuccesfull())
+            {
+                ShowNotification("¡Se registró la partida exitosamente!", Severity.Success);
+            }
+            else
+            {
+                ShowNotification("Hubo un error al registrar la partida.", Severity.Error);
+            }
+        }
+        
+        protected async Task PostGameMistake(ContieneErrorModel c)
+        {
+            
+        }
+
 
     }
 }

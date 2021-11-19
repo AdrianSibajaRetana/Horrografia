@@ -126,7 +126,7 @@ namespace Horrografia.Client.Data.Services.Implementations
             ControllerResponse<bool> controllerResponse = new();
             try
             {
-                var response = await _anonymousHttpClient.PostAsJsonAsync("api/Usuario/verificar", ID);
+                var response = await _anonymousHttpClient.PostAsJsonAsync("api/Reporte/verificar", ID);
                 if (response.IsSuccessStatusCode)
                 {
                     controllerResponse.Status = Constantes.OKSTATUS;

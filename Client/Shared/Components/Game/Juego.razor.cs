@@ -29,6 +29,16 @@ namespace Horrografia.Client.Shared.Components.Game
 
         [Parameter] 
         public string PlayerID { get; set; }
+        
+        [Parameter]
+        
+        public int MatchID { get; set; }
+        
+        [Parameter]
+        public EventCallback<ReporteModel> OnReportCreated { get; set; }
+        
+        [Parameter]
+        public EventCallback<ContieneErrorModel> OnGameMistakeCreated { get; set; }
 
         private Timer gameTimer;
 
@@ -188,6 +198,7 @@ namespace Horrografia.Client.Shared.Components.Game
             else
             {
                 ContieneErrorModel Mistake = new();
+                Mistake.IdReporte = MatchID;
                 Mistake.IdItem = CurrentItemModel.Id;
                 Mistake.Respuesta = CurrentInput;
                 GameMistakes.Add(Mistake);
@@ -217,14 +228,18 @@ namespace Horrografia.Client.Shared.Components.Game
 
         protected async Task SubmitGame()
         {
+            //Do this forloop
+            foreach (var mistakeDone in GameMistakes)
+            {
+                await OnGameMistakeCreated.InvokeAsync(mistakeDone);
+            }
             //Do this method.
+            GameReport.Id = MatchID;
             GameReport.IdUsuario = PlayerID;
             GameReport.Puntuacion = CurrentGameScore;
             GameReport.IdNivel = Nivel.Id;
             GameReport.CantidadErrores = CurrentMistakes;
-            // Push Game report
-            // Get game report ID
-            
+            await OnReportCreated.InvokeAsync(GameReport);
         }
         
         
