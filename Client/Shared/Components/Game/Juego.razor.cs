@@ -70,6 +70,8 @@ namespace Horrografia.Client.Shared.Components.Game
         private bool ShowGameoverDialog { get; set; }
         
         private bool DidUserWinGame { get; set; }
+        
+        private Stopwatch GameStopWatch { get; set; }
 
         protected override void OnInitialized()
         {
@@ -146,6 +148,7 @@ namespace Horrografia.Client.Shared.Components.Game
                 var IncorrectForms = FormasIncorrectas.Where(x => x.Itemid == CurrentItemModel.Id).ToList();
                 int index = random.Next(IncorrectForms.Count());
                 CurrentIncorrectForm = IncorrectForms[index].Forma;
+                GameStopWatch = Stopwatch.StartNew();
             }
             else
             {
@@ -156,10 +159,22 @@ namespace Horrografia.Client.Shared.Components.Game
 
         private void CheckAnswer()
         {
+            GameStopWatch.Stop();
             if (CurrentFormaCorrecta == CurrentInput)
             {
                 ShowGuessDialog(true);
-                //Give user score here. 
+                //Give user score here.
+                var timeElapsedSeconds = GameStopWatch.Elapsed.Seconds;
+                if (timeElapsedSeconds >= 60)
+                {
+                    timeElapsedSeconds = 1;
+                }
+                else
+                {
+                    timeElapsedSeconds = 60 - timeElapsedSeconds;
+                }
+
+                CurrentGameScore += (timeElapsedSeconds * 500);
             }
             else
             {
