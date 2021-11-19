@@ -126,19 +126,25 @@ namespace Horrografia.Client.Data.Services.Implementations
             ControllerResponse<bool> controllerResponse = new();
             try
             {
-                var response = await _anonymousHttpClient.PostAsJsonAsync("api/Reporte/verificar", ID);
+                var response = await _anonymousHttpClient.GetAsync($"api/Reporte/verificar/{ID}");
                 if (response.IsSuccessStatusCode)
                 {
+                    var respuesta = await response.Content.ReadFromJsonAsync<bool>();
+                    List<bool> lista = new();
+                    lista.Add(respuesta);
                     controllerResponse.Status = Constantes.OKSTATUS;
+                    controllerResponse.Response = lista;
                     return controllerResponse;
                 }
                 controllerResponse.Status = Constantes.INTERNALERRORSTATUS;
+                controllerResponse.Response = new List<bool>();
                 return controllerResponse;
             }
             catch (Exception e)
             {
-                _logger.LogError(e, "An error occurred while fetching from db");
                 controllerResponse.Status = Constantes.INTERNALERRORSTATUS;
+                controllerResponse.Response = new List<bool>();
+                _logger.LogError(e, "An error occurred while fetching from db");
                 return controllerResponse;
             }
         }

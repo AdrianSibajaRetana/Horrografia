@@ -39,6 +39,9 @@ namespace Horrografia.Client.Shared.Components.Game
         
         [Parameter]
         public EventCallback<ContieneErrorModel> OnGameMistakeCreated { get; set; }
+        
+        [Parameter]
+        public EventCallback<string> OnExceptionOccured { get; set; }
 
         private Timer gameTimer;
 
@@ -95,6 +98,7 @@ namespace Horrografia.Client.Shared.Components.Game
         {
             ItemQueue = new();
             GameMistakes = new();
+            GameReport = new();
             ShowInstructions = false;
             UserWantsToSeeInstructions = false;
             ShowClueDialog = false;
@@ -198,9 +202,9 @@ namespace Horrografia.Client.Shared.Components.Game
             else
             {
                 ContieneErrorModel Mistake = new();
-                Mistake.IdReporte = MatchID;
-                Mistake.IdItem = CurrentItemModel.Id;
-                Mistake.Respuesta = CurrentInput;
+                Mistake.idReporte = MatchID;
+                Mistake.idItem = CurrentItemModel.Id;
+                Mistake.respuesta = CurrentInput;
                 GameMistakes.Add(Mistake);
                 CurrentLife -= 100 / Nivel.ErroresPermitidos;
                 CurrentLifeString = CurrentLife.ToString();
@@ -228,18 +232,27 @@ namespace Horrografia.Client.Shared.Components.Game
 
         protected async Task SubmitGame()
         {
-            //Do this forloop
-            foreach (var mistakeDone in GameMistakes)
+            try
             {
-                await OnGameMistakeCreated.InvokeAsync(mistakeDone);
+                //Do this method.
+                GameReport.Id = MatchID;
+                GameReport.IdUsuario = PlayerID;
+                GameReport.IdNivel = Nivel.Id;
+                GameReport.CantidadErrores = CurrentMistakes;
+                GameReport.Puntuacion = CurrentGameScore;
+                await OnReportCreated.InvokeAsync(GameReport);
+                //Do this forloop
+                foreach (var mistakeDone in GameMistakes)
+                {
+                    await OnGameMistakeCreated.InvokeAsync(mistakeDone);
+                }
+                ShowGameoverDialog = false;
+                // Show dialog for playing again or choosing other level.
             }
-            //Do this method.
-            GameReport.Id = MatchID;
-            GameReport.IdUsuario = PlayerID;
-            GameReport.Puntuacion = CurrentGameScore;
-            GameReport.IdNivel = Nivel.Id;
-            GameReport.CantidadErrores = CurrentMistakes;
-            await OnReportCreated.InvokeAsync(GameReport);
+            catch(Exception e)
+            {
+                await OnExceptionOccured.InvokeAsync($"{e.Message}");
+            }
         }
         
         

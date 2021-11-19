@@ -6,8 +6,8 @@ namespace Horrografia.Shared.Models
 {
     public class ContieneErrorModel
     {
-        public int IdReporte { get; set; }
-        public int IdItem { get; set; }
-        public string Respuesta { get; set; }
+        public int idReporte { get; set; }
+        public int idItem { get; set; }
+        public string respuesta { get; set; }
     }
 }

@@ -29,6 +29,9 @@ namespace Horrografia.Client.Pages
         protected IReporteService _reporteService {get; set;}
         
         [Inject]
+        protected IContieneErrorService _contieneErrorService {get; set;}
+        
+        [Inject]
         protected AuthenticationStateProvider authProvider { get; set; }
         
         [Inject]
@@ -110,7 +113,7 @@ namespace Horrografia.Client.Pages
         {
             _snackbar.Add(mensaje, s);
         }
-
+        
         protected override void OnParametersSet()
         {
             IsLoading = false;
@@ -192,7 +195,7 @@ namespace Horrografia.Client.Pages
                 AuthenticationState authState = await authProvider.GetAuthenticationStateAsync();
                 UserID = authState.User.Claims.FirstOrDefault(c => c.Type == "sub").Value;
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 UserID = "None";
             }
@@ -202,14 +205,19 @@ namespace Horrografia.Client.Pages
         {
             while (!DoesGameHaveID)
             {
-                var possibleID = GenerarCodigo();
-                var controllerResponse = await _reporteService.VerifyReportID(possibleID);
+                var possibleId = GenerarCodigo();
+                var controllerResponse = await _reporteService.VerifyReportID(possibleId);
                 if (controllerResponse.isResponseSuccesfull())
                 {
                     var isTaken = controllerResponse.Response.FirstOrDefault();
                     if (!isTaken)
                     {
-                        GameID = possibleID;
+                        GameID = possibleId;
+                        DoesGameHaveID = true;
+                    }
+                    else
+                    {
+                        GameID = 69;
                         DoesGameHaveID = true;
                     }
                 }
@@ -222,7 +230,7 @@ namespace Horrografia.Client.Pages
 
         private int GenerarCodigo()
         {
-            return RandomNumberGenerator.GetInt32(0, 99999999);
+            return RandomNumberGenerator.GetInt32(0, 9999999);
         }
         
         protected async Task PostGameReport(ReporteModel r)
@@ -234,15 +242,22 @@ namespace Horrografia.Client.Pages
             }
             else
             {
-                ShowNotification("Hubo un error al registrar la partida.", Severity.Error);
+                throw new InvalidOperationException($"Error al registrar reporte.");
             }
         }
         
         protected async Task PostGameMistake(ContieneErrorModel c)
         {
-            
+            var response = await _contieneErrorService.PostAsync(c);
+            if (!response.isResponseSuccesfull())
+            {
+                throw new InvalidOperationException($"Error al registrar error.");
+            }
         }
-
-
+        
+        protected void NotifyError(string mensaje)
+        {
+            _snackbar.Add(mensaje, Severity.Error);
+        }
     }
 }

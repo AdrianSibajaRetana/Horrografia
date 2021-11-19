@@ -38,8 +38,8 @@ namespace Horrografia.Server.Data.Repos.Implementations
         //POST
         public async Task InsertData(ReporteModel r)
         {
-            string sql = "insert into reporte (IdUsuario, IdNivel, CantidadErrores, Puntuacion) values (@IdUsuario, @IdNivel, @CantidadErrores, @Puntuacion);";
-            await _dbContext.SaveData(sql, new { IdUsuario = r.IdUsuario, IdNivel = r.IdNivel, CantidadErrores = r.CantidadErrores, Puntuacion = r.Puntuacion }, ConectionString);
+            string sql = "insert into reporte (id, IdUsuario, IdNivel, CantidadErrores, Puntuacion) values (@Id, @IdUsuario, @IdNivel, @CantidadErrores, @Puntuacion);";
+            await _dbContext.SaveData(sql, new { Id = r.Id, IdUsuario = r.IdUsuario, IdNivel = r.IdNivel, CantidadErrores = r.CantidadErrores, Puntuacion = r.Puntuacion }, ConectionString);
         }
 
         //DELETE

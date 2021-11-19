@@ -83,7 +83,9 @@
                         PlayerID="@UserID" 
                         MatchID="GameID"
                         OnReportCreated="PostGameReport"
-                        OnGameMistakeCreated="PostGameMistake"/>
+                        OnGameMistakeCreated="PostGameMistake"
+                        OnExceptionOccured="NotifyError"
+                        />
                 }
                 else
                 {

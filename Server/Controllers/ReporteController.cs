@@ -95,14 +95,13 @@ namespace Horrografia.Server.Controllers
             }
         }
         
-        [HttpPost]
+        [HttpGet("verificar/{id}")]
         [AllowAnonymous]
-        [Route("verificar")]
-        public async Task<IActionResult> VerifyReportID(int ID)
+        public async Task<IActionResult> VerifyReportID(int id)
         {
             try
             {
-                var isAvailable = await _repo.CheckIfIDIsAvailable(ID);
+                var isAvailable = await _repo.CheckIfIDIsAvailable(id);
                 return Ok(isAvailable);
             }
             catch (Exception e)

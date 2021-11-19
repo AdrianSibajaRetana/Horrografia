@@ -70,11 +70,11 @@ namespace Horrografia.Server.Controllers
         // POST api/<ContieneErrorController>
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> Post(List<ContieneErrorModel> clist)
+        public async Task<IActionResult> Post(ContieneErrorModel c)
         {
             try
             {
-                await _repo.InsertMultiple(clist);
+                await _repo.InsertData(c);
                 return Ok();
             }
             catch (Exception e)
