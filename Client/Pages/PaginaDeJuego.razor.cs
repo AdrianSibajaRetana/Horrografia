@@ -215,11 +215,6 @@ namespace Horrografia.Client.Pages
                         GameID = possibleId;
                         DoesGameHaveID = true;
                     }
-                    else
-                    {
-                        GameID = 69;
-                        DoesGameHaveID = true;
-                    }
                 }
                 else
                 {
