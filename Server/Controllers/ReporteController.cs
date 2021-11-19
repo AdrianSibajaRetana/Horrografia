@@ -94,5 +94,22 @@ namespace Horrografia.Server.Controllers
                 return new StatusCodeResult(StatusCodes.Status500InternalServerError);
             }
         }
+        
+        [HttpPost]
+        [AllowAnonymous]
+        [Route("verificar")]
+        public async Task<IActionResult> VerifyReportID(int ID)
+        {
+            try
+            {
+                var isAvailable = await _repo.CheckIfIDIsAvailable(ID);
+                return Ok(isAvailable);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "An error occurred while fetching from db");
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }
+        }
     }
 }

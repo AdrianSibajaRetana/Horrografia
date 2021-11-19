@@ -25,6 +25,9 @@ namespace Horrografia.Client.Pages
         protected IFormaIncorrectaService _formaIncorrectaService {get; set;}
         
         [Inject]
+        protected IReporteService _reporteService {get; set;}
+        
+        [Inject]
         protected AuthenticationStateProvider authProvider { get; set; }
         
         [Inject]

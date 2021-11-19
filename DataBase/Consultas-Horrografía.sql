@@ -54,7 +54,7 @@ CREATE TABLE FormaIncorrecta(
 
 
 CREATE TABLE Reporte(
-                        id int NOT NULL AUTO_INCREMENT,
+                        id int,
                         idUsuario VARCHAR(255) NOT NULL,
                         idNivel int NOT NULL,
                         CantidadErrores int NOT NULL,

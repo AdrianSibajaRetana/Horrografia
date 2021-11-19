@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Horrografia.Shared.Models;
 using DataLibrary;
@@ -46,6 +47,14 @@ namespace Horrografia.Server.Data.Repos.Implementations
         {
             string sql = "delete from reporte where id = @id";
             await _dbContext.SaveData(sql, new { id = ReporteId }, ConectionString);
+        }
+        
+        //POST
+        public async Task<bool> CheckIfIDIsAvailable(int ID)
+        {
+            string sql = "SELECT * FROM reporte WHERE id = @reportId";
+            var reportes = await _dbContext.LoadData<ReporteModel, dynamic>(sql, new { reportId = ID }, ConectionString);
+            return reportes.Any();
         }
     }
 }

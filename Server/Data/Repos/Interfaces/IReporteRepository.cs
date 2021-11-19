@@ -10,5 +10,7 @@ namespace Horrografia.Server.Data.Repos.Interfaces
         Task<List<ReporteModel>> GetAllAsync();
         Task<List<ReporteModel>> GetUserReports(string IdUsuario);
         Task InsertData(ReporteModel r);
+
+        Task<bool> CheckIfIDIsAvailable(int ID);
     }
 }
