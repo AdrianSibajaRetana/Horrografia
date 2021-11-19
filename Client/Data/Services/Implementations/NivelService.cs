@@ -15,10 +15,12 @@ namespace Horrografia.Client.Data.Services.Implementations
     public class NivelService : INivelService
     {
         private readonly HttpClient _http;
+        private readonly HttpClient _anonymousHttpClient;
         private readonly ILogger<NivelService> _logger;
-        public NivelService(HttpClient client, ILogger<NivelService> logger)
+        public NivelService(IHttpClientFactory httpClientFactory, ILogger<NivelService> logger)
         {
-            _http = client;
+            _http = httpClientFactory.CreateClient("Horrografia.ServerAPI");
+            _anonymousHttpClient = httpClientFactory.CreateClient("Horrografia.ServerAPI.Anonymous");
             _logger = logger;
         }
 
@@ -27,7 +29,7 @@ namespace Horrografia.Client.Data.Services.Implementations
             ControllerResponse<NivelModel> _controllerResponse = new ControllerResponse<NivelModel>();
             try
             {
-                var response = await _http.GetAsync("api/Nivel");
+                var response = await _anonymousHttpClient.GetAsync("api/Nivel");
                 if (response.IsSuccessStatusCode)
                 {
                     var niveles = await response.Content.ReadFromJsonAsync<List<NivelModel>>();

@@ -7,6 +7,7 @@ using Horrografia.Server.Data.Repos.Interfaces;
 using Horrografia.Shared.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Horrografia.Server.Controllers
 {
@@ -23,6 +24,7 @@ namespace Horrografia.Server.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Get()
         {
             try
@@ -38,6 +40,7 @@ namespace Horrografia.Server.Controllers
         }
 
         [HttpGet("{id}")]
+        [AllowAnonymous]
         public async Task<IActionResult> Get(int id)
         {
             try
@@ -57,6 +60,7 @@ namespace Horrografia.Server.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Post(FormaIncorrectaModel f)
         {
             try
@@ -72,6 +76,7 @@ namespace Horrografia.Server.Controllers
         }
 
         [HttpDelete("{idItem}/{forma}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Delete(int idItem, string forma)
         {
             try

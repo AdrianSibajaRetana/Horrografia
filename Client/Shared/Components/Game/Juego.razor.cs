@@ -8,6 +8,7 @@ using Horrografia.Client.Data.Services.Interfaces;
 using Horrografia.Client.Shared.Constants;
 using Horrografia.Shared.Models;
 using Microsoft.AspNetCore.Components;
+using System.Web;
 using MudBlazor;
 
 namespace Horrografia.Client.Shared.Components.Game
@@ -25,7 +26,10 @@ namespace Horrografia.Client.Shared.Components.Game
         
         [Parameter]
         public List<FormaIncorrectaModel> FormasIncorrectas { get; set; }
-        
+
+        [Parameter] 
+        public string PlayerID { get; set; }
+
         private Timer gameTimer;
 
         private Queue<ItemModel> ItemQueue { get; set; }
@@ -72,10 +76,15 @@ namespace Horrografia.Client.Shared.Components.Game
         private bool DidUserWinGame { get; set; }
         
         private Stopwatch GameStopWatch { get; set; }
+        
+        private ReporteModel GameReport { get; set; }
+
+        private List<ContieneErrorModel> GameMistakes;
 
         protected override void OnInitialized()
         {
             ItemQueue = new();
+            GameMistakes = new();
             ShowInstructions = false;
             UserWantsToSeeInstructions = false;
             ShowClueDialog = false;
@@ -178,6 +187,10 @@ namespace Horrografia.Client.Shared.Components.Game
             }
             else
             {
+                ContieneErrorModel Mistake = new();
+                Mistake.IdItem = CurrentItemModel.Id;
+                Mistake.Respuesta = CurrentInput;
+                GameMistakes.Add(Mistake);
                 CurrentLife -= 100 / Nivel.ErroresPermitidos;
                 CurrentLifeString = CurrentLife.ToString();
                 CurrentLifePercentage = CurrentLifeString + '%';
@@ -202,10 +215,19 @@ namespace Horrografia.Client.Shared.Components.Game
             ShowGameoverDialog = true;
         }
 
-        protected void SubmitGame()
+        protected async Task SubmitGame()
         {
             //Do this method.
+            GameReport.IdUsuario = PlayerID;
+            GameReport.Puntuacion = CurrentGameScore;
+            GameReport.IdNivel = Nivel.Id;
+            GameReport.CantidadErrores = CurrentMistakes;
+            // Push Game report
+            // Get game report ID
+            
         }
+        
+        
 
         private void ShowGuessDialog(bool isCorrect)
         {

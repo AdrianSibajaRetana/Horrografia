@@ -15,10 +15,12 @@ namespace Horrografia.Client.Data.Services.Implementations
     public class PistaService : IPistaService
     {
         private readonly HttpClient _http;
+        private readonly HttpClient _anonymousHttpClient;
         private readonly ILogger<PistaService> _logger;
-        public PistaService(HttpClient client, ILogger<PistaService> logger)
+        public PistaService(IHttpClientFactory httpClientFactory, ILogger<PistaService> logger)
         {
-            _http = client;
+            _http = httpClientFactory.CreateClient("Horrografia.ServerAPI");
+            _anonymousHttpClient = httpClientFactory.CreateClient("Horrografia.ServerAPI.Anonymous");
             _logger = logger;
         }
 
@@ -27,7 +29,7 @@ namespace Horrografia.Client.Data.Services.Implementations
             ControllerResponse<PistaModel> _controllerResponse = new();
             try
             {
-                var response = await _http.GetAsync("api/Pista");
+                var response = await _anonymousHttpClient.GetAsync("api/Pista");
                 if (response.IsSuccessStatusCode)
                 {
                     var pistas = await response.Content.ReadFromJsonAsync<List<PistaModel>>();

@@ -16,10 +16,12 @@ namespace Horrografia.Client.Data.Services.Implementations
     public class FormaIncorrectaService : IFormaIncorrectaService
     {
         private readonly HttpClient _http;
+        private readonly HttpClient _anonymousHttpClient;
         private readonly ILogger<FormaIncorrectaService> _logger;
-        public FormaIncorrectaService(HttpClient client, ILogger<FormaIncorrectaService> logger)
+        public FormaIncorrectaService(IHttpClientFactory httpClientFactory, ILogger<FormaIncorrectaService> logger)
         {
-            _http = client;
+            _http = httpClientFactory.CreateClient("Horrografia.ServerAPI");
+            _anonymousHttpClient = httpClientFactory.CreateClient("Horrografia.ServerAPI.Anonymous");
             _logger = logger;
         }
 
@@ -54,7 +56,7 @@ namespace Horrografia.Client.Data.Services.Implementations
             ControllerResponse<FormaIncorrectaModel> _controllerResponse = new();
             try
             {
-                var response = await _http.GetAsync($"api/Formaincorrecta/{nivelid}");
+                var response = await _anonymousHttpClient.GetAsync($"api/Formaincorrecta/{nivelid}");
                 if (response.IsSuccessStatusCode)
                 {
                     var formasIncorrectas = await response.Content.ReadFromJsonAsync<List<FormaIncorrectaModel>>();

@@ -15,10 +15,12 @@ namespace Horrografia.Client.Data.Services.Implementations
     public class ItemService : IItemService
     {
         private readonly HttpClient _http;
+        private readonly HttpClient _anonymousHttpClient;
         private readonly ILogger<ItemService> _logger;
-        public ItemService(HttpClient client, ILogger<ItemService> logger)
+        public ItemService(IHttpClientFactory httpClientFactory, ILogger<ItemService> logger)
         {
-            _http = client;
+            _http = httpClientFactory.CreateClient("Horrografia.ServerAPI");
+            _anonymousHttpClient = httpClientFactory.CreateClient("Horrografia.ServerAPI.Anonymous");
             _logger = logger;
         }
 
@@ -53,7 +55,7 @@ namespace Horrografia.Client.Data.Services.Implementations
             ControllerResponse<ItemModel> _controllerResponse = new();
             try
             {
-                var response = await _http.GetAsync($"api/Item/{id}");
+                var response = await _anonymousHttpClient.GetAsync($"api/Item/{id}");
                 if (response.IsSuccessStatusCode)
                 {
                     var items = await response.Content.ReadFromJsonAsync<List<ItemModel>>();

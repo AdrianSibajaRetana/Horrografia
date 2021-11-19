@@ -25,6 +25,9 @@ namespace Horrografia.Client.Pages
         protected IFormaIncorrectaService _formaIncorrectaService {get; set;}
         
         [Inject]
+        protected AuthenticationStateProvider authProvider { get; set; }
+        
+        [Inject]
         protected ISnackbar _snackbar { get; set; }
         
         //Todos los niveles
@@ -61,6 +64,8 @@ namespace Horrografia.Client.Pages
         private string LoadingStatus { get; set; }
 
         private bool SuccesfulGameLoad { get; set; }
+        
+        private String UserID { get; set; }
 
         public PaginaDeJuego()
         {
@@ -73,6 +78,7 @@ namespace Horrografia.Client.Pages
         protected override async Task OnInitializedAsync()
         {
             _snackbar.Configuration.PositionClass = Defaults.Classes.Position.TopCenter;
+            await GetUserInformation();
             await CargarNiveles();
         }
         
@@ -166,6 +172,19 @@ namespace Horrografia.Client.Pages
             {
                 string reporteError = "Formas Incorrectas";
                 throw new InvalidOperationException($"Error al cargar las {reporteError}.");
+            }
+        }
+
+        private async Task GetUserInformation()
+        {
+            try
+            {
+                AuthenticationState authState = await authProvider.GetAuthenticationStateAsync();
+                UserID = authState.User.Claims.FirstOrDefault(c => c.Type == "sub").Value;
+            }
+            catch (Exception e)
+            {
+                UserID = "None";
             }
         }
 

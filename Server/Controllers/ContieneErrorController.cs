@@ -7,6 +7,7 @@ using Horrografia.Server.Data.Repos.Interfaces;
 using Horrografia.Shared.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Horrografia.Server.Controllers
 {
@@ -30,6 +31,7 @@ namespace Horrografia.Server.Controllers
 
         // GET: api/<ContieneErrorController>
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Get()
         {
             try
@@ -46,6 +48,7 @@ namespace Horrografia.Server.Controllers
 
         // GET api/<ContieneErrorController>/5
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<IActionResult> Get(int id)
         {
             try
@@ -66,6 +69,7 @@ namespace Horrografia.Server.Controllers
 
         // POST api/<ContieneErrorController>
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> Post(List<ContieneErrorModel> clist)
         {
             try

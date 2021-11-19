@@ -58,7 +58,6 @@
                                             <b>Errores permitidos: </b>@NivelSeleccionado.ErroresPermitidos
                                         </p>      
                                     </div>
-                                    
                                 </div>
                             }
                         </div>
@@ -71,7 +70,7 @@
             <LoadingScreen SubTitulo="@LoadingStatus" IsLoading="@IsLoadingGame">
                 @if (SuccesfulGameLoad)
                 {
-                    <Juego Items="ItemsTotales" Pistas="PistasTotales" FormasIncorrectas="FormasIncorrectasTotales" Nivel="NivelSeleccionado"/>
+                    <Juego Items="ItemsTotales" Pistas="PistasTotales" FormasIncorrectas="FormasIncorrectasTotales" Nivel="NivelSeleccionado" PlayerID="@UserID"/>
                 }
                 else
                 {
