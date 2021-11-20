@@ -24,6 +24,7 @@ namespace Horrografia.Server.Controllers
         }
 
         // GET: api/<ReporteController>
+        
         [HttpGet]
         [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Get()
@@ -42,7 +43,7 @@ namespace Horrografia.Server.Controllers
 
         // GET api/<ReporteController>/5
         [HttpGet("{id}")]
-        [Authorize]
+        [AllowAnonymous]
         public async Task<IActionResult> Get(string id)
         {
             try

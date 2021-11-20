@@ -24,7 +24,10 @@
         @switch (_activeTab)
         {
             case ActiveTabState.ShowGeneralTab:
-                <UserData User="User" />
+                <UserData User="User"
+                          NumberOfGames="@PartidasJugadas.Count"
+                          IsUserInSchool="_isUserInSchool"
+                          UserSchool="UserSchool"/>
                 break;
             case ActiveTabState.ShowHistoryTab:
                 <UserHistory />

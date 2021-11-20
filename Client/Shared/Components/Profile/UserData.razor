@@ -2,9 +2,68 @@
     <div class='columns is-mobile is-centered'>
         <div class='column is-8'>
             <div class="block has-text-centered">
-                <h1 class='title'>Bienvenido!</h1>
+                <h1 class='title'>¡Bienvenido a Horrografía!</h1>
                 <hr>
             </div>
+            <table class="block table is-bordered is-striped is-hoverable is-fullwidth">
+                <tbody>
+                    <tr>
+                        <td>
+                            <span class="icon-text">
+                                <span class="icon">
+                                    <i class="fas fa-user"></i>
+                                </span>
+                                <span>Nombre de Usuario</span>
+                            </span>
+                        </td>
+                        <td>
+                            @User.nombreDeUsuario
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="icon-text">
+                                <span class="icon">
+                                    <i class="fas fa-envelope"></i>
+                                </span>
+                                <span>Correo</span>
+                            </span>
+                        </td>
+                        <td>
+                            @User.correo
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <span class="icon-text">
+                                <span class="icon">
+                                    <i class="fas fa-user-graduate"></i>
+                                </span>
+                                <span>Partidas jugadas</span>
+                            </span>
+                        </td>
+                        <td>
+                            @NumberOfGames
+                        </td>
+                    </tr>
+                    @if (IsUserInSchool)
+                    {
+                        <tr>
+                            <td>
+                                <span class="icon-text">
+                                    <span class="icon">
+                                        <i class="fas fa-school"></i>
+                                    </span>
+                                    <span>Escuela</span>
+                                </span>
+                            </td>
+                            <td>
+                                @UserSchool.Nombre
+                            </td>
+                        </tr>    
+                    }
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

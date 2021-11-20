@@ -12,6 +12,14 @@ namespace Horrografia.Client.Shared.Components.Profile
     {
         [Parameter]
         public UsuarioDTO User { get; set; }
-
+        
+        [Parameter]
+        public int NumberOfGames { get; set; }
+        
+        [Parameter]
+        public EscuelaModel UserSchool { get; set; }
+        
+        [Parameter]
+        public bool IsUserInSchool { get; set; }
     }
 }

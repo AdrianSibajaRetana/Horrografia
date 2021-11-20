@@ -23,7 +23,11 @@ namespace Horrografia.Client.Pages
 
         [Inject]
         protected IEscuelaService _escuelaService { get; set; }
+        
+        [Inject]
+        protected IReporteService _reporteService { get; set; }
 
+        
         [Inject]
         protected ISnackbar _snackbar { get; set; }
 
@@ -34,6 +38,8 @@ namespace Horrografia.Client.Pages
         private EscuelaModel UserSchool { get; set; }
         private List<string> Estudiantes { get; set; }
         private List<string> Profesores { get; set; }
+
+        private List<ReporteModel> PartidasJugadas { get; set; }
 
         //Para el manejo de tabs
         private enum ActiveTabState
@@ -55,6 +61,7 @@ namespace Horrografia.Client.Pages
             _lecturaExitosa = false;
             _isUserInSchool = false;
             UserSchool = new();
+            PartidasJugadas = new();
             _activeTab = ActiveTabState.ShowGeneralTab;
             _generalActiveString = ShowActiveState;
         }
@@ -88,12 +95,20 @@ namespace Horrografia.Client.Pages
 
         protected override async Task OnInitializedAsync()
         {
-            await CargarData();
-            if (_isUserInSchool)
+            try
             {
-                await CargarDataDeEscuela();
+                await CargarData();
+                await CargarHistorialDePartidas();
+                if (_isUserInSchool)
+                {
+                    await CargarDataDeEscuela();
+                }
+                _isLoading = false;
             }
-            _isLoading = false;
+            catch (Exception e)
+            {
+                ShowNotification(e.Message, Severity.Error);
+            }
         }
 
         private async Task CargarData()
@@ -111,6 +126,23 @@ namespace Horrografia.Client.Pages
                 _lecturaExitosa = true;
                 _snackbar.Configuration.PositionClass = Defaults.Classes.Position.TopCenter;
             }
+            else
+            {
+                throw new InvalidOperationException($"Error al datos de usuario.");
+            }
+        }
+
+        private async Task CargarHistorialDePartidas()
+        {
+            var response = await _reporteService.GetUserReportsById(User.id);
+            if (response.isResponseSuccesfull())
+            {
+                PartidasJugadas = response.Response;
+            }
+            else
+            {
+                throw new InvalidOperationException($"Error al cargar partidas.");
+            }
         }
 
         private async Task CargarDataDeEscuela()
@@ -122,7 +154,7 @@ namespace Horrografia.Client.Pages
             }
             else
             {
-                ShowNotification("Error al cargar datos de escuela.", Severity.Error);
+                throw new InvalidOperationException($"Error al cargar datos de escuela.");
             }
 
             var response2 = await _userService.GetSchoolStudents(User.codigoEscuela);
@@ -132,7 +164,7 @@ namespace Horrografia.Client.Pages
             }
             else
             {
-                ShowNotification("Error al cargar datos de escuela.", Severity.Error);
+                throw new InvalidOperationException($"Error al cargar datos de escuela.");
             }
 
             var response3 = await _userService.GetSchoolProfessors(User.codigoEscuela);
@@ -142,7 +174,7 @@ namespace Horrografia.Client.Pages
             }
             else
             {
-                ShowNotification("Error al cargar datos de escuela.", Severity.Error);
+                throw new InvalidOperationException($"Error al cargar datos de escuela.");
             }
         }
 
