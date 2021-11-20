@@ -25,6 +25,9 @@ namespace Horrografia.Client.Pages
         protected IEscuelaService _escuelaService { get; set; }
         
         [Inject]
+        protected INivelService _nivelService { get; set; }
+        
+        [Inject]
         protected IReporteService _reporteService { get; set; }
 
         
@@ -40,6 +43,8 @@ namespace Horrografia.Client.Pages
         private List<string> Profesores { get; set; }
 
         private List<ReporteModel> PartidasJugadas { get; set; }
+        
+        private List<NivelModel> Niveles { get; set; }
 
         //Para el manejo de tabs
         private enum ActiveTabState
@@ -99,6 +104,7 @@ namespace Horrografia.Client.Pages
             {
                 await CargarData();
                 await CargarHistorialDePartidas();
+                await CargarNiveles();
                 if (_isUserInSchool)
                 {
                     await CargarDataDeEscuela();
@@ -142,6 +148,19 @@ namespace Horrografia.Client.Pages
             else
             {
                 throw new InvalidOperationException($"Error al cargar partidas.");
+            }
+        }
+        
+        private async Task CargarNiveles()
+        {
+            var nivelesResponse = await _nivelService.GetAsync();
+            if (nivelesResponse.isResponseSuccesfull())
+            {
+                Niveles = nivelesResponse.Response;
+            }
+            else
+            {
+                throw new InvalidOperationException($"Error al cargar niveles.");
             }
         }
 

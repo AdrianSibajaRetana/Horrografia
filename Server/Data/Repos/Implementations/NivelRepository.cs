@@ -26,18 +26,7 @@ namespace Horrografia.Server.Data.Repos.Implementations
             var niveles = await _dbContext.LoadData<NivelModel, dynamic>(sql, new { }, ConectionString);
             return niveles;
         }
-
-        /*
-         * Método comentado porque no creo darle uso.
-        //GET/{IdPista}
-        public async Task<NivelModel> GetNivelById(int idNivel)
-        {
-            string sql = "SELECT * FROM nivel WHERE id = @idNivel";
-            var nivel = await _dbContext.LoadData<NivelModel, dynamic>(sql, new { idNivel = idNivel }, ConectionString);
-            return nivel.FirstOrDefault();
-        }
-        */
-
+        
         //POST
         public async Task InsertData(NivelModel n)
         {

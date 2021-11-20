@@ -47,7 +47,7 @@ namespace Horrografia.Server.Controllers
                 return new StatusCodeResult(StatusCodes.Status500InternalServerError);
             }
         }
-
+        
         // POST api/<NivelController>
         [HttpPost]
         [Authorize(Roles = "Admin")]
