@@ -260,3 +260,13 @@ div.column.is-8:first-child {
 }
 
 
+/*General*/
+.table_wrapper 
+{
+    overflow-x: auto;
+}
+
+.table_width_100
+{
+    width: 100%;
+}

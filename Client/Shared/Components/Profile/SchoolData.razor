@@ -8,57 +8,65 @@
             <div class="block">
                 <h2 class="subtitle"> Profesores</h2>
             </div>
-            <table class='block table is-bordered is-striped is-hoverable is-fullwidth'>
-                <thead>
-                    <tr>
-                        <th>Nombre</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if (Profesores.Any())
-                    {
-                        @foreach (var nombre in Profesores)
-                        {
-                            <tr>
-                                <td>@nombre</td>
-                            </tr>
-                        }
-                    }
-                    else
-                    {
-                        <tr>
-                            <td>La escuela aún no tiene profesor</td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
+             <div class="block table_width_100">
+                 <div class="table_wrapper">
+                     <table class='block table is-bordered is-striped is-hoverable is-fullwidth'>
+                          <thead>
+                          <tr>
+                              <th>Nombre</th>
+                          </tr>
+                          </thead>
+                          <tbody>
+                          @if (Profesores.Any())
+                          {
+                              @foreach (var nombre in Profesores)
+                              {
+                                  <tr>
+                                      <td>@nombre</td>
+                                  </tr>
+                              }
+                          }
+                          else
+                          {
+                              <tr>
+                                  <td>La escuela aún no tiene profesor</td>
+                              </tr>
+                          }
+                          </tbody>
+                      </table>
+                 </div>
+            </div>
             <div class="block">
                 <h2 class="subtitle"> Estudiantes</h2>
             </div>
-            <table class='block table is-bordered is-striped is-hoverable is-fullwidth'>
-                <thead>
-                    <tr>
-                        <th>Nombre</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @if (Estudiantes.Any())
-                    {
-                        @foreach (var nombre in Estudiantes)
+            <div class="table_width_100">
+                <div class="table_wrapper">
+                    <table class='block table is-bordered is-striped is-hoverable is-fullwidth'>
+                        <thead>
+                        <tr>
+                            <th>Nombre</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @if (Estudiantes.Any())
+                        {
+                            @foreach (var nombre in Estudiantes)
+                            {
+                                <tr>
+                                    <td>@nombre</td>
+                                </tr>
+                            }
+                        }
+                        else
                         {
                             <tr>
-                                <td>@nombre</td>
+                                <td>La escuela aún no tiene estudiantes</td>
                             </tr>
                         }
-                    }
-                    else
-                    {
-                        <tr>
-                            <td>La escuela aún no tiene estudiantes</td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </div>
 </div>

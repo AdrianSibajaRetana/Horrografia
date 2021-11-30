@@ -7,35 +7,40 @@
                     <h1 class='title'>Historial de partidas</h1>
                     <hr>
                 </div>
-                <table class="block table is-bordered is-striped is-hoverable is-fullwidth">
-                    <thead>
-                    <tr>
-                        <th>Nivel jugado</th>
-                        <th>Errores cometidos</th>
-                        <th>Puntaje conseguido</th>
-                        <th>Ver Detalles</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    @foreach (var partida in Historial)
-                    {
-                        <tr>
-                            <td>
-                                @GetLevelNameFromId(partida.IdNivel)
-                            </td>
-                            <td>
-                                @partida.CantidadErrores
-                            </td>
-                            <td>
-                                @partida.Puntuacion
-                            </td>
-                            <td>
-                                <button class="button is-success">Detalles</button>
-                            </td>
-                        </tr>
-                    }
-                    </tbody>
-                </table>
+                <div class="table_width_100">
+                    <div class="table_wrapper">
+                        <table class="block table is-bordered is-striped is-hoverable is-fullwidth">
+                            <thead>
+                                <tr>
+                                    <th>Nivel jugado</th>
+                                    <th>Errores cometidos</th>
+                                    <th>Puntaje conseguido</th>
+                                    <th>Ver Detalles</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var partida in Historial)
+                                {
+                                    <tr>
+                                        <td>
+                                            @GetLevelNameFromId(partida.IdNivel)
+                                        </td>
+                                        <td>
+                                            @partida.CantidadErrores
+                                        </td>
+                                        <td>
+                                            @partida.Puntuacion
+                                        </td>
+                                        <td>
+                                            <button class="button is-success">Detalles</button>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                
             </div>
         </div>
     </div>
