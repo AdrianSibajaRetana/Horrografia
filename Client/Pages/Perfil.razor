@@ -31,7 +31,9 @@
                 break;
             case ActiveTabState.ShowHistoryTab:
                 <UserHistory Historial="PartidasJugadasYFechas"
-                             NivelesInDatabase="Niveles"/>
+                             NivelesInDatabase="Niveles"
+                             Errores="Erorres"
+                             OnMistakesRequest="GetMistakesMadeByReportID"/>
                 break;
 
             case ActiveTabState.ShowSchoolTab:
@@ -48,36 +50,6 @@
                 }
                 break;
         }
-
-        @*
-        <MudItem Class="mx-8" Style="height: 80vh;">
-            <MudItem xs="12" sm="12" md="12" Class="mt-8">
-                <MudText Typo="Typo.h5">Mi perfil</MudText>
-            </MudItem>
-            <MudTabs Outlined="true" Position="@Position.Left" Rounded="true" Border="true"
-                     ApplyEffectsToContainer="true" PanelClass="pa-6" Class="mt-2" Style="height: inherit; max-height: 65vh;">
-                <MudTabPanel Text="General" Icon="@Icons.Material.Filled.Settings">
-                    <UserData User="User" />
-                </MudTabPanel>
-                <MudTabPanel Text="Historial" Icon="@Icons.Material.Filled.HistoryEdu">
-                    <UserHistory />
-                </MudTabPanel>
-                <MudTabPanel Text="Escuela" Icon="@Icons.Material.Filled.Festival">
-                    @if (!_isUserInSchool)
-                    {
-                        <UserSchool OnSchoolVerification="SearchSchoolExistence"
-                                    OnUserSchoolRegistration="RegisterUserToSchool" />
-                    }
-                    else
-                    {
-                        <SchoolData Escuela="UserSchool"
-                                    Estudiantes="Estudiantes"
-                                    Profesores="Profesores" />
-                    }
-                </MudTabPanel>
-            </MudTabs>
-        </MudItem>
-        *@
     }
     else
     {

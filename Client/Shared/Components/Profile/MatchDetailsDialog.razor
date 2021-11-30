@@ -1,0 +1,99 @@
+﻿@inject IDialogService DialogService
+@using System.ComponentModel.DataAnnotations
+@using Horrografia.Shared.Models
+
+<MudDialog @bind-IsVisible="ShowDialogue">
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            Errores cometidos
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        @if (IsLoading)
+        {
+            <div class="article-bottom">
+                <MudProgressCircular Color="Color.Success" Size="Size.Large" Indeterminate="true" Class="block"/>
+                <MudItem Typo="Typo.subtitle1" Class="block has-text-centered">
+                    <p>
+                        Cargado errores...
+                    </p>
+                </MudItem>
+            </div>
+        }
+        else
+        {
+            <MudCard Elevation=0>
+                <MudCardContent>
+                    <MudContainer Style="max-height: 300px; overflow-y: scroll">
+                        @if (Errores.Any())
+                        {
+                            <div class="table_width_100">
+                                <div class="table_wrapper">
+                                    <table class="block table is-bordered is-striped is-hoverable is-fullwidth">
+                                        <thead>
+                                        <tr>
+                                            <th>Forma original</th>
+                                            <th>Forma escrita</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach (var error in Errores)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @error.original
+                                                </td>
+                                                <td>
+                                                    @error.respuesta
+                                                </td>
+                                            </tr>
+                                        }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        }
+                        else
+                        {
+                            <MudItem Typo="Typo.subtitle1" Class="block">
+                                <p>
+                                    No cometió errores en el nivel seleccionado.
+                                </p>
+                            </MudItem>
+                        }
+                    </MudContainer>
+                </MudCardContent>
+                <MudCardActions>
+                    <MudGrid>
+                        <MudItem Class="ml-auto">
+                            <MudButton Variant="Variant.Text" Color="Color.Success" OnClick="ButtonPressed">Listo</MudButton>
+                        </MudItem>
+                    </MudGrid>
+                </MudCardActions>
+            </MudCard>
+        }
+        
+    </DialogContent>
+</MudDialog>
+
+
+@code 
+{
+    [Parameter]
+    public bool ShowDialogue { get; set; }
+
+    [Parameter]
+    public bool IsLoading { get; set; }
+
+    [Parameter]
+    public List<ContieneErrorModel> Errores { get; set; }
+    
+    [Parameter]
+    public EventCallback OnButtonPressed { get; set; }
+    
+    private async Task ButtonPressed()
+    {
+        await OnButtonPressed.InvokeAsync();
+    }
+
+}

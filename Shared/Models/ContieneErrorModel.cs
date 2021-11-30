@@ -9,5 +9,7 @@ namespace Horrografia.Shared.Models
         public int idReporte { get; set; }
         public int idItem { get; set; }
         public string respuesta { get; set; }
+
+        public string original { get; set; }
     }
 }

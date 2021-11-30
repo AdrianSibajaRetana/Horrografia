@@ -208,6 +208,7 @@ namespace Horrografia.Client.Shared.Components.Game
                 Mistake.idReporte = MatchID;
                 Mistake.idItem = CurrentItemModel.Id;
                 Mistake.respuesta = CurrentInput;
+                Mistake.original = CurrentFormaCorrecta;
                 GameMistakes.Add(Mistake);
                 CurrentLife -= 100 / Nivel.ErroresPermitidos;
                 CurrentLifeString = CurrentLife.ToString();

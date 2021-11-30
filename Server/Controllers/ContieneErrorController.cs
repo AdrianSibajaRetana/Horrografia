@@ -48,7 +48,7 @@ namespace Horrografia.Server.Controllers
 
         // GET api/<ContieneErrorController>/5
         [HttpGet("{id}")]
-        [Authorize]
+        [AllowAnonymous]
         public async Task<IActionResult> Get(int id)
         {
             try

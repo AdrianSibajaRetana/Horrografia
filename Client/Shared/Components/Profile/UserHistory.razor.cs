@@ -15,10 +15,56 @@ namespace Horrografia.Client.Shared.Components.Profile
         
         [Parameter]
         public List<NivelModel> NivelesInDatabase { get; set; }
+        
+        [Parameter]
+        public List<ContieneErrorModel> Errores { get; set; }
+        
+        [Parameter]
+        public EventCallback<int> OnMistakesRequest { get; set; }
+        
+        private bool ShowDetailsDialoge;
 
+        private bool DialogIsLoading;
+
+        private ReporteModel CurrentReporte;
+
+        public UserHistory()
+        {
+            CurrentReporte = new();
+            ShowDetailsDialoge = false;
+            DialogIsLoading = false;
+        }
+        
         private string GetLevelNameFromId(int id)
         {
             return NivelesInDatabase.FirstOrDefault(n => n.Id == id)?.Nombre;
         }
+
+        private async Task OpenDetailsDialoge(ReporteModel r)
+        {
+            if (CurrentReporte.Id != r.Id)
+            {
+                Errores = new List<ContieneErrorModel>();
+                DialogIsLoading = true;
+                ShowDetailsDialoge = true;
+                if (r.CantidadErrores != 0)
+                {
+                    await OnMistakesRequest.InvokeAsync(r.Id);
+                }
+                DialogIsLoading = false;
+                StateHasChanged();
+            }
+            else
+            {
+                DialogIsLoading = false;
+                ShowDetailsDialoge = true;
+            }
+        }
+
+        protected void CloseDialog()
+        {
+            ShowDetailsDialoge = false;
+        }
+
     }
 }

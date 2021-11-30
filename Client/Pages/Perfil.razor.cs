@@ -29,7 +29,9 @@ namespace Horrografia.Client.Pages
         
         [Inject]
         protected IReporteService _reporteService { get; set; }
-
+        
+        [Inject]
+        protected IContieneErrorService _contieneErrorService { get; set; }
         
         [Inject]
         protected ISnackbar _snackbar { get; set; }
@@ -45,6 +47,8 @@ namespace Horrografia.Client.Pages
         private List<(ReporteModel, string)> PartidasJugadasYFechas { get; set; }
         
         private List<NivelModel> Niveles { get; set; }
+        
+        private List<ContieneErrorModel> Erorres { get; set; }
 
         //Para el manejo de tabs
         private enum ActiveTabState
@@ -66,6 +70,7 @@ namespace Horrografia.Client.Pages
             _lecturaExitosa = false;
             _isUserInSchool = false;
             UserSchool = new();
+            Erorres = new();
             PartidasJugadasYFechas = new();
             _activeTab = ActiveTabState.ShowGeneralTab;
             _generalActiveString = ShowActiveState;
@@ -246,6 +251,19 @@ namespace Horrografia.Client.Pages
                 ShowNotification("Hubo un error al registrarse a la escuela", Severity.Error);
             }
             await CargarDataDeEscuela();
+        }
+
+        protected async Task GetMistakesMadeByReportID(int reportID)
+        {
+            var respsonse = await _contieneErrorService.GetByReporteIDAsync(reportID);
+            if (respsonse.isResponseSuccesfull())
+            {
+                Erorres = respsonse.Response;
+            }
+            else
+            {
+                ShowNotification("Hubo un error al cargar los detalles del nivel.", Severity.Error);
+            }
         }
     }
 }

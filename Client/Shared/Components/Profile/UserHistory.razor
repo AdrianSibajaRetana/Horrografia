@@ -11,35 +11,35 @@
                     <div class="table_wrapper">
                         <table class="block table is-bordered is-striped is-hoverable is-fullwidth">
                             <thead>
-                                <tr>
-                                    <th>Nivel jugado</th>
-                                    <th>Errores cometidos</th>
-                                    <th>Puntaje conseguido</th>
-                                    <th>Fecha de juego</th>
-                                    <th>Ver Detalles</th>
-                                </tr>
+                            <tr>
+                                <th>Nivel jugado</th>
+                                <th>Errores cometidos</th>
+                                <th>Puntaje conseguido</th>
+                                <th>Fecha de juego</th>
+                                <th>Ver Detalles</th>
+                            </tr>
                             </thead>
                             <tbody>
-                                @foreach (var valueTuple in Historial)
-                                {
-                                    <tr>
-                                        <td>
-                                            @GetLevelNameFromId(valueTuple.Item1.IdNivel)
-                                        </td>
-                                        <td>
-                                            @valueTuple.Item1.CantidadErrores
-                                        </td>
-                                        <td>
-                                            @valueTuple.Item1.Puntuacion
-                                        </td>
-                                        <td>
-                                            @valueTuple.Item2
-                                        </td>
-                                        <td>
-                                            <button class="button is-success">Detalles</button>
-                                        </td>
-                                    </tr>
-                                }
+                            @foreach (var valueTuple in Historial)
+                            {
+                                <tr>
+                                    <td>
+                                        @GetLevelNameFromId(valueTuple.Item1.IdNivel)
+                                    </td>
+                                    <td>
+                                        @valueTuple.Item1.CantidadErrores
+                                    </td>
+                                    <td>
+                                        @valueTuple.Item1.Puntuacion
+                                    </td>
+                                    <td>
+                                        @valueTuple.Item2
+                                    </td>
+                                    <td>
+                                        <button class="button is-success" @onclick="() => OpenDetailsDialoge(valueTuple.Item1)">Detalles</button>
+                                    </td>
+                                </tr>
+                            }
                             </tbody>
                         </table>
                     </div>
@@ -48,6 +48,11 @@
             </div>
         </div>
     </div>
+    <MatchDetailsDialog
+        ShowDialogue="ShowDetailsDialoge"
+        IsLoading="DialogIsLoading"
+        Errores="Errores"
+        OnButtonPressed="CloseDialog"/>
 }
 else
 {

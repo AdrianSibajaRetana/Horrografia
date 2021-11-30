@@ -36,11 +36,10 @@ namespace Horrografia.Server.Data.Repos.Implementations
         }
 
         //POST
-        //CONSIDERAR BULK INSERT
         public async Task InsertData(ContieneErrorModel error)
         {
-            string sql = "insert into contieneerror (idReporte, idItem, respuesta) values (@idReporte, @idItem, @respuesta);";
-            await _dbContext.SaveData(sql, new { idReporte = error.idReporte, idItem = error.idItem, respuesta = error.respuesta }, ConectionString);
+            string sql = "insert into contieneerror (idReporte, idItem, respuesta, original) values (@idReporte, @idItem, @respuesta, @original);";
+            await _dbContext.SaveData(sql, new { idReporte = error.idReporte, idItem = error.idItem, respuesta = error.respuesta, original = error.original }, ConectionString);
         }
 
     }
