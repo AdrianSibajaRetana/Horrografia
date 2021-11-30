@@ -11,7 +11,7 @@ namespace Horrografia.Client.Shared.Components.Profile
     public partial class UserHistory
     {
         [Parameter]
-        public List<(ReporteModel, string)> Historial { get; set; }
+        public List<ReporteModel> Historial { get; set; }
         
         [Parameter]
         public List<NivelModel> NivelesInDatabase { get; set; }

@@ -244,8 +244,7 @@ namespace Horrografia.Client.Shared.Components.Game
                 GameReport.IdNivel = Nivel.Id;
                 GameReport.CantidadErrores = CurrentMistakes;
                 GameReport.Puntuacion = CurrentGameScore;
-                GameReport.Fecha = CurrentGameDate;
-                Console.WriteLine(CurrentGameDate);
+                GameReport.FechaString = CurrentGameDate;
                 
                 await OnReportCreated.InvokeAsync(GameReport);
                 //Do this forloop

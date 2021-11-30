@@ -25,6 +25,10 @@ namespace Horrografia.Server.Data.Repos.Implementations
         {
             string sql = "select * from reporte ORDER BY Fecha DESC";
             var reportes = await _dbContext.LoadData<ReporteModel, dynamic>(sql, new { }, ConectionString);
+            foreach (var report in reportes)
+            {
+                report.TransformFechaToString();
+            }
             return reportes;
         }
 
@@ -33,6 +37,10 @@ namespace Horrografia.Server.Data.Repos.Implementations
         {
             string sql = "SELECT * FROM reporte WHERE IdUsuario = @id ORDER BY Fecha DESC";
             var reportes = await _dbContext.LoadData<ReporteModel, dynamic>(sql, new { id = IdUsuario }, ConectionString);
+            foreach (var report in reportes)
+            {
+                report.TransformFechaToString();
+            }
             return reportes;
         }
         
@@ -48,7 +56,7 @@ namespace Horrografia.Server.Data.Repos.Implementations
         public async Task InsertData(ReporteModel r)
         {
             string sql = "insert into reporte (id, IdUsuario, IdNivel, CantidadErrores, Puntuacion, Fecha) values (@Id, @IdUsuario, @IdNivel, @CantidadErrores, @Puntuacion, @Fecha);";
-            await _dbContext.SaveData(sql, new { Id = r.Id, IdUsuario = r.IdUsuario, IdNivel = r.IdNivel, CantidadErrores = r.CantidadErrores, Puntuacion = r.Puntuacion, Fecha = r.Fecha }, ConectionString);
+            await _dbContext.SaveData(sql, new { Id = r.Id, IdUsuario = r.IdUsuario, IdNivel = r.IdNivel, CantidadErrores = r.CantidadErrores, Puntuacion = r.Puntuacion, Fecha = r.FechaString }, ConectionString);
         }
 
 

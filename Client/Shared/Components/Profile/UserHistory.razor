@@ -20,23 +20,23 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach (var valueTuple in Historial)
+                            @foreach (var reporte in Historial)
                             {
                                 <tr>
                                     <td>
-                                        @GetLevelNameFromId(valueTuple.Item1.IdNivel)
+                                        @GetLevelNameFromId(reporte.IdNivel)
                                     </td>
                                     <td>
-                                        @valueTuple.Item1.CantidadErrores
+                                        @reporte.CantidadErrores
                                     </td>
                                     <td>
-                                        @valueTuple.Item1.Puntuacion
+                                        @reporte.Puntuacion
                                     </td>
                                     <td>
-                                        @valueTuple.Item2
+                                        @reporte.FechaString
                                     </td>
                                     <td>
-                                        <button class="button is-success" @onclick="() => OpenDetailsDialoge(valueTuple.Item1)">Detalles</button>
+                                        <button class="button is-success" @onclick="() => OpenDetailsDialoge(reporte)">Detalles</button>
                                     </td>
                                 </tr>
                             }
