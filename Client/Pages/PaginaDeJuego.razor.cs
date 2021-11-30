@@ -78,7 +78,6 @@ namespace Horrografia.Client.Pages
 
         private String UserID { get; set; }
         
-        private String CurrentDate { get; set; }
 
         public PaginaDeJuego()
         {
@@ -95,7 +94,6 @@ namespace Horrografia.Client.Pages
             await GetGameID();
             await GetUserInformation();
             await CargarNiveles();
-            GetDate();
         }
         
         private async Task CargarNiveles()
@@ -111,13 +109,7 @@ namespace Horrografia.Client.Pages
                 ShowNotification(reporteError, Severity.Error);
             }
         }
-
-        private void GetDate()
-        {
-            DateTime today = DateTime.Now;
-            CurrentDate = today.ToString("yyyy-MM-dd hh:mm:ss");
-        }
-
+        
         private void ShowNotification(string mensaje, Severity s)
         {
             _snackbar.Add(mensaje, s);
