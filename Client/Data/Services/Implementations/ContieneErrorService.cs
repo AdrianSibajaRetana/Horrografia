@@ -82,7 +82,7 @@ namespace Horrografia.Client.Data.Services.Implementations
             ControllerResponse<ContieneErrorModel> controllerResponse = new ();
             try
             {
-                var response = await _http.PostAsJsonAsync("api/ContieneError", error);
+                var response = await _anonymousHttpClient.PostAsJsonAsync("api/ContieneError", error);
                 if (response.IsSuccessStatusCode)
                 {
                     controllerResponse.Status = Constantes.OKSTATUS;

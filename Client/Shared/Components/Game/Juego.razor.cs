@@ -43,6 +43,9 @@ namespace Horrografia.Client.Shared.Components.Game
         [Parameter]
         public EventCallback<string> OnExceptionOccured { get; set; }
 
+        [Parameter] 
+        public string CurrentGameDate { get; set; }
+
         private Timer gameTimer;
 
         private Queue<ItemModel> ItemQueue { get; set; }
@@ -240,6 +243,9 @@ namespace Horrografia.Client.Shared.Components.Game
                 GameReport.IdNivel = Nivel.Id;
                 GameReport.CantidadErrores = CurrentMistakes;
                 GameReport.Puntuacion = CurrentGameScore;
+                GameReport.Fecha = CurrentGameDate;
+                Console.WriteLine(CurrentGameDate);
+                
                 await OnReportCreated.InvokeAsync(GameReport);
                 //Do this forloop
                 foreach (var mistakeDone in GameMistakes)

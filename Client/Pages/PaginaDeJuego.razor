@@ -58,11 +58,6 @@
                                             <b>Errores permitidos: </b>@NivelSeleccionado.ErroresPermitidos
                                         </p>      
                                     </div>
-                                    <div class="block">
-                                        <p>
-                                            @GameID
-                                        </p>      
-                                    </div>
                                 </div>
                             }
                         </div>
@@ -85,6 +80,7 @@
                         OnReportCreated="PostGameReport"
                         OnGameMistakeCreated="PostGameMistake"
                         OnExceptionOccured="NotifyError"
+                        CurrentGameDate="@CurrentDate"
                         />
                 }
                 else

@@ -82,7 +82,7 @@ namespace Horrografia.Client.Data.Services.Implementations
             ControllerResponse<ReporteModel> controllerResponse = new();
             try
             {
-                var response = await _http.PostAsJsonAsync("api/Reporte", r);
+                var response = await _anonymousHttpClient.PostAsJsonAsync("api/Reporte", r);
                 if (response.IsSuccessStatusCode)
                 {
                     controllerResponse.Status = Constantes.OKSTATUS;
