@@ -59,10 +59,11 @@ CREATE TABLE Reporte(
                         idNivel int NOT NULL,
                         CantidadErrores int NOT NULL,
                         Puntuacion INT NOT NULL,
-                        Fecha DATE NOT NULL,
+                        Fecha DATETIME NOT NULL,
                         PRIMARY KEY(id),
                         FOREIGN KEY (idNivel) REFERENCES Nivel(id) ON DELETE CASCADE
 )
+
 
 CREATE TABLE ContieneError(
                       idReporte INT NOT NULL,

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Horrografia.Shared.Models;
@@ -22,7 +23,7 @@ namespace Horrografia.Server.Data.Repos.Implementations
         //GET
         public async Task<List<ReporteModel>> GetAllAsync()
         {
-            string sql = "select * from reporte";
+            string sql = "select * from reporte ORDER BY Fecha DESC";
             var reportes = await _dbContext.LoadData<ReporteModel, dynamic>(sql, new { }, ConectionString);
             return reportes;
         }
@@ -30,9 +31,17 @@ namespace Horrografia.Server.Data.Repos.Implementations
         //GET/{IdUsuario}
         public async Task<List<ReporteModel>> GetUserReports(string IdUsuario)
         {
-            string sql = "SELECT * FROM reporte WHERE IdUsuario = @id";
+            string sql = "SELECT * FROM reporte WHERE IdUsuario = @id ORDER BY Fecha DESC";
             var reportes = await _dbContext.LoadData<ReporteModel, dynamic>(sql, new { id = IdUsuario }, ConectionString);
             return reportes;
+        }
+        
+        
+        public async Task<DateTime> GetReportDate(int reportID)
+        {
+            string sql = "SELECT Fecha FROM reporte WHERE id = @id";
+            var date = await _dbContext.LoadData<DateTime, dynamic>(sql, new { id = reportID }, ConectionString);
+            return date.FirstOrDefault();
         }
 
         //POST
@@ -41,6 +50,7 @@ namespace Horrografia.Server.Data.Repos.Implementations
             string sql = "insert into reporte (id, IdUsuario, IdNivel, CantidadErrores, Puntuacion, Fecha) values (@Id, @IdUsuario, @IdNivel, @CantidadErrores, @Puntuacion, @Fecha);";
             await _dbContext.SaveData(sql, new { Id = r.Id, IdUsuario = r.IdUsuario, IdNivel = r.IdNivel, CantidadErrores = r.CantidadErrores, Puntuacion = r.Puntuacion, Fecha = r.Fecha }, ConectionString);
         }
+
 
         //DELETE
         public async Task DeleteReporteById(int ReporteId)

@@ -111,5 +111,21 @@ namespace Horrografia.Server.Controllers
                 return new StatusCodeResult(StatusCodes.Status500InternalServerError);
             }
         }
+        
+        [HttpGet("fecha/{id}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetDate(int id)
+        {
+            try
+            {
+                var reportDate = await _repo.GetReportDate(id);
+                return Ok(reportDate);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "An error occurred while fetching from db");
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }
+        }
     }
 }

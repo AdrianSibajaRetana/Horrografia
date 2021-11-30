@@ -76,6 +76,35 @@ namespace Horrografia.Client.Data.Services.Implementations
                 return controllerResponse;
             }
         }
+        
+        
+        public async Task<ControllerResponse<DateTime>> GetDateByReportID(int ID)
+        {
+            ControllerResponse<DateTime> controllerResponse = new();
+            try
+            {
+                var response = await _anonymousHttpClient.GetAsync($"api/Reporte/fecha/{ID}");
+                if (response.IsSuccessStatusCode)
+                {
+                    var date = await response.Content.ReadFromJsonAsync<DateTime>();
+                    List<DateTime> controllerList = new();
+                    controllerList.Add(date);
+                    controllerResponse.Status = Constantes.OKSTATUS;
+                    controllerResponse.Response = controllerList;
+                    return controllerResponse;
+                }
+                controllerResponse.Status = Constantes.INTERNALERRORSTATUS;
+                controllerResponse.Response = new List<DateTime>();
+                return controllerResponse;
+            }
+            catch (Exception e)
+            {
+                controllerResponse.Status = Constantes.INTERNALERRORSTATUS;
+                controllerResponse.Response = new List<DateTime>();
+                _logger.LogError(e, "An error occurred while fetching from db");
+                return controllerResponse;
+            }
+        }
 
         public async Task<ControllerResponse<ReporteModel>> PostAsync(ReporteModel r)
         {
@@ -148,5 +177,6 @@ namespace Horrografia.Client.Data.Services.Implementations
                 return controllerResponse;
             }
         }
+
     }
 }

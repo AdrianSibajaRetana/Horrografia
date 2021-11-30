@@ -114,8 +114,8 @@ namespace Horrografia.Client.Pages
 
         private void GetDate()
         {
-            DateTime today = DateTime.Today;
-            CurrentDate = today.ToString("yyyy-MM-dd");
+            DateTime today = DateTime.Now;
+            CurrentDate = today.ToString("yyyy-MM-dd hh:mm:ss");
         }
 
         private void ShowNotification(string mensaje, Severity s)

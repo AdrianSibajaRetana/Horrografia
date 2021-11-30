@@ -25,12 +25,12 @@
         {
             case ActiveTabState.ShowGeneralTab:
                 <UserData User="User"
-                          NumberOfGames="@PartidasJugadas.Count"
+                          NumberOfGames="@PartidasJugadasYFechas.Count"
                           IsUserInSchool="_isUserInSchool"
                           UserSchool="UserSchool"/>
                 break;
             case ActiveTabState.ShowHistoryTab:
-                <UserHistory Historial="PartidasJugadas"
+                <UserHistory Historial="PartidasJugadasYFechas"
                              NivelesInDatabase="Niveles"/>
                 break;
 

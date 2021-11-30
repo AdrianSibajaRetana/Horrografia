@@ -42,7 +42,7 @@ namespace Horrografia.Client.Pages
         private List<string> Estudiantes { get; set; }
         private List<string> Profesores { get; set; }
 
-        private List<ReporteModel> PartidasJugadas { get; set; }
+        private List<(ReporteModel, string)> PartidasJugadasYFechas { get; set; }
         
         private List<NivelModel> Niveles { get; set; }
 
@@ -66,7 +66,7 @@ namespace Horrografia.Client.Pages
             _lecturaExitosa = false;
             _isUserInSchool = false;
             UserSchool = new();
-            PartidasJugadas = new();
+            PartidasJugadasYFechas = new();
             _activeTab = ActiveTabState.ShowGeneralTab;
             _generalActiveString = ShowActiveState;
         }
@@ -140,6 +140,7 @@ namespace Horrografia.Client.Pages
 
         private async Task CargarHistorialDePartidas()
         {
+            List<ReporteModel> PartidasJugadas = new();
             var response = await _reporteService.GetUserReportsById(User.id);
             if (response.isResponseSuccesfull())
             {
@@ -148,6 +149,21 @@ namespace Horrografia.Client.Pages
             else
             {
                 throw new InvalidOperationException($"Error al cargar partidas.");
+            }
+
+            foreach (var reporte in PartidasJugadas)
+            {
+                var secondResponse = await _reporteService.GetDateByReportID(reporte.Id);
+                if (secondResponse.isResponseSuccesfull())
+                {
+                    DateTime gameDate = secondResponse.Response.FirstOrDefault();
+                    string stringDate = gameDate.ToString("yyyy-MM-dd hh:mm:ss");
+                    PartidasJugadasYFechas.Add((reporte, stringDate));
+                }
+                else
+                {
+                    throw new InvalidOperationException($"Error al cargar fechas");
+                }
             }
         }
         

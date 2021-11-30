@@ -1,4 +1,5 @@
-﻿using Horrografia.Client.Shared.Objects;
+﻿using System;
+using Horrografia.Client.Shared.Objects;
 using Horrografia.Shared.Models;
 using System.Threading.Tasks;
 
@@ -15,5 +16,7 @@ namespace Horrografia.Client.Data.Services.Interfaces
         Task<ControllerResponse<ReporteModel>> DeleteAsync(ReporteModel r);
         
         Task<ControllerResponse<bool>> VerifyReportID(int ID);
+
+        Task<ControllerResponse<DateTime>> GetDateByReportID(int ID);
     }
 }
