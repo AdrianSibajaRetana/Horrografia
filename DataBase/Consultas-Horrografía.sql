@@ -60,15 +60,15 @@ CREATE TABLE Reporte(
                         CantidadErrores int NOT NULL,
                         Puntuacion INT NOT NULL,
                         PRIMARY KEY(id),
-                        FOREIGN KEY (idNivel) REFERENCES Nivel(id)
+                        FOREIGN KEY (idNivel) REFERENCES Nivel(id) ON DELETE CASCADE
 )
 
 CREATE TABLE ContieneError(
                       idReporte INT NOT NULL,
                       idItem INT NOT NULL,
                       respuesta VARCHAR(255) NOT NULL,
-                      FOREIGN KEY (idReporte) REFERENCES Reporte(id),
-                      FOREIGN KEY (idItem) REFERENCES Item(id)
+                      FOREIGN KEY (idReporte) REFERENCES Reporte(id) ON DELETE CASCADE,
+                      FOREIGN KEY (idItem) REFERENCES Item(id) ON DELETE CASCADE
 )
 
 
