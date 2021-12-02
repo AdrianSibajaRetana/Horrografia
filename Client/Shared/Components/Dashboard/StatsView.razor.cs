@@ -37,9 +37,8 @@ namespace Horrografia.Client.Shared.Components.Dashboard
         private List<ReporteModel> Partidas{ get; set; }
         
         private List<ReporteModel> PartidasLuegoDeSerFiltradas { get; set; }
-
-        private List<ContieneErrorModel> Erorres { get; set; }
         
+       
         private bool EstaCargandoLasNuevasEstadisticas { get; set; }
 
         private bool EnseñarEstadísticas { get; set; }
@@ -47,6 +46,8 @@ namespace Horrografia.Client.Shared.Components.Dashboard
         private string TituloDeEstadisticas { get; set; }
 
         private int AñoActual { get; set;}
+        
+        private int ErroresCometidos { get; set; }
 
         public StatsView()
         {
@@ -90,26 +91,35 @@ namespace Horrografia.Client.Shared.Components.Dashboard
             }
         }
 
-        private void FiltrarPartidas()
+        private async Task FiltrarPartidas()
         {
             EnseñarEstadísticas = true;
             EstaCargandoLasNuevasEstadisticas = true;
-            switch (OpcionEscogida)
+            try
             {
-                case Opciones.TodasLasPartidas:
-                    TituloDeEstadisticas = "Información de todas las partidas de Horrografía";
-                    DevolverTodas();
-                    break;
-                case Opciones.Año:
-                    TituloDeEstadisticas = $"Información de todas las partidas jugadas en el año {AñoSeleccionado}";
-                    FiltrarPorAño();
-                    break;
-                case Opciones.Mes:
-                    TituloDeEstadisticas = $"Información de todas las partidas jugadas en {GetMes()} del {AñoActual}";
-                    FiltrarPorMes();
-                    break;
+                switch (OpcionEscogida)
+                {
+                    case Opciones.TodasLasPartidas:
+                        TituloDeEstadisticas = "Información de todas las partidas de Horrografía";
+                        DevolverTodas();
+                        break;
+                    case Opciones.Año:
+                        TituloDeEstadisticas = $"Información de todas las partidas jugadas en el año {AñoSeleccionado}";
+                        FiltrarPorAño();
+                        break;
+                    case Opciones.Mes:
+                        TituloDeEstadisticas = $"Información de todas las partidas jugadas en {GetMes()} del {AñoActual}";
+                        FiltrarPorMes();
+                        break;
+                }
+                ContarErroresCometidos();
+                await ConseguirTiposDeErroresCometidos();
+                EstaCargandoLasNuevasEstadisticas = false;
             }
-            EstaCargandoLasNuevasEstadisticas = false;
+            catch (Exception e)
+            {
+                ShowNotification(e.Message, Severity.Error);
+            }
         }
 
         private void DevolverTodas()
@@ -171,6 +181,20 @@ namespace Horrografia.Client.Shared.Components.Dashboard
                     break;
             }
             return Mes;
+        }
+
+        private void ContarErroresCometidos()
+        {
+            ErroresCometidos = 0;
+            foreach (var reporte in PartidasLuegoDeSerFiltradas)
+            {
+                ErroresCometidos += reporte.CantidadErrores;
+            }
+        }
+
+        private async Task ConseguirTiposDeErroresCometidos()
+        {
+            //implementar
         }
     }
 }

@@ -25,6 +25,14 @@ namespace Horrografia.Server.Data.Repos.Implementations
             var tags = await _dbContext.LoadData<TagModel, dynamic>(sql, new { }, ConectionString);
             return tags;
         }
+        
+        public async Task<List<string>> GetFromReport(int id)
+        {
+            string sql =
+                "SELECT tag FROM Tag JOIN ItemTag i ON Tag.id = i.idTag JOIN item it ON i.idItem = it.id JOIN contieneerror c ON it.id = c.idItem JOIN reporte r ON c.idReporte = r.id WHERE r.id = @id";
+            var tags = await _dbContext.LoadData<string, dynamic>(sql, new {id = id }, ConectionString);
+            return tags;
+        }
 
         public async Task InsertData(TagModel t)
         {

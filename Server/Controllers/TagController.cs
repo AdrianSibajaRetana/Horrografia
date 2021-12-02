@@ -37,6 +37,21 @@ namespace Horrografia.Server.Controllers
                 return new StatusCodeResult(StatusCodes.Status500InternalServerError);
             }
         }
+        
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetTagsFromReportId(int id)
+        {
+            try
+            {
+                var tags = await _repo.GetFromReport(id);
+                return Ok(tags);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "An error occurred while fetching from db");
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }
+        }
 
         [HttpPost]
         public async Task<IActionResult> Post(TagModel i)
