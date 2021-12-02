@@ -23,7 +23,7 @@ namespace Horrografia.Client.Shared.Components.Dashboard
         protected IReporteService _reporteService { get; set; }
         
         [Inject]
-        protected IContieneErrorService _contieneErrorService { get; set; }
+        protected ITagService _tagService { get; set; }
         
         [Inject]
         protected ISnackbar _snackbar { get; set; }
@@ -37,6 +37,8 @@ namespace Horrografia.Client.Shared.Components.Dashboard
         private List<ReporteModel> Partidas{ get; set; }
         
         private List<ReporteModel> PartidasLuegoDeSerFiltradas { get; set; }
+        
+        private Dictionary<string,int> TagCounterDictionary { get; set; }
         
        
         private bool EstaCargandoLasNuevasEstadisticas { get; set; }
@@ -194,7 +196,76 @@ namespace Horrografia.Client.Shared.Components.Dashboard
 
         private async Task ConseguirTiposDeErroresCometidos()
         {
-            //implementar
+            TagCounterDictionary = new();
+            List<string> Tags = new();
+            switch (OpcionEscogida)
+            {
+                case Opciones.TodasLasPartidas:
+                    Tags = await ConseguirTodosLosTags();
+                    break;
+                case Opciones.Año:
+                    Tags = await ConseguirTagsPorAño();
+                    break;
+                case Opciones.Mes:
+                    Tags = await ConseguirTagsPorMes();
+                    break;
+            }
+            foreach (var tag in Tags)
+            {
+                if(TagCounterDictionary.ContainsKey(tag))
+                {
+                    TagCounterDictionary[tag]++;
+                }
+                else
+                {
+                    TagCounterDictionary[tag] = 1;
+                }
+            }
+        }
+
+        private async Task<List<string>> ConseguirTodosLosTags()
+        {
+            List<string> Tags = new();
+            var response = await _tagService.GetTagsFromAllReports();
+            if (response.isResponseSuccesfull())
+            {
+                Tags = response.Response;
+            }
+            else
+            {
+                throw new InvalidOperationException($"Error al conseguir todos los tags.");
+            }
+            return Tags;
+        }
+        
+        private async Task<List<string>> ConseguirTagsPorMes()
+        {
+            List<string> Tags = new();
+            var response = await _tagService.GetTagsFromMonthlyReports(MesSeleccionado, AñoActual);
+            if (response.isResponseSuccesfull())
+            {
+                Tags = response.Response;
+            }
+            else
+            {
+                throw new InvalidOperationException($"Error al conseguir los tags del mes.");
+            }
+            return Tags;
+        }
+        
+        private async Task<List<string>> ConseguirTagsPorAño()
+        {
+            List<string> Tags = new();
+            var response = await _tagService.GetTagsFromYearlyReports(AñoSeleccionado);
+            if (response.isResponseSuccesfull())
+            {
+                Tags = response.Response;
+            }
+            else
+            {
+                throw new InvalidOperationException($"Error al conseguir los tags del año.");
+            }
+            return Tags;
         }
     }
 }

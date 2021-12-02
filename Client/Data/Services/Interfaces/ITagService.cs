@@ -12,5 +12,9 @@ namespace Horrografia.Client.Data.Services.Interfaces
         Task<ControllerResponse<TagModel>> PostRelationAync(ItemTagModel i);
         Task<ControllerResponse<TagModel>> DeleteRelationAync(ItemTagModel i);
         Task<ControllerResponse<ItemTagModel>> GetRelationsAync();
+        
+        Task<ControllerResponse<string>> GetTagsFromAllReports();
+        Task<ControllerResponse<string>> GetTagsFromMonthlyReports(int month, int year);
+        Task<ControllerResponse<string>> GetTagsFromYearlyReports(int year);
     }
 }

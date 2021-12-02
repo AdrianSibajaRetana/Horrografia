@@ -26,14 +26,30 @@ namespace Horrografia.Server.Data.Repos.Implementations
             return tags;
         }
         
-        public async Task<List<string>> GetFromReport(int id)
+        public async Task<List<string>> GetFromAllReports()
         {
             string sql =
-                "SELECT tag FROM Tag JOIN ItemTag i ON Tag.id = i.idTag JOIN item it ON i.idItem = it.id JOIN contieneerror c ON it.id = c.idItem JOIN reporte r ON c.idReporte = r.id WHERE r.id = @id";
-            var tags = await _dbContext.LoadData<string, dynamic>(sql, new {id = id }, ConectionString);
+                "SELECT tag FROM Tag JOIN ItemTag i ON Tag.id = i.idTag JOIN item it ON i.idItem = it.id JOIN contieneerror c ON it.id = c.idItem JOIN reporte r ON c.idReporte = r.id";
+            var tags = await _dbContext.LoadData<string, dynamic>(sql, new {}, ConectionString);
             return tags;
         }
-
+        
+        public async Task<List<string>> GetFromMonthlyReports(int month, int year)
+        {
+            string sql =
+                "SELECT tag FROM Tag JOIN ItemTag i ON Tag.id = i.idTag JOIN item it ON i.idItem = it.id JOIN contieneerror c ON it.id = c.idItem JOIN reporte r ON c.idReporte = r.id WHERE EXTRACT(MONTH FROM r.Fecha) = @mes AND EXTRACT(YEAR FROM r.Fecha) = @ano";
+            var tags = await _dbContext.LoadData<string, dynamic>(sql, new {mes = month, ano = year}, ConectionString);
+            return tags;
+        }
+        
+        public async Task<List<string>> GetFromYearlyReports(int year)
+        {
+            string sql =
+                "SELECT tag FROM Tag JOIN ItemTag i ON Tag.id = i.idTag JOIN item it ON i.idItem = it.id JOIN contieneerror c ON it.id = c.idItem JOIN reporte r ON c.idReporte = r.id WHERE EXTRACT(YEAR FROM r.Fecha) = @ano";
+            var tags = await _dbContext.LoadData<string, dynamic>(sql, new {ano = year}, ConectionString);
+            return tags;
+        }
+        
         public async Task InsertData(TagModel t)
         {
             string sql = "insert into Tag (Tag) values (@TagContent);";

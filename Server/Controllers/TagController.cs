@@ -38,12 +38,12 @@ namespace Horrografia.Server.Controllers
             }
         }
         
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetTagsFromReportId(int id)
+        [HttpGet("todos")]
+        public async Task<IActionResult> GetTagsFromReportId()
         {
             try
             {
-                var tags = await _repo.GetFromReport(id);
+                var tags = await _repo.GetFromAllReports();
                 return Ok(tags);
             }
             catch (Exception e)
@@ -52,18 +52,33 @@ namespace Horrografia.Server.Controllers
                 return new StatusCodeResult(StatusCodes.Status500InternalServerError);
             }
         }
-
-        [HttpPost]
-        public async Task<IActionResult> Post(TagModel i)
+        
+        [HttpGet("mensual/{month:int}/{year:int}")]
+        public async Task<IActionResult> GetTagsFromMonth(int month, int year)
         {
             try
             {
-                await _repo.InsertData(i);
-                return Ok();
+                var tags = await _repo.GetFromMonthlyReports(month, year);
+                return Ok(tags);
             }
             catch (Exception e)
             {
-                _logger.LogError(e, "An error occurred while writing to db");
+                _logger.LogError(e, "An error occurred while fetching from db");
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }
+        }
+        
+        [HttpGet("anual/{year:int}")]
+        public async Task<IActionResult> GetTagsFromYear(int year)
+        {
+            try
+            {
+                var tags = await _repo.GetFromYearlyReports(year);
+                return Ok(tags);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "An error occurred while fetching from db");
                 return new StatusCodeResult(StatusCodes.Status500InternalServerError);
             }
         }

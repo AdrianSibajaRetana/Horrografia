@@ -105,6 +105,12 @@
                         </div>
                     </div>
                 </div>
+                <div class="block">
+                    @foreach (KeyValuePair<string, int> entry in TagCounterDictionary)
+                    {
+                        <p>@entry.Key -> @entry.Value</p>
+                    }
+                </div>
             }
         }
     </div>
