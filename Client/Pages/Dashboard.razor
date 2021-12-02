@@ -5,7 +5,7 @@
 @attribute [Authorize(Roles = "Admin")]
 
 
-<div class="columns is-vcentered">
+<div class="columns is-centered block">
     <div class="column is-one-third">
         <div class="dashboard-administration-container">
             <div class="card article  m-auto dashboard-administration-card">
@@ -64,58 +64,6 @@
         </div>
     </div>
 </div>
-
-    @*
-        <MudGrid>
-            <MudItem xs="12" sm="12" md="12" Class="mt-8 px-8">
-                <MudGrid Justify="Justify.Center">
-                    <MudItem xs="12" sm="12" md="6">
-                        <DataAdministration Titulo="Administrar niveles"
-                                            Subtitulo="Editar, añadir o eliminar niveles"
-                                            IconoBoton="@Icons.Material.Filled.Edit"
-                                            ClaseBoton="teal"
-                                            TextoBoton="Administrar"
-                                            LinkBoton="/dashboard/niveles" />
-                    </MudItem>
-
-                    <MudItem xs="12" sm="12" md="6">
-                        <DataAdministration Titulo="Administrar items"
-                                            Subtitulo="Administrar etiquetas"
-                                            IconoBoton="@Icons.Material.Outlined.Edit"
-                                            ClaseBoton="teal"
-                                            TextoBoton="Administrar"
-                                            LinkBoton="/dashboard/items" />
-                    </MudItem>
-
-                    <MudItem xs="12" sm="12" md="6">
-                        <DataAdministration Titulo="Administrarción general"
-                                            Subtitulo="Administrar permisos y escuelas"
-                                            IconoBoton="@Icons.Material.Outlined.AdminPanelSettings"
-                                            ClaseBoton="indigo"
-                                            TextoBoton="Administrar"
-                                            LinkBoton="/dashboard/permisos" />
-                    </MudItem>
-
-                    <MudItem xs="12" sm="12" md="12">
-                        <MudPaper Elevation="2" Class="pa-4" Style="height: auto;">
-
-                        </MudPaper>
-                    </MudItem>
-
-                </MudGrid>
-            </MudItem>
-
-            <MudItem xs="12" sm="12" md="12">
-                <MudItem xs="12" sm="6" md="4">
-                    <MudPaper Elevation="2" Class="pa-4" ></MudPaper>
-                </MudItem>
-                <MudItem xs="12" sm="6" md="4">
-                    <MudPaper Elevation="2" Class="pa-4" ></MudPaper>
-                </MudItem>
-                <MudItem xs="12" sm="12" md="4">
-                    <MudPaper Elevation="2" Class="pa-4" ></MudPaper>
-                </MudItem>
-            </MudItem>
-
-        </MudGrid>
-    *@
+<div class="block px-5">
+    <StatsView/>
+</div>
