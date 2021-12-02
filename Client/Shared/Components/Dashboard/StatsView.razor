@@ -1,79 +1,100 @@
-﻿<div class="container m-4 is-fullhd">
-    <div class="block">
-        <p class="title is-2">Visión de Estadísticas</p>
-        <p class="subtitle is-4">Seleccione el rango que desea visualizar</p>
-    </div>
-    <hr>
-    <div class="block">
-        <div class="columns">
-            <div class="column px-2">
-                <div class="block">
-                    <p class="title is-4">Filtro</p>
-                </div>
-                <div class="block">
-                    <div class="select is-medium is-fullwidth">
-                        <select class="form-control" @bind="OpcionEscogida">
-                            <option value="@Opciones.TodasLasPartidas">Todas las partidas</option>
-                            <option value="@Opciones.Año">Filtrar por año</option>
-                            <option value="@Opciones.Mes">Filtrar por mes</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-            @if (OpcionEscogida is Opciones.Año or Opciones.Mes)
-            {
+﻿@using Horrografia.Client.Shared.Components.General
+<PageLoading Titulo="Estadísticas" IsLoading="@IsLoading">
+    <div class="container m-4 is-fullhd">
+        <div class="block">
+            <p class="title is-2">Visión de Estadísticas</p>
+            <p class="subtitle is-4">Seleccione el rango que desea visualizar</p>
+        </div>
+        <hr>
+        <div class="block">
+            <div class="columns">
                 <div class="column px-2">
                     <div class="block">
-                        @if (OpcionEscogida == Opciones.Año)
-                        {
-                            <p class="title is-4">Seleccione el año</p>
-                        }
-                        else
-                        {
-                            <p class="title is-4">Seleccione el mes</p>
-                        }
+                        <p class="title is-4">Filtro</p>
                     </div>
                     <div class="block">
                         <div class="select is-medium is-fullwidth">
+                            <select class="form-control" @bind="OpcionEscogida">
+                                <option value="@Opciones.TodasLasPartidas">Todas las partidas</option>
+                                <option value="@Opciones.Año">Filtrar por año</option>
+                                <option value="@Opciones.Mes">Filtrar por mes</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                @if (OpcionEscogida is Opciones.Año or Opciones.Mes)
+                {
+                    <div class="column px-2">
+                        <div class="block">
                             @if (OpcionEscogida == Opciones.Año)
                             {
-                                <select class="form-control" @bind="AñoSeleccionado">
-                                    @for (int i = 2022; i < 2051; i++)
-                                    {
-                                        var localVariable = i;
-                                        <option value="@localVariable">@localVariable</option>
-                                    }
-                                </select>
+                                <p class="title is-4">Seleccione el año</p>
                             }
                             else
                             {
-                                <select class="form-control" @bind="MesSeleccionado">
-                                    <option value="@Meses.Enero">Enero</option>
-                                    <option value="@Meses.Febrero">Febrero</option>
-                                    <option value="@Meses.Marzo">Marzo</option>
-                                    <option value="@Meses.Abril">Abril</option>
-                                    <option value="@Meses.Mayo">Mayo</option>
-                                    <option value="@Meses.Junio">Junio</option>
-                                    <option value="@Meses.Julio">Julio</option>
-                                    <option value="@Meses.Agosto">Agosto</option>
-                                    <option value="@Meses.Septiembre">Septiembre</option>
-                                    <option value="@Meses.Octubre">Octubre</option>
-                                    <option value="@Meses.Noviembre">Noviembre</option>
-                                    <option value="@Meses.Diciembre">Diciembre</option>
-                                </select>
+                                <p class="title is-4">Seleccione el mes</p>
                             }
                         </div>
+                        <div class="block">
+                            <div class="select is-medium is-fullwidth">
+                                @if (OpcionEscogida == Opciones.Año)
+                                {
+                                    <select class="form-control" @bind="AñoSeleccionado">
+                                        @for (int i = 2022; i < 2051; i++)
+                                        {
+                                            var localVariable = i;
+                                            <option value="@localVariable">@localVariable</option>
+                                        }
+                                    </select>
+                                }
+                                else
+                                {
+                                    <select class="form-control" @bind="MesSeleccionado">
+                                        <option value=1>Enero</option>
+                                        <option value=2>Febrero</option>
+                                        <option value=3>Marzo</option>
+                                        <option value=4>Abril</option>
+                                        <option value=5>Mayo</option>
+                                        <option value=6>Junio</option>
+                                        <option value=7>Julio</option>
+                                        <option value=8>Agosto</option>
+                                        <option value=9>Septiembre</option>
+                                        <option value=10>Octubre</option>
+                                        <option value=11>Noviembre</option>
+                                        <option value=12>Diciembre</option>
+                                    </select>
+                                }
+                            </div>
+                        </div>
+                    </div>    
+                }
+                <div class="column px-2">
+                    <div class="block">
+                        <p class="title is-4">Filtrar datos</p>
                     </div>
-                </div>    
-            }
-            <div class="column px-2">
-                <div class="block">
-                    <p class="title is-4">Filtrar datos</p>
-                </div>
-                <div class="block">
-                    <button class="button is-primary">Filtrar</button>
+                    <div class="block">
+                        <button class="button is-primary" @onclick="FiltrarPartidas">Filtrar</button>
+                    </div>
                 </div>
             </div>
         </div>
+        <hr/>
+        @if (EnseñarEstadísticas)
+        {
+            if (EstaCargandoLasNuevasEstadisticas)
+            {
+                <div class="block article-bottom">
+                    <MudProgressCircular Color="Color.Primary" Size="Size.Large" Indeterminate="true" />
+                </div>
+            }
+            else
+            {
+                <div class="block">
+                    <p class="title is-2">Visión General</p>
+                    <p class="subtitle is-4">@TituloDeEstadisticas</p>
+                </div>
+            }
+        }
     </div>
-</div>
+</PageLoading>
+

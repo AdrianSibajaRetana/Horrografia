@@ -30,7 +30,7 @@ namespace Horrografia.Client.Data.Services.Implementations
             ControllerResponse<ReporteModel> controllerResponse = new();
             try
             {
-                var response = await _anonymousHttpClient.GetAsync("api/Reporte");
+                var response = await _http.GetAsync("api/Reporte");
                 if (response.IsSuccessStatusCode)
                 {
                     var reportes = await response.Content.ReadFromJsonAsync<List<ReporteModel>>();
