@@ -1,6 +1,8 @@
 ﻿@using Horrografia.Client.Shared.Components.General
+@using Horrografia.Client.Shared.Components.Dashboard.Statistics
+
 <PageLoading Titulo="Estadísticas" IsLoading="@IsLoading">
-    <div class="container m-4 is-fullhd">
+    <div class="container m-4 is-fullhd dashboard-stats-container">
         <div class="block">
             <p class="title is-2">Visión de Estadísticas</p>
             <p class="subtitle is-4">Seleccione el rango que desea visualizar</p>
@@ -105,10 +107,33 @@
                         </div>
                     </div>
                 </div>
-                <div class="block">
-                    @foreach (KeyValuePair<string, int> entry in TagCounterDictionary)
+                <div class="block tabs is-centered is-medium is-boxed">
+                    <ul>
+                        <li class=@_tableActiveString>
+                            <a @onclick="c => ChangeTabContent(ActiveTabState.ShowTableTab)">Errores</a>
+                        </li>
+                        <li class=@_graphActiveString>
+                            <a @onclick="c => ChangeTabContent(ActiveTabState.ShowGraphTab)">Gráficos</a>
+                        </li>
+                        <li class=@_historyActiveString>
+                            <a @onclick="c => ChangeTabContent(ActiveTabState.ShowHistoryTab)">Historial</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="block stats-container">
+                    @switch (_activeTab)
                     {
-                        <p>@entry.Key -> @entry.Value</p>
+                        case ActiveTabState.ShowTableTab:
+                            <StatsTable Dictionary="TagCounterDictionary"/>
+                            break;
+                        case ActiveTabState.ShowGraphTab:
+                            <StatsGraph Dictionary="TagCounterDictionary"/>
+                            break;
+                        case ActiveTabState.ShowHistoryTab:
+                            <StatsHistory Reportes="PartidasLuegoDeSerFiltradas"
+                                          NivelesInDatabase="Niveles"
+                                          UsuariosInDatabase="Usuarios"/>
+                            break;
                     }
                 </div>
             }

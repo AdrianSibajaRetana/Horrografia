@@ -1,0 +1,60 @@
+﻿@using Horrografia.Shared.Models
+
+<div class="table_width_100">
+    <div class="table_wrapper">
+        <table class="table is-bordered is-striped is-hoverable is-fullwidth">
+            <thead>
+            <tr>
+                <th>Usuario</th>
+                <th>Nivel jugado</th>
+                <th>Errores cometidos</th>
+                <th>Puntaje conseguido</th>
+                <th>Fecha de juego</th>
+            </tr>
+            </thead>
+            <tbody>
+                @foreach (var reporte in Reportes)
+                {
+                    <tr>
+                        <td>
+                            @GetUsernamefromId(reporte.IdUsuario)
+                        </td>
+                        <td>
+                            @GetLevelNameFromId(reporte.IdNivel)
+                        </td>
+                        <td>
+                            @reporte.CantidadErrores
+                        </td>
+                        <td>
+                            @reporte.Puntuacion
+                        </td>
+                        <td>
+                            @reporte.FechaString
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@code {
+    [Parameter] 
+    public List<ReporteModel> Reportes { get; set; }
+    
+    [Parameter]
+    public List<NivelModel> NivelesInDatabase { get; set; }
+    
+    [Parameter]
+    public List<UsuarioDTO> UsuariosInDatabase { get; set; }
+    
+    private string GetLevelNameFromId(int id)
+    {
+        return NivelesInDatabase.FirstOrDefault(n => n.Id == id)?.Nombre;
+    }
+    
+    private string GetUsernamefromId(string id)
+    {
+        return UsuariosInDatabase.FirstOrDefault(u => u.id == id)?.nombreDeUsuario;
+    }
+}

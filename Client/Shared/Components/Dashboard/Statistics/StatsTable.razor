@@ -1,0 +1,32 @@
+﻿@using Horrografia.Shared.Models
+
+<div class="table_width_100">
+    <div class="table_wrapper">
+        <table class="table is-bordered is-striped is-hoverable is-fullwidth">
+            <thead>
+            <tr>
+                <th>Tipo de error</th>
+                <th>Cantidad</th>
+            </tr>
+            </thead>
+            <tbody>
+            @foreach (KeyValuePair<string, int> entry in Dictionary.OrderByDescending(pair => pair.Value))
+            {
+                <tr>
+                    <td>
+                        @entry.Key
+                    </td>
+                    <td>
+                        @entry.Value
+                    </td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public Dictionary<string,int> Dictionary { get; set; }
+}

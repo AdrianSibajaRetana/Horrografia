@@ -26,6 +26,12 @@ namespace Horrografia.Client.Shared.Components.Dashboard
         protected ITagService _tagService { get; set; }
         
         [Inject]
+        protected INivelService _nivelService { get; set; }
+        
+        [Inject]
+        protected  IUserService _userService { get; set; }
+        
+        [Inject]
         protected ISnackbar _snackbar { get; set; }
         
         private Opciones OpcionEscogida { get; set; }
@@ -34,13 +40,14 @@ namespace Horrografia.Client.Shared.Components.Dashboard
         
         private bool IsLoading { get; set; }
         
+        private List<NivelModel> Niveles { get; set; }
+        private List<UsuarioDTO> Usuarios { get; set; }
         private List<ReporteModel> Partidas{ get; set; }
         
         private List<ReporteModel> PartidasLuegoDeSerFiltradas { get; set; }
         
         private Dictionary<string,int> TagCounterDictionary { get; set; }
         
-       
         private bool EstaCargandoLasNuevasEstadisticas { get; set; }
 
         private bool EnseñarEstadísticas { get; set; }
@@ -50,9 +57,23 @@ namespace Horrografia.Client.Shared.Components.Dashboard
         private int AñoActual { get; set;}
         
         private int ErroresCometidos { get; set; }
+        
+        private enum ActiveTabState
+        {
+            ShowTableTab,
+            ShowGraphTab,
+            ShowHistoryTab,
+        }
+        private string _tableActiveString { get; set; }
+        private string _graphActiveString { get; set; }
+        private string _historyActiveString { get; set; }
+        private ActiveTabState _activeTab { get; set; }
+        private const string ShowActiveState = "is-active";
 
         public StatsView()
         {
+            _activeTab = ActiveTabState.ShowTableTab;
+            _tableActiveString = ShowActiveState;
             AñoActual = DateTime.Now.Year;
             IsLoading = true;
             EstaCargandoLasNuevasEstadisticas = false;
@@ -60,11 +81,40 @@ namespace Horrografia.Client.Shared.Components.Dashboard
             PartidasLuegoDeSerFiltradas = new();
         }
         
+        private void ChangeTabContent(ActiveTabState StateToChange)
+        {
+
+            if (StateToChange != _activeTab)
+            {
+                _activeTab = StateToChange;
+                switch (StateToChange)
+                {
+                    case ActiveTabState.ShowTableTab:
+                        _historyActiveString = null;
+                        _tableActiveString = ShowActiveState;
+                        _graphActiveString = null;
+                        break;
+                    case ActiveTabState.ShowGraphTab:
+                        _historyActiveString = null;
+                        _tableActiveString = null;
+                        _graphActiveString = ShowActiveState;
+                        break;
+                    case ActiveTabState.ShowHistoryTab:
+                        _historyActiveString = ShowActiveState;
+                        _tableActiveString = null;
+                        _graphActiveString = null;
+                        break;
+                }
+            }
+        }
+        
         protected override async Task OnInitializedAsync()
         {
             try
             {
                 await CargarPartidas();
+                await CargarNiveles();
+                await CargarUsuarios();
                 IsLoading = false;
                 StateHasChanged();
             }
@@ -90,6 +140,32 @@ namespace Horrografia.Client.Shared.Components.Dashboard
             else
             {
                 throw new InvalidOperationException($"Error al cargar partidas.");
+            }
+        }
+
+        private async Task CargarNiveles()
+        {
+            var response = await _nivelService.GetAsync();
+            if (response.isResponseSuccesfull())
+            {
+                Niveles = response.Response;
+            }
+            else
+            {
+                throw new InvalidOperationException($"Error al cargar niveles.");
+            }
+        }
+
+        private async Task CargarUsuarios()
+        {
+            var response = await _userService.GetAsync();
+            if (response.isResponseSuccesfull())
+            {
+                Usuarios = response.Response;
+            }
+            else
+            {
+                throw new InvalidOperationException($"Error al cargar usuarios.");
             }
         }
 

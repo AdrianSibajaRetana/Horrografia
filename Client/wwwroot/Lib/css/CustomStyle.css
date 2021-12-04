@@ -102,6 +102,11 @@ div.column.is-8:first-child {
     height: 170px;
 }
 
+.dashboard-stats-container
+{
+    min-height: 100vh;    
+}
+
 .dashboard-filter-button-container
 {
     position: relative;
@@ -111,6 +116,12 @@ div.column.is-8:first-child {
 {
     position: absolute;
     bottom: 0;
+}
+
+/*Graph*/
+.stats-container
+{
+    min-height: 100vh;
 }
 
 /*Meet the team page*/

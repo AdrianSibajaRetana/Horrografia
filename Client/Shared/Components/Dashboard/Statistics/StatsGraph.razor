@@ -1,0 +1,64 @@
+﻿<div class='block container'>
+    <div class='columns is-mobile is-centered'>
+        <div class='column is-8 px-5'>
+            <div class="block">
+                <MudChart ChartType="ChartType.Donut" Width="70vh" Height="70vh" @bind-SelectedIndex="Index" InputData="@data" InputLabels="@labels"></MudChart>    
+            </div>
+            <div class="block has-text-centered">
+                @if (displayIndex != -1)
+                {
+                    <h4 class="title is-4">@displayLabel</h4>
+                    <h6 class="subtitle is-6">Errores cometidos: @displayCount</h6>    
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@code {
+    [Parameter]
+    public Dictionary<string,int> Dictionary { get; set; }
+
+    public double[] data;
+    public string[] labels;
+    private int Index
+    {
+        get => displayIndex;
+        set
+        {
+            displayIndex = value;
+            changeDisplayLabel();
+        }
+    }
+    
+    private int displayIndex;
+    private string displayLabel;
+    private double displayCount;
+
+    protected override void OnParametersSet()
+    {
+        var numberOfItems = Dictionary.Count;
+        data = new double[numberOfItems];
+        labels = new string[numberOfItems];
+        int currentIndex = 0;
+        foreach (KeyValuePair<string, int> entry in Dictionary)
+        {
+            data[currentIndex] = entry.Value;
+            labels[currentIndex] = entry.Key;
+            currentIndex++;
+        }
+        Index = -1;
+    }
+
+    private void changeDisplayLabel()
+    {
+        if (displayIndex != -1)
+        {
+            displayCount = data[displayIndex];
+            displayLabel = labels[displayIndex];
+            StateHasChanged();
+        }
+    }
+
+}
