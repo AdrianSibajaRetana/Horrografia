@@ -35,15 +35,40 @@ namespace Horrografia.Client.Pages
         private bool IsLoading { get; set; }
         private List<NivelModel> Niveles { get; set; }
         private List<UsuarioDTO> Usuarios { get; set; }
+        private UsuarioDTO UsuarioSeleccionado { get; set; }
         private List<ReporteModel> Partidas{ get; set; }
         private List<ReporteModel> PartidasLuegoDeSerFiltradas { get; set; }
         private Dictionary<string,int> TagCounterDictionary { get; set; }
+
+        private string _UsuarioID;
+        private string _IdEnSeleccionDePagina
+        { 
+            get => _UsuarioID;
+            set
+            {
+                _UsuarioID = value;
+                UsuarioSeleccionado = Usuarios.FirstOrDefault(n => n.id == _UsuarioID);
+            }
+        }
+
+        private enum Opciones
+        {
+            TodasLasPartidas,
+            Estudiante
+        }
+        
+        private Opciones OpcionEscogida { get; set; }
 
         public Estudiantes()
         {
             IsLoading = true;
         }
-        
+
+        private string GetUserNameFromId(string id)
+        {
+            return Usuarios.FirstOrDefault(u => u.id == id)?.nombreDeUsuario;
+        }
+
         protected override async Task OnInitializedAsync()
         {
             try

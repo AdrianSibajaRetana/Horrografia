@@ -3,11 +3,58 @@
 @using Horrografia.Client.Shared.Components.General
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @using Horrografia.Client.Shared.Components.Dashboard
+@using Horrografia.Shared.Models
 @attribute [Authorize(Roles = "Admin, Profesor")]
 
 <PageLoading Titulo="Administración estudiantil" IsLoading="@IsLoading">
-    @foreach (var user in Usuarios)
-    {
-        <p>@user.nombreDeUsuario</p>
-    }
+   <div class="container m-4 is-fullhd dashboard-stats-container">
+        <div class="block">
+            <p class="title is-2">Visión de estadísticas para estudiantes</p>
+            <p class="subtitle is-4">Seleccione qué desea visualizar</p>
+        </div>
+        <hr>
+        <div class="block">
+            <div class="columns">
+                <div class="column px-2">
+                    <div class="block">
+                        <p class="title is-4">Filtro</p>
+                    </div>
+                    <div class="block">
+                        <div class="select is-medium is-fullwidth">
+                            <select class="form-control" @bind="OpcionEscogida">
+                                <option value="@Opciones.TodasLasPartidas">Todas las partidas</option>
+                                <option value="@Opciones.Estudiante">Filtrar por estudiante</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                @if (OpcionEscogida is Opciones.Estudiante)
+                {
+                    <div class="column px-2">
+                        <div class="block">
+                            <p class="title is-4">Seleccione el estudiante</p>
+                        </div>
+                        <div class="block">
+                            <div class="select is-medium is-fullwidth">
+                                <select class="form-control" @bind="_IdEnSeleccionDePagina">
+                                    @foreach (var estudiante in Usuarios)
+                                    {
+                                        <option value="@estudiante.id">@GetUserNameFromId(estudiante.id)</option>    
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                }
+                <div class="column px-2">
+                    <div class="block">
+                        <p class="title is-4">Filtrar datos</p>
+                    </div>
+                    <div class="block">
+                        <button class="button is-primary">Filtrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+   </div>
 </PageLoading>
