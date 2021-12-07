@@ -33,6 +33,9 @@ namespace Horrografia.Client.Pages
         protected ISnackbar _snackbar { get; set; }
         
         private bool IsLoading { get; set; }
+        
+        private bool EnseñarEstadísticas { get; set; }
+        private bool EstaCargandoLasNuevasEstadisticas { get; set; }
         private List<NivelModel> Niveles { get; set; }
         private List<UsuarioDTO> Usuarios { get; set; }
         private UsuarioDTO UsuarioSeleccionado { get; set; }
@@ -41,6 +44,9 @@ namespace Horrografia.Client.Pages
         private Dictionary<string,int> TagCounterDictionary { get; set; }
 
         private string _UsuarioID;
+        
+        private string CodigoEscuela { get; set; }
+        
         private string _IdEnSeleccionDePagina
         { 
             get => _UsuarioID;
@@ -51,6 +57,9 @@ namespace Horrografia.Client.Pages
             }
         }
 
+        private int ErroresCometidos { get; set; }
+        private string TituloDeEstadisticas { get; set; }
+
         private enum Opciones
         {
             TodasLasPartidas,
@@ -58,10 +67,53 @@ namespace Horrografia.Client.Pages
         }
         
         private Opciones OpcionEscogida { get; set; }
+        
+        private enum ActiveTabState
+        {
+            ShowTableTab,
+            ShowGraphTab,
+            ShowHistoryTab,
+        }
+        private string _tableActiveString { get; set; }
+        private string _graphActiveString { get; set; }
+        private string _historyActiveString { get; set; }
+        private ActiveTabState _activeTab { get; set; }
+        private const string ShowActiveState = "is-active";
 
         public Estudiantes()
         {
+            _tableActiveString = ShowActiveState;
+            _activeTab = ActiveTabState.ShowTableTab;
             IsLoading = true;
+            EnseñarEstadísticas = false;
+            EstaCargandoLasNuevasEstadisticas = false;
+        }
+        
+        private void ChangeTabContent(ActiveTabState StateToChange)
+        {
+
+            if (StateToChange != _activeTab)
+            {
+                _activeTab = StateToChange;
+                switch (StateToChange)
+                {
+                    case ActiveTabState.ShowTableTab:
+                        _historyActiveString = null;
+                        _tableActiveString = ShowActiveState;
+                        _graphActiveString = null;
+                        break;
+                    case ActiveTabState.ShowGraphTab:
+                        _historyActiveString = null;
+                        _tableActiveString = null;
+                        _graphActiveString = ShowActiveState;
+                        break;
+                    case ActiveTabState.ShowHistoryTab:
+                        _historyActiveString = ShowActiveState;
+                        _tableActiveString = null;
+                        _graphActiveString = null;
+                        break;
+                }
+            }
         }
 
         private string GetUserNameFromId(string id)
@@ -145,6 +197,7 @@ namespace Horrografia.Client.Pages
             {
                 var usuarioDeProfesor = response.Response.FirstOrDefault();
                 codigo = usuarioDeProfesor.codigoEscuela;
+                CodigoEscuela = codigo;
             }
             else
             {
@@ -153,5 +206,106 @@ namespace Horrografia.Client.Pages
             return codigo;
         }
 
+        private async Task FiltrarPartidas()
+        {
+            EnseñarEstadísticas = true;
+            EstaCargandoLasNuevasEstadisticas = true;
+            try
+            {
+                switch (OpcionEscogida)
+                {
+                    case Opciones.TodasLasPartidas:
+                        TituloDeEstadisticas = "Información de todas las partidas de Horrografía";
+                        DevolverTodas();
+                        break;
+                    case Opciones.Estudiante:
+                        TituloDeEstadisticas = $"Información de todas las partidas de {UsuarioSeleccionado.nombreDeUsuario}";
+                        FiltrarPorEstudiante();
+                        break;
+                }
+                ContarErroresCometidos();
+                await ConseguirTiposDeErroresCometidos();
+                EstaCargandoLasNuevasEstadisticas = false;
+            }
+            catch (Exception e)
+            {
+                ShowNotification(e.Message, Severity.Error);
+            }
+        }
+        
+        private void DevolverTodas()
+        {
+            PartidasLuegoDeSerFiltradas = Partidas;
+        }
+        
+        private void FiltrarPorEstudiante()
+        {
+            PartidasLuegoDeSerFiltradas = Partidas.Where(p => p.IdUsuario == UsuarioSeleccionado.id).ToList();
+        }
+        
+        private void ContarErroresCometidos()
+        {
+            ErroresCometidos = 0;
+            foreach (var reporte in PartidasLuegoDeSerFiltradas)
+            {
+                ErroresCometidos += reporte.CantidadErrores;
+            }
+        }
+
+        private async Task ConseguirTiposDeErroresCometidos()
+        {
+            TagCounterDictionary = new();
+            List<string> Tags = new();
+            switch (OpcionEscogida)
+            {
+                case Opciones.TodasLasPartidas:
+                    Tags = await ConseguirTodosLosTags();
+                    break;
+                case Opciones.Estudiante:
+                    Tags = await ConseguirTagsPorEstudiante();
+                    break;
+            }
+            foreach (var tag in Tags)
+            {
+                if(TagCounterDictionary.ContainsKey(tag))
+                {
+                    TagCounterDictionary[tag]++;
+                }
+                else
+                {
+                    TagCounterDictionary[tag] = 1;
+                }
+            }
+        }
+        
+        private async Task<List<string>> ConseguirTodosLosTags()
+        {
+            List<string> Tags = new();
+            var response = await _tagService.GetTagsFromSchool(CodigoEscuela);
+            if (response.isResponseSuccesfull())
+            {
+                Tags = response.Response;
+            }
+            else
+            {
+                throw new InvalidOperationException($"Error al conseguir todos los tags.");
+            }
+            return Tags;
+        }
+
+        private async Task<List<string>> ConseguirTagsPorEstudiante()
+        {
+            List<string> Tags = new();
+            var response = await _tagService.GetTagsFromUser(UsuarioSeleccionado.id);
+            if (response.isResponseSuccesfull())
+            {
+                Tags = response.Response;
+            }
+            else
+            {
+                throw new InvalidOperationException($"Error al conseguir todos los tags.");
+            }
+            return Tags;
+        }
     }
 }

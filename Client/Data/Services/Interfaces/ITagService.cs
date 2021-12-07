@@ -16,5 +16,8 @@ namespace Horrografia.Client.Data.Services.Interfaces
         Task<ControllerResponse<string>> GetTagsFromAllReports();
         Task<ControllerResponse<string>> GetTagsFromMonthlyReports(int month, int year);
         Task<ControllerResponse<string>> GetTagsFromYearlyReports(int year);
+        Task<ControllerResponse<string>> GetTagsFromSchool(string schoolCode);
+        Task<ControllerResponse<string>> GetTagsFromUser(string id);
+        
     }
 }

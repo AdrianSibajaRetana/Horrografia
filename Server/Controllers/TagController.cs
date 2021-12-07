@@ -82,6 +82,36 @@ namespace Horrografia.Server.Controllers
                 return new StatusCodeResult(StatusCodes.Status500InternalServerError);
             }
         }
+        
+        [HttpGet("escuela/{schoolCode}")]
+        public async Task<IActionResult> GetTagsFromSchool(string schoolCode)
+        {
+            try
+            {
+                var tags = await _repo.GetFromAllReportsFromSchool(schoolCode);
+                return Ok(tags);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "An error occurred while fetching from db");
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }
+        }
+        
+        [HttpGet("usuario/{id}")]
+        public async Task<IActionResult> GetTagsFromUser(string id)
+        {
+            try
+            {
+                var tags = await _repo.GetFromUser(id);
+                return Ok(tags);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(e, "An error occurred while fetching from db");
+                return new StatusCodeResult(StatusCodes.Status500InternalServerError);
+            }
+        }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)

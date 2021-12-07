@@ -15,5 +15,7 @@ namespace Horrografia.Server.Data.Repos.Interfaces
         Task<List<string>> GetFromAllReports();
         Task<List<string>> GetFromMonthlyReports(int month, int year);
         Task<List<string>> GetFromYearlyReports(int year);
+        Task<List<string>> GetFromAllReportsFromSchool(string schoolCode);
+        Task<List<string>> GetFromUser(string id);
     }
 }

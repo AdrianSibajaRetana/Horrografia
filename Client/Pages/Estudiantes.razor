@@ -1,6 +1,7 @@
 ﻿@page "/estudiantes"
 @using Microsoft.AspNetCore.Authorization
 @using Horrografia.Client.Shared.Components.General
+@using Horrografia.Client.Shared.Components.Dashboard.Statistics
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @using Horrografia.Client.Shared.Components.Dashboard
 @using Horrografia.Shared.Models
@@ -51,10 +52,68 @@
                         <p class="title is-4">Filtrar datos</p>
                     </div>
                     <div class="block">
-                        <button class="button is-primary">Filtrar</button>
+                        <button class="button is-primary" @onclick="FiltrarPartidas">Filtrar</button>
                     </div>
                 </div>
             </div>
         </div>
+        <hr/>
+        @if (EnseñarEstadísticas)
+        {
+            if (EstaCargandoLasNuevasEstadisticas)
+            {
+                <div class="block article-bottom">
+                    <MudProgressCircular Color="Color.Primary" Size="Size.Large" Indeterminate="true" />
+                </div>
+            }
+            else
+            {
+                <div class="block">
+                    <p class="title is-2">Visión General</p>
+                    <p class="subtitle is-4">@TituloDeEstadisticas</p>
+                </div>
+                <div class="block">
+                    <div class="columns">
+                        <div class="column px-2">
+                            <h4 class="title is-4">Partidas jugadas</h4>
+                            <h6 class="subtitle is-6">@PartidasLuegoDeSerFiltradas.Count</h6>
+                        </div>
+                        <div class="column px-2">
+                            <h4 class="title is-4">Errores cometidos</h4>
+                            <h6 class="subtitle is-6">@ErroresCometidos</h6>
+                        </div>
+                    </div>
+                </div>
+                <div class="block tabs is-centered is-medium is-boxed">
+                    <ul>
+                        <li class=@_tableActiveString>
+                            <a @onclick="c => ChangeTabContent(ActiveTabState.ShowTableTab)">Errores</a>
+                        </li>
+                        <li class=@_graphActiveString>
+                            <a @onclick="c => ChangeTabContent(ActiveTabState.ShowGraphTab)">Gráficos</a>
+                        </li>
+                        <li class=@_historyActiveString>
+                            <a @onclick="c => ChangeTabContent(ActiveTabState.ShowHistoryTab)">Historial</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="block stats-container">
+                    @switch (_activeTab)
+                    {
+                        case ActiveTabState.ShowTableTab:
+                            <StatsTable Dictionary="TagCounterDictionary"/>
+                            break;
+                        case ActiveTabState.ShowGraphTab:
+                            <StatsGraph Dictionary="TagCounterDictionary"/>
+                            break;
+                        case ActiveTabState.ShowHistoryTab:
+                            <StatsHistory Reportes="PartidasLuegoDeSerFiltradas"
+                                          NivelesInDatabase="Niveles"
+                                          UsuariosInDatabase="Usuarios"/>
+                            break;
+                    }
+                </div>
+            }
+        }
    </div>
 </PageLoading>

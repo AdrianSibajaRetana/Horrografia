@@ -80,5 +80,21 @@ namespace Horrografia.Server.Data.Repos.Implementations
             var tags = await _dbContext.LoadData<ItemTagModel, dynamic>(sql, new { }, ConectionString);
             return tags;
         }
+
+        public async Task<List<string>> GetFromAllReportsFromSchool(string schoolCode)
+        {
+            string sql =
+                "SELECT tag FROM Tag JOIN ItemTag i ON Tag.id = i.idTag JOIN item it ON i.idItem = it.id JOIN contieneerror c ON it.id = c.idItem JOIN reporte r ON c.idReporte = r.id JOIN aspnetusers a ON r.idUsuario = a.Id WHERE a.CodigoEscuela = @code";
+            var tags = await _dbContext.LoadData<string, dynamic>(sql, new { code = schoolCode}, ConectionString);
+            return tags;
+        }
+
+        public async Task<List<string>> GetFromUser(string id)
+        {
+            string sql =
+                "SELECT tag FROM Tag JOIN ItemTag i ON Tag.id = i.idTag JOIN item it ON i.idItem = it.id JOIN contieneerror c ON it.id = c.idItem JOIN reporte r ON c.idReporte = r.id JOIN aspnetusers a ON r.idUsuario = a.Id WHERE a.Id = @studentId";
+            var tags = await _dbContext.LoadData<string, dynamic>(sql, new { studentId = id}, ConectionString);
+            return tags;
+        }
     }
 }
