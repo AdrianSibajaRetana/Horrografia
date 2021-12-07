@@ -24,5 +24,6 @@ namespace Horrografia.Server.Data.Repos.Interfaces
         Task UpdateData(UsuarioDTO usuario);
         Task<List<string>> GetStudentsBySchoolCode(string codigo);
         Task<List<string>> GetProfessorsBySchoolCode(string codigo);
+        Task<List<UsuarioDTO>> GetStudentAccountsBySchoolChode(string codigo);
     }
 }

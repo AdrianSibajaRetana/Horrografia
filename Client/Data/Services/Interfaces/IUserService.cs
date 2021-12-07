@@ -21,5 +21,6 @@ namespace Horrografia.Client.Data.Services.Interfaces
         Task<ControllerResponse<UsuarioDTO>> UpdateUser(UsuarioDTO user);
         Task<ControllerResponse<string>> GetSchoolStudents(string codigo);
         Task<ControllerResponse<string>> GetSchoolProfessors(string codigo);
+        Task<ControllerResponse<UsuarioDTO>> GetSchoolUsers(string codigo);
     }
 }

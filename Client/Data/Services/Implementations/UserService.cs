@@ -352,5 +352,30 @@ namespace Horrografia.Client.Data.Services.Implementations
             }
         }
 
+        public async Task<ControllerResponse<UsuarioDTO>> GetSchoolUsers(string codigo)
+        {
+            ControllerResponse<UsuarioDTO> _controllerResponse = new();
+            try
+            {
+                var response = await _http.GetAsync($"api/Usuario/getUsuariosDeColegio/{codigo}");
+                if (response.IsSuccessStatusCode)
+                {
+                    var estudiantes = await response.Content.ReadFromJsonAsync<List<UsuarioDTO>>();
+                    _controllerResponse.Status = Constantes.OKSTATUS;
+                    _controllerResponse.Response = estudiantes;
+                    return _controllerResponse;
+                }
+                _controllerResponse.Status = Constantes.INTERNALERRORSTATUS;
+                _controllerResponse.Response = new List<UsuarioDTO>();
+                return _controllerResponse;
+            }
+            catch (Exception e)
+            {
+                _controllerResponse.Status = Constantes.INTERNALERRORSTATUS;
+                _controllerResponse.Response = new List<UsuarioDTO>();
+                _logger.LogError(e, "An error occurred while fetching from db");
+                return _controllerResponse;
+            }
+        }
     }
 }

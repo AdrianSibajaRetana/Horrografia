@@ -174,6 +174,12 @@ namespace Horrografia.Server.Data.Repos.Implementations
             var nombres = await _dbContext.LoadData<string, dynamic>(sql, new { code = codigo }, ConectionString);
             return nombres;
         }
-        
+
+        public async Task<List<UsuarioDTO>> GetStudentAccountsBySchoolChode(string codigo)
+        {
+            string sql = "SELECT * FROM aspnetusers WHERE not exists(select UserId from aspnetuserroles where aspnetusers.Id = aspnetuserroles.UserId) AND aspnetusers.CodigoEscuela = @code";
+            var usuarios = await _dbContext.LoadData<UsuarioDTO, dynamic>(sql, new { code = codigo }, ConectionString);
+            return usuarios;
+        }
     }
 }

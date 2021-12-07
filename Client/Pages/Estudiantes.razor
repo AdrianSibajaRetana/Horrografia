@@ -1,7 +1,13 @@
 ﻿@page "/estudiantes"
+@using Microsoft.AspNetCore.Authorization
+@using Horrografia.Client.Shared.Components.General
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@using Horrografia.Client.Shared.Components.Dashboard
+@attribute [Authorize(Roles = "Admin, Profesor")]
 
-<h3>Estudiantes</h3>
-
-@code {
-
-}
+<PageLoading Titulo="Administración estudiantil" IsLoading="@IsLoading">
+    @foreach (var user in Usuarios)
+    {
+        <p>@user.nombreDeUsuario</p>
+    }
+</PageLoading>

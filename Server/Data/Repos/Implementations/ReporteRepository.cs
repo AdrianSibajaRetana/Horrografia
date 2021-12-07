@@ -43,8 +43,10 @@ namespace Horrografia.Server.Data.Repos.Implementations
             }
             return reportes;
         }
-        
-        
+
+
+
+
         public async Task<DateTime> GetReportDate(int reportID)
         {
             string sql = "SELECT Fecha FROM reporte WHERE id = @id";
