@@ -41,7 +41,7 @@ div.column.is-8:first-child {
 }
 
 .index-display {
-    background-image: url("../../Images/Fondo.jpeg");
+    background-image: url("../../Images/FondoIndex.jpg");
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -49,12 +49,21 @@ div.column.is-8:first-child {
 }
 
 .about-display{
-    background-image: url("../../Images/FondoSobre.jpg");
+    background-image: url("../../Images/FondoSobre.JPG");
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
     height: 500px;
 }
+
+.about-team-display{
+    background-image: url("../../Images/FondoSobreEquipo.JPG");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 500px;
+}
+
 
 .article-bottom {
     display: flex;
