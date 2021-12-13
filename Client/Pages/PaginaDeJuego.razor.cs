@@ -37,6 +37,9 @@ namespace Horrografia.Client.Pages
         [Inject]
         protected ISnackbar _snackbar { get; set; }
         
+        [Inject]
+        protected NavigationManager _navManager { get; set; }
+        
         //Todos los niveles
         private List<NivelModel> Niveles { get; set; }
 
@@ -254,6 +257,11 @@ namespace Horrografia.Client.Pages
         protected void NotifyError(string mensaje)
         {
             _snackbar.Add(mensaje, Severity.Error);
+        }
+
+        protected void Terminarpartida()
+        {
+            _navManager.NavigateTo("/juego", true);
         }
     }
 }

@@ -43,6 +43,9 @@ namespace Horrografia.Client.Shared.Components.Game
         [Parameter]
         public EventCallback<string> OnExceptionOccured { get; set; }
         
+        [Parameter]
+        public EventCallback TerminarPartida { get; set; }
+        
         private Timer gameTimer;
 
         private Queue<ItemModel> ItemQueue { get; set; }
@@ -88,6 +91,8 @@ namespace Horrografia.Client.Shared.Components.Game
         
         private bool DidUserWinGame { get; set; }
         
+        private bool isCheckingAnswer { get; set; }
+        
         private Stopwatch GameStopWatch { get; set; }
         
         private ReporteModel GameReport { get; set; }
@@ -106,6 +111,7 @@ namespace Horrografia.Client.Shared.Components.Game
             IsCurrentGuessGood = false;
             ShowGameoverDialog = false;
             DidUserWinGame = false;
+            isCheckingAnswer = false;
             CurrentIncorrectForm = "";
             CurrentGameScore = 0;
             currentFrame = 1;
@@ -116,7 +122,7 @@ namespace Horrografia.Client.Shared.Components.Game
             CurrentLifePercentage = CurrentLifeString + '%';
             CurrentMistakes = 0;
             mainCharacterImagePath = $"/Images/Game/Main_Character/Character{currentFrame}.png";
-            currentItemImagePath = $"/Images/Game/Items/Item{currentItem}.png";                       
+            currentItemImagePath = $"/Images/Game/Items/Item{currentItem}.png";                 
         }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -183,10 +189,11 @@ namespace Horrografia.Client.Shared.Components.Game
         private void CheckAnswer()
         {
             GameStopWatch.Stop();
+            isCheckingAnswer = true;
             if (CurrentFormaCorrecta == CurrentInput)
             {
                 ShowGuessDialog(true);
-                //Give user score here.
+                
                 var timeElapsedSeconds = GameStopWatch.Elapsed.Seconds;
                 if (timeElapsedSeconds >= 60)
                 {
@@ -224,7 +231,7 @@ namespace Horrografia.Client.Shared.Components.Game
                 }
             }
         }
-
+        
         private void ShowGameOverScreen(bool didUserWin)
         {
             DidUserWinGame = didUserWin;
@@ -251,6 +258,7 @@ namespace Horrografia.Client.Shared.Components.Game
                 }
                 ShowGameoverDialog = false;
                 // Show dialog for playing again or choosing other level.
+                await TerminarPartida.InvokeAsync();
             }
             catch(Exception e)
             {
@@ -262,6 +270,8 @@ namespace Horrografia.Client.Shared.Components.Game
 
         private void ShowGuessDialog(bool isCorrect)
         {
+            currentItemImagePath = isCorrect ? "/Images/Game/Items/Item1.png" : "/Images/Game/Items/Item2.png";
+            StateHasChanged();
             IsCurrentGuessGood = isCorrect;
             ShowItemGuessedDialog = true;
         }
@@ -270,6 +280,7 @@ namespace Horrografia.Client.Shared.Components.Game
         {
             CurrentInput = "";
             GetNextItem();
+            isCheckingAnswer = false;
             ShowItemGuessedDialog = false;
         }
 
@@ -288,19 +299,22 @@ namespace Horrografia.Client.Shared.Components.Game
 
         private void TimerOnElapsed(object sender, ElapsedEventArgs e)
         {
-            currentFrame = (currentFrame + 1) % 9;
-            if (currentFrame == 0)
+            if (!isCheckingAnswer)
             {
-                currentFrame = 1;
+                currentFrame = (currentFrame + 1) % 9;
+                if (currentFrame == 0)
+                {
+                    currentFrame = 1;
+                }
+    
+                if (currentFrame == 1 || currentFrame == 4)
+                {
+                    ChangeItemDisplayed();
+                }
+    
+                mainCharacterImagePath = $"/Images/Game/Main_Character/Character{currentFrame}.png";
+                StateHasChanged();    
             }
-
-            if (currentFrame == 1 || currentFrame == 4)
-            {
-                ChangeItemDisplayed();
-            }
-
-            mainCharacterImagePath = $"/Images/Game/Main_Character/Character{currentFrame}.png";
-            StateHasChanged();
         }
 
         private void ChangeItemDisplayed()
