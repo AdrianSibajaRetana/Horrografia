@@ -56,3 +56,13 @@ Al igual que los servicios, hay un controlador por tabla de la base de datos y c
 Los repositorios se encargan de escribir los comandos SQL en la base de datos, por lo que leen y escriben la información directamente.
 
 ![Figura](Arquitectura.png)
+
+## Para crear administradores
+
+### Primera opción añadirlo dentro del código
+
+Añadir correo en la lista Administradores en Horrografía/Server/SharedConstants.cs.
+
+### Segunda opción añadirlo a mano.
+
+Conseguir el id del rol y el id del usuario y crear una tabla aspnetuserroles.
